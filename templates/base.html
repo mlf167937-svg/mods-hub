@@ -7,6 +7,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
+        /* Variabel Warna Tema Utama (Default Hijau) */
+        :root {
+            --neon-color: #22c55e;
+            --neon-glow: rgba(34, 197, 94, 0.4);
+            --bg-gradient: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+        }
+
+        /* Variabel Tema Ungu Cyberpunk */
+        [data-theme="cyberpunk"] {
+            --neon-color: #a855f7;
+            --neon-glow: rgba(168, 85, 247, 0.4);
+        }
+
+        /* Variabel Tema Biru Aurora */
+        [data-theme="aurora"] {
+            --neon-color: #06b6d4;
+            --neon-glow: rgba(6, 182, 212, 0.4);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,18 +34,19 @@
         }
 
         body {
-            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            background: var(--bg-gradient);
             color: #f8fafc;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background 0.3s;
         }
 
-        /* Navbar Transparan Keren (Glassmorphism) */
+        /* Navbar dengan Pengaturan di Pojok Kiri Atas */
         .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 30px;
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -36,26 +56,119 @@
             z-index: 999;
         }
 
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: #22c55e;
-            text-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
-            letter-spacing: -0.5px;
+        /* Menu Dropdown Pengaturan */
+        .settings-container {
+            position: relative;
+            display: inline-block;
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #94a3b8;
-            font-weight: 600;
-            padding: 10px 20px;
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 10px 16px;
             border-radius: 12px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
         }
 
-        .nav-links a:hover {
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
+        .settings-btn:hover {
+            border-color: var(--neon-color);
+            box-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .settings-dropdown {
+            display: none;
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 220px;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .settings-dropdown.show {
+            display: block;
+        }
+
+        .settings-dropdown h4 {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .theme-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .theme-dot:hover { transform: scale(1.15); }
+        .theme-dot.active { border-color: white; }
+
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+
+        /* Switch Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input { display: none; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #334155;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px; width: 14px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--neon-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--neon-color);
+            text-shadow: 0 0 15px var(--neon-glow);
+            transition: color 0.3s;
         }
 
         .container {
@@ -64,10 +177,10 @@
             padding: 40px 20px;
         }
 
-        /* Hero Banner Utama (Tempat banner.jpg berada) */
+        /* Hero Banner Utama */
         .hero-banner {
             position: relative;
-            height: 380px;
+            height: 340px;
             border-radius: 32px;
             overflow: hidden;
             display: flex;
@@ -78,92 +191,75 @@
             padding: 0 20px;
             margin-bottom: 40px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Efek Animasi Bergerak / Berjalan Otomatis pada Gambar Banner */
         .hero-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('/static/img/banner.jpg');
             background-size: cover;
             background-position: center;
             z-index: 1;
-            /* Efek zoom-in-out & pergeseran lambat selama 20 detik */
             animation: bannerBerjalan 20s infinite alternate ease-in-out;
         }
 
-        @keyframes bannerBerjalan {
-            0% {
-                transform: scale(1) translate(0px, 0px);
-            }
-            100% {
-                transform: scale(1.15) translate(-10px, -10px);
-            }
+        /* Class untuk mematikan animasi */
+        .hero-bg.no-anim {
+            animation: none !important;
         }
 
-        /* Lapisan Kegelapan Gradasi agar Teks di Atas Banner Sangat Jelas Dibaca */
+        @keyframes bannerBerjalan {
+            0% { transform: scale(1) translate(0px, 0px); }
+            100% { transform: scale(1.12) translate(-8px, -8px); }
+        }
+
         .hero-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.85) 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 0.85) 100%);
             z-index: 2;
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            max-width: 700px;
-        }
+        .hero-content { position: relative; z-index: 3; max-width: 700px; }
 
         .hero-content h1 {
-            font-size: 48px;
+            font-size: 44px;
             font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #22c55e);
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #ffffff, var(--neon-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
-        .hero-content p {
-            color: #cbd5e1;
-            font-size: 18px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        /* Kolom Pencarian / Search Bar UI Premium */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 25px auto 0 auto;
         }
 
-        /* Tombol Filter Kategori (Java & MCPE) */
-        .filter-btn {
-            background: rgba(30, 41, 59, 0.6);
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(15, 23, 42, 0.8);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 24px;
-            border-radius: 14px;
+            border-radius: 16px;
             color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(8px);
         }
 
-        .filter-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+        .search-input:focus {
+            border-color: var(--neon-color);
+            box-shadow: 0 0 15px var(--neon-glow);
+            background: #0f172a;
         }
 
-        .filter-btn.active {
-            background: #22c55e;
-            border-color: #22c55e;
-            color: black;
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
-        }
-
-        /* Grid System dan Desain Kartu Mod */
+        /* Grid & Cards */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -176,73 +272,53 @@
             padding: 30px;
             border-radius: 24px;
             backdrop-filter: blur(8px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(34, 197, 94, 0.4);
-            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.15);
+            transform: translateY(-6px);
+            border-color: var(--neon-color);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
         }
 
-        .card h2 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #ffffff;
-            transition: color 0.3s;
-        }
-
-        .card:hover h2 {
-            color: #22c55e;
-        }
-
-        .card p {
-            color: #94a3b8;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+        .card h2 { font-size: 22px; color: #ffffff; margin-bottom: 12px; }
+        .card:hover h2 { color: var(--neon-color); }
+        .card p { color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
 
         .badge {
             display: inline-block;
             padding: 6px 14px;
             border-radius: 999px;
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 16px;
         }
 
-        /* Tombol View Download Premium */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             padding: 14px 24px;
             border-radius: 16px;
-            background: #22c55e;
+            background: var(--neon-color);
             text-decoration: none;
             color: #020617;
-            font-weight: 600;
-            font-size: 15px;
+            font-weight: 700;
             transition: all 0.3s ease;
             width: 100%;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
         }
 
         .btn:hover {
-            background: #16a34a;
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            opacity: 0.9;
             transform: translateY(-2px);
         }
 
-        /* Tanda Penanda Watermark Bawah */
         .watermark {
             position: fixed;
             bottom: 15px;
@@ -253,25 +329,34 @@
             background: rgba(15, 23, 42, 0.6);
             padding: 6px 12px;
             border-radius: 8px;
-            backdrop-filter: blur(5px);
             pointer-events: none;
-        }
-
-        /* Optimalisasi untuk Layar Handphone */
-        @media (max-width: 768px) {
-            .hero-banner { height: 280px; }
-            .hero-content h1 { font-size: 32px; }
-            .nav { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="nav">
-    <div class="logo">🟢 RexCraft Mods</div>
-    <div class="nav-links">
-        <a href="/">Home</a>
+    <div class="settings-container">
+        <button class="settings-btn" onclick="toggleSettings()">⚙️ Pengaturan</button>
+        <div class="settings-dropdown" id="settingsDropdown">
+            <h4>Pilih Tema Neon</h4>
+            <div class="theme-options">
+                <div class="theme-dot active" style="background: #22c55e;" onclick="changeTheme('default', this)"></div>
+                <div class="theme-dot" style="background: #a855f7;" onclick="changeTheme('cyberpunk', this)"></div>
+                <div class="theme-dot" style="background: #06b6d4;" onclick="changeTheme('aurora', this)"></div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 12px 0;">
+            <div class="toggle-container">
+                <span>Mode Hemat Kuota</span>
+                <label class="switch">
+                    <input type="checkbox" id="animToggle" onchange="toggleAnimation(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
     </div>
+
+    <div class="logo">🟢 RexCraft Mods</div>
 </div>
 
 <div class="container">
@@ -279,6 +364,48 @@
 </div>
 
 <div class="watermark">⚡ Official RexCraft Web</div>
+
+<script>
+function toggleSettings() {
+    document.getElementById('settingsDropdown').classList.toggle('show');
+}
+
+// Menutup dropdown jika user klik di luar area menu pengaturan
+window.onclick = function(event) {
+    if (!event.target.matches('.settings-btn')) {
+        let dropdowns = document.getElementsByClassName("settings-dropdown");
+        for (let i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}
+
+function changeTheme(themeName, element) {
+    if(themeName === 'default') {
+        document.documentElement.removeAttribute('data-theme');
+    } else {
+        document.documentElement.setAttribute('data-theme', themeName);
+    }
+    
+    let dots = document.querySelectorAll('.theme-dot');
+    dots.forEach(dot => dot.classList.remove('active'));
+    element.classList.add('active');
+}
+
+function toggleAnimation(checkbox) {
+    let bannerBg = document.querySelector('.hero-bg');
+    if(bannerBg) {
+        if(checkbox.checked) {
+            bannerBg.classList.add('no-anim');
+        } else {
+            bannerBg.classList.remove('no-anim');
+        }
+    }
+}
+</script>
 
 </body>
 </html>
