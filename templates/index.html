@@ -17,17 +17,17 @@
 
 <h2>☕ Java</h2>
 
-<a href="#java-shaders">✨ Shaders</a>
-<a href="#java-texture">🎨 Texture Pack</a>
-<a href="#java-mods">⚙ Mods</a>
+<a href="#">✨ Shaders</a>
+<a href="#">🎨 Texture Pack</a>
+<a href="#">⚙ Mods</a>
 
 <hr>
 
 <h2>📱 Bedrock</h2>
 
-<a href="#bedrock-shaders">✨ Shaders</a>
-<a href="#bedrock-texture">🎨 Texture Pack</a>
-<a href="#bedrock-addon">🧩 Addon</a>
+<a href="#">✨ Shaders</a>
+<a href="#">🎨 Texture Pack</a>
+<a href="#">🧩 Addon</a>
 
 </div>
 
@@ -40,84 +40,26 @@
 <h1>🎮 RexCraft Hub</h1>
 
 <p>
-Minecraft mods, shaders, texture packs and addons.
+Minecraft mods, shaders, addons and texture packs.
 </p>
 
-<input type="text" id="search" placeholder="🔍 Search mods...">
+<input
+type="text"
+id="search"
+placeholder="🔍 Search mods..."
+>
 
 </div>
-
-<!-- JAVA -->
-
-<div class="section-title" id="java">
-☕ Java Edition
-</div>
-
-<div class="grid">
-
-<div class="card" id="java-shaders">
-<h2>✨ Shaders</h2>
-<p>Beautiful shaders for Java Edition.</p>
-<a class="btn">Open</a>
-</div>
-
-<div class="card" id="java-texture">
-<h2>🎨 Texture Pack</h2>
-<p>FPS boost and HD textures.</p>
-<a class="btn">Open</a>
-</div>
-
-<div class="card" id="java-mods">
-<h2>⚙ Mods</h2>
-<p>Best mods collection for survival.</p>
-<a class="btn">Open</a>
-</div>
-
-</div>
-
-<br><br>
-
-<!-- BEDROCK -->
-
-<div class="section-title" id="bedrock">
-📱 Bedrock Edition
-</div>
-
-<div class="grid">
-
-<div class="card" id="bedrock-shaders">
-<h2>✨ Shaders</h2>
-<p>Shaders for MCPE and Bedrock.</p>
-<a class="btn">Open</a>
-</div>
-
-<div class="card" id="bedrock-texture">
-<h2>🎨 Texture Pack</h2>
-<p>Texture packs for Bedrock Edition.</p>
-<a class="btn">Open</a>
-</div>
-
-<div class="card" id="bedrock-addon">
-<h2>🧩 Addon</h2>
-<p>Addons and behavior packs.</p>
-<a class="btn">Open</a>
-</div>
-
-</div>
-
-<br><br>
-
-<!-- UPLOAD -->
 
 <div class="section-title">
 📦 Latest Uploads
 </div>
 
-<div class="grid" id="mods-grid">
+<div class="grid">
 
 {% for mod in mods %}
 
-<div class="card mod-card">
+<div class="card">
 
 <div class="badge">
 MC {{ mod.version }}
@@ -142,29 +84,5 @@ MC {{ mod.version }}
 </div>
 
 </div>
-
-<script>
-
-const search = document.getElementById("search")
-
-search.addEventListener("keyup", function(){
-
-let value = search.value.toLowerCase()
-
-let cards = document.querySelectorAll(".mod-card")
-
-cards.forEach(card=>{
-
-if(card.innerText.toLowerCase().includes(value)){
-card.style.display = "block"
-}else{
-card.style.display = "none"
-}
-
-})
-
-})
-
-</script>
 
 {% endblock %}
