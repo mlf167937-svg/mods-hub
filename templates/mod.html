@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="hero">
+<h1>{{ mod.title }}</h1>
+<p>
+Minecraft Version: {{ mod.version }}
+</p>
+</div>
+
+<div class="card">
+
+<h2>Description</h2>
+
+<p>
+{{ mod.desc }}
+</p>
+
+<a class="btn" href="/download/{{ mod.file }}">
+⬇ Download File
+</a>
+
+</div>
+
+{% endblock %}

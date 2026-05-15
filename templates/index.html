@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="hero">
+<h1>🎮 Minecraft Mods Hub</h1>
+<p>
+Download mods, shaders, texture packs, and tools.
+</p>
+</div>
+
+<div class="grid">
+
+{% for mod in mods %}
+
+<div class="card">
+
+<div class="badge">
+MC {{ mod.version }}
+</div>
+
+<h2>{{ mod.title }}</h2>
+
+<p>
+{{ mod.desc }}
+</p>
+
+<a class="btn" href="/mod/{{ mod.file }}">
+📦 View Download
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
