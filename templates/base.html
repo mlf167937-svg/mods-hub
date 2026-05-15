@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{{ title if title else 'Rauf Mods Hub' }}</title>
+
+<title>{{ title if title else 'RexCraft Hub' }}</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -10,6 +12,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+scroll-behavior:smooth;
 }
 
 body{
@@ -20,16 +23,26 @@ color:white;
 min-height:100vh;
 }
 
+/* NAVBAR */
+
 .nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
+
 padding:18px 30px;
+
 background:rgba(15,23,42,0.8);
+
 backdrop-filter:blur(10px);
+
 position:sticky;
 top:0;
+
 z-index:999;
+
+border-bottom:
+1px solid rgba(255,255,255,0.05);
 }
 
 .logo{
@@ -42,8 +55,11 @@ color:#22c55e;
 text-decoration:none;
 color:white;
 margin-left:15px;
+
 padding:10px 14px;
+
 border-radius:12px;
+
 transition:0.3s;
 }
 
@@ -52,144 +68,61 @@ background:#22c55e;
 color:black;
 }
 
+/* CONTAINER */
+
 .container{
-max-width:1200px;
+max-width:1400px;
 margin:auto;
 padding:30px;
 }
 
-.hero{
+/* LAYOUT */
+
+.layout{
+display:flex;
+gap:25px;
+align-items:flex-start;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:250px;
+
 background:
-linear-gradient(
-135deg,
-rgba(34,197,94,0.15),
-rgba(255,255,255,0.03)
-);
+rgba(15,23,42,0.9);
 
-padding:60px 30px;
-text-align:center;
-border-radius:30px;
-margin-bottom:30px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
+padding:20px;
+
+border-radius:25px;
+
+position:sticky;
+top:100px;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.4);
 }
 
-.hero h1{
-font-size:50px;
-margin-bottom:10px;
-}
-
-.hero p{
-color:#cbd5e1;
+.sidebar h2{
+margin-bottom:15px;
+color:#22c55e;
 font-size:18px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-}
+.sidebar a{
+display:block;
 
-.card{
-background:rgba(15,23,42,0.8);
-padding:20px;
-border-radius:25px;
-backdrop-filter:blur(10px);
-transition:0.3s;
-box-shadow:0 10px 25px rgba(0,0,0,0.4);
-}
-
-.card:hover{
-transform:translateY(-6px);
-}
-
-.card h2{
-margin-bottom:10px;
-color:#22c55e;
-}
-
-.badge{
-display:inline-block;
-padding:6px 12px;
-border-radius:999px;
-background:#22c55e;
-color:black;
-font-size:13px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-.btn{
-display:inline-block;
-padding:12px 18px;
-border-radius:14px;
-background:linear-gradient(135deg,#22c55e,#16a34a);
 text-decoration:none;
-color:black;
-font-weight:bold;
-margin-top:15px;
+
+color:#cbd5e1;
+
+padding:10px 12px;
+
+border-radius:12px;
+
+margin-bottom:10px;
+
 transition:0.3s;
 }
 
-.btn:hover{
-transform:scale(1.04);
-}
-
-input,textarea{
-width:100%;
-padding:14px;
-margin-top:12px;
-border:none;
-border-radius:14px;
-background:#111827;
-color:white;
-}
-
-.watermark{
-position:fixed;
-bottom:10px;
-right:15px;
-color:rgba(255,255,255,0.15);
-font-size:12px;
-pointer-events:none;
-}
-
-@media(max-width:700px){
-
-.hero h1{
-font-size:34px;
-}
-
-.nav{
-flex-direction:column;
-gap:15px;
-}
-
-}
-
-</style>
-</head>
-<body>
-
-<div class="nav">
-
-<div class="logo">
-⛏️ Rauf Mods Hub
-</div>
-
-<div>
-<a href="/">Home</a>
-<a href="/upload">Upload</a>
-</div>
-
-</div>
-
-<div class="container">
-{% block content %}{% endblock %}
-</div>
-
-<div class="watermark">
-⚡ Website by Rauf Faris
-</div>
-
-</body>
-</html>
+.sidebar a:hover{
