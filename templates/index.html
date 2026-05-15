@@ -3,36 +3,34 @@
 {% block content %}
 
 <div class="hero">
-<h1>🎮 Minecraft Mods Hub</h1>
-<p>
-Download mods, shaders, texture packs, and tools.
-</p>
+    <h1>🎮 RexCraft Mods Hub</h1>
+    <p>
+        Pusat download modifikasi Minecraft terbaik. Temukan Mods, Shaders, Texture Packs, dan Tools favoritmu di sini.
+    </p>
 </div>
 
 <div class="grid">
-
-{% for mod in mods %}
-
-<div class="card">
-
-<div class="badge">
-MC {{ mod.version }}
-</div>
-
-<h2>{{ mod.title }}</h2>
-
-<p>
-{{ mod.desc }}
-</p>
-
-<a class="btn" href="/mod/{{ mod.file }}">
-📦 View Download
-</a>
-
-</div>
-
-{% endfor %}
-
+    {% for mod in mods %}
+    <div class="card">
+        <div>
+            <div class="badge">
+                MC {{ mod.version }}
+            </div>
+            <h2>{{ mod.title }}</h2>
+            <p>
+                {{ mod.desc }}
+            </p>
+        </div>
+        <a class="btn" href="/mod/{{ mod.file }}">
+            📦 View Details
+        </a>
+    </div>
+    {% else %}
+    <div class="card" style="grid-column: 1/-1; text-align: center; padding: 50px;">
+        <h2 style="color: #64748b;">Belum ada mod yang diupload.</h2>
+        <p style="margin-bottom: 0;">Silakan klik menu Upload di atas untuk menambahkan mod pertama!</p>
+    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}
