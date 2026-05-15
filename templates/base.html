@@ -1,128 +1,284 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else 'RexCraft Mods - Minecraft Hub' }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
-<title>{{ title if title else 'RexCraft Hub' }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        body {
+            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-<style>
+        /* Navbar Transparan Keren (Glassmorphism) */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-scroll-behavior:smooth;
-}
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #22c55e;
+            text-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+            letter-spacing: -0.5px;
+        }
 
-body{
-font-family:sans-serif;
-background:
-linear-gradient(135deg,#020617,#0f172a);
-color:white;
-min-height:100vh;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
 
-/* NAVBAR */
+        .nav-links a:hover {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
 
-.nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
 
-padding:18px 30px;
+        /* Hero Banner Utama (Tempat banner.jpg berada) */
+        .hero-banner {
+            position: relative;
+            height: 380px;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
 
-background:rgba(15,23,42,0.8);
+        /* Efek Animasi Bergerak / Berjalan Otomatis pada Gambar Banner */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/static/img/banner.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            /* Efek zoom-in-out & pergeseran lambat selama 20 detik */
+            animation: bannerBerjalan 20s infinite alternate ease-in-out;
+        }
 
-backdrop-filter:blur(10px);
+        @keyframes bannerBerjalan {
+            0% {
+                transform: scale(1) translate(0px, 0px);
+            }
+            100% {
+                transform: scale(1.15) translate(-10px, -10px);
+            }
+        }
 
-position:sticky;
-top:0;
+        /* Lapisan Kegelapan Gradasi agar Teks di Atas Banner Sangat Jelas Dibaca */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.85) 100%);
+            z-index: 2;
+        }
 
-z-index:999;
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 700px;
+        }
 
-border-bottom:
-1px solid rgba(255,255,255,0.05);
-}
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #ffffff, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
 
-.logo{
-font-size:24px;
-font-weight:bold;
-color:#22c55e;
-}
+        .hero-content p {
+            color: #cbd5e1;
+            font-size: 18px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
 
-.nav a{
-text-decoration:none;
-color:white;
-margin-left:15px;
+        /* Tombol Filter Kategori (Java & MCPE) */
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 24px;
+            border-radius: 14px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-padding:10px 14px;
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+        }
 
-border-radius:12px;
+        .filter-btn.active {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: black;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+        }
 
-transition:0.3s;
-}
+        /* Grid System dan Desain Kartu Mod */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
 
-.nav a:hover{
-background:#22c55e;
-color:black;
-}
+        .card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 24px;
+            backdrop-filter: blur(8px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-/* CONTAINER */
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(34, 197, 94, 0.4);
+            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.15);
+        }
 
-.container{
-max-width:1400px;
-margin:auto;
-padding:30px;
-}
+        .card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
 
-/* LAYOUT */
+        .card:hover h2 {
+            color: #22c55e;
+        }
 
-.layout{
-display:flex;
-gap:25px;
-align-items:flex-start;
-}
+        .card p {
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
 
-/* SIDEBAR */
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
 
-.sidebar{
-width:250px;
+        /* Tombol View Download Premium */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 24px;
+            border-radius: 16px;
+            background: #22c55e;
+            text-decoration: none;
+            color: #020617;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
 
-background:
-rgba(15,23,42,0.9);
+        .btn:hover {
+            background: #16a34a;
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+            transform: translateY(-2px);
+        }
 
-padding:20px;
+        /* Tanda Penanda Watermark Bawah */
+        .watermark {
+            position: fixed;
+            bottom: 15px;
+            right: 20px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 6px 12px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            pointer-events: none;
+        }
 
-border-radius:25px;
+        /* Optimalisasi untuk Layar Handphone */
+        @media (max-width: 768px) {
+            .hero-banner { height: 280px; }
+            .hero-content h1 { font-size: 32px; }
+            .nav { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
 
-position:sticky;
-top:100px;
+<div class="nav">
+    <div class="logo">🟢 RexCraft Mods</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+    </div>
+</div>
 
-box-shadow:
-0 10px 25px rgba(0,0,0,0.4);
-}
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
 
-.sidebar h2{
-margin-bottom:15px;
-color:#22c55e;
-font-size:18px;
-}
+<div class="watermark">⚡ Official RexCraft Web</div>
 
-.sidebar a{
-display:block;
-
-text-decoration:none;
-
-color:#cbd5e1;
-
-padding:10px 12px;
-
-border-radius:12px;
-
-margin-bottom:10px;
-
-transition:0.3s;
-}
-
-.sidebar a:hover{
+</body>
+</html>
