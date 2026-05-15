@@ -2,33 +2,29 @@
 
 {% block content %}
 
-<div class="hero">
-    <h1>🎮 RexCraft Mods Hub</h1>
-    <p>
-        Pusat download modifikasi Minecraft terbaik. Temukan Mods, Shaders, Texture Packs, dan Tools favoritmu di sini.
-    </p>
+<div class="hero-banner">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>🎮 RexCraft Mods Hub</h1>
+        <p>Pusat download modifikasi Minecraft terbaik. Temukan Shaders, Mods, dan Pack keren buatan GitHub di sini.</p>
+    </div>
 </div>
 
 <div class="grid">
     {% for mod in mods %}
     <div class="card">
         <div>
-            <div class="badge">
-                MC {{ mod.version }}
-            </div>
+            <div class="badge">MC {{ mod.version }}</div>
             <h2>{{ mod.title }}</h2>
-            <p>
-                {{ mod.desc }}
-            </p>
+            <p>{{ mod.desc }}</p>
         </div>
-        <a class="btn" href="/mod/{{ mod.file }}">
-            📦 View Details
-        </a>
+        <a class="btn" href="/mod/{{ mod.file }}">📦 View Download</a>
     </div>
     {% else %}
     <div class="card" style="grid-column: 1/-1; text-align: center; padding: 50px;">
-        <h2 style="color: #64748b;">Belum ada mod yang diupload.</h2>
-        <p style="margin-bottom: 0;">Silakan klik menu Upload di atas untuk menambahkan mod pertama!</p>
+        <h2 style="color: #64748b;">Belum ada mod di folder uploads.</h2>
+        <p style="margin-bottom: 0; color: #94a3b8;">Masukkan file mod kamu ke folder <strong>static/uploads/</strong> di GitHub agar langsung muncul di sini!</p>
     </div>
     {% endfor %}
 </div>
