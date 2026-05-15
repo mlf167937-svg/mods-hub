@@ -2,28 +2,28 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title if title else 'RexCraft Mods - Minecraft Hub' }}</title>
+    <title>{{ title if title else 'RexCraft Mods' }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Variabel Warna Tema Utama (Default Hijau) */
+        /* Default Tema Hijau */
         :root {
             --neon-color: #22c55e;
-            --neon-glow: rgba(34, 197, 94, 0.4);
+            --neon-glow: rgba(34, 197, 94, 0.3);
             --bg-gradient: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
         }
 
-        /* Variabel Tema Ungu Cyberpunk */
+        /* Tema Ungu Cyberpunk */
         [data-theme="cyberpunk"] {
             --neon-color: #a855f7;
-            --neon-glow: rgba(168, 85, 247, 0.4);
+            --neon-glow: rgba(168, 85, 247, 0.3);
         }
 
-        /* Variabel Tema Biru Aurora */
+        /* Tema Biru Aurora */
         [data-theme="aurora"] {
             --neon-color: #06b6d4;
-            --neon-glow: rgba(6, 182, 212, 0.4);
+            --neon-glow: rgba(6, 182, 212, 0.3);
         }
 
         * {
@@ -37,59 +37,57 @@
             background: var(--bg-gradient);
             color: #f8fafc;
             min-height: 100vh;
-            overflow-x: hidden;
-            transition: background 0.3s;
         }
 
-        /* Navbar dengan Pengaturan di Pojok Kiri Atas */
+        /* Navbar Pas - Tidak Kegedean */
         .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            padding: 12px 24px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: sticky;
             top: 0;
             z-index: 999;
         }
 
-        /* Menu Dropdown Pengaturan */
+        /* Ukuran Tombol Pengaturan Diperkecil & Lebih Pas */
         .settings-container {
             position: relative;
-            display: inline-block;
         }
 
         .settings-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px 16px;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            padding: 6px 12px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s;
+            font-size: 13px;
+            transition: all 0.2s;
         }
 
         .settings-btn:hover {
             border-color: var(--neon-color);
-            box-shadow: 0 0 10px var(--neon-glow);
+            color: white;
         }
 
+        /* Dropdown Ringkas Khusus Ganti Warna */
         .settings-dropdown {
             display: none;
             position: absolute;
-            top: 120%;
+            top: 130%;
             left: 0;
             background: #0f172a;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 220px;
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            min-width: 140px;
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             z-index: 1000;
         }
 
@@ -98,7 +96,7 @@
         }
 
         .settings-dropdown h4 {
-            font-size: 12px;
+            font-size: 11px;
             color: #64748b;
             text-transform: uppercase;
             margin-bottom: 8px;
@@ -107,81 +105,40 @@
 
         .theme-options {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 10px;
+            justify-content: center;
         }
 
         .theme-dot {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
             transition: transform 0.2s;
         }
 
-        .theme-dot:hover { transform: scale(1.15); }
+        .theme-dot:hover { transform: scale(1.1); }
         .theme-dot.active { border-color: white; }
 
-        .toggle-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #cbd5e1;
-        }
-
-        /* Switch Toggle */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-        }
-
-        .switch input { display: none; }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #334155;
-            transition: .4s;
-            border-radius: 20px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px; width: 14px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider { background-color: var(--neon-color); }
-        input:checked + .slider:before { transform: translateX(20px); }
-
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--neon-color);
-            text-shadow: 0 0 15px var(--neon-glow);
-            transition: color 0.3s;
+            text-shadow: 0 0 10px var(--neon-glow);
         }
 
         .container {
             max-width: 1200px;
             margin: auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
-        /* Hero Banner Utama */
+        /* Hero Banner */
         .hero-banner {
             position: relative;
-            height: 340px;
-            border-radius: 32px;
+            height: 300px;
+            border-radius: 24px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -189,9 +146,9 @@
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .hero-bg {
@@ -204,131 +161,143 @@
             animation: bannerBerjalan 20s infinite alternate ease-in-out;
         }
 
-        /* Class untuk mematikan animasi */
-        .hero-bg.no-anim {
-            animation: none !important;
-        }
-
         @keyframes bannerBerjalan {
-            0% { transform: scale(1) translate(0px, 0px); }
-            100% { transform: scale(1.12) translate(-8px, -8px); }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1) translate(-5px, -5px); }
         }
 
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.2) 0%, rgba(2, 6, 23, 0.85) 100%);
+            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.85) 100%);
             z-index: 2;
         }
 
-        .hero-content { position: relative; z-index: 3; max-width: 700px; }
-
+        .hero-content { position: relative; z-index: 3; max-width: 600px; }
         .hero-content h1 {
-            font-size: 44px;
+            font-size: 38px;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             background: linear-gradient(to right, #ffffff, var(--neon-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .hero-content p { color: #94a3b8; font-size: 15px; }
 
-        /* Kolom Pencarian / Search Bar UI Premium */
-        .search-wrapper {
-            position: relative;
-            max-width: 500px;
-            margin: 25px auto 0 auto;
-        }
-
+        .search-wrapper { position: relative; max-width: 450px; margin: 20px auto 0 auto; }
         .search-input {
             width: 100%;
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: rgba(15, 23, 42, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
             color: white;
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 14px;
             outline: none;
             transition: all 0.3s;
-            backdrop-filter: blur(8px);
         }
-
         .search-input:focus {
             border-color: var(--neon-color);
-            box-shadow: 0 0 15px var(--neon-glow);
-            background: #0f172a;
+            box-shadow: 0 0 10px var(--neon-glow);
         }
 
-        /* Grid & Cards */
+        /* 🛠️ REVISI TOMBOL FILTER: Bagus, Proporsional, Mengikuti Warna Tema */
+        .filter-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 20px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        /* Saat Aktif: Tombol Menyala Penuh Sesuai Tema */
+        .filter-btn.active {
+            background: var(--neon-color);
+            border-color: var(--neon-color);
+            color: #020617;
+            box-shadow: 0 0 12px var(--neon-glow);
+        }
+
+        /* Grid Cards */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background: rgba(30, 41, 59, 0.4);
+            background: rgba(30, 41, 59, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 24px;
-            backdrop-filter: blur(8px);
-            transition: all 0.4s ease;
+            padding: 25px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: all 0.3s ease;
         }
 
         .card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             border-color: var(--neon-color);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
         }
 
-        .card h2 { font-size: 22px; color: #ffffff; margin-bottom: 12px; }
+        .card h2 { font-size: 20px; color: #ffffff; margin-bottom: 10px; }
         .card:hover h2 { color: var(--neon-color); }
-        .card p { color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+        .card p { color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
 
         .badge {
             display: inline-block;
-            padding: 6px 14px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.08);
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #94a3b8;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 14px 24px;
-            border-radius: 16px;
+            padding: 12px 20px;
+            border-radius: 12px;
             background: var(--neon-color);
             text-decoration: none;
             color: #020617;
             font-weight: 700;
-            transition: all 0.3s ease;
+            font-size: 14px;
             width: 100%;
+            transition: transform 0.2s;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
+        .btn:hover { transform: translateY(-1px); }
 
         .watermark {
             position: fixed;
             bottom: 15px;
             right: 20px;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 13px;
-            font-weight: 600;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 12px;
             background: rgba(15, 23, 42, 0.6);
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 4px 10px;
+            border-radius: 6px;
             pointer-events: none;
         }
     </style>
@@ -337,75 +306,3 @@
 
 <div class="nav">
     <div class="settings-container">
-        <button class="settings-btn" onclick="toggleSettings()">⚙️ Pengaturan</button>
-        <div class="settings-dropdown" id="settingsDropdown">
-            <h4>Pilih Tema Neon</h4>
-            <div class="theme-options">
-                <div class="theme-dot active" style="background: #22c55e;" onclick="changeTheme('default', this)"></div>
-                <div class="theme-dot" style="background: #a855f7;" onclick="changeTheme('cyberpunk', this)"></div>
-                <div class="theme-dot" style="background: #06b6d4;" onclick="changeTheme('aurora', this)"></div>
-            </div>
-            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 12px 0;">
-            <div class="toggle-container">
-                <span>Mode Hemat Kuota</span>
-                <label class="switch">
-                    <input type="checkbox" id="animToggle" onchange="toggleAnimation(this)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <div class="logo">🟢 RexCraft Mods</div>
-</div>
-
-<div class="container">
-    {% block content %}{% endblock %}
-</div>
-
-<div class="watermark">⚡ Official RexCraft Web</div>
-
-<script>
-function toggleSettings() {
-    document.getElementById('settingsDropdown').classList.toggle('show');
-}
-
-// Menutup dropdown jika user klik di luar area menu pengaturan
-window.onclick = function(event) {
-    if (!event.target.matches('.settings-btn')) {
-        let dropdowns = document.getElementsByClassName("settings-dropdown");
-        for (let i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-}
-
-function changeTheme(themeName, element) {
-    if(themeName === 'default') {
-        document.documentElement.removeAttribute('data-theme');
-    } else {
-        document.documentElement.setAttribute('data-theme', themeName);
-    }
-    
-    let dots = document.querySelectorAll('.theme-dot');
-    dots.forEach(dot => dot.classList.remove('active'));
-    element.classList.add('active');
-}
-
-function toggleAnimation(checkbox) {
-    let bannerBg = document.querySelector('.hero-bg');
-    if(bannerBg) {
-        if(checkbox.checked) {
-            bannerBg.classList.add('no-anim');
-        } else {
-            bannerBg.classList.remove('no-anim');
-        }
-    }
-}
-</script>
-
-</body>
-</html>
