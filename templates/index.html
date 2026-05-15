@@ -2,31 +2,204 @@
 
 {% block content %}
 
-<div class="hero-banner">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>🎮 RexCraft Mods Hub</h1>
-        <p>Pusat Download Mods racikan custom, shaders, dan texture pack java maupun bedrock.</p>
-    </div>
+<div class="hero">
+
+<h1>🎮 RexCraft Mods Hub</h1>
+
+<p>
+Download Minecraft mods, shaders, texture packs and addons.
+</p>
+
+</div>
+
+<!-- PILIHAN VERSION -->
+
+<div class="grid">
+
+<div class="card">
+
+<h2>☕ Java Edition</h2>
+
+<p>
+Mods, shaders, texture packs for Minecraft Java.
+</p>
+
+<a class="btn" href="#java">
+Open Java
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>📱 Bedrock Edition</h2>
+
+<p>
+Addon, shaders, texture packs for Minecraft Bedrock.
+</p>
+
+<a class="btn" href="#bedrock">
+Open Bedrock
+</a>
+
+</div>
+
+</div>
+
+<br><br>
+
+<!-- JAVA -->
+
+<div class="hero" id="java">
+
+<h1>☕ Java Edition</h1>
+
+<p>
+Shaders, Mods and Texture Packs
+</p>
+
 </div>
 
 <div class="grid">
-    {% for mod in mods %}
-    <div class="card">
-        <div>
-            <div class="badge">MC {{ mod.version }}</div>
-            <h2>{{ mod.title }}</h2>
-            <p>{{ mod.desc }}</p>
-        </div>
-        <a class="btn" href="/mod/{{ mod.file }}">📦 View Download</a>
-    </div>
-    {% else %}
-    <div class="card" style="grid-column: 1/-1; text-align: center; padding: 50px;">
-        <h2 style="color: #64748b;">Belum ada mod di folder uploads.</h2>
-        <p style="margin-bottom: 0; color: #94a3b8;">Masukkan file mod kamu ke folder <strong>static/uploads/</strong> di GitHub agar langsung muncul di sini!</p>
-    </div>
-    {% endfor %}
+
+<div class="card">
+
+<h2>✨ Shaders</h2>
+
+<p>
+Beautiful shaders for Java Edition.
+</p>
+
+<a class="btn">
+View
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>🎨 Texture Pack</h2>
+
+<p>
+HD and FPS boost texture packs.
+</p>
+
+<a class="btn">
+View
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>⚙ Mods</h2>
+
+<p>
+Best mods collection.
+</p>
+
+<a class="btn">
+View
+</a>
+
+</div>
+
+</div>
+
+<br><br>
+
+<!-- BEDROCK -->
+
+<div class="hero" id="bedrock">
+
+<h1>📱 Bedrock Edition</h1>
+
+<p>
+Shaders, Texture Packs and Addons
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h2>✨ Shaders</h2>
+
+<p>
+Shaders for MCPE and Bedrock.
+</p>
+
+<a class="btn">
+View
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>🎨 Texture Pack</h2>
+
+<p>
+Texture packs for Bedrock Edition.
+</p>
+
+<a class="btn">
+View
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>🧩 Addons</h2>
+
+<p>
+Cool addons and behavior packs.
+</p>
+
+<a class="btn">
+View
+</a>
+
+</div>
+
+</div>
+
+<br><br>
+
+<!-- MOD LIST -->
+
+<div class="hero">
+
+<h1>📦 Latest Uploads</h1>
+
+</div>
+
+<div class="grid">
+
+{% for mod in mods %}
+
+<div class="card">
+
+<div class="badge">
+MC {{ mod.version }}
+</div>
+
+<h2>{{ mod.title }}</h2>
+
+<p>
+{{ mod.desc }}
+</p>
+
+<a class="btn" href="/mod/{{ mod.file }}">
+📥 Download
+</a>
+
+</div>
+
+{% endfor %}
+
 </div>
 
 {% endblock %}
