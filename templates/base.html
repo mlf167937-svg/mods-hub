@@ -1,252 +1,195 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{{ title if title else 'RexCraft Mods - Minecraft Hub' }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<title>{{ title if title else 'Rauf Mods Hub' }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+<style>
 
-        body {
-            background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
-            color: #f8fafc;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
+body{
+font-family:sans-serif;
+background:
+linear-gradient(135deg,#020617,#0f172a);
+color:white;
+min-height:100vh;
+}
 
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            color: #22c55e;
-            text-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
-            letter-spacing: -0.5px;
-        }
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 30px;
+background:rgba(15,23,42,0.8);
+backdrop-filter:blur(10px);
+position:sticky;
+top:0;
+z-index:999;
+}
 
-        .nav-links a {
-            text-decoration: none;
-            color: #94a3b8;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
+.logo{
+font-size:24px;
+font-weight:bold;
+color:#22c55e;
+}
 
-        .nav-links a:hover {
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
-        }
+.nav a{
+text-decoration:none;
+color:white;
+margin-left:15px;
+padding:10px 14px;
+border-radius:12px;
+transition:0.3s;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 40px 20px;
-        }
+.nav a:hover{
+background:#22c55e;
+color:black;
+}
 
-        /* Hero Banner Utama dengan Background banner.jpg Berjalan */
-        .hero-banner {
-            position: relative;
-            height: 380px;
-            border-radius: 32px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(34, 197, 94, 0.2);
-        }
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px;
+}
 
-        /* Efek Animasi Bergerak/Berjalan pada Gambar Banner */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('/static/img/banner.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-            /* Animasi zoom & geser perlahan (berjalan otomatis) */
-            animation: bannerBerjalan 20s infinite alternate ease-in-out;
-        }
+.hero{
+background:
+linear-gradient(
+135deg,
+rgba(34,197,94,0.15),
+rgba(255,255,255,0.03)
+);
 
-        @keyframes bannerBerjalan {
-            0% {
-                transform: scale(1) translate(0px, 0px);
-            }
-            100% {
-                transform: scale(1.15) translate(-10px, -10px);
-            }
-        }
+padding:60px 30px;
+text-align:center;
+border-radius:30px;
+margin-bottom:30px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
 
-        /* Lapisan Gelap di atas banner agar teks gampang dibaca */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(2, 6, 23, 0.3) 0%, rgba(2, 6, 23, 0.85) 100%);
-            z-index: 2;
-        }
+.hero h1{
+font-size:50px;
+margin-bottom:10px;
+}
 
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            max-width: 700px;
-        }
+.hero p{
+color:#cbd5e1;
+font-size:18px;
+}
 
-        .hero-content h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-            background: linear-gradient(to right, #ffffff, #22c55e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        }
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
 
-        .hero-content p {
-            color: #cbd5e1;
-            font-size: 18px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        }
+.card{
+background:rgba(15,23,42,0.8);
+padding:20px;
+border-radius:25px;
+backdrop-filter:blur(10px);
+transition:0.3s;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
 
-        /* Grid System & Cards */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
+.card:hover{
+transform:translateY(-6px);
+}
 
-        .card {
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 30px;
-            border-radius: 24px;
-            backdrop-filter: blur(8px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.card h2{
+margin-bottom:10px;
+color:#22c55e;
+}
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(34, 197, 94, 0.4);
-            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.1);
-        }
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:999px;
+background:#22c55e;
+color:black;
+font-size:13px;
+font-weight:bold;
+margin-bottom:12px;
+}
 
-        .card h2 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #ffffff;
-        }
+.btn{
+display:inline-block;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+text-decoration:none;
+color:black;
+font-weight:bold;
+margin-top:15px;
+transition:0.3s;
+}
 
-        .card:hover h2 {
-            color: #22c55e;
-        }
+.btn:hover{
+transform:scale(1.04);
+}
 
-        .card p {
-            color: #94a3b8;
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+input,textarea{
+width:100%;
+padding:14px;
+margin-top:12px;
+border:none;
+border-radius:14px;
+background:#111827;
+color:white;
+}
 
-        .badge {
-            align-self: flex-start;
-            padding: 6px 14px;
-            border-radius: 999px;
-            background: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
+.watermark{
+position:fixed;
+bottom:10px;
+right:15px;
+color:rgba(255,255,255,0.15);
+font-size:12px;
+pointer-events:none;
+}
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 24px;
-            border-radius: 16px;
-            background: #22c55e;
-            text-decoration: none;
-            color: #020617;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
+@media(max-width:700px){
 
-        .btn:hover {
-            background: #16a34a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
-        }
+.hero h1{
+font-size:34px;
+}
 
-        .watermark {
-            position: fixed;
-            bottom: 15px;
-            right: 20px;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 13px;
-            font-weight: 600;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 6px 12px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
-        }
+.nav{
+flex-direction:column;
+gap:15px;
+}
 
-        @media (max-width: 768px) {
-            .hero-banner { height: 280px; }
-            .hero-content h1 { font-size: 32px; }
-            .nav { padding: 20px; }
-        }
-    </style>
+}
+
+</style>
 </head>
 <body>
 
 <div class="nav">
-    <div class="logo">🟢 RexCraft Mods</div>
-    <div class="nav-links">
-        <a href="/">Home</a>
-    </div>
+
+<div class="logo">
+⛏️ Rauf Mods Hub
+</div>
+
+<div>
+<a href="/">Home</a>
+<a href="/upload">Upload</a>
+</div>
+
 </div>
 
 <div class="container">
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 </div>
 
-<div class="watermark">⚡ Official RexCraft Web</div>
+<div class="watermark">
+⚡ Website by Rauf Faris
+</div>
 
 </body>
 </html>
