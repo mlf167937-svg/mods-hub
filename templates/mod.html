@@ -1,7 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="hero">
+
+<h1>
+📦 {{ mod.title }}
+</h1>
+
+<p>
+Version: {{ mod.version }}
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+About File
+</h2>
+
+<br>
+
+<p>
+{{ mod.desc }}
+</p>
+
+<br>
+
 <p>
 📦 Size: {{ mod.size }}
 </p>
 
+<br>
+
+<p>
+🎮 Category: {{ mod.category.upper() }}
+</p>
+
+<br>
+
 <a class="btn" href="/download/{{ mod.category }}/{{ mod.file }}">
-    ⬇ Download File
+
+⬇ Download File
+
 </a>
+
+</div>
+
+{% endblock %}
