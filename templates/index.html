@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="filter-container" style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;">
+<div class="filter-container" style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
     <button class="filter-btn active" id="btn-all" onclick="setSubCategory('all', 'all', this)">🌍 Semua Berkas</button>
     <button class="filter-btn" onclick="setSubCategory('java', 'all', this)">☕ Java Edition</button>
     <button class="filter-btn" onclick="setSubCategory('mcpe', 'all', this)">📱 Bedrock / MCPE</button>
@@ -44,7 +44,7 @@
     {% for mod in mods %}
     <div class="card mod-item platform-{{ mod.category }}" data-folder-id="{{ mod.id|lower }}">
         <div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom: 4px;">
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom: 8px;">
                 <div class="badge" style="border-color: var(--neon-color); color: var(--neon-color); background: transparent;">
                     {{ mod.category.upper() }}
                 </div>
@@ -56,7 +56,7 @@
                 </div>
             </div>
             
-            <h2 class="mod-title">{{ mod.title }}</h2>
+            <h2 class="mod-title" style="margin-top: 5px;">{{ mod.title }}</h2>
             <p>{{ mod.desc }}</p>
         </div>
         
@@ -64,7 +64,7 @@
     </div>
     {% else %}
     <div class="card" style="grid-column:1/-1; text-align:center; padding:40px;">
-        <h2 style="color:#64748b;">Belum ada folder mod di GitHub Bos.</h2>
+        <h2 style="color:#64748b;">Belum ada folder mod yang terdeteksi di GitHub Bos.</h2>
     </div>
     {% endfor %}
 </div>
@@ -73,6 +73,7 @@
 let currentCategory = 'all';
 let currentSub = 'all';
 
+// Fungsi untuk membuka dan menutup laci Advance Filter saat diklik
 function toggleSettingsFilter() {
     const filterBox = document.getElementById('settingsFilterBox');
     if(filterBox.style.display === 'none') {
@@ -82,6 +83,7 @@ function toggleSettingsFilter() {
     }
 }
 
+// Menentukan sub-kategori aktif dan mengubah status warna tombol aktif
 function setSubCategory(cat, sub, element) {
     let buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
@@ -92,6 +94,7 @@ function setSubCategory(cat, sub, element) {
     searchAndFilter();
 }
 
+// Inti mesin pencarian dan penyaringan filter pintar
 function searchAndFilter() {
     let keyword = document.getElementById('searchBox').value.toLowerCase();
     let items = document.querySelectorAll('.mod-item');
@@ -100,19 +103,37 @@ function searchAndFilter() {
         let title = item.querySelector('.mod-title').innerText.toLowerCase();
         let folderId = item.getAttribute('data-folder-id');
         
+        // 1. Validasi Kategori Utama (All, Java, atau MCPE)
         let matchCategory = (currentCategory === 'all' || item.classList.contains('platform-' + currentCategory));
         
+        // 2. Validasi Sub-Kategori Spesifik (Mendukung Multi Kata Kunci Alternatif)
         let matchSub = false;
         if (currentSub === 'all') {
             matchSub = true;
-        } else {
-            if (folderId.includes(currentSub)) {
+        } else if (currentSub === 'texture') {
+            // Lolos jika nama folder mengandung texture, pack, resource, atau folder andalan Bos 'bare_bones'
+            if (folderId.includes('texture') || folderId.includes('pack') || folderId.includes('resource') || folderId.includes('bare_bones')) {
+                matchSub = true;
+            }
+        } else if (currentSub === 'shader') {
+            if (folderId.includes('shader') || folderId.includes('shaders')) {
+                matchSub = true;
+            }
+        } else if (currentSub === 'mod_racikan') {
+            // Lolos jika mengandung mod, mods, atau racikan (Mengatasi komplain kartu hilang kemarin!)
+            if (folderId.includes('mod') || folderId.includes('mods') || folderId.includes('racikan')) {
+                matchSub = true;
+            }
+        } else if (currentSub === 'map') {
+            if (folderId.includes('map') || folderId.includes('maps') || folderId.includes('world')) {
                 matchSub = true;
             }
         }
         
+        // 3. Validasi Teks Kolom Pencarian
         let matchKeyword = title.includes(keyword);
         
+        // Eksekusi Akhir: Kartu hanya muncul jika lolos ketiga syarat di atas
         if (matchCategory && matchSub && matchKeyword) {
             item.style.display = 'flex';
         } else {
