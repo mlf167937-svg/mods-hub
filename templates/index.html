@@ -133,27 +133,28 @@
         }
         .rex-search-field:focus { border-color: #22c55e; }
 
-        /* ==================== FILTERS GRID ==================== */
+        /* ==================== BUTTONS FILTER (UKURAN LEBIH KECIL) ==================== */
         .filter-buttons-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr); /* Menjadi 4 kolom sejajar berjejer rapi */
+            gap: 8px; /* Jarak antar tombol agak dirapatkan */
             margin-bottom: 25px;
         }
         .filter-btn {
             background: #141b2d;
             border: 1px solid #1e293b;
             color: #94a3b8;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 8px 4px; /* Padding vertikal & horizontal diperkecil */
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 11px; /* Ukuran teks diperkecil dari 13px ke 11px */
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 4px;
             transition: 0.2s;
+            white-space: nowrap; /* Teks tidak akan kepotong/turun kebawah */
         }
         .filter-btn:hover { background: #1e293b; color: #fff; }
         .filter-btn.active-filter {
@@ -173,7 +174,7 @@
             border-color: #38bdf8;
         }
 
-        /* ==================== MODS CARD LAYOUT (SIDE-BY-SIDE) ==================== */
+        /* ==================== MODS CARD LAYOUT ==================== */
         .mods-grid-container { 
             display: flex; 
             flex-direction: column; 
@@ -222,7 +223,7 @@
         .mod-card-title { font-size: 22px; color: #fff; font-weight: 700; margin: 0 0 6px 0; line-height: 1.2; }
         .mod-card-desc { color: #94a3b8; font-size: 13px; margin: 0 0 18px 0; line-height: 1.5; }
         
-        /* MODRINTH STYLE TRIGGER BUTTON */
+        /* VIEW DOWNLOAD LINK BUTTON (DIUBAH KEMBALI JADI LINK KE HALAMAN WEB DETAIL) */
         .action-view-btn { 
             background: #22c55e; 
             color: #fff; 
@@ -244,12 +245,12 @@
         }
         .action-view-btn:hover { background: #16a34a; }
 
-        /* ==================== MODRINTH DOWNLOAD MODAL SYSTEM ==================== */
+        /* ==================== INTERFACE ADVANCE FILTER MODAL ==================== */
         .rex-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(6px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -258,86 +259,43 @@
             box-sizing: border-box;
         }
         .rex-modal-box {
-            background: #1c1e1f; /* Warna Gelap Modrinth */
-            border: 1px solid #2d3134;
+            background: #0f172a;
+            border: 1px solid #334155;
             border-radius: 16px;
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             padding: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
-            animation: modrinthSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            animation: popSlide 0.25s ease-out;
             box-sizing: border-box;
         }
-        @keyframes modrinthSlideUp { 
-            from { transform: translateY(30px); opacity: 0; } 
-            to { transform: translateY(0); opacity: 1; } 
-        }
+        @keyframes popSlide { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
-        .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .modal-title i { color: #00af5c; }
-        .modal-close-x { background: #2d3134; border: none; color: #a1a1aa; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .modal-close-x:hover { color: #fff; background: #3e4448; }
+        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-title { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .modal-close-x { background: none; border: none; color: #64748b; font-size: 20px; cursor: pointer; }
+        .modal-close-x:hover { color: #fff; }
 
-        /* MODRINTH INPUT SELECT BLOCK */
-        .modrinth-select-block {
-            background: #242628;
-            border: 1px solid #2d3134;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+        .filter-select-group { margin-bottom: 16px; }
+        .filter-select-group label { display: block; font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; text-transform: uppercase; }
+        .rex-dropdown { width: 100%; background: #0b0f19; border: 1px solid #334155; border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; outline: none; cursor: pointer; }
+        
+        .btn-apply-advance {
+            background: #22c55e; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .modrinth-select-block label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #a1a1aa;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .modrinth-dropdown {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 15px;
-            font-weight: 600;
-            outline: none;
-            cursor: pointer;
-            padding-right: 10px;
-        }
-        .modrinth-dropdown option {
-            background: #1c1e1f;
-            color: #fff;
-        }
+        .btn-apply-advance:hover { background: #16a34a; }
 
-        /* FINAL DOWNLOAD BUTTON */
-        .btn-modrinth-download {
-            background: #00af5c;
-            color: #fff;
-            width: 100%;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(0, 175, 92, 0.3);
-            transition: 0.2s;
-        }
-        .btn-modrinth-download:hover { background: #00c769; transform: translateY(-1px); }
-
+        /* RESPONSIVE LAYOUT MOBILE PHONE */
         @media (max-width: 600px) { 
-            .filter-buttons-grid { grid-template-columns: 1fr; }
+            /* Tombol filter tetap dipaksa berjejer 4 baris kecil di HP agar tidak melorot */
+            .filter-buttons-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+                gap: 4px;
+            }
+            .filter-btn {
+                font-size: 9px; /* Teks otomatis mengecil jadi 9px di HP biar muat */
+                padding: 6px 2px;
+            }
             .mod-card-item { padding: 16px; gap: 14px; }
         }
     </style>
@@ -360,7 +318,7 @@
             <h1 class="rex-hero-title">RexCraft Mods Hub</h1>
             <p class="rex-hero-subtitle">Cari berkas modifikasi Minecraft favoritmu dengan instan.</p>
             <a href="/tutorial" class="tutorial-alert-pill">📩 Bingung cara pasang mod? Klik panduan di sini!</a>
-            
+
             <div class="search-container-inside">
                 <i class="fas fa-search"></i>
                 <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod atau shader..." onkeyup="filterModsMaster()">
@@ -369,10 +327,18 @@
     </div>
 
     <div class="filter-buttons-grid">
-        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">🌏 Semua Berkas</button>
-        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">☕ Java Edition</button>
-        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">📱 Bedrock / MCPE</button>
-        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">⚙️ Advance Filter</button>
+        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
+            🌏 Semua
+        </button>
+        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
+            ☕ Java
+        </button>
+        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
+            📱 MCPE
+        </button>
+        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">
+            ⚙️ Advance
+        </button>
     </div>
 
     <div class="mods-grid-container" id="modsContainer">
@@ -403,14 +369,9 @@
                 <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
                 <p class="mod-card-desc">{{ mod.desc }}</p>
                 
-                <button class="action-view-btn" 
-                        data-mod-title="{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}"
-                        data-mod-category="{{ mod.category }}"
-                        data-mod-id="{{ mod.id }}"
-                        data-mod-files='{{ mod.files | tojson | safe }}'
-                        onclick="openModrinthDownload(this)">
+                <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
                     📦 View Download
-                </button>
+                </a>
             </div>
 
         </div>
@@ -421,50 +382,26 @@
         </div>
         {% endfor %}
     </div>
-</div>
 
-<div class="rex-modal-overlay" id="modrinthDownloadModal">
-    <div class="rex-modal-box">
-        <div class="modal-header-flex">
-            <div class="modal-title">
-                <i class="fas fa-cloud-download-alt"></i> <span id="modalModTitleName">Download Mod</span>
-            </div>
-            <button class="modal-close-x" onclick="closeModrinthDownload()"><i class="fas fa-times"></i></button>
-        </div>
-
-        <div class="modrinth-select-block">
-            <label><i class="fas fa-gamepad"></i> Select game version / engine</label>
-            <select id="modrinthFileSelect" class="modrinth-dropdown">
-                </select>
-        </div>
-
-        <p style="font-size: 12px; color: #a1a1aa; margin: -5px 0 20px 0; line-height: 1.4;">
-            *Pilih file loader dan versi Minecraft yang sesuai dengan platform client kamu untuk menghindari error crash game.
-        </p>
-
-        <button class="btn-modrinth-download" onclick="submitModrinthDownload()">
-            <i class="fas fa-download"></i> Download Now
-        </button>
-    </div>
 </div>
 
 <div class="rex-modal-overlay" id="advanceFilterModal">
-    <div class="rex-modal-box" style="background:#0f172a; border-color:#334155;">
+    <div class="rex-modal-box">
         <div class="modal-header-flex">
             <div class="modal-title"><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Filter Pencarian Spesifik</div>
             <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
         </div>
-        <div class="filter-select-group" style="margin-bottom:16px;">
-            <label style="display:block; font-size:11px; color:#94a3b8; margin-bottom:6px; text-transform:uppercase;">Game Version</label>
-            <select id="modalVersionSelect" class="modrinth-dropdown" style="background:#0b0f19; border:1px solid #334155; padding:12px; border-radius:8px;">
+        <div class="filter-select-group">
+            <label>Select Game Version</label>
+            <select id="modalVersionSelect" class="rex-dropdown">
                 <option value="all">Semua Versi (All Versions)</option>
                 <option value="1.21">Minecraft 1.21 / 1.21.1</option>
                 <option value="1.20">Minecraft 1.20+</option>
             </select>
         </div>
-        <div class="filter-select-group" style="margin-bottom:20px;">
-            <label style="display:block; font-size:11px; color:#94a3b8; margin-bottom:6px; text-transform:uppercase;">Platform & Type</label>
-            <select id="modalPlatformSelect" class="modrinth-dropdown" style="background:#0b0f19; border:1px solid #334155; padding:12px; border-radius:8px;">
+        <div class="filter-select-group">
+            <label>Select Platform & Type</label>
+            <select id="modalPlatformSelect" class="rex-dropdown">
                 <option value="all">Semua Jenis (All)</option>
                 <option value="java-racikan">Java mods racikan</option>
                 <option value="java-mods">Java mods</option>
@@ -477,90 +414,24 @@
                 <option value="mcpe-map">Mcpe map</option>
             </select>
         </div>
-        <button class="btn-modrinth-download" style="background:#22c55e; box-shadow:none;" onclick="applyAdvanceFilterAction()">
-            <i class="fas fa-check-circle"></i> Terapkan Filter
+        <button class="btn-apply-advance" onclick="applyAdvanceFilterAction()">
+            <i class="fas fa-check-circle"></i> Terapkan Filter Spesifik
         </button>
     </div>
 </div>
 
 <script>
 let currentCategory = 'all';
-let currentActiveModCategory = '';
-let currentActiveModId = '';
 
-// --- FUNGSI UTAMA POP-UP DOWNLOAD KUSTOM MODRINTH (FIXED) ---
-function openModrinthDownload(buttonElement) {
-    // Membaca data attribute HTML secara aman tanpa merusak tag string
-    const modTitle = buttonElement.getAttribute('data-mod-title');
-    currentActiveModCategory = buttonElement.getAttribute('data-mod-category');
-    currentActiveModId = buttonElement.getAttribute('data-mod-id');
-    const rawFiles = buttonElement.getAttribute('data-mod-files');
-    
-    document.getElementById('modalModTitleName').innerText = "Download " + modTitle;
-    
-    const dropdownSelect = document.getElementById('modrinthFileSelect');
-    dropdownSelect.innerHTML = ""; // Reset data opsi list di dalam pop-up
-
-    try {
-        const filesArray = JSON.parse(rawFiles);
-
-        if (filesArray && filesArray.length > 0) {
-            filesArray.forEach(file => {
-                const option = document.createElement('option');
-                option.value = file.filename;
-                
-                let labelText = "";
-                const nameLower = file.filename.toLowerCase();
-                
-                if (nameLower.includes('fabric')) {
-                    labelText = "✨ Fabric Engine - Versi " + file.version;
-                } else if (nameLower.includes('forge')) {
-                    labelText = "🛠️ Forge Engine - Versi " + file.version;
-                } else {
-                    labelText = "📦 Pack File - Versi " + file.version;
-                }
-                
-                option.innerText = labelText;
-                dropdownSelect.appendChild(option);
-            });
-        } else {
-            const option = document.createElement('option');
-            option.innerText = "Tidak ada berkas tersedia";
-            dropdownSelect.appendChild(option);
-        }
-    } catch (error) {
-        console.error("Gagal parsing JSON file mod:", error);
-        const option = document.createElement('option');
-        option.innerText = "Gagal memuat daftar berkas";
-        dropdownSelect.appendChild(option);
-    }
-
-    // Munculkan Pop-up ke layar
-    document.getElementById('modrinthDownloadModal').style.display = 'flex';
-}
-
-function closeModrinthDownload() {
-    document.getElementById('modrinthDownloadModal').style.display = 'none';
-}
-
-function submitModrinthDownload() {
-    const selectedFile = document.getElementById('modrinthFileSelect').value;
-    if (selectedFile && selectedFile !== "Tidak ada berkas tersedia" && selectedFile !== "Gagal memuat daftar berkas") {
-        window.location.href = "/download/" + currentActiveModCategory + "/" + currentActiveModId + "/" + selectedFile;
-        closeModrinthDownload();
-    } else {
-        alert("Maaf, file download tidak valid!");
-    }
-}
-
-// --- FUNGSI UTILITY SEARCH & FILTERS ---
 function openAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'flex'; }
 function closeAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'none'; }
 
 function setCategoryFilter(category, element) {
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active-filter'));
-    if (element) { element.classList.add('active-filter'); }
+    if (element && !element.classList.contains('btn-advance-filter')) {
+        element.classList.add('active-filter');
+    }
     currentCategory = category;
     filterModsMaster();
 }
@@ -571,15 +442,15 @@ function applyAdvanceFilterAction() {
     const cards = document.querySelectorAll('.mod-card-item');
 
     cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-        const cardTitle = card.getAttribute('data-title');
+        const cardCategory = card.getAttribute('data-category'); 
+        const cardTitle = card.getAttribute('data-title'); 
         const cardVersion = card.getAttribute('data-version');
 
         let matchPlatformAndType = false;
         if (selectedPlatform === 'all') { matchPlatformAndType = true; } else {
             const parts = selectedPlatform.split('-');
-            const reqPlatform = parts[0];
-            const reqKeyword = parts[1];
+            const reqPlatform = parts[0]; 
+            const reqKeyword = parts[1];  
             const basePlatformMatch = (cardCategory === reqPlatform);
             let keywordMatch = cardTitle.includes(reqKeyword);
             if (reqKeyword === 'addon') { keywordMatch = cardTitle.includes('addon') || cardTitle.includes('add-on'); }
@@ -603,12 +474,9 @@ function filterModsMaster() {
     });
 }
 
-// Klik luar kotak otomatis nutup pop-up
 window.onclick = function(event) {
-    const modal1 = document.getElementById('modrinthDownloadModal');
-    const modal2 = document.getElementById('advanceFilterModal');
-    if (event.target == modal1) { closeModrinthDownload(); }
-    if (event.target == modal2) { closeAdvanceModal(); }
+    const modal = document.getElementById('advanceFilterModal');
+    if (event.target == modal) { closeAdvanceModal(); }
 }
 </script>
 </body>
