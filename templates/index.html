@@ -18,16 +18,20 @@
     </div>
 </div>
 
-<div class="filter-container">
+<div class="filter-container" style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;">
     <button class="filter-btn active" id="btn-all" onclick="setSubCategory('all', 'all', this)">🌍 Semua Berkas</button>
     <button class="filter-btn" onclick="setSubCategory('java', 'all', this)">☕ Java Edition</button>
     <button class="filter-btn" onclick="setSubCategory('mcpe', 'all', this)">📱 Bedrock / MCPE</button>
+    
+    <button class="filter-btn" onclick="toggleSettingsFilter()" style="border-color: #64748b; color: #cbd5e1; background: rgba(30, 41, 59, 0.5);">
+        ⚙️ Advance Filter
+    </button>
 </div>
 
-<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 10px auto; max-width: 1200px; display: none;">
-    <h3 style="font-size: 14px; color: var(--neon-color); margin-bottom: 12px; font-weight: 700;">⚙️ Pengaturan Filter Spesifik</h3>
+<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 15px auto; max-width: 600px; display: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);">
+    <h3 style="font-size: 14px; color: var(--neon-color); margin-bottom: 12px; font-weight: 700; text-align: center;">⚙️ Pengaturan Filter Spesifik</h3>
     
-    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
         <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'texture', this)">📱 MCPE Texture Pack</button>
         <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'shader', this)">📱 MCPE Shaders</button>
         
@@ -36,7 +40,7 @@
     </div>
 </div>
 
-<div class="grid">
+<div class="grid" style="margin-top: 20px;">
     {% for mod in mods %}
     <div class="card mod-item platform-{{ mod.category }}" data-folder-id="{{ mod.id|lower }}">
         <div>
@@ -67,21 +71,7 @@
 
 <script>
 let currentCategory = 'all';
-let currentSub = 'all'; // Menyimpan filter sub-kategori (texture, shader, dll)
-
-// Fungsi otomatis untuk menghubungkan tombol Settings bawaan web dengan kotak filter ini
-document.addEventListener("DOMContentLoaded", function() {
-    // Cari tombol settings di pojok kiri atas web Bos
-    const settingsBtn = document.querySelector('a[href="/tutorial"]')?.parentElement?.querySelector('button') || document.querySelector('.btn-settings') || document.getElementsbyClassName('btn')[0];
-    
-    // Trik pemicu: Jika tombol settings diklik, menu filter rahasia di atas langsung terbuka/tertutup!
-    const allButtons = document.querySelectorAll('button, a');
-    allButtons.forEach(btn => {
-        if(btn.innerText.includes('Settings')) {
-            btn.setAttribute('onclick', 'toggleSettingsFilter()');
-        }
-    });
-});
+let currentSub = 'all';
 
 function toggleSettingsFilter() {
     const filterBox = document.getElementById('settingsFilterBox');
@@ -93,7 +83,6 @@ function toggleSettingsFilter() {
 }
 
 function setSubCategory(cat, sub, element) {
-    // Atur status aktif tombol
     let buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
@@ -111,24 +100,19 @@ function searchAndFilter() {
         let title = item.querySelector('.mod-title').innerText.toLowerCase();
         let folderId = item.getAttribute('data-folder-id');
         
-        // Cek kategori utama (All, Java, atau MCPE)
         let matchCategory = (currentCategory === 'all' || item.classList.contains('platform-' + currentCategory));
         
-        // Cek sub-kategori berdasarkan kata kunci di nama folder GitHub Bos
         let matchSub = false;
         if (currentSub === 'all') {
             matchSub = true;
         } else {
-            // Memeriksa isi id folder (Contoh: 'texture_bare_bones' mengandung kata 'texture')
             if (folderId.includes(currentSub)) {
                 matchSub = true;
             }
         }
         
-        // Cek kolom pencarian ketikan kata kunci
         let matchKeyword = title.includes(keyword);
         
-        // Tampilkan jika semua syarat terpenuhi
         if (matchCategory && matchSub && matchKeyword) {
             item.style.display = 'flex';
         } else {
