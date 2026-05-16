@@ -3,155 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RexCraft Mods Hub</title>
+    <title>RexCraft Mods</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #111213; font-family: 'Inter', sans-serif; color: #cbd5e1; margin: 0; padding: 0; }
+        body { 
+            background-color: #0b0f19; 
+            font-family: 'Inter', sans-serif; 
+            color: #cbd5e1; 
+            margin: 0; 
+            padding: 0; 
+        }
         .main-wrapper-container { max-width: 800px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
         
-        /* ==================== HERO BANNER SECTION ==================== */
+        /* TOP BAR MINI NAV */
+        .top-nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .btn-settings {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .brand-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #22c55e;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .status-dot-green {
+            width: 10px;
+            height: 10px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+        }
+
+        /* ==================== HERO BANNER WITH BACKGROUND IMAGE ==================== */
         .rex-hero-banner {
-            background: linear-gradient(135deg, #161718 0%, #1c1e1f 100%);
-            border: 1px solid #242628;
+            position: relative;
+            /* Menggunakan gambar bernuansa Minecraft gelap sebagai background utama */
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.6), rgba(11, 15, 25, 1)), 
+                        url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            border: 1px solid #1e293b;
             border-radius: 16px;
-            padding: 35px 20px;
+            padding: 40px 20px;
             text-align: center;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
-        .rex-hero-title { font-size: 32px; font-weight: 800; color: #fff; margin: 0 0 10px 0; letter-spacing: -0.5px; }
-        .rex-hero-subtitle { color: #8a96a3; font-size: 14px; margin: 0 0 20px 0; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .server-status-container { display: flex; justify-content: center; gap: 12px; align-items: center; flex-wrap: wrap; }
-        .server-status-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 175, 92, 0.1); border: 1px solid rgba(0, 175, 92, 0.2); padding: 6px 14px; border-radius: 20px; color: #00ff87; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .status-dot-glow { width: 8px; height: 8px; background-color: #00ff87; border-radius: 50%; box-shadow: 0 0 8px #00ff87; }
-        .tutorial-nav-btn { display: inline-flex; align-items: center; gap: 6px; background: #1c1e1f; border: 1px solid #2d3134; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; text-decoration: none; transition: 0.2s; }
-        .tutorial-nav-btn:hover { background: #25282a; border-color: #00af5c; }
+        
+        /* Efek teks samar besar di latar belakang (RexCraft Engine Style) */
+        .rex-bg-text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 70px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.03);
+            letter-spacing: 8px;
+            white-space: nowrap;
+            pointer-events: none;
+            text-transform: uppercase;
+            z-index: 1;
+        }
 
-        /* ==================== SEARCH & FILTER BOX ==================== */
-        .filter-bar-container { background: #161718; border: 1px solid #242628; border-radius: 12px; padding: 16px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 14px; }
-        .search-input-wrapper { position: relative; width: 100%; }
-        .search-input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #71717a; font-size: 14px; }
-        .rex-search-field { width: 100%; background: #1c1e1f; border: 1px solid #2d3134; border-radius: 8px; padding: 12px 12px 12px 40px; color: #fff; font-size: 14px; font-weight: 500; outline: none; box-sizing: border-box; transition: border-color 0.2s; }
-        .rex-search-field:focus { border-color: #00af5c; }
-        .filter-buttons-row { display: flex; gap: 8px; flex-wrap: wrap; }
-        .filter-btn { background: #1c1e1f; border: 1px solid #2d3134; color: #a1a1aa; padding: 8px 14px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; border: none; }
-        .filter-btn:hover, .filter-btn.active-filter { background: #00af5c; color: #fff; border-color: #00af5c; }
+        .rex-hero-content-wrapper { position: relative; z-index: 2; }
+        .rex-hero-title { font-size: 30px; font-weight: 800; color: #fff; margin: 0 0 8px 0; }
+        .rex-hero-subtitle { color: #94a3b8; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5; }
+        
+        .tutorial-alert-pill {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: #4ade80;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
 
-        /* ==================== LIST CARDS LAYOUT ==================== */
-        .mods-grid-container { display: flex; flex-direction: column; gap: 18px; }
-        .mod-card-item { background: #161718; border: 1px solid #242628; border-radius: 16px; padding: 20px; display: flex; gap: 20px; transition: border-color 0.2s; }
-        .mod-card-item:hover { border-color: #3f4448; }
-        .mod-avatar-box { width: 76px; height: 76px; background: #1c1e1f; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid #2d3134; flex-shrink: 0; overflow: hidden; }
+        /* INPUT PENCARIAN DI DALAM BANNER */
+        .search-container-inside {
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-container-inside i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+        .rex-search-field {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 14px 14px 14px 45px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
+        .rex-search-field:focus { border-color: #22c55e; }
+
+        /* ==================== GRID TOMBOL FILTER SPESIFIK ==================== */
+        .filter-buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .filter-btn {
+            background: #141b2d;
+            border: 1px solid #1e293b;
+            color: #94a3b8;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .filter-btn:hover { background: #1e293b; color: #fff; }
+        .filter-btn.active-filter {
+            background: #22c55e;
+            color: #fff;
+            border-color: #22c55e;
+        }
+        /* Tombol Advance Filter Spesifik */
+        .btn-advance-filter {
+            background: #141b2d;
+            border: 1px solid #1e293b;
+            color: #38bdf8;
+        }
+
+        /* LAYOUT KARTU MODS */
+        .mods-grid-container { display: flex; flex-direction: column; gap: 20px; }
+        .mod-card-item { 
+            background: #0f172a; 
+            border: 1px solid #1e293b; 
+            border-radius: 16px; 
+            padding: 22px; 
+            display: flex; 
+            gap: 20px; 
+            position: relative;
+        }
+        .mod-avatar-box { 
+            width: 76px; height: 76px; background: #1e293b; border-radius: 14px; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
+        }
         .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
         .mod-info-content { flex-grow: 1; display: flex; flex-direction: column; }
-        .mod-card-title { font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 6px 0; }
         
-        .tag-badges-flex { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
-        .meta-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; }
-        .badge-java-main { background: rgba(52, 152, 219, 0.1); color: #3498db; border: 1px solid rgba(52, 152, 219, 0.15); }
-        .badge-mcpe-main { background: rgba(230, 126, 34, 0.1); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.15); }
-        .badge-version-main { background: #1c1e1f; color: #a1a1aa; border: 1px solid #2d3134; }
-        .badge-files-main { background: rgba(0, 175, 92, 0.08); color: #00af5c; border: 1px solid rgba(0, 175, 92, 0.15); }
+        .tag-row-top { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+        .mini-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+        .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
+        .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+        .badge-version { background: rgba(147, 51, 234, 0.1); color: #c084fc; }
+        .badge-files { background: rgba(34, 197, 94, 0.1); color: #4ade80; }
+        .badge-loader { background: #1e293b; color: #94a3b8; }
 
-        .badge-loader-front { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; }
-        .front-fabric { background: #322519; color: #f1a550; border: 1px solid #4a3825; }
-        .front-forge { background: #1c273a; color: #5b92e5; border: 1px solid #2b3d5c; }
-        .front-bedrock { background: #1e2920; color: #2ecc71; border: 1px solid #27ae60; }
+        .mod-card-title { font-size: 22px; color: #fff; font-weight: 700; margin: 0 0 6px 0; }
+        .mod-card-desc { color: #94a3b8; font-size: 13px; margin: 0 0 18px 0; line-height: 1.5; }
+        
+        .action-view-btn { 
+            background: #22c55e; color: #fff; font-size: 13px; font-weight: 700; 
+            padding: 12px; border-radius: 10px; display: flex; align-items: center; 
+            justify-content: center; gap: 6px; text-decoration: none; transition: 0.2s; 
+            width: 100%; box-sizing: border-box; margin-top: auto;
+        }
+        .action-view-btn:hover { background: #16a34a; }
 
-        .mod-card-desc { color: #8a96a3; font-size: 14px; margin: 0 0 16px 0; line-height: 1.5; }
-        .action-view-btn { background: #00af5c; color: #fff; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: background 0.2s; width: 100%; box-sizing: border-box; border: none; }
-        .action-view-btn:hover { background: #00c769; }
-
-        @media (max-width: 600px) { .mod-card-item { flex-direction: column; gap: 16px; } }
+        @media (max-width: 600px) { 
+            .mod-card-item { flex-direction: column; } 
+            .filter-buttons-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
 <div class="main-wrapper-container">
 
-    <div class="rex-hero-banner">
-        <h1 class="rex-hero-title">RexCraft Mods Hub</h1>
-        <p class="rex-hero-subtitle">Eksplorasi modifikasi Minecraft terlengkap, optimal, dan anti-lag buatan RexCraft Engine.</p>
-        <div class="server-status-container">
-            <div class="server-status-pill">
-                <div class="status-dot-glow"></div>
-                <span>System Online</span>
-            </div>
-            <a href="/tutorial" class="tutorial-nav-btn">
-                <i class="fas fa-book"></i> Panduan Pasang Mod
-            </a>
+    <div class="top-nav-bar">
+        <button class="btn-settings"><i class="fas fa-cog"></i> Settings</button>
+        <div class="brand-status">
+            <div class="status-dot-green"></div>
+            <span>RexCraft Mods</span>
         </div>
     </div>
 
-    <div class="filter-bar-container">
-        <div class="search-input-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Ketik nama mod yang ingin dicari di sini..." onkeyup="filterModsMaster()">
-        </div>
+    <div class="rex-hero-banner">
+        <div class="rex-bg-text-overlay">REXCRAFT</div>
         
-        <div class="filter-buttons-row">
-            <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
-                <i class="fas fa-globe"></i> Semua Platform
-            </button>
-            <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
-                <i class="fas fa-mug-hot"></i> Java Edition
-            </button>
-            <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
-                <i class="fas fa-mobile-alt"></i> Bedrock / MCPE
-            </button>
+        <div class="rex-hero-content-wrapper">
+            <h1 class="rex-hero-title">RexCraft Mods Hub</h1>
+            <p class="rex-hero-subtitle">Cari berkas modifikasi Minecraft favoritmu dengan instan.</p>
+            
+            <a href="/tutorial" class="tutorial-alert-pill">
+                📩 Bingung cara pasang mod? Klik panduan di sini!
+            </a>
+
+            <div class="search-container-inside">
+                <i class="fas fa-search"></i>
+                <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod atau shader..." onkeyup="filterModsMaster()">
+            </div>
         </div>
+    </div>
+
+    <div class="filter-buttons-grid">
+        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
+            🌏 Semua Berkas
+        </button>
+        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
+            ☕ Java Edition
+        </button>
+        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
+            📱 Bedrock / MCPE
+        </button>
+        <button class="filter-btn btn-advance-filter" onclick="alert('Fitur Advance Filter Spesifik Siap Dikonfigurasi!')">
+            ⚙️ Advance Filter
+        </button>
     </div>
 
     <div class="mods-grid-container" id="modsContainer">
         {% for mod in mods %}
         <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{{ mod.title.lower() }}">
+            
             <div class="mod-avatar-box">
                 {% if mod.icon_url %}
                     <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
                 {% else %}
-                    {% if mod.category == 'java' %}
-                    <i class="fas fa-mug-hot" style="font-size: 26px; color: #00af5c;"></i>
-                    {% endif %}
+                    <i class="fas fa-cubes" style="font-size: 26px; color: #22c55e;"></i>
                 {% endif %}
             </div>
 
             <div class="mod-info-content">
-                <h2 class="mod-card-title">{{ mod.title }}</h2>
-                
-                <div class="tag-badges-flex">
+                <div class="tag-row-top">
                     {% if mod.category == 'java' %}
-                    <span class="meta-badge badge-java-main">JAVA</span>
+                    <span class="mini-badge badge-java">JAVA</span>
                     {% else %}
-                    <span class="meta-badge badge-mcpe-main">MCPE</span>
+                    <span class="mini-badge badge-mcpe">MCPE</span>
                     {% endif %}
                     
-                    <span class="meta-badge badge-version-main"><i class="fas fa-code-branch"></i> {{ mod.version_range }}</span>
-                    <span class="meta-badge badge-files-main"><i class="fas fa-folder-open"></i> {{ mod.total_files }} File</span>
-
-                    {% if mod.category == 'java' %}
-                        {% for ld in mod.loaders %}
-                            {% if ld == 'Fabric' %}
-                            <span class="badge-loader-front front-fabric"><i class="fas fa-scroll"></i> Fabric</span>
-                            {% elif ld == 'Forge' %}
-                            <span class="badge-loader-front front-forge"><i class="fas fa-hammer"></i> Forge</span>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        <span class="badge-loader-front front-bedrock"><i class="fas fa-cube"></i> Bedrock</span>
-                    {% endif %}
+                    <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
+                    <span class="mini-badge badge-files">📁 {{ mod.total_files }} File</span>
                 </div>
 
+                <h2 class="mod-card-title">{{ mod.title }}</h2>
                 <p class="mod-card-desc">{{ mod.desc }}</p>
                 
                 <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
                     📦 View Download
                 </a>
             </div>
+
         </div>
         {% else %}
-        <div style="background: #161718; border: 1px dashed #242628; padding: 40px; text-align: center; border-radius: 12px; color: #8a96a3;">
-            <i class="fas fa-box-open" style="font-size: 40px; margin-bottom: 10px; color: #00af5c;"></i>
+        <div style="background: #0f172a; border: 1px dashed #1e293b; padding: 40px; text-align: center; border-radius: 12px; color: #94a3b8;">
+            <i class="fas fa-box-open" style="font-size: 40px; margin-bottom: 10px; color: #22c55e;"></i>
             <p style="margin: 0; font-weight: 600;">Belum ada berkas mod di dalam folder penyimpanan.</p>
         </div>
         {% endfor %}
@@ -165,7 +299,9 @@ let currentCategory = 'all';
 function setCategoryFilter(category, element) {
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active-filter'));
-    element.classList.add('active-filter');
+    if (!element.classList.contains('btn-advance-filter')) {
+        element.classList.add('active-filter');
+    }
     
     currentCategory = category;
     filterModsMaster();
