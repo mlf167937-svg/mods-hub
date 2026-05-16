@@ -28,7 +28,6 @@ def get_file_info(filepath, filename):
     
     version = "1.20 - 1.21+" # Fallback standar jika tidak ditemukan angka versi
     for part in parts:
-        # Mendeteksi format angka versi seperti 1.21, 1.20.1, v1.26, dll.
         if re.search(r'\d+\.\d+', part):
             version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '').replace('.mcaddon', '')
             if version.lower().startswith('v') and len(version) > 1:
@@ -64,8 +63,15 @@ def get_all_mods():
                 continue
 
             files_list = []
+            icon_file = None # Tempat menyimpan nama file gambar ikon custom
+            
             for filename in os.listdir(folder_path):
                 if filename.startswith('.'):
+                    continue
+                
+                # FITUR BARU: Deteksi jika ada file gambar custom (.png / .jpg) di folder mod
+                if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+                    icon_file = filename
                     continue
                     
                 filepath = os.path.join(folder_path, filename)
@@ -83,6 +89,9 @@ def get_all_mods():
 
                 display_title = folder_name.replace('_', ' ').replace('-', ' ').title()
 
+                # Atur path url untuk ikon custom, jika kosong pasang None
+                icon_url = f"/static/uploads/{category}/{folder_name}/{icon_file}" if icon_file else None
+
                 mods_data.append({
                     'id': folder_name,
                     'title': display_title,
@@ -90,7 +99,8 @@ def get_all_mods():
                     'version_range': version_range,
                     'total_files': len(files_list),
                     'desc': f"Update berkas {category.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
-                    'files': files_list
+                    'files': files_list,
+                    'icon_url': icon_url
                 })
                 
     return mods_data
@@ -110,19 +120,24 @@ def tutorial():
 
 @app.route("/mod/<category>/<mod_id>")
 def mod_detail(category, mod_id):
-    """Halaman Detail Pilih Versi & Download Mod (VERSI FIX ANTI-EROR 500)"""
+    """Halaman Detail Pilih Versi & Download Mod"""
     if category not in ['java', 'mcpe']:
         abort(404)
         
     target_folder = os.path.join(UPLOAD_FOLDER, category, mod_id)
-    
     if not os.path.exists(target_folder) or not os.path.isdir(target_folder):
         abort(404)
         
     files_list = []
+    icon_file = None
+    
     try:
         for filename in os.listdir(target_folder):
             if filename.startswith('.'):
+                continue
+            # Deteksi gambar ikon custom di halaman detail
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+                icon_file = filename
                 continue
             filepath = os.path.join(target_folder, filename)
             if os.path.isfile(filepath):
@@ -141,6 +156,7 @@ def mod_detail(category, mod_id):
         version_range = files_list[0]['version']
         
     display_title = mod_id.replace('_', ' ').replace('-', ' ').title()
+    icon_url = f"/static/uploads/{category}/{mod_id}/{icon_file}" if icon_file else None
 
     current_mod = {
         'id': mod_id,
@@ -148,7 +164,8 @@ def mod_detail(category, mod_id):
         'category': category,
         'version_range': version_range,
         'desc': f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft kamu.",
-        'files': files_list
+        'files': files_list,
+        'icon_url': icon_url
     }
     
     return render_template("mod.html", mod=current_mod)
@@ -164,7 +181,6 @@ def download_file(category, mod_id, filename):
 
 @app.route("/health")
 def health_check():
-    """Rute pembantu untuk memastikan Render tetap hidup lancar"""
     return "OK", 200
 
 @app.errorhandler(404)
