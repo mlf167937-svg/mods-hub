@@ -2,203 +2,75 @@
 
 {% block content %}
 
-<!-- HERO -->
-
 <div class="hero-banner">
-
     <div class="hero-bg"></div>
-
     <div class="hero-overlay"></div>
-
     <div class="hero-content">
-
         <h1>🎮 RexCraft Mods Hub</h1>
-
-        <p>
-        Cari berkas modifikasi Minecraft favoritmu dengan instan.
-        </p>
-        
+        <p>Cari berkas modifikasi Minecraft favoritmu dengan instan.</p>
         <div class="search-wrapper">
-
-            <input
-            type="text"
-            id="searchBox"
-            class="search-input"
-            placeholder="🔍 Cari nama mod atau shader..."
-            onkeyup="searchAndFilter()"
-            >
-
+            <input type="text" id="searchBox" class="search-input" placeholder="🔍 Cari nama mod atau shader..." onkeyup="searchAndFilter()">
         </div>
-
     </div>
-
 </div>
-
-<!-- FILTER -->
 
 <div class="filter-container">
-
-    <button
-    class="filter-btn active"
-    onclick="setCategory('all')"
-    >
-    🌍 Semua Mod
-    </button>
-
-    <button
-    class="filter-btn"
-    onclick="setCategory('java')"
-    >
-    ☕ Java Edition
-    </button>
-
-    <button
-    class="filter-btn"
-    onclick="setCategory('mcpe')"
-    >
-    📱 Bedrock / MCPE
-    </button>
-
+    <button class="filter-btn active" onclick="setCategory('all', this)">🌍 Semua Mod</button>
+    <button class="filter-btn" onclick="setCategory('java', this)">☕ Java Edition</button>
+    <button class="filter-btn" onclick="setCategory('mcpe', this)">📱 Bedrock / MCPE</button>
 </div>
-
-<!-- GRID -->
 
 <div class="grid">
-
     {% for mod in mods %}
-
     <div class="card mod-item platform-{{ mod.category }}">
-
         <div>
-
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-
-                <div class="badge">
-                MC {{ mod.version }}
+                <div class="badge">MC {{ mod.version }}</div>
+                <div class="badge" style="border-color: var(--neon-color); color: var(--neon-color); background: transparent;">
+                    {{ mod.category.upper() }}
                 </div>
-
-                <div
-                class="badge"
-                style="
-                border-color: var(--neon-color);
-                color: var(--neon-color);
-                background: transparent;
-                "
-                >
-                {{ mod.category.upper() }}
-                </div>
-
             </div>
-
-            <h2 class="mod-title">
-            {{ mod.title }}
-            </h2>
-
-            <p>
-            {{ mod.desc }}
-            </p>
-
-            <p style="margin-top:10px;">
-            📦 {{ mod.size }}
-            </p>
-
+            <h2 class="mod-title">{{ mod.title }}</h2>
+            <p>{{ mod.desc }}</p>
+            <p style="margin-top:10px; font-size: 13px; color: #64748b;">📦 {{ mod.size }}</p>
         </div>
-
-        <a
-        class="btn"
-        href="/mod/{{ mod.category }}/{{ mod.file }}"
-        >
-        📦 View Download
-        </a>
-
+        <a class="btn" href="/mod/{{ mod.category }}/{{ mod.file }}" style="margin-top: 15px;">📦 View Download</a>
     </div>
-
     {% else %}
-
-    <div
-    class="card"
-    style="
-    grid-column:1/-1;
-    text-align:center;
-    padding:40px;
-    "
-    >
-
-        <h2 style="color:#64748b;">
-        Belum ada berkas di folder GitHub.
-        </h2>
-
+    <div class="card" style="grid-column:1/-1; text-align:center; padding:40px;">
+        <h2 style="color:#64748b;">Belum ada berkas di folder GitHub.</h2>
     </div>
-
     {% endfor %}
-
 </div>
 
-<!-- SCRIPT -->
-
 <script>
-
 let currentCategory = 'all';
 
-function setCategory(cat) {
-
-    let buttons =
-    document.querySelectorAll('.filter-btn');
-
-    buttons.forEach(btn =>
-        btn.classList.remove('active')
-    );
-
-    event.target.classList.add('active');
-
+function setCategory(cat, element) {
+    let buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    // Perbaikan: menggunakan element langsung, bukan variabel global event
+    element.classList.add('active');
     currentCategory = cat;
-
     searchAndFilter();
 }
 
 function searchAndFilter() {
-
-    let keyword =
-    document.getElementById('searchBox')
-    .value
-    .toLowerCase();
-
-    let items =
-    document.querySelectorAll('.mod-item');
+    let keyword = document.getElementById('searchBox').value.toLowerCase();
+    let items = document.querySelectorAll('.mod-item');
 
     items.forEach(item => {
-
-        let title =
-        item.querySelector('.mod-title')
-        .innerText
-        .toLowerCase();
-
-        let matchCategory =
-        (
-            currentCategory === 'all'
-            ||
-            item.classList.contains(
-                'platform-' + currentCategory
-            )
-        );
-
-        let matchKeyword =
-        title.includes(keyword);
+        let title = item.querySelector('.mod-title').innerText.toLowerCase();
+        let matchCategory = (currentCategory === 'all' || item.classList.contains('platform-' + currentCategory));
+        let matchKeyword = title.includes(keyword);
 
         if (matchCategory && matchKeyword) {
-
             item.style.display = 'flex';
-
         } else {
-
             item.style.display = 'none';
-
         }
-
     });
-
 }
-
 </script>
-
 {% endblock %}
