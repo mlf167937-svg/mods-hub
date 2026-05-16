@@ -2,96 +2,200 @@
 
 {% block content %}
 
-<div class="hero-banner">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>🎮 RexCraft Mods Hub</h1>
-        <p>Cari berkas modifikasi Minecraft favoritmu dengan instan.</p>
-        
-        <div class="search-wrapper">
-            <input type="text" id="searchBox" class="search-input" placeholder="🔍 Cari nama mod atau shader..." onkeyup="searchAndFilter()">
-        </div>
-    </div>
-</div>
+<!-- SIDEBAR -->
 
-<!-- GAMERTAG PANEL -->
-
-<div class="card gamer-card">
+<div class="sidebar-panel">
 
     <h2>🎮 GAMERTAG MC</h2>
 
-    <div class="gamer-box">
+    <div class="sidebar-box">
 
-        <p class="gamer-label">
+        <p class="sidebar-label">
         📱 Bedrock
         </p>
 
-        <p class="gamer-name">
+        <p class="sidebar-name">
         RexCraft6506
         </p>
 
     </div>
 
-    <div class="gamer-box">
+    <div class="sidebar-box">
 
-        <p class="gamer-label">
+        <p class="sidebar-label">
         ☕ Java
         </p>
 
-        <p class="gamer-name">
+        <p class="sidebar-name">
         RexCraft
         </p>
 
     </div>
 
+    <hr class="sidebar-divider">
+
+    <h2>🎨 THEME</h2>
+
+    <div class="theme-buttons">
+
+        <button
+        class="theme-btn green-btn"
+        onclick="setTheme('green')"
+        >
+        🟢 Green
+        </button>
+
+        <button
+        class="theme-btn blue-btn"
+        onclick="setTheme('blue')"
+        >
+        🔵 Blue
+        </button>
+
+        <button
+        class="theme-btn purple-btn"
+        onclick="setTheme('purple')"
+        >
+        🟣 Purple
+        </button>
+
+    </div>
+
 </div>
+
+<!-- HERO -->
+
+<div class="hero-banner">
+
+    <div class="hero-bg"></div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <h1>🎮 RexCraft Mods Hub</h1>
+
+        <p>
+        Cari berkas modifikasi Minecraft favoritmu dengan instan.
+        </p>
+        
+        <div class="search-wrapper">
+
+            <input
+            type="text"
+            id="searchBox"
+            class="search-input"
+            placeholder="🔍 Cari nama mod atau shader..."
+            onkeyup="searchAndFilter()"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FILTER -->
 
 <div class="filter-container">
-    <button class="filter-btn active" onclick="setCategory('all')">🌍 Semua Mod</button>
-    <button class="filter-btn" onclick="setCategory('java')">☕ Java Edition</button>
-    <button class="filter-btn" onclick="setCategory('mcpe')">📱 Bedrock / MCPE</button>
+
+    <button
+    class="filter-btn active"
+    onclick="setCategory('all')"
+    >
+    🌍 Semua Mod
+    </button>
+
+    <button
+    class="filter-btn"
+    onclick="setCategory('java')"
+    >
+    ☕ Java Edition
+    </button>
+
+    <button
+    class="filter-btn"
+    onclick="setCategory('mcpe')"
+    >
+    📱 Bedrock / MCPE
+    </button>
+
 </div>
 
-<div class="grid">
-    {% for mod in mods %}
-    <div class="card mod-item platform-{{ mod.category }}">
-        <div>
-            <div style="display: flex; gap: 6px;">
-                <div class="badge">MC {{ mod.version }}</div>
+<!-- GRID -->
 
-                <div class="badge" style="border-color: var(--neon-color); color: var(--neon-color); background: transparent;">
-                    {{ mod.category.upper() }}
+<div class="grid">
+
+    {% for mod in mods %}
+
+    <div class="card mod-item platform-{{ mod.category }}">
+
+        <div>
+
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+
+                <div class="badge">
+                MC {{ mod.version }}
+                </div>
+
+                <div
+                class="badge"
+                style="
+                border-color: var(--neon-color);
+                color: var(--neon-color);
+                background: transparent;
+                "
+                >
+                {{ mod.category.upper() }}
                 </div>
 
             </div>
 
-            <h2 class="mod-title">{{ mod.title }}</h2>
+            <h2 class="mod-title">
+            {{ mod.title }}
+            </h2>
 
-            <p>{{ mod.desc }}</p>
+            <p>
+            {{ mod.desc }}
+            </p>
 
             <p style="margin-top:10px;">
-                📦 {{ mod.size }}
+            📦 {{ mod.size }}
             </p>
 
         </div>
 
-        <a class="btn" href="/mod/{{ mod.category }}/{{ mod.file }}">
-            📦 View Download
+        <a
+        class="btn"
+        href="/mod/{{ mod.category }}/{{ mod.file }}"
+        >
+        📦 View Download
         </a>
 
     </div>
 
     {% else %}
 
-    <div class="card" style="grid-column: 1/-1; text-align: center; padding: 40px;">
-        <h2 style="color: #64748b;">
-            Belum ada berkas di folder GitHub.
+    <div
+    class="card"
+    style="
+    grid-column:1/-1;
+    text-align:center;
+    padding:40px;
+    "
+    >
+
+        <h2 style="color:#64748b;">
+        Belum ada berkas di folder GitHub.
         </h2>
+
     </div>
 
     {% endfor %}
+
 </div>
+
+<!-- SCRIPT -->
 
 <script>
 
