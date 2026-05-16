@@ -20,7 +20,6 @@ def format_size(file_path):
         return "0 MB"
 
 def get_file_info(filename, folder_path, category_name):
-    """Fungsi pembaca detail file (Versi & Loader) berdasarkan nama filenya"""
     filename_lower = filename.lower()
     
     # 1. Deteksi Loader
@@ -36,7 +35,7 @@ def get_file_info(filename, folder_path, category_name):
         parts = filename_lower.replace('-', '_').split('_')
         for part in parts:
             if "1." in part:
-                version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '')
+                version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '').replace('.mcaddon', '')
                 break
 
     return {
@@ -48,11 +47,11 @@ def get_file_info(filename, folder_path, category_name):
 
 @app.route("/")
 def home():
-    """Menampilkan daftar MOD berdasarkan FOLDER, bukan lagi berdasarkan FILE"""
     all_mods = []
     
     for category_path, cat_name in [(JAVA_FOLDER, "java"), (MCPE_FOLDER, "mcpe")]:
         if os.path.exists(category_path):
+            # Perbaikan: Membaca SEMUA folder termasuk yang ada tanda plus (+)
             folders = [f for f in os.listdir(category_path) if os.path.isdir(os.path.join(category_path, f))]
             folders.sort()
             
@@ -60,24 +59,39 @@ def home():
                 mod_path = os.path.join(category_path, folder_name)
                 files = [f for f in os.listdir(mod_path) if not f.startswith('.')]
                 
-                if not files: continue # Lewati jika folder kosong
+                if not files: continue 
                 
-                # Judul kartu diambil dari nama folder (ganti strip/garis bawah jadi spasi)
                 clean_title = folder_name.replace('_', ' ').replace('-', ' ').title()
+                
+                # AUTO DETEKSI RANGE VERSI UNTUK HALAMAN DEPAN
+                versions_found = []
+                for f in files:
+                    info = get_file_info(f, mod_path, cat_name)
+                    if info["version"] != "All Version":
+                        versions_found.add(info["version"]) if hasattr(versions_found, 'add') else versions_found.append(info["version"])
+
+                # Buat teks rangkuman versi otomatis (Misal: 1.16.5 - 1.21.11)
+                unique_versions = sorted(list(set(versions_found)))
+                if len(unique_versions) == 1:
+                    version_range = unique_versions[0]
+                elif len(unique_versions) > 1:
+                    version_range = f"{unique_versions[0]} - {unique_versions[-1]}"
+                else:
+                    version_range = "Multi Version"
                 
                 all_mods.append({
                     "id": folder_name,
                     "title": clean_title,
                     "category": cat_name,
+                    "version_range": version_range, # Menyimpan range versi baru
                     "desc": f"Update berkas {cat_name.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
                     "total_files": len(files)
                 })
                 
     return render_template("index.html", mods=all_mods)
 
-@app.route("/mod/<category>/<mod_id>")
+@app.route("/mod/<category>/<path:mod_id>") # Menggunakan path agar aman jika ada karakter unik
 def mod_page(category, mod_id):
-    """Halaman Detail ala Modrinth: Membaca seluruh file di dalam folder mod"""
     base_folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
     mod_path = os.path.join(base_folder, mod_id)
     
@@ -87,7 +101,6 @@ def mod_page(category, mod_id):
     clean_title = mod_id.replace('_', ' ').replace('-', ' ').title()
     files = [f for f in os.listdir(mod_path) if not f.startswith('.')]
     
-    # Ambil data spesifik dari setiap file di dalam folder
     file_list = []
     versions_set = set()
     loaders_set = set()
@@ -98,7 +111,6 @@ def mod_page(category, mod_id):
         versions_set.add(info["version"])
         loaders_set.add(info["loader"])
 
-    # Urutkan versi agar dari yang terbaru
     sorted_versions = sorted(list(versions_set), reverse=True)
     sorted_loaders = sorted(list(loaders_set))
 
@@ -114,7 +126,7 @@ def mod_page(category, mod_id):
     
     return render_template("mod.html", mod=mod_data)
 
-@app.route("/download/<category>/<mod_id>/<filename>")
+@app.route("/download/<category>/<path:mod_id>/<filename>")
 def download(category, mod_id, filename):
     base_folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
     mod_path = os.path.join(base_folder, mod_id)
