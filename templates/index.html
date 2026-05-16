@@ -28,12 +28,13 @@
     </button>
 </div>
 
-<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 15px auto; max-width: 600px; display: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);">
+<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 15px auto; max-width: 650px; display: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);">
     <h3 style="font-size: 14px; color: var(--neon-color); margin-bottom: 12px; font-weight: 700; text-align: center;">⚙️ Pengaturan Filter Spesifik</h3>
     
     <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
         <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'texture', this)">📱 MCPE Texture Pack</button>
         <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'shader', this)">📱 MCPE Shaders</button>
+        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'mc_addon', this)">📱 MCPE Add-On / Mods</button>
         
         <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'mod_racikan', this)">☕ Java Mod Racikan</button>
         <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'map', this)">☕ Java Maps</button>
@@ -73,7 +74,6 @@
 let currentCategory = 'all';
 let currentSub = 'all';
 
-// Fungsi untuk membuka dan menutup laci Advance Filter saat diklik
 function toggleSettingsFilter() {
     const filterBox = document.getElementById('settingsFilterBox');
     if(filterBox.style.display === 'none') {
@@ -83,7 +83,6 @@ function toggleSettingsFilter() {
     }
 }
 
-// Menentukan sub-kategori aktif dan mengubah status warna tombol aktif
 function setSubCategory(cat, sub, element) {
     let buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
@@ -94,7 +93,6 @@ function setSubCategory(cat, sub, element) {
     searchAndFilter();
 }
 
-// Inti mesin pencarian dan penyaringan filter pintar
 function searchAndFilter() {
     let keyword = document.getElementById('searchBox').value.toLowerCase();
     let items = document.querySelectorAll('.mod-item');
@@ -103,15 +101,12 @@ function searchAndFilter() {
         let title = item.querySelector('.mod-title').innerText.toLowerCase();
         let folderId = item.getAttribute('data-folder-id');
         
-        // 1. Validasi Kategori Utama (All, Java, atau MCPE)
         let matchCategory = (currentCategory === 'all' || item.classList.contains('platform-' + currentCategory));
         
-        // 2. Validasi Sub-Kategori Spesifik (Mendukung Multi Kata Kunci Alternatif)
         let matchSub = false;
         if (currentSub === 'all') {
             matchSub = true;
         } else if (currentSub === 'texture') {
-            // Lolos jika nama folder mengandung texture, pack, resource, atau folder andalan Bos 'bare_bones'
             if (folderId.includes('texture') || folderId.includes('pack') || folderId.includes('resource') || folderId.includes('bare_bones')) {
                 matchSub = true;
             }
@@ -119,8 +114,12 @@ function searchAndFilter() {
             if (folderId.includes('shader') || folderId.includes('shaders')) {
                 matchSub = true;
             }
+        } else if (currentSub === 'mc_addon') {
+            // DETEKSI OTOMATIS ADD-ON / MODS MCPE (Aman untuk folder brutal_legends_mcaddon milik Bos!)
+            if (folderId.includes('addon') || folderId.includes('addons') || folderId.includes('mcaddon') || folderId.includes('mod') || folderId.includes('mods')) {
+                matchSub = true;
+            }
         } else if (currentSub === 'mod_racikan') {
-            // Lolos jika mengandung mod, mods, atau racikan (Mengatasi komplain kartu hilang kemarin!)
             if (folderId.includes('mod') || folderId.includes('mods') || folderId.includes('racikan')) {
                 matchSub = true;
             }
@@ -130,10 +129,8 @@ function searchAndFilter() {
             }
         }
         
-        // 3. Validasi Teks Kolom Pencarian
         let matchKeyword = title.includes(keyword);
         
-        // Eksekusi Akhir: Kartu hanya muncul jika lolos ketiga syarat di atas
         if (matchCategory && matchSub && matchKeyword) {
             item.style.display = 'flex';
         } else {
