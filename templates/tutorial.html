@@ -1,1 +1,65 @@
+{% extends 'base.html' %}
 
+{% block content %}
+<div style="max-width: 800px; margin: 30px auto; padding: 0 10px;">
+    
+    <a href="/" style="color: var(--neon-color); text-decoration: none; font-size: 14px; font-weight: 600; display: inline-block; margin-bottom: 20px;">
+        ← Kembali ke Beranda
+    </a>
+
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px;">📖 Panduan Pemasangan Berkas</h1>
+        <p style="color: #94a3b8; font-size: 14px;">Ikuti langkah-langkah di bawah ini untuk memasang Mod atau Shader ke dalam Minecraft kamu.</p>
+    </div>
+
+    <div class="card" style="padding: 25px; border-radius: 16px; margin-bottom: 25px; border-left: 4px solid #eab308;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+            <span style="font-size: 24px;">☕</span>
+            <h2 style="font-size: 20px; color: #ffffff;">Minecraft Java Edition (PC)</h2>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; color: #cbd5e1; font-size: 14px; line-height: 1.6;">
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 1:</strong> Unduh berkas mod berformat <code style="color: #eab308;">.jar</code> dari RexCraft Mods Hub.
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 2:</strong> Tekan tombol <kbd style="background: #1f2937; padding: 2px 6px; border-radius: 4px; font-size: 12px;">Windows + R</kbd> di keyboard kamu, ketik <code style="color: #06b6d4;">%appdata%\.minecraft</code>, lalu klik OK.
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 3:</strong> Cari folder bernama <code style="color: #06b6d4;">mods</code>. Jika belum ada, silakan buat folder baru dengan nama <code style="color: #06b6d4;">mods</code> (huruf kecil semua).
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 4:</strong> Pindahkan berkas <code style="color: #eab308;">.jar</code> yang sudah kamu unduh tadi ke dalam folder <code style="color: #06b6d4;">mods</code> tersebut.
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 5:</strong> Jalankan Minecraft Launcher kamu dan pastikan kamu memilih profile **Forge** atau **Fabric** sesuai dengan kebutuhan mod tersebut. Selamat bermain!
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="padding: 25px; border-radius: 16px; border-left: 4px solid #06b6d4;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+            <span style="font-size: 24px;">📱</span>
+            <h2 style="font-size: 20px; color: #ffffff;">Minecraft Bedrock / MCPE (Android/iOS/Win10)</h2>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; color: #cbd5e1; font-size: 14px; line-height: 1.6;">
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 1:</strong> Unduh berkas berformat <code style="color: #06b6d4;">.mcpack</code>, <code style="color: #06b6d4;">.mcaddon</code>, atau <code style="color: #06b6d4;">.zip</code> dari web ini.
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 2 (Jika format .mcpack / .mcaddon):</strong> Kamu cukup buka aplikasi File Manager di HP kamu, lalu **klik langsung berkas tersebut** dan pilih untuk dibuka menggunakan game **Minecraft**. Game akan otomatis mengimpor berkas secara instan!
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 3 (Jika format .zip):</strong> Ekstrak folder tersebut terlebih dahulu menggunakan aplikasi seperti ZArchiver. 
+                <br>• Pindahkan folder **Resource Pack** ke: <code style="color: #94a3b8;">Android/data/com.mojang.minecraftpe/files/games/com.mojang/resource_packs</code>
+                <br>• Pindahkan folder **Behavior Pack** ke: <code style="color: #94a3b8;">Android/data/com.mojang.minecraftpe/files/games/com.mojang/behavior_packs</code>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 12px; border-radius: 8px;">
+                <strong style="color: var(--neon-color);">Langkah 4:</strong> Masuk ke dalam game Minecraft, buat dunia baru atau edit dunia yang ada, lalu aktifkan Resource/Behavior Pack tersebut di menu pengaturan dunia sebelum menekan tombol Play.
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
