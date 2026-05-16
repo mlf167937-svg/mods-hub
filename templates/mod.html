@@ -2,9 +2,30 @@
 
 {% block content %}
 <style>
-    .detail-container { background: #161718; border: 1px solid #242628; border-radius: 16px; padding: 25px; margin-top: 20px; }
+    /* ==================== HERO BANNER GAMBAR (MODRINTH STYLE) ==================== */
+    .rex-banner-wrapper {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(to bottom, rgba(17, 18, 19, 0.3), #111213), 
+                    url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+        border-radius: 16px;
+        margin-top: 15px;
+        box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+    }
+
+    .detail-container { 
+        background: #161718; 
+        border: 1px solid #242628; 
+        border-radius: 16px; 
+        padding: 25px; 
+        margin-top: -30px; /* Menimpa banner agar estetik */
+        position: relative;
+        z-index: 10;
+    }
+    
     .mod-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #242628; padding-bottom: 25px; }
-    .mod-icon-large { width: 90px; height: 90px; background: #1c1e1f; border-radius: 14px; border: 1px solid #2d3134; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .mod-icon-large { width: 90px; height: 90px; background: #1c1e1f; border-radius: 14px; border: 1px solid #2d3134; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
     .mod-icon-large img { width: 100%; height: 100%; object-fit: cover; }
     .mod-title-text h1 { margin: 0 0 8px 0; color: #fff; font-size: 26px; font-weight: 800; }
     .badge-category { background: rgba(0, 175, 92, 0.1); color: #00af5c; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
@@ -12,26 +33,75 @@
     .desc-box { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 12px; padding: 20px; margin-bottom: 30px; line-height: 1.6; }
     .desc-box h3 { margin-top: 0; color: #fff; font-size: 16px; display: flex; align-items: center; gap: 8px; }
     
-    .file-list-title { color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 15px; }
-    .file-row { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 10px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-    .file-info-left { display: flex; flex-direction: column; gap: 4px; }
-    .file-name { color: #fff; font-weight: 600; font-size: 14px; word-break: break-all; }
-    .file-meta-sub { font-size: 12px; color: #8a96a3; display: flex; gap: 10px; }
+    /* MAIN BUTTON TRIGGER POP-UP FILTER */
+    .btn-trigger-filter-spesifik {
+        background: #00af5c;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 15px 25px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        transition: 0.2s;
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0, 175, 92, 0.3);
+    }
+    .btn-trigger-filter-spesifik:hover { background: #00c769; }
+
+    /* ==================== POP-UP MODAL FILTER SPESIFIK ==================== */
+    .rex-modal-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(4px);
+        display: none; /* Sembunyi awal */
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+    .rex-modal-box {
+        background: #1c1e1f;
+        border: 1px solid #2d3134;
+        border-radius: 16px;
+        width: 90%;
+        max-width: 450px;
+        padding: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        position: relative;
+        animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     
-    .btn-download-trigger { background: #00af5c; color: #fff; font-weight: 700; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; border: none; cursor: pointer; }
-    .btn-download-trigger:hover { background: #00c769; }
-    
+    .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .modal-close-x { background: none; border: none; color: #a1a1aa; font-size: 20px; cursor: pointer; }
+    .modal-close-x:hover { color: #fff; }
+
+    .filter-select-group { margin-bottom: 16px; }
+    .filter-select-group label { display: block; font-size: 12px; font-weight: 600; color: #a1a1aa; margin-bottom: 6px; text-transform: uppercase; }
+    .rex-dropdown { width: 100%; background: #111213; border: 1px solid #2d3134; border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; }
+    .rex-dropdown:focus { border-color: #00af5c; }
+
+    .btn-execute-download {
+        background: #00af5c; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-execute-download:hover { background: #00c769; }
+
     .back-home-btn { display: inline-flex; align-items: center; gap: 8px; color: #8a96a3; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 15px; transition: 0.2s; }
     .back-home-btn:hover { color: #fff; }
-
-    @media (max-width: 600px) {
-        .mod-header { flex-direction: column; text-align: center; }
-        .file-row { flex-direction: column; align-items: flex-start; }
-        .btn-download-trigger { width: 100%; justify-content: center; }
-    }
 </style>
 
 <a href="/" class="back-home-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+
+<div class="rex-banner-wrapper"></div>
 
 <div class="detail-container">
     <div class="mod-header">
@@ -48,6 +118,10 @@
         </div>
     </div>
 
+    <button class="btn-trigger-filter-spesifik" onclick="openDownloadModal()">
+        <i class="fas fa-download"></i> Download {{ mod.title }}
+    </button>
+
     <div class="desc-box">
         <h3><i class="fas fa-file-alt" style="color: #00af5c;"></i> Deskripsi Resmi Mod</h3>
         <p style="margin: 0 0 15px 0;">{{ mod.desc }}</p>
@@ -59,24 +133,72 @@
             <li>Lolos uji sistem proteksi dan ramah memori RAM</li>
         </ul>
     </div>
+</div>
 
-    <h2 class="file-list-title">Berkas Tersedia ({{ mod.files|length }})</h2>
-    <div class="file-list-wrapper">
-        {% for file in mod.files %}
-        <div class="file-row">
-            <div class="file-info-left">
-                <span class="file-name">{{ file.filename }}</span>
-                <div class="file-meta-sub">
-                    <span><i class="fas fa-code-branch"></i> {{ file.version }}</span>
-                    <span><i class="fas fa-hdd"></i> {{ file.size }}</span>
-                    <span style="color: #00af5c; font-weight: bold;">{{ file.loader }}</span>
-                </div>
+<div class="rex-modal-overlay" id="downloadModal">
+    <div class="rex-modal-box">
+        <div class="modal-header-flex">
+            <div class="modal-title">
+                <i class="fas fa-filter" style="color: #00af5c;"></i> Filter Spesifik Berkas
             </div>
-            <a href="/download/{{ mod.category }}/{{ mod.id }}/{{ file.filename }}" class="btn-download-trigger">
-                <i class="fas fa-download"></i> Download
-            </a>
+            <button class="modal-close-x" onclick="closeDownloadModal()"><i class="fas fa-times"></i></button>
         </div>
-        {% endfor %}
+
+        <div class="filter-select-group">
+            <label><i class="fas fa-gamepad"></i> Select Game Version</label>
+            <select id="versionSelect" class="rex-dropdown">
+                {% for file in mod.files %}
+                <option value="{{ file.filename }}">{{ file.version }} ({{ file.size }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-select-group">
+            <label><i class="fas fa-wrench"></i> Select Platform / Loader</label>
+            <select id="platformSelect" class="rex-dropdown">
+                {% if mod.category == 'java' %}
+                    <option value="fabric">Fabric Engine</option>
+                    <option value="forge">Forge Engine</option>
+                {% else %}
+                    <option value="bedrock">Bedrock / MCPE</option>
+                {% endif %}
+            </select>
+        </div>
+
+        <button class="btn-execute-download" onclick="executeFinalDownload()">
+            <i class="fas fa-file-download"></i> Ambil Berkas Sekarang
+        </button>
     </div>
 </div>
+
+<script>
+function openDownloadModal() {
+    document.getElementById('downloadModal').style.display = 'flex';
+}
+
+function closeDownloadModal() {
+    document.getElementById('downloadModal').style.opacity = '0';
+    setTimeout(() => {
+        document.getElementById('downloadModal').style.display = 'none';
+        document.getElementById('downloadModal').style.opacity = '1';
+    }, 200);
+}
+
+function executeFinalDownload() {
+    const selectedFile = document.getElementById('versionSelect').value;
+    if (selectedFile) {
+        // Otomatis mengarahkan ke link download berkas aslinya
+        window.location.href = "/download/{{ mod.category }}/{{ mod.id }}/" + selectedFile;
+        closeDownloadModal();
+    }
+}
+
+// Tutup modal jika klik di luar area box hitam
+window.onclick = function(event) {
+    const modal = document.getElementById('downloadModal');
+    if (event.target == modal) {
+        closeDownloadModal();
+    }
+}
+</script>
 {% endblock %}
