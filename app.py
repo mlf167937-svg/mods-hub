@@ -1,172 +1,149 @@
-from flask import Flask, render_template, abort, send_from_directory
 import os
+import re
+from flask import Flask, render_template, abort, send_from_directory
 
 app = Flask(__name__)
 
-# Folder penyimpanan utama
-BASE_UPLOAD = "static/uploads"
-JAVA_FOLDER = os.path.join(BASE_UPLOAD, "java")
-MCPE_FOLDER = os.path.join(BASE_UPLOAD, "mcpe")
+# Mengatur lokasi folder penyimpanan berkas (Directori static/uploads/)
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Otomatis bikin folder jika belum ada
-os.makedirs(JAVA_FOLDER, exist_ok=True)
-os.makedirs(MCPE_FOLDER, exist_ok=True)
-
-def format_size(file_path):
-    """Menghitung ukuran file dengan aman agar tidak memicu eror jika file corrupt"""
+def get_file_info(filepath, filename):
+    """
+    Fungsi pintar untuk membaca ukuran file dan membersihkan nama berkas 
+    menjadi teks versi yang rapi di menu dropdown.
+    """
     try:
-        size = os.path.getsize(file_path)
-        if size < 1024: 
-            return f"{size} B"
-        elif size < 1024 * 1024: 
-            return f"{size / 1024:.1f} KB"
-        else: 
-            return f"{size / (1024 * 1024):.1f} MB"
-    except:
-        return "0 MB"
+        size_bytes = os.path.getsize(filepath)
+        if size_bytes >= 1024 * 1024:
+            size_str = f"{size_bytes / (1024 * 1024):.1f} MB"
+        else:
+            size_str = f"{size_bytes / 1024:.1f} KB"
+    except OSError:
+        size_str = "0 KB"
 
-def get_file_info(filename, folder_path, category_name):
-    """Mendeteksi Loader dan Versi secara pintar dari nama file berkas"""
-    filename_lower = filename.lower()
+    # Proses ekstraksi angka versi game dari nama berkas asli
+    clean_name = os.path.splitext(filename)[0]
+    parts = re.split(r'[-_]', clean_name)
     
-    # 1. Deteksi Mod Loader / Platform
-    loader = "Vanilla/Custom"
-    if "forge" in filename_lower: 
-        loader = "Forge"
-    elif "fabric" in filename_lower: 
-        loader = "Fabric"
-    elif "quilt" in filename_lower: 
-        loader = "Quilt"
-    elif "geyser" in filename_lower: 
-        loader = "Geyser"
-
-    # 2. Deteksi Versi Game (Mencari teks angka dengan pola '1.xx')
-    version = "All Version"
-    if "1." in filename:
-        # Pisahkan nama file berdasarkan simbol agar pembacaan teks angka lebih akurat
-        parts = filename_lower.replace('-', '_').replace('+', '_').split('_')
-        for part in parts:
-            if "1." in part:
-                version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '').replace('.mcaddon', '')
-                break
-
+    version = "1.20 - 1.21+" # Fallback standar jika tidak ditemukan angka versi
+    for part in parts:
+        # Mendeteksi format angka versi seperti 1.21, 1.20.1, v1.26, dll.
+        if re.search(r'\d+\.\d+', part):
+            # Memotong ekstensi berkas MCPE/Java jika masih menempel di teks
+            version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '').replace('.mcaddon', '')
+            if version.lower().startswith('v') and len(version) > 1:
+                version = version[1:]
+            break
+            
     return {
-        "filename": filename,
-        "version": version,
-        "loader": loader,
-        "size": format_size(os.path.join(folder_path, filename))
+        'filename': filename,
+        'version': version,
+        'size': size_str
     }
 
-@app.route("/")
-def home():
-    """Halaman Utama: Membaca daftar folder mod dengan proteksi kebal bug"""
-    all_mods = []
+def get_all_mods():
+    """
+    Mesin utama web yang otomatis membaca seluruh struktur folder di GitHub 
+    dan merangkumnya menjadi kartu-kartu mod di halaman utama.
+    """
+    mods_data = []
+    categories = ['java', 'mcpe']
     
-    for category_path, cat_name in [(JAVA_FOLDER, "java"), (MCPE_FOLDER, "mcpe")]:
-        if os.path.exists(category_path):
-            try:
-                # Ambil semua item berjenis folder di dalam direktori
-                folders = [f for f in os.listdir(category_path) if os.path.isdir(os.path.join(category_path, f))]
-                folders.sort()
-            except:
-                continue
-            
-            for folder_name in folders:
-                mod_path = os.path.join(category_path, folder_name)
-                
-                try:
-                    # Ambil semua file asli (abaikan file sistem tersembunyi seperti .DS_Store)
-                    files = [f for f in os.listdir(mod_path) if not f.startswith('.')]
-                except:
-                    continue
-                
-                if not files: 
-                    continue # Lewati kartu jika di dalam foldernya benar-benar kosong kosong kosong
-                
-                # Mengubah nama folder menjadi judul yang rapi (Contoh: mod_booster -> Mod Booster)
-                clean_title = folder_name.replace('_', ' ').replace('-', ' ').title()
-                
-                # Proses scan versi file di dalam folder dengan proteksi try-except
-                versions_found = []
-                for f in files:
-                    try:
-                        info = get_file_info(f, mod_path, cat_name)
-                        if info["version"] != "All Version":
-                            versions_found.append(info["version"])
-                    except:
-                        pass
+    if not os.path.exists(UPLOAD_FOLDER):
+        return mods_data
 
-                # Menentukan teks range versi yang akan dipajang di halaman depan web
-                try:
-                    unique_versions = sorted(list(set(versions_found)))
-                    if len(unique_versions) == 1:
-                        version_range = unique_versions[0]
-                    elif len(unique_versions) > 1:
-                        version_range = f"{unique_versions[0]} - {unique_versions[-1]}"
-                    else:
-                        # Fallback otomatis khusus MCPE atau file berkarakter unik (+) agar badge tetap terisi indah
-                        version_range = "1.20 - 1.21+" if cat_name == "mcpe" else "Multi Version"
-                except:
-                    version_range = "Multi Version"
+    for category in categories:
+        category_path = os.path.join(UPLOAD_FOLDER, category)
+        if not os.path.exists(category_path):
+            continue
+
+        # Membaca folder judul mod (Tingkat 2)
+        for folder_name in os.listdir(category_path):
+            folder_path = os.path.join(category_path, folder_name)
+            
+            # Abaikan jika itu file sampah sistem atau bukan sebuah direktori/folder
+            if folder_name.startswith('.') or not os.path.isdir(folder_path):
+                continue
+
+            files_list = []
+            # Membaca berkas asli di dalam folder (Tingkat 3)
+            for filename in os.listdir(folder_path):
+                # Proteksi: Abaikan file tersembunyi sistem (.gitkeep, .DS_Store, dll)
+                if filename.startswith('.'):
+                    continue
+                    
+                filepath = os.path.join(folder_path, filename)
+                if os.path.isfile(filepath):
+                    file_info = get_file_info(filepath, filename)
+                    files_list.append(file_info)
+
+            if files_list:
+                # Mengurutkan versi dari yang paling baru ke versi lama di dropdown
+                files_list.sort(key=lambda x: x['version'], reverse=True)
                 
-                all_mods.append({
-                    "id": folder_name,
-                    "title": clean_title,
-                    "category": cat_name,
-                    "version_range": version_range,
-                    "desc": f"Update berkas {cat_name.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
-                    "total_files": len(files)
+                # Menentukan rentang versi untuk dipajang di badge kartu depan
+                if len(files_list) > 1:
+                    version_range = f"{files_list[-1]['version']} - {files_list[0]['version']}"
+                else:
+                    version_range = files_list[0]['version']
+
+                # Membuat format nama judul yang rapi (mengganti garis bawah menjadi spasi)
+                display_title = folder_name.replace('_', ' ').title()
+
+                mods_data.append({
+                    'id': folder_name,
+                    'title': display_title,
+                    'category': category,
+                    'version_range': version_range,
+                    'total_files': len(files_list),
+                    'desc': f"Update berkas {category.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
+                    'files': files_list
                 })
                 
-    return render_template("index.html", mods=all_mods)
+    return mods_data
 
-@app.route("/mod/<category>/<path:mod_id>")
-def mod_page(category, mod_id):
-    """Halaman Detail Dropdown: Menggunakan tipe rute <path:> agar kebal eror simbol unik"""
-    base_folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
-    mod_path = os.path.join(base_folder, mod_id)
+# ==================== RUTE / ROUTES FLASK ====================
+
+@app.route("/")
+def index():
+    """Halaman Utama Web RexCraft Mods Hub"""
+    mods = get_all_mods()
+    return render_template("index.html", mods=mods)
+
+@app.route("/tutorial")
+def tutorial():
+    """Halaman Resmi Panduan Cara Pasang Mod (SOLUSI FIX BUG 404)"""
+    return render_template("tutorial.html")
+
+@app.route("/mod/<category>/<mod_id>")
+def mod_detail(category, mod_id):
+    """Halaman Detail Pilih Versi & Download Mod"""
+    mods = get_all_mods()
+    # Mencari data mod yang spesifik sesuai ID folder yang diklik pengunjung
+    current_mod = next((m for m in mods if m['category'] == category and m['id'] == mod_id), None)
     
-    if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
+    if not current_mod:
         abort(404)
         
-    clean_title = mod_id.replace('_', ' ').replace('-', ' ').title()
-    files = [f for f in os.listdir(mod_path) if not f.startswith('.')]
-    
-    file_list = []
-    versions_set = set()
-    loaders_set = set()
-    
-    for f in files:
-        try:
-            info = get_file_info(f, mod_path, category)
-            file_list.append(info)
-            versions_set.add(info["version"])
-            loaders_set.add(info["loader"])
-        except:
-            pass
+    return render_template("mod_detail.html", mod=current_mod)
 
-    # Urutkan opsi dropdown versi (dari versi paling baru di paling atas)
-    sorted_versions = sorted(list(versions_set), reverse=True)
-    sorted_loaders = sorted(list(loaders_set))
+@app.route("/download/<category>/<mod_id>/<filename>")
+def download_file(category, mod_id, filename):
+    """Sistem Pengirim Berkas Aman (Mendukung .jar, .zip, .mcpack, .mcaddon)"""
+    secure_dir = os.path.join(UPLOAD_FOLDER, category, mod_id)
+    # Proteksi keamanan: pastikan folder tujuan benar-minded ada di sistem
+    if not os.path.exists(os.path.join(secure_dir, filename)):
+        abort(404)
+        
+    # Mengirim file secara utuh langsung ke browser pengunjung tanpa merubah format asli
+    return send_from_directory(secure_dir, filename, as_attachment=True)
 
-    mod_data = {
-        "id": mod_id,
-        "title": clean_title,
-        "category": category,
-        "desc": f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft kamu.",
-        "files": file_list,
-        "available_versions": sorted_versions,
-        "available_loaders": sorted_loaders
-    }
-    
-    return render_template("mod.html", mod=mod_data)
-
-@app.route("/download/<category>/<path:mod_id>/<filename>")
-def download(category, mod_id, filename):
-    """Rute pengunduhan file instan dan aman"""
-    base_folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
-    mod_path = os.path.join(base_folder, mod_id)
-    return send_from_directory(mod_path, filename, as_attachment=True)
+# Error Handler jika pengunjung nyasar ke alamat salah
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run()
+    # Menjalankan server Flask lokal
+    app.run(debug=True, host="0.0.0.0", port=5000)
