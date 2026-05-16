@@ -1,82 +1,77 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort, send_from_directory
 import os
 
 app = Flask(__name__)
 
-# FOLDER
+# Folder penyimpanan utama
+BASE_UPLOAD = "static/uploads"
+JAVA_FOLDER = os.path.join(BASE_UPLOAD, "java")
+MCPE_FOLDER = os.path.join(BASE_UPLOAD, "mcpe")
 
-JAVA_FOLDER = "static/uploads/java"
-MCPE_FOLDER = "static/uploads/mcpe"
+# Otomatis bikin folder di komputer lokal saat dijalankan
+os.makedirs(JAVA_FOLDER, exist_ok=True)
+os.makedirs(MCPE_FOLDER, exist_ok=True)
 
-# FORMAT SIZE
+def scan_mods_by_category(folder_path, category_name):
+    """Fungsi mendeteksi file di dalam folder spesifik (java/mcpe)"""
+    mods_list = []
+    if os.path.exists(folder_path):
+        files = os.listdir(folder_path)
+        files.sort()
+        for filename in files:
+            if filename.startswith('.') or filename == 'test.txt':
+                continue
+                
+            clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
+            
+            version = "All Version"
+            if "1." in filename:
+                parts = filename.split('_')
+                for part in parts:
+                    if part.startswith('1.') or '1.' in part:
+                        version = os.path.splitext(part)[0]
 
-def ukuran_file(path):
-
-    size = os.path.getsize(path)
-
-    if size < 1024:
-        return f"{size} B"
-
-    elif size < 1024 * 1024:
-        return f"{size/1024:.1f} KB"
-
-    elif size < 1024 * 1024 * 1024:
-        return f"{size/(1024*1024):.1f} MB"
-
-    else:
-        return f"{size/(1024*1024*1024):.1f} GB"
-
-# AMBIL FILE
-
-def ambil_file(folder, kategori):
-
-    hasil = []
-
-    if os.path.exists(folder):
-
-        for file in os.listdir(folder):
-
-            filepath = os.path.join(folder, file)
-
-            if os.path.isfile(filepath):
-
-                hasil.append({
-
-                    "name": file,
-
-                    "category": kategori,
-
-                    "size": ukuran_file(filepath),
-
-                    "path": filepath.replace("static/", "")
-
-                })
-
-    return hasil
-
-# HOME
+            mods_list.append({
+                "title": clean_title,
+                "version": version,
+                "desc": f"Modifikasi {category_name} dari RexCraft Mods. Unduh dan pasang ke Minecraft kamu.",
+                "file": filename,
+                "category": category_name.lower() # 'java' atau 'mcpe'
+            })
+    return mods_list
 
 @app.route("/")
 def home():
+    # Scan masing-masing folder
+    java_mods = scan_mods_by_category(JAVA_FOLDER, "Java")
+    mcpe_mods = scan_mods_by_category(MCPE_FOLDER, "MCPE")
+    
+    # Gabungkan semua mod untuk dikirim ke template
+    all_mods = java_mods + mcpe_mods
+    return render_template("index.html", mods=all_mods)
 
-    java = ambil_file(
-        JAVA_FOLDER,
-        "Java"
-    )
+@app.route("/mod/<category>/<filename>")
+def mod_page(category, filename):
+    folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
+    
+    # Validasi apakah file memang ada
+    if not os.path.exists(os.path.join(folder, filename)):
+        abort(404)
+        
+    clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
+    mod = {
+        "title": clean_title,
+        "version": "Sesuai Nama File",
+        "desc": f"Modifikasi resmi Berjenis {category.upper()} dari RexCraft Mods.",
+        "file": filename,
+        "category": category
+    }
+    return render_template("mod.html", mod=mod)
 
-    mcpe = ambil_file(
-        MCPE_FOLDER,
-        "MCPE"
-    )
-
-    mods = java + mcpe
-
-    return render_template(
-        "index.html",
-        mods=mods
-    )
-
-# RUN
+@app.route("/download/<category>/<filename>")
+def download(category, filename):
+    folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
+    return send_from_directory(folder, filename, as_attachment=True)
 
 if __name__ == "__main__":
     app.run()
