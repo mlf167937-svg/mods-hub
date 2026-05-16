@@ -8,13 +8,17 @@
     body { background-color: #111213 !important; font-family: 'Inter', sans-serif; color: #cbd5e1; margin: 0; padding: 0; }
     .modrinth-wrapper { max-width: 960px; margin: 30px auto; padding: 0 16px; }
     
-    /* PROJECT HEADER STYLE (MODRINTH AUTHENTIC) */
+    /* PROJECT HEADER STYLE */
     .project-header-container { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
-    .project-logo-box { width: 84px; height: 84px; background: #1c1e1f; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid #2d3134; box-shadow: 0 4px 10px rgba(0,0,0,0.3); flex-shrink: 0; }
+    
+    /* MODRINTH LOGO/IMAGE CUSTOM BOX */
+    .project-logo-box { width: 84px; height: 84px; background: #1c1e1f; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 1px solid #2d3134; box-shadow: 0 4px 10px rgba(0,0,0,0.3); flex-shrink: 0; overflow: hidden; }
+    .project-logo-img { width: 100%; height: 100%; object-fit: cover; }
+    
     .project-title-text { font-size: 28px; color: #fff; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.5px; }
     .project-desc-text { color: #8a96a3; font-size: 14px; margin: 0; line-height: 1.4; }
     
-    /* ACTION ROW BUTTONS (DOWNLOAD, LIKE, BOOKMARK) */
+    /* ACTION ROW BUTTONS */
     .action-row { display: flex; gap: 10px; align-items: center; margin-bottom: 25px; flex-wrap: wrap; }
     .main-dl-btn { background: #00af5c; color: #fff; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: background 0.2s; border: none; }
     .main-dl-btn:hover { background: #00c769; }
@@ -37,12 +41,12 @@
     .grid-layout { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
     .block-card { background: #161718; border-radius: 12px; border: 1px solid #242628; padding: 20px; }
     
-    /* MCPE DROPDOWN LIST INTERFACE (SINKRON & TIDAK BERUBAH) */
+    /* MCPE STYLING */
     .mcpe-select-box { width: 100%; padding: 11px; background: #1c1e1f; border: 1px solid #2d3134; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; outline: none; margin-bottom: 15px; }
     .mcpe-dl-trigger { display: flex; align-items: center; justify-content: center; gap: 8px; background: #00af5c; color: #fff; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; }
     .mcpe-dl-trigger:hover { background: #00c769; }
 
-    /* AUTHENTIC MODRINTH MODAL POP-UP (KHUSUS JAVA EDITION) */
+    /* MODAL POP-UP JAVA */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; visibility: hidden; transition: 0.2s; }
     .modal-overlay.show-modal { opacity: 1; visibility: visible; }
     
@@ -75,10 +79,14 @@
 
     <div class="project-header-container">
         <div class="project-logo-box">
-            {% if mod.category == 'java' %}
-            <i class="fas fa-mug-hot" style="font-size: 36px; color: #00af5c;"></i>
+            {% if mod.icon_url %}
+                <img src="{{ mod.icon_url }}" class="project-logo-img" alt="Mod Icon">
             {% else %}
-            <i class="fas fa-cubes" style="font-size: 36px; color: #00af5c;"></i>
+                {% if mod.category == 'java' %}
+                <i class="fas fa-mug-hot" style="font-size: 36px; color: #00af5c;"></i>
+                {% else %}
+                <i class="fas fa-cubes" style="font-size: 36px; color: #00af5c;"></i>
+                {% endif %}
             {% endif %}
         </div>
         <div>
@@ -93,7 +101,7 @@
             <i class="fas fa-download"></i> Download
         </button>
         {% else %}
-        <a href="#download-section" class="main-dl-btn">
+        <a href="#download-section" class="main-dl-btn" onclick="registerDownloadClick()">
             <i class="fas fa-download"></i> Get Files
         </a>
         {% endif %}
@@ -101,12 +109,12 @@
         <button class="icon-action-btn" id="likeElement" onclick="hitLikeAction()">
             <i class="fas fa-heart"></i>
         </button>
-        <div class="counter-text"><b id="likeValue">36.3K</b></div>
+        <div class="counter-text"><b id="likeValue">0</b> <span style="color: #71717a;">Suka</span></div>
 
         <button class="icon-action-btn" id="bookElement" onclick="hitBookAction()">
             <i class="fas fa-bookmark"></i>
         </button>
-        <div class="counter-text"><b>154.06M</b> <span style="color: #71717a;">Downloads</span></div>
+        <div class="counter-text"><b id="downloadValue">0</b> <span style="color: #71717a;">Unduhan</span></div>
     </div>
 
     <div class="nav-tabs-modrinth">
@@ -149,7 +157,7 @@
                     <div id="mcpeNameDisplay" style="color: #fff; font-weight: 600; word-break: break-all;">Memuat...</div>
                 </div>
 
-                <a id="mcpeDlBtn" href="#" class="mcpe-texture-pack mcpe-shoders mcpe-dl-trigger">
+                <a id="mcpeDlBtn" href="#" class="mcpe-dl-trigger" onclick="registerDownloadClick()">
                     <i class="fas fa-download"></i> Unduh Berkas (<span id="mcpeSizeDisplay">...</span>)
                 </a>
             </div>
@@ -200,7 +208,7 @@
         </div>
 
         <div style="margin-top: 20px;">
-            <a id="javaDlBtn" href="#" class="java-final-dl-btn">
+            <a id="javaDlBtn" href="#" class="java-final-dl-btn" onclick="registerDownloadClick(); closeJavaModal();">
                 <i class="fas fa-download"></i> Jalankan Unduhan (<span id="javaSizeDisplay">...</span>)
             </a>
         </div>
@@ -210,21 +218,47 @@
 {% endif %}
 
 <script>
-let clickLiked = false;
+// Mengambil atau membuat ID penyimpanan unik berdasarkan nama folder mod ini
+const storageKeyLike = "rex_like_" + "{{ mod.id }}";
+const storageKeyDl = "rex_dl_" + "{{ mod.id }}";
+
+// Load data simpanan dari browser browser penonton jika ada
+let currentLikes = parseInt(localStorage.getItem(storageKeyLike)) || 0;
+let currentDownloads = parseInt(localStorage.getItem(storageKeyDl)) || 0;
+let clickLiked = localStorage.getItem(storageKeyLike + "_status") === "true";
 let clickBook = false;
+
+// Tampilkan angka simpanan saat halaman dibuka
+document.getElementById('likeValue').innerText = currentLikes;
+document.getElementById('downloadValue').innerText = currentDownloads;
+
+if(clickLiked) {
+    document.getElementById('likeElement').classList.add('active-like');
+}
 
 function hitLikeAction() {
     const btn = document.getElementById('likeElement');
     const txt = document.getElementById('likeValue');
+    
     if(!clickLiked) {
         btn.classList.add('active-like');
-        txt.innerText = "36.4K";
+        currentLikes += 1;
         clickLiked = true;
     } else {
         btn.classList.remove('active-like');
-        txt.innerText = "36.3K";
+        currentLikes -= 1;
         clickLiked = false;
     }
+    
+    txt.innerText = currentLikes;
+    localStorage.setItem(storageKeyLike, currentLikes);
+    localStorage.setItem(storageKeyLike + "_status", clickLiked);
+}
+
+function registerDownloadClick() {
+    currentDownloads += 1;
+    document.getElementById('downloadValue').innerText = currentDownloads;
+    localStorage.setItem(storageKeyDl, currentDownloads);
 }
 
 function hitBookAction() {
@@ -238,7 +272,6 @@ function hitBookAction() {
     }
 }
 
-// Logika Khusus Modal Java
 function openJavaModal() {
     const modal = document.getElementById('javaModalWrapper');
     if(modal) {
@@ -274,7 +307,6 @@ function syncJavaFile() {
     document.getElementById('javaDlBtn').href = "/download/" + category + "/" + modId + "/" + filename;
 }
 
-// Logika Khusus MCPE
 function syncMcpeFile() {
     const select = document.getElementById('mcpeSelect');
     if(!select || select.options.length === 0) return;
@@ -291,14 +323,9 @@ function syncMcpeFile() {
     document.getElementById('mcpeDlBtn').href = "/download/" + category + "/" + modId + "/" + filename;
 }
 
-// Inisialisasi Otomatis saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function() {
-    if (document.getElementById('mcpeSelect')) {
-        syncMcpeFile();
-    }
-    if (document.getElementById('javaSelect')) {
-        syncJavaFile();
-    }
+    if (document.getElementById('mcpeSelect')) syncMcpeFile();
+    if (document.getElementById('javaSelect')) syncJavaFile();
 });
 </script>
 {% endblock %}
