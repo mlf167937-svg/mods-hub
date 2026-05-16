@@ -21,14 +21,14 @@ def get_file_info(filepath, filename):
     except OSError:
         size_str = "0 KB"
 
-    # FITUR BARU: Deteksi otomatis Mod Loader dari nama file
+    # Deteksi otomatis Mod Loader dari nama file
     name_lower = filename.lower()
     if 'fabric' in name_lower:
         loader = "Fabric"
     elif 'forge' in name_lower:
         loader = "Forge"
     else:
-        loader = "Universal" # Jaga-jaga jika nama file tidak ditulis loader-nya
+        loader = "Universal"
 
     clean_name = os.path.splitext(filename)[0]
     parts = re.split(r'[-_]', clean_name)
@@ -45,10 +45,14 @@ def get_file_info(filepath, filename):
         'filename': filename,
         'version': version,
         'size': size_str,
-        'loader': loader  # Data loader dikirim ke HTML
+        'loader': loader
     }
 
 def get_all_mods():
+    """
+    Membaca seluruh struktur folder di GitHub, mengumpulkan daftar file,
+    dan mendeteksi loader apa saja yang tersedia untuk ditampilkan di halaman depan.
+    """
     mods_data = []
     categories = ['java', 'mcpe']
     
@@ -68,6 +72,7 @@ def get_all_mods():
 
             files_list = []
             icon_file = None
+            detected_loaders = set() # Menggunakan set agar loader yang sama tidak mendobel
             
             for filename in os.listdir(folder_path):
                 if filename.startswith('.'):
@@ -80,6 +85,8 @@ def get_all_mods():
                 if os.path.isfile(filepath):
                     file_info = get_file_info(filepath, filename)
                     files_list.append(file_info)
+                    # Catat loader yang ditemukan di folder ini
+                    detected_loaders.add(file_info['loader'])
 
             if files_list:
                 files_list.sort(key=lambda x: x['version'], reverse=True)
@@ -100,7 +107,8 @@ def get_all_mods():
                     'total_files': len(files_list),
                     'desc': f"Update berkas {category.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
                     'files': files_list,
-                    'icon_url': icon_url
+                    'icon_url': icon_url,
+                    'loaders': list(detected_loaders) # Ubah set ke list untuk dikirim ke index.html
                 })
                 
     return mods_data
