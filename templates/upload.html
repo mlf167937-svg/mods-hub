@@ -1,32 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div style="max-width: 550px; margin: 40px auto; padding: 0 10px;">
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 8px;">⬆️ Unggah Berkas Mod</h1>
+        <p style="color: #94a3b8; font-size: 14px;">Tambahkan mod atau shader Minecraft baru ke dalam server database.</p>
+    </div>
 
-<div class="hero">
-<h1>⬆ Upload Mods</h1>
-<p>
-Upload your Minecraft mods and files.
-</p>
+    <div class="card" style="padding: 30px; border-radius: 24px;">
+        <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 16px;">
+            
+            <div>
+                <label style="font-size: 13px; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Judul Berkas</label>
+                <input name="title" class="form-input" placeholder="Contoh: Cyberpunk Shanghai Shaders" required>
+            </div>
+
+            <div>
+                <label style="font-size: 13px; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Versi Minecraft</label>
+                <input name="version" class="form-input" placeholder="Contoh: 1.20.1 atau All Version" required>
+            </div>
+
+            <div>
+                <label style="font-size: 13px; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 6px;">Deskripsi Singkat</label>
+                <textarea name="desc" class="form-input" rows="4" placeholder="Jelaskan fitur utama dari mod atau shader ini..."></textarea>
+            </div>
+
+            <div style="margin-top: 5px; margin-bottom: 10px;">
+                <label style="font-size: 13px; color: #94a3b8; font-weight: 600; display: block; margin-bottom: 8px;">Pilih File (.zip / .jar / .mcpack)</label>
+                <input type="file" name="file" required style="font-size: 14px; color: #94a3b8;">
+            </div>
+
+            <button class="btn" style="padding: 14px; font-size: 15px; cursor: pointer; border: none;">
+                🚀 Publikasikan Berkas
+            </button>
+        </form>
+    </div>
 </div>
 
-<div class="card">
-
-<form method="POST" enctype="multipart/form-data">
-
-<input name="title" placeholder="Mod Title" required>
-
-<input name="version" placeholder="Minecraft Version" required>
-
-<textarea name="desc" placeholder="Description"></textarea>
-
-<input type="file" name="file" required>
-
-<button class="btn">
-🚀 Upload Mod
-</button>
-
-</form>
-
-</div>
-
+<style>
+    .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        background: #1f2937;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        color: white;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+    .form-input:focus {
+        border-color: var(--neon-color);
+    }
+</style>
 {% endblock %}
