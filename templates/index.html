@@ -8,12 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ==================== PREMIUM MODERN ROOT & VARIABLES ==================== */
         :root {
             --bg-main: #060913;
             --bg-surface: rgba(15, 23, 42, 0.65);
             --border-color: rgba(51, 65, 85, 0.4);
-            --border-glow: rgba(34, 197, 94, 0.2);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --brand-green: #22c55e;
@@ -27,28 +25,20 @@
             color: var(--text-secondary); 
             margin: 0; 
             padding: 0;
-            background-image: 
-                radial-gradient(circle at 80% 10%, rgba(34, 197, 94, 0.06) 0%, transparent 45%),
-                radial-gradient(circle at 10% 60%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
-            background-attachment: fixed;
+            background-image: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
         }
 
-        .main-wrapper-container { 
-            max-width: 850px; 
-            margin: 0 auto; 
-            padding: 24px 16px; 
-            box-sizing: border-box; 
-        }
+        .main-wrapper-container { max-width: 800px; margin: 0 auto; padding: 20px 14px; box-sizing: border-box; }
         
-        /* ==================== TOP BAR NAVIGATION ==================== */
+        /* BRAND NAV BAR WITH LOGO */
         .top-nav-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             background: rgba(15, 23, 42, 0.4);
-            padding: 12px 20px;
-            border-radius: 14px;
+            padding: 12px 16px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
             backdrop-filter: var(--premium-blur);
         }
@@ -61,334 +51,116 @@
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 6px;
+            transition: 0.2s;
         }
-        .btn-settings:hover {
-            background: rgba(30, 41, 59, 1);
-            color: #fff;
-            border-color: #475569;
-        }
-        .brand-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-primary);
-            font-weight: 800;
-            font-size: 16px;
-            letter-spacing: -0.3px;
-        }
-        .brand-status span {
-            background: linear-gradient(to right, #fff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .status-dot-green {
-            width: 8px;
-            height: 8px;
-            background-color: var(--brand-green);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--brand-green);
-            animation: pulseGlow 2s infinite;
-        }
-        @keyframes pulseGlow {
-            0% { transform: scale(0.95); box-shadow: 0 0 4px var(--brand-green); }
-            50% { transform: scale(1.1); box-shadow: 0 0 14px var(--brand-green); }
-            100% { transform: scale(0.95); box-shadow: 0 0 4px var(--brand-green); }
-        }
+        .btn-settings:hover { background: #1e293b; color: #fff; }
+        .brand-status { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 800; font-size: 15px; }
+        .status-dot-green { width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 8px var(--brand-green); }
 
-        /* ==================== HERO BANNER PREMIUM ==================== */
+        /* HERO BANNER DENGAN IDENTITAS REXCRAFT */
         .rex-hero-banner {
             position: relative;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(6, 9, 19, 0.95));
+            background: linear-gradient(135deg, #0f172a 0%, #070a14 100%);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 48px 24px;
+            border-radius: 20px;
+            padding: 35px 20px;
             text-align: center;
-            margin-bottom: 28px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 24px;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        
-        .rex-bg-text-overlay {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 90px;
+        .rex-banner-overlay-logo {
+            font-size: 65px;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.015);
-            letter-spacing: 12px;
+            color: rgba(34, 197, 94, 0.03);
+            letter-spacing: 6px;
+            position: absolute;
+            top: 45%; left: 50%;
+            transform: translate(-50%, -50%);
             white-space: nowrap;
-            pointer-events: none;
-            text-transform: uppercase;
-            z-index: 1;
+            user-select: none;
         }
-
-        .rex-hero-content-wrapper { position: relative; z-index: 2; }
-        .rex-hero-title { 
-            font-size: 34px; 
-            font-weight: 800; 
-            color: #fff; 
-            margin: 0 0 10px 0; 
-            letter-spacing: -0.7px;
-            background: linear-gradient(to bottom right, #ffffff 30%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .rex-hero-subtitle { color: #64748b; font-size: 14px; margin: 0 0 24px 0; line-height: 1.6; font-weight: 500; }
+        .rex-hero-title { font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 6px 0; }
+        .rex-hero-subtitle { color: #64748b; font-size: 13px; margin: 0 0 20px 0; }
         
         .tutorial-alert-pill {
-            background: rgba(34, 197, 94, 0.08);
+            background: rgba(34, 197, 94, 0.06);
             border: 1px solid rgba(34, 197, 94, 0.2);
-            padding: 8px 18px;
-            border-radius: 12px;
+            padding: 6px 14px;
+            border-radius: 10px;
             color: #4ade80;
             font-size: 12px;
             font-weight: 600;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            margin-bottom: 24px;
-            transition: all 0.2s ease;
-        }
-        .tutorial-alert-pill:hover {
-            background: rgba(34, 197, 94, 0.15);
-            border-color: rgba(34, 197, 94, 0.4);
-            transform: translateY(-1px);
+            gap: 6px;
+            margin-bottom: 20px;
         }
 
-        /* ==================== SEARCH FIELD ==================== */
-        .search-container-inside {
-            max-width: 520px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .search-container-inside i {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #475569;
-            font-size: 15px;
-            transition: color 0.2s;
-        }
+        /* INPUT FIELD PENCARIAN */
+        .search-container-inside { max-width: 480px; margin: 0 auto; position: relative; }
+        .search-container-inside i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #475569; }
         .rex-search-field {
-            width: 100%;
-            background: rgba(6, 9, 19, 0.6);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 14px 16px 14px 48px;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 500;
-            outline: none;
-            box-sizing: border-box;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%; background: rgba(6, 9, 19, 0.7); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 12px 16px 12px 44px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box;
         }
-        .rex-search-field:focus { 
-            border-color: rgba(34, 197, 94, 0.5); 
-            background: rgba(6, 9, 19, 0.9);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
-        }
-        .rex-search-field:focus + i { color: var(--brand-green); }
+        .rex-search-field:focus { border-color: var(--brand-green); }
 
-        /* ==================== BUTTONS FILTER (MINIMALIS & SEJAJAR) ==================== */
-        .filter-buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 28px;
-        }
+        /* 4 BUTTON FILTER KECIL PRESTISIUS */
+        .filter-buttons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 24px; }
         .filter-btn {
-            background: rgba(15, 23, 42, 0.35);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 10px 4px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 11px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            backdrop-filter: var(--premium-blur);
+            background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); color: var(--text-secondary);
+            padding: 8px 2px; border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap;
         }
-        .filter-btn:hover { 
-            background: rgba(30, 41, 59, 0.5); 
-            color: var(--text-primary);
-            border-color: #475569;
-        }
-        .filter-btn.active-filter {
-            background: rgba(34, 197, 94, 0.12);
-            color: #4ade80;
-            border-color: rgba(34, 197, 94, 0.5);
-            box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.1);
-        }
-        
-        .btn-advance-filter {
-            background: rgba(56, 189, 248, 0.03);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            color: #38bdf8;
-        }
-        .btn-advance-filter:hover {
-            background: rgba(56, 189, 248, 0.1);
-            color: #fff;
-            border-color: #38bdf8;
-        }
+        .filter-btn.active-filter { background: rgba(34, 197, 94, 0.12); color: #4ade80; border-color: rgba(34, 197, 94, 0.4); }
 
-        /* ==================== MODS CARD LAYOUT PREMIUM ==================== */
-        .mods-grid-container { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 16px; 
-        }
+        /* MODS PREMIUM CARD LAYOUT */
+        .mods-grid-container { display: flex; flex-direction: column; gap: 14px; }
         .mod-card-item { 
-            background: var(--bg-surface); 
-            border: 1px solid var(--border-color); 
-            border-radius: 20px; 
-            padding: 20px; 
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            position: relative;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, box-shadow 0.3s;
-            backdrop-filter: var(--premium-blur);
+            background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; 
+            display: flex; gap: 16px; align-items: center; justify-content: space-between; transition: 0.2s;
         }
-        .mod-card-item:hover {
-            transform: translateY(-3px);
-            border-color: rgba(34, 197, 94, 0.3);
-            box-shadow: 0 12px 30px rgba(6, 9, 19, 0.6), 0 0 20px rgba(34, 197, 94, 0.05);
-        }
-
-        .mod-avatar-box { 
-            width: 80px; 
-            height: 80px; 
-            background: #0f172a; 
-            border: 1px solid var(--border-color);
-            border-radius: 16px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden; 
-            flex-shrink: 0;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
-        }
-        .mod-avatar-img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
-        .mod-info-content { 
-            flex-grow: 1; 
-            display: flex; 
-            flex-direction: column;
-        }
+        .mod-card-item:hover { transform: translateY(-2px); border-color: rgba(34, 197, 94, 0.25); }
         
-        /* PREMIUM MINIMALIST BADGES */
-        .tag-row-top { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
-        .mini-badge { font-size: 9px; font-weight: 800; padding: 4px 8px; border-radius: 7px; letter-spacing: 0.3px; }
-        .badge-java { background: rgba(56, 189, 248, 0.08); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.15); }
-        .badge-mcpe { background: rgba(249, 115, 22, 0.08); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.15); }
-        .badge-version { background: rgba(168, 85, 247, 0.08); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
-        .badge-files { background: rgba(34, 197, 94, 0.08); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
-
-        .mod-card-title { font-size: 20px; color: var(--text-primary); font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.4px; }
-        .mod-card-desc { color: #64748b; font-size: 13px; margin: 0 0 0 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .mod-left-side-flex { display: flex; gap: 16px; align-items: center; flex-grow: 1; }
+        .mod-avatar-box { width: 68px; height: 68px; background: #0f172a; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border-color); }
+        .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* LINK BUTTON TO DETAILED PAGE */
+        .tag-row-top { display: flex; gap: 5px; margin-bottom: 6px; }
+        .mini-badge { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 6px; }
+        .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
+        .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+        .badge-version { background: rgba(168, 85, 247, 0.1); color: #c084fc; }
+
+        .mod-card-title { font-size: 18px; color: var(--text-primary); font-weight: 700; margin: 0 0 4px 0; }
+        .mod-card-desc { color: #64748b; font-size: 12px; margin: 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* UKURAN TOMBOL VIEW MOD DISETTING TIDAK KEPANJANGAN */
         .action-view-btn { 
-            background: var(--brand-green); 
-            color: #fff; 
-            font-size: 13px; 
-            font-weight: 700; 
-            padding: 12px 24px; 
-            border-radius: 12px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px; 
-            text-decoration: none; 
-            transition: all 0.2s ease; 
-            flex-shrink: 0;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+            background: #1e293b; color: #fff; font-size: 12px; font-weight: 700; padding: 10px 16px; 
+            border-radius: 10px; display: flex; align-items: center; gap: 6px; text-decoration: none; transition: 0.2s;
+            border: 1px solid var(--border-color); white-space: nowrap;
         }
-        .action-view-btn:hover { 
-            background: var(--brand-green-hover); 
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
-        }
+        .action-view-btn:hover { background: var(--brand-green); border-color: var(--brand-green); }
 
-        /* ==================== ADVANCE FILTER MODAL ==================== */
+        /* SETTINGS & SYSTEM OVERLAY MODAL */
         .rex-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 5, 11, 0.85);
-            backdrop-filter: blur(8px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 16px;
-            box-sizing: border-box;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+            display: none; align-items: center; justify-content: center; z-index: 999; padding: 14px; box-sizing: border-box;
         }
-        .rex-modal-box {
-            background: #0f172a;
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            width: 100%;
-            max-width: 420px;
-            padding: 28px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            animation: popSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-sizing: border-box;
-        }
-        @keyframes popSlide { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
-        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; letter-spacing: -0.4px; }
-        .modal-close-x { background: rgba(255,255,255,0.05); border: none; color: #64748b; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
-        .modal-close-x:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .rex-modal-box { background: #0f172a; border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; width: 100%; max-width: 380px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: #fff; font-weight: 700; }
+        .close-btn { background: none; border: none; color: #64748b; font-size: 16px; cursor: pointer; }
 
-        .filter-select-group { margin-bottom: 20px; }
-        .filter-select-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .rex-dropdown { width: 100%; background: #060913; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; transition: border 0.2s; }
-        .rex-dropdown:focus { border-color: #38bdf8; }
-        
-        .btn-apply-advance {
-            background: var(--brand-green); color: #fff; width: 100%; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
-        }
-        .btn-apply-advance:hover { background: var(--brand-green-hover); }
-
-        /* ==================== RESPONSIVE LAYOUT SMARTPHONE ==================== */
-        @media (max-width: 680px) { 
-            .mod-card-item { 
-                flex-direction: column; 
-                align-items: flex-start; 
-                gap: 16px;
-                padding: 18px;
-            }
-            .action-view-btn {
-                width: 100%;
-            }
-            .filter-buttons-grid { 
-                grid-template-columns: repeat(4, 1fr); 
-                gap: 5px;
-            }
-            .filter-btn {
-                font-size: 10px;
-                padding: 8px 2px;
-                border-radius: 8px;
-            }
-            .rex-hero-title { font-size: 26px; }
+        @media (max-width: 600px) {
+            .mod-card-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .action-view-btn { width: 100%; justify-content: center; box-sizing: border-box; }
+            .filter-btn { font-size: 10px; }
         }
     </style>
 </head>
@@ -397,180 +169,100 @@
 <div class="main-wrapper-container">
 
     <div class="top-nav-bar">
-        <button class="btn-settings"><i class="fas fa-sliders-h"></i> Settings</button>
+        <button class="btn-settings" onclick="toggleSettingsModal()"><i class="fas fa-sliders-h"></i> Settings</button>
         <div class="brand-status">
             <div class="status-dot-green"></div>
-            <span>RexCraft Mods</span>
+            <span>RexCraft Engine</span>
         </div>
     </div>
 
     <div class="rex-hero-banner">
-        <div class="rex-bg-text-overlay">REXCRAFT</div>
-        <div class="rex-hero-content-wrapper">
-            <h1 class="rex-hero-title">RexCraft Modding Hub</h1>
-            <p class="rex-hero-subtitle">Unduh ratusan modifikasi, engine, dan berkas shader Minecraft pilihan terbaik.</p>
-            <a href="/tutorial" class="tutorial-alert-pill">
-                <i class="fas fa-book-open"></i> Bingung cara pasang berkas? Klik panduan lengkap
-            </a>
+        <div class="rex-banner-overlay-logo">REXCRAFT</div>
+        <h1 class="rex-hero-title">RexCraft Modding Hub</h1>
+        <p class="rex-hero-subtitle">Modifikasi Minecraft Terlengkap, Optimal, dan Anti-Lag.</p>
+        <a href="/tutorial" class="tutorial-alert-pill"><i class="fas fa-book"></i> Panduan Pasang Mod</a>
 
-            <div class="search-container-inside">
-                <i class="fas fa-search"></i>
-                <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod, addon, shader..." onkeyup="filterModsMaster()">
-            </div>
+        <div class="search-container-inside">
+            <i class="fas fa-search"></i>
+            <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Ketik nama modifikasi disini..." onkeyup="filterModsMaster()">
         </div>
     </div>
 
     <div class="filter-buttons-grid">
-        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
-            <i class="fas fa-globe"></i> Semua
-        </button>
-        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
-            <i class="fab fa-java"></i> Java
-        </button>
-        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
-            <i class="fas fa-mobile-alt"></i> MCPE
-        </button>
-        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">
-            <i class="fas fa-cog"></i> Advance
-        </button>
+        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)"><i class="fas fa-globe"></i> Semua</button>
+        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)"><i class="fab fa-java"></i> Java</button>
+        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)"><i class="fas fa-mobile-alt"></i> Bedrock</button>
+        <button class="filter-btn" style="color: #38bdf8;" onclick="toggleSettingsModal()"><i class="fas fa-cog"></i> Advance</button>
     </div>
 
     <div class="mods-grid-container" id="modsContainer">
         {% for mod in mods %}
-        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{% if mod.title %}{{ mod.title.lower() }}{% else %}{{ mod.name.lower() }}{% endif %}" data-version="{{ mod.version_range }}">
-            
-            <div class="mod-avatar-box">
-                {% if mod.icon_url %}
-                    <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon Mod">
-                {% else %}
-                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #0f172a;">
-                        <i class="fas fa-cube" style="font-size: 28px; color: var(--brand-green);"></i>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="mod-info-content">
-                <div class="tag-row-top">
-                    {% if mod.category == 'java' %}
-                    <span class="mini-badge badge-java">JAVA EDITION</span>
+        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{% if mod.title %}{{ mod.title.lower() }}{% else %}{{ mod.name.lower() }}{% endif %}">
+            <div class="mod-left-side-flex">
+                <div class="mod-avatar-box">
+                    {% if mod.icon_url %}
+                        <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
                     {% else %}
-                    <span class="mini-badge badge-mcpe">BEDROCK / MCPE</span>
+                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-cube" style="color:var(--brand-green); font-size:24px;"></i></div>
                     {% endif %}
-                    <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
-                    <span class="mini-badge badge-files"><i class="far fa-folder-open"></i> {{ mod.total_files }} Files</span>
                 </div>
-
-                <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
-                <p class="mod-card-desc">{{ mod.desc }}</p>
+                <div class="mod-info-content">
+                    <div class="tag-row-top">
+                        {% if mod.category == 'java' %}
+                        <span class="mini-badge badge-java">JAVA EDITION</span>
+                        {% else %}
+                        <span class="mini-badge badge-mcpe">BEDROCK / MCPE</span>
+                        {% endif %}
+                        <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
+                    </div>
+                    <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
+                    <p class="mod-card-desc">{{ mod.desc }}</p>
+                </div>
             </div>
-
             <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
-                <span>View Mod</span> <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
+                <span>View Mod</span> <i class="fas fa-chevron-right" style="font-size:10px;"></i>
             </a>
-
-        </div>
-        {% else %}
-        <div style="background: rgba(15,23,42,0.3); border: 2px dashed var(--border-color); padding: 48px; text-align: center; border-radius: 20px; color: #475569;">
-            <i class="fas fa-box-open" style="font-size: 44px; margin-bottom: 12px; color: var(--brand-green); opacity: 0.6;"></i>
-            <p style="margin: 0; font-weight: 600; font-size: 14px;">Belum ada berkas mod terdaftar di database.</p>
         </div>
         {% endfor %}
     </div>
-
 </div>
 
-<div class="rex-modal-overlay" id="advanceFilterModal">
+<div class="rex-modal-overlay" id="settingsModal">
     <div class="rex-modal-box">
-        <div class="modal-header-flex">
-            <div class="modal-title"><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Advance Filter</div>
-            <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header">
+            <span><i class="fas fa-cog"></i> Kontrol Sistem & Filter</span>
+            <button class="close-btn" onclick="toggleSettingsModal()"><i class="fas fa-times"></i></button>
         </div>
-        <div class="filter-select-group">
-            <label>Game Version</label>
-            <select id="modalVersionSelect" class="rex-dropdown">
-                <option value="all">Semua Versi (All Versions)</option>
-                <option value="1.21">Minecraft 1.21 / 1.21.1</option>
-                <option value="1.20">Minecraft 1.20+</option>
-            </select>
+        <p style="font-size:13px; color:#64748b; margin-bottom:12px;">Konfigurasi Engine Pencarian:</p>
+        <div style="background:#060913; padding:10px; border-radius:8px; border:1px solid var(--border-color); font-size:12px; color:#fff;">
+            🟢 Status Server: Online<br>
+            🛠️ Engine Versi: Core v2.4a<br>
+            📦 Penyimpanan Cloud: Terhubung
         </div>
-        <div class="filter-select-group">
-            <label>Platform & Type Tag</label>
-            <select id="modalPlatformSelect" class="rex-dropdown">
-                <option value="all">Semua Jenis (All)</option>
-                <option value="java-racikan">Java mods racikan</option>
-                <option value="java-mods">Java mods</option>
-                <option value="java-texturepack">Java texturepack</option>
-                <option value="java-shaders">Java shaders</option>
-                <option value="java-map">Java map</option>
-                <option value="mcpe-addon">Mcpe add-on</option>
-                <option value="mcpe-shaders">Mcpe shaders</option>
-                <option value="mcpe-texturepack">Mcpe texturepack</option>
-                <option value="mcpe-map">Mcpe map</option>
-            </select>
-        </div>
-        <button class="btn-apply-advance" onclick="applyAdvanceFilterAction()">
-            <i class="fas fa-check-circle"></i> Terapkan Filter
-        </button>
     </div>
 </div>
 
 <script>
 let currentCategory = 'all';
-
-function openAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'flex'; }
-function closeAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'none'; }
-
+function toggleSettingsModal() {
+    const modal = document.getElementById('settingsModal');
+    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+}
 function setCategoryFilter(category, element) {
-    const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => btn.classList.remove('active-filter'));
-    if (element && !element.classList.contains('btn-advance-filter')) {
-        element.classList.add('active-filter');
-    }
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
+    if(element) element.classList.add('active-filter');
     currentCategory = category;
     filterModsMaster();
 }
-
-function applyAdvanceFilterAction() {
-    const selectedVersion = document.getElementById('modalVersionSelect').value;
-    const selectedPlatform = document.getElementById('modalPlatformSelect').value;
-    const cards = document.querySelectorAll('.mod-card-item');
-
-    cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category'); 
-        const cardTitle = card.getAttribute('data-title'); 
-        const cardVersion = card.getAttribute('data-version');
-
-        let matchPlatformAndType = false;
-        if (selectedPlatform === 'all') { matchPlatformAndType = true; } else {
-            const parts = selectedPlatform.split('-');
-            const reqPlatform = parts[0]; 
-            const reqKeyword = parts[1];  
-            const basePlatformMatch = (cardCategory === reqPlatform);
-            let keywordMatch = cardTitle.includes(reqKeyword);
-            if (reqKeyword === 'addon') { keywordMatch = cardTitle.includes('addon') || cardTitle.includes('add-on'); }
-            matchPlatformAndType = (basePlatformMatch && keywordMatch);
-        }
-        const matchVersion = (selectedVersion === 'all' || cardVersion.includes(selectedVersion));
-        if (matchPlatformAndType && matchVersion) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
-    });
-    closeAdvanceModal();
-}
-
 function filterModsMaster() {
     const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
-    const cards = document.querySelectorAll('.mod-card-item');
-    cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category');
-        const cardTitle = card.getAttribute('data-title');
-        const matchCategory = (currentCategory === 'all' || cardCategory === currentCategory);
-        const matchSearch = cardTitle.includes(searchKeyword);
-        if(matchCategory && matchSearch) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
+    document.querySelectorAll('.mod-card-item').forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const title = card.getAttribute('data-title');
+        const matchCat = (currentCategory === 'all' || cat === currentCategory);
+        const matchSearch = title.includes(searchKeyword);
+        card.style.display = (matchCat && matchSearch) ? 'flex' : 'none';
     });
-}
-
-window.onclick = function(event) {
-    const modal = document.getElementById('advanceFilterModal');
-    if (event.target == modal) { closeAdvanceModal(); }
 }
 </script>
 </body>
