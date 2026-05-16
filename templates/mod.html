@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ mod.title }} | RexCraft Hub</title>
+    <title>{{ mod.title }} | RexCraft Premium Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -13,47 +13,99 @@
             --bg-surface: #0f172a;
             --border-color: rgba(51, 65, 85, 0.4);
             --brand-green: #22c55e;
+            --brand-green-hover: #16a34a;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
         }
 
-        body { background-color: var(--bg-main); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-secondary); margin: 0; padding: 0; }
-        .detail-wrapper { max-width: 750px; margin: 0 auto; padding: 20px 14px; }
+        body { 
+            background-color: var(--bg-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: var(--text-secondary); 
+            margin: 0; 
+            padding: 0; 
+        }
         
-        .back-nav-link { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+        .detail-wrapper { max-width: 720px; margin: 0 auto; padding: 20px 14px; box-sizing: border-box; }
         
-        /* HEADER UTAMA ALA MODRINTH */
-        .modrinth-header-container { display: flex; gap: 18px; align-items: center; margin-bottom: 24px; }
-        .modrinth-logo-frame { width: 74px; height: 74px; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); }
+        .back-nav-link { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; transition: 0.2s; }
+        .back-nav-link:hover { color: #fff; }
+        
+        /* ==================== MODRINTH INTERFACE HEADER ==================== */
+        .modrinth-header-container { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
+        .modrinth-logo-frame { width: 72px; height: 72px; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0; }
         .modrinth-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
-        .mod-header-title { font-size: 24px; color: #fff; font-weight: 800; margin: 0 0 4px 0; }
+        .mod-header-title { font-size: 24px; color: #fff; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.5px; }
         
-        /* INTERACTION ROW: DOWNLOADS, LIKES & SHARE COUNTER */
-        .modrinth-stats-row { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
-        .stat-item-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; }
+        .edition-pill-badge { font-size: 10px; font-weight: 800; background: rgba(34, 197, 94, 0.1); color: var(--brand-green); padding: 3px 8px; border-radius: 6px; text-transform: uppercase; border: 1px solid rgba(34,197,94,0.15); display: inline-block; }
+        
+        /* ==================== STATS ROW (DOWNLOADS & LIKES) ==================== */
+        .modrinth-stats-row { 
+            display: flex; 
+            gap: 14px; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 18px; 
+        }
+        .stat-item-badge { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: #fff; 
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 10px;
+        }
         .stat-item-badge i { color: var(--brand-green); }
         
-        .btn-interact-heart { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #f87171; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .btn-interact-heart:hover { background: #ef4444; color: #fff; }
+        /* TOMBOL HEART INTERAKTIF */
+        .btn-interact-heart { 
+            background: rgba(239, 68, 68, 0.08); 
+            border: 1px solid rgba(239, 68, 68, 0.2); 
+            color: #f87171; 
+            padding: 6px 14px; 
+            border-radius: 10px; 
+            font-weight: 700; 
+            font-size: 13px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            transition: all 0.2s ease;
+        }
+        .btn-interact-heart:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
 
-        /* TAB SELECTION EFFECT */
-        .modrinth-tabs-list { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .tab-item { padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--text-secondary); border-bottom: 2px solid transparent; }
+        /* TAB BAR MOCKUP STYLE */
+        .modrinth-tabs-list { display: flex; gap: 6px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .tab-item { padding: 10px 14px; font-size: 13px; font-weight: 700; color: var(--text-secondary); border-bottom: 2px solid transparent; }
         .tab-item.active-tab { color: var(--brand-green); border-color: var(--brand-green); }
 
-        /* CONTAINER DOKUMEN / DESKRIPSI */
-        .content-card-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; line-height: 1.6; font-size: 14px; color: #cbd5e1; margin-bottom: 24px; }
+        /* CONTENT BLOCK BOX */
+        .content-card-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; margin-bottom: 24px; }
+        .content-card-box p { line-height: 1.6; font-size: 14px; color: #cbd5e1; margin: 0 0 12px 0; }
         
-        /* LIST FILE VERSI DOWNLOAD (DAPAT DIKLIK) */
+        /* ==================== DOWNLOAD SECTION ALA MODRINTH ==================== */
         .version-list-section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        
         .version-file-card {
-            background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px;
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; text-decoration: none; color: inherit; transition: 0.2s;
+            background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); padding: 14px; border-radius: 14px;
+            display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; transition: 0.2s;
         }
-        .version-file-card:hover { border-color: var(--brand-green); background: var(--bg-surface); }
-        .v-title { color: #fff; font-weight: 700; font-size: 13px; margin-bottom: 4px; }
-        .v-meta { display: flex; gap: 6px; font-size: 11px; color: #64748b; }
-        .v-download-icon-box { width: 32px; height: 32px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brand-green); }
+        .version-file-card:hover { border-color: var(--brand-green); background: var(--bg-surface); transform: scale(1.005); }
+        
+        .v-title { color: #fff; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .v-meta { display: flex; gap: 8px; font-size: 11px; color: #64748b; font-weight: 500; }
+        .v-meta span i { margin-right: 3px; }
+        
+        .v-download-icon-box { 
+            width: 36px; height: 36px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; color: var(--brand-green); transition: 0.2s;
+        }
+        .version-file-card:hover .v-download-icon-box { background: var(--brand-green); color: #fff; }
     </style>
 </head>
 <body>
@@ -64,90 +116,74 @@
     <div class="modrinth-header-container">
         <div class="modrinth-logo-frame">
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" alt="Logo">
+                <img src="{{ mod.icon_url }}" alt="Icon Mod">
             {% else %}
-                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-cubes" style="color:var(--brand-green); font-size:28px;"></i></div>
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-cubes" style="color:var(--brand-green); font-size:26px;"></i></div>
             {% endif %}
         </div>
         <div>
             <h1 class="mod-header-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h1>
-            <span style="font-size:11px; font-weight:800; background:rgba(34,197,94,0.1); color:var(--brand-green); padding:3px 8px; border-radius:6px; text-transform:uppercase;">{{ mod.category }} EDITION</span>
+            <span class="edition-pill-badge">{{ mod.category }} Edition</span>
         </div>
     </div>
 
     <div class="modrinth-stats-row">
         <div class="stat-item-badge">
-            <i class="fas fa-download"></i> <span>14.5K Downloads</span>
+            <i class="fas fa-download"></i> 
+            <span>12.8K <span style="color:var(--text-secondary); font-weight:500; font-size:12px;">unduhan</span></span>
         </div>
         <button class="btn-interact-heart" id="heartBtn" onclick="triggerLikeAction()">
-            <i class="far fa-heart"></i> <span id="likeCount">342 Likes</span>
+            <i class="far fa-heart"></i> <span id="likeText">415 Suka</span>
         </button>
     </div>
 
     <div class="modrinth-tabs-list">
-        <div class="tab-item active-tab">Description</div>
-        <div class="tab-item">Versions</div>
+        <div class="tab-item active-tab">Deskripsi Berkas</div>
+        <div class="tab-item">Versi Rilis</div>
     </div>
 
     <div class="content-card-box">
-        <h3 style="margin-top:0; color:#fff; font-size:15px;"><i class="far fa-file-alt" style="color:var(--brand-green);"></i> Deskripsi Resmi Mod</h3>
         <p>{{ mod.desc }}</p>
-        <p style="margin-bottom:0; font-size:13px; color:#64748b;">Berkas resmi dari database RexCraft. Sudah melewati uji coba komparasi performa sistem agar dijamin lancar, estetik, dan anti-lag saat dimainkan di Minecraft Anda.</p>
+        <p style="margin: 0; font-size:13px; color:#64748b;">Berkas resmi berjenis {{ mod.category.upper() }} dari RexCraft Mods. Sudah melewati uji coba komparasi performa sistem agar dijamin aman, lancar, estetik, dan anti-lag saat dimainkan di Minecraft Anda.</p>
     </div>
 
     <div class="version-list-section-title">
-        <i class="fas fa-history" style="color:#c084fc;"></i> Tersedia Berkas Rilis Versi
+        <i class="fas fa-cloud-download-alt" style="color:#38bdf8;"></i> Unduh Berkas Versi Terbaru
     </div>
     
-    {% if mod.files %}
-        {% for file in mod.files %}
-        <a href="/download/{{ mod.category }}/{{ mod.id }}/{{ file }}" class="version-file-card">
-            <div>
-                <div class="v-title">{{ file }}</div>
-                <div class="v-meta">
-                    <span><i class="far fa-clock"></i> Minecraft {{ mod.version_range }}</span>
-                    <span>•</span>
-                    <span>Stable Release</span>
-                </div>
+    <a href="/download/{{ mod.category }}/{{ mod.id }}/default" class="version-file-card">
+        <div>
+            <div class="v-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %} (Rilis Utama)</div>
+            <div class="v-meta">
+                <span><i class="fas fa-gamepad"></i> MC {{ mod.version_range }}</span>
+                <span>•</span>
+                <span><i class="fas fa-shield-alt"></i> Verified Stable</span>
             </div>
-            <div class="v-download-icon-box">
-                <i class="fas fa-download"></i>
-            </div>
-        </a>
-        {% endfor %}
-    {% else %}
-        <a href="/download/{{ mod.category }}/{{ mod.id }}/default" class="version-file-card">
-            <div>
-                <div class="v-title">Unduh Berkas Utama (.zip / .jar)</div>
-                <div class="v-meta">
-                    <span><i class="far fa-clock"></i> Minecraft {{ mod.version_range }}</span>
-                </div>
-            </div>
-            <div class="v-download-icon-box">
-                <i class="fas fa-download"></i>
-            </div>
-        </a>
-    {% endif %}
+        </div>
+        <div class="v-download-icon-box">
+            <i class="fas fa-download"></i>
+        </div>
+    </a>
 
 </div>
 
 <script>
-let isLiked = false;
-let likes = 342;
+let liked = false;
+let count = 415;
 function triggerLikeAction() {
     const btn = document.getElementById('heartBtn');
-    if(!isLiked) {
-        likes++;
-        btn.innerHTML = `<i class="fas fa-heart" style="color:#ef4444;"></i> <span>${likes} Likes</span>`;
+    if(!liked) {
+        count++;
+        btn.innerHTML = `<i class="fas fa-heart" style="color:#ef4444;"></i> <span>${count} Suka</span>`;
         btn.style.background = "#ef4444";
         btn.style.color = "#fff";
-        isLiked = true;
+        liked = true;
     } else {
-        likes--;
-        btn.innerHTML = `<i class="far fa-heart"></i> <span>${likes} Likes</span>`;
-        btn.style.background = "rgba(239, 68, 68, 0.1)";
+        count--;
+        btn.innerHTML = `<i class="far fa-heart"></i> <span>${count} Suka</span>`;
+        btn.style.background = "rgba(239, 68, 68, 0.08)";
         btn.style.color = "#f87171";
-        isLiked = false;
+        liked = false;
     }
 }
 </script>
