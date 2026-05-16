@@ -7,297 +7,86 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { 
-            background-color: #0b0f19; 
-            font-family: 'Inter', sans-serif; 
-            color: #cbd5e1; 
-            margin: 0; 
-            padding: 0; 
-        }
+        body { background-color: #0b0f19; font-family: 'Inter', sans-serif; color: #cbd5e1; margin: 0; padding: 0; }
         .main-wrapper-container { max-width: 800px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
-        
-        /* TOP BAR NAV */
-        .top-nav-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .btn-settings {
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #94a3b8;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .brand-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #22c55e;
-            font-weight: 700;
-            font-size: 15px;
-        }
-        .status-dot-green {
-            width: 10px;
-            height: 10px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #22c55e;
-        }
-
-        /* HERO BANNER BACKGROUND LOCAL IMAGE */
-        .rex-hero-banner {
-            position: relative;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.5), rgba(11, 15, 25, 0.95)), 
-                        url('/static/img/banner.jpg') center/cover no-repeat;
-            border: 1px solid #1e293b;
-            border-radius: 16px;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-        
-        .rex-bg-text-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 70px;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.02);
-            letter-spacing: 8px;
-            white-space: nowrap;
-            pointer-events: none;
-            text-transform: uppercase;
-            z-index: 1;
-        }
-
+        .top-nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-settings { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
+        .brand-status { display: flex; align-items: center; gap: 8px; color: #22c55e; font-weight: 700; font-size: 15px; }
+        .status-dot-green { width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
+        .rex-hero-banner { position: relative; background: linear-gradient(to bottom, rgba(15, 23, 42, 0.5), rgba(11, 15, 25, 0.95)), url('/static/img/banner.jpg') center/cover no-repeat; border: 1px solid #1e293b; border-radius: 16px; padding: 40px 20px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5); overflow: hidden; }
+        .rex-bg-text-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 70px; font-weight: 900; color: rgba(255, 255, 255, 0.02); letter-spacing: 8px; white-space: nowrap; pointer-events: none; text-transform: uppercase; z-index: 1; }
         .rex-hero-content-wrapper { position: relative; z-index: 2; }
         .rex-hero-title { font-size: 30px; font-weight: 800; color: #fff; margin: 0 0 8px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .rex-hero-subtitle { color: #94a3b8; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5; }
-        
-        .tutorial-alert-pill {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 8px 16px;
-            border-radius: 8px;
-            color: #4ade80;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            margin-bottom: 20px;
-            backdrop-filter: blur(4px);
-        }
-
-        /* SEARCH CONTAINER */
-        .search-container-inside {
-            max-width: 550px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .search-container-inside i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-        }
-        .rex-search-field {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid #334155;
-            border-radius: 10px;
-            padding: 14px 14px 14px 45px;
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-            box-sizing: border-box;
-            transition: 0.2s;
-        }
+        .tutorial-alert-pill { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 16px; border-radius: 8px; color: #4ade80; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; margin-bottom: 20px; backdrop-filter: blur(4px); }
+        .search-container-inside { max-width: 550px; margin: 0 auto; position: relative; }
+        .search-container-inside i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #64748b; }
+        .rex-search-field { width: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); border: 1px solid #334155; border-radius: 10px; padding: 14px 14px 14px 45px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; transition: 0.2s; }
         .rex-search-field:focus { border-color: #22c55e; }
-
-        /* BUTTONS GRID */
-        .filter-buttons-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        .filter-btn {
-            background: #141b2d;
-            border: 1px solid #1e293b;
-            color: #94a3b8;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
+        .filter-buttons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        .filter-btn { background: #141b2d; border: 1px solid #1e293b; color: #94a3b8; padding: 12px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
         .filter-btn:hover { background: #1e293b; color: #fff; }
-        .filter-btn.active-filter {
-            background: #22c55e;
-            color: #fff;
-            border-color: #22c55e;
-        }
-        
-        .btn-advance-filter {
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            color: #38bdf8;
-        }
-        .btn-advance-filter:hover {
-            background: #38bdf8;
-            color: #fff;
-            border-color: #38bdf8;
-        }
-
-        /* MODS CARDS */
+        .filter-btn.active-filter { background: #22c55e; color: #fff; border-color: #22c55e; }
+        .btn-advance-filter { background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        .btn-advance-filter:hover { background: #38bdf8; color: #fff; border-color: #38bdf8; }
         .mods-grid-container { display: flex; flex-direction: column; gap: 20px; }
-        .mod-card-item { 
-            background: #0f172a; 
-            border: 1px solid #1e293b; 
-            border-radius: 16px; 
-            padding: 22px; 
-            display: flex; 
-            gap: 20px; 
-            position: relative;
-        }
-        .mod-avatar-box { 
-            width: 76px; height: 76px; background: #1e293b; border-radius: 14px; 
-            display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
-        }
+        .mod-card-item { background: #0f172a; border: 1px solid #1e293b; border-radius: 16px; padding: 22px; display: flex; gap: 20px; position: relative; }
+        .mod-avatar-box { width: 76px; height: 76px; background: #1e293b; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
         .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
         .mod-info-content { flex-grow: 1; display: flex; flex-direction: column; }
-        
         .tag-row-top { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
         .mini-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
         .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
         .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; }
         .badge-version { background: rgba(147, 51, 234, 0.1); color: #c084fc; }
         .badge-files { background: rgba(34, 197, 94, 0.1); color: #4ade80; }
-
         .mod-card-title { font-size: 22px; color: #fff; font-weight: 700; margin: 0 0 6px 0; }
         .mod-card-desc { color: #94a3b8; font-size: 13px; margin: 0 0 18px 0; line-height: 1.5; }
-        
-        .action-view-btn { 
-            background: #22c55e; color: #fff; font-size: 13px; font-weight: 700; 
-            padding: 12px; border-radius: 10px; display: flex; align-items: center; 
-            justify-content: center; gap: 6px; text-decoration: none; transition: 0.2s; 
-            width: 100%; box-sizing: border-box; margin-top: auto;
-        }
+        .action-view-btn { background: #22c55e; color: #fff; font-size: 13px; font-weight: 700; padding: 12px; border-radius: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; transition: 0.2s; width: 100%; box-sizing: border-box; margin-top: auto; }
         .action-view-btn:hover { background: #16a34a; }
-
-        /* MODAL OUTLINE ADVANCE FILTER */
-        .rex-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(6px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-        .rex-modal-box {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 420px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            animation: popSlide 0.25s ease-out;
-            box-sizing: border-box;
-        }
+        .rex-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 15px; box-sizing: border-box; }
+        .rex-modal-box { background: #0f172a; border: 1px solid #334155; border-radius: 16px; width: 100%; max-width: 420px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); animation: popSlide 0.25s ease-out; box-sizing: border-box; }
         @keyframes popSlide { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
         .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .modal-title { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
         .modal-close-x { background: none; border: none; color: #64748b; font-size: 20px; cursor: pointer; }
         .modal-close-x:hover { color: #fff; }
-
         .filter-select-group { margin-bottom: 16px; }
         .filter-select-group label { display: block; font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
         .rex-dropdown { width: 100%; background: #0b0f19; border: 1px solid #334155; border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; }
         .rex-dropdown:focus { border-color: #22c55e; }
-
-        .btn-apply-advance {
-            background: #22c55e; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;
-        }
+        .btn-apply-advance { background: #22c55e; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; }
         .btn-apply-advance:hover { background: #16a34a; }
-
-        @media (max-width: 600px) { 
-            .mod-card-item { flex-direction: column; } 
-            .filter-buttons-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 600px) { .mod-card-item { flex-direction: column; } .filter-buttons-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-
 <div class="main-wrapper-container">
-
     <div class="top-nav-bar">
         <button class="btn-settings"><i class="fas fa-cog"></i> Settings</button>
-        <div class="brand-status">
-            <div class="status-dot-green"></div>
-            <span>RexCraft Mods</span>
-        </div>
+        <div class="brand-status"><div class="status-dot-green"></div><span>RexCraft Mods</span></div>
     </div>
-
     <div class="rex-hero-banner">
         <div class="rex-bg-text-overlay">REXCRAFT</div>
-        
         <div class="rex-hero-content-wrapper">
             <h1 class="rex-hero-title">RexCraft Mods Hub</h1>
             <p class="rex-hero-subtitle">Cari berkas modifikasi Minecraft favoritmu dengan instan.</p>
-            
-            <a href="/tutorial" class="tutorial-alert-pill">
-                📩 Bingung cara pasang mod? Klik panduan di sini!
-            </a>
-
+            <a href="/tutorial" class="tutorial-alert-pill">📩 Bingung cara pasang mod? Klik panduan di sini!</a>
             <div class="search-container-inside">
                 <i class="fas fa-search"></i>
                 <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod atau shader..." onkeyup="filterModsMaster()">
             </div>
         </div>
     </div>
-
     <div class="filter-buttons-grid">
-        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
-            🌏 Semua Berkas
-        </button>
-        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
-            ☕ Java Edition
-        </button>
-        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
-            📱 Bedrock / MCPE
-        </button>
-        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">
-            ⚙️ Advance Filter
-        </button>
+        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">🌏 Semua Berkas</button>
+        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">☕ Java Edition</button>
+        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">📱 Bedrock / MCPE</button>
+        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">⚙️ Advance Filter</button>
     </div>
-
     <div class="mods-grid-container" id="modsContainer">
         {% for mod in mods %}
-        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{{ mod.title.lower() }}" data-version="{{ mod.version_range }}">
-            
+        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{% if mod.title %}{{ mod.title.lower() }}{% else %}{{ mod.name.lower() }}{% endif %}" data-version="{{ mod.version_range }}">
             <div class="mod-avatar-box">
                 {% if mod.icon_url %}
                     <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
@@ -305,7 +94,6 @@
                     <i class="fas fa-cubes" style="font-size: 26px; color: #22c55e;"></i>
                 {% endif %}
             </div>
-
             <div class="mod-info-content">
                 <div class="tag-row-top">
                     {% if mod.category == 'java' %}
@@ -313,19 +101,13 @@
                     {% else %}
                     <span class="mini-badge badge-mcpe">MCPE</span>
                     {% endif %}
-                    
                     <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
                     <span class="mini-badge badge-files">📁 {{ mod.total_files }} File</span>
                 </div>
-
-                <h2 class="mod-card-title">{{ mod.title }}</h2>
+                <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
                 <p class="mod-card-desc">{{ mod.desc }}</p>
-                
-                <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
-                    📦 View Download
-                </a>
+                <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">📦 View Download</a>
             </div>
-
         </div>
         {% else %}
         <div style="background: #0f172a; border: 1px dashed #1e293b; padding: 40px; text-align: center; border-radius: 12px; color: #94a3b8;">
@@ -334,18 +116,13 @@
         </div>
         {% endfor %}
     </div>
-
 </div>
-
 <div class="rex-modal-overlay" id="advanceFilterModal">
     <div class="rex-modal-box">
         <div class="modal-header-flex">
-            <div class="modal-title">
-                <i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Filter Pencarian Spesifik
-            </div>
+            <div class="modal-title"><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Filter Pencarian Spesifik</div>
             <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
         </div>
-
         <div class="filter-select-group">
             <label><i class="fas fa-gamepad"></i> Select Game Version</label>
             <select id="modalVersionSelect" class="rex-dropdown">
@@ -354,7 +131,6 @@
                 <option value="1.20">Minecraft 1.20+</option>
             </select>
         </div>
-
         <div class="filter-select-group">
             <label><i class="fas fa-layer-group"></i> Select Platform & Type</label>
             <select id="modalPlatformSelect" class="rex-dropdown">
@@ -370,108 +146,55 @@
                 <option value="mcpe-map">Mcpe map</option>
             </select>
         </div>
-
-        <button class="btn-apply-advance" onclick="applyAdvanceFilterAction()">
-            <i class="fas fa-check-circle"></i> Terapkan Filter Spesifik
-        </button>
+        <button class="btn-apply-advance" onclick="applyAdvanceFilterAction()"><i class="fas fa-check-circle"></i> Terapkan Filter Spesifik</button>
     </div>
 </div>
-
 <script>
 let currentCategory = 'all';
-
-function openAdvanceModal() {
-    document.getElementById('advanceFilterModal').style.display = 'flex';
-}
-
-function closeAdvanceModal() {
-    document.getElementById('advanceFilterModal').style.none = 'none';
-    document.getElementById('advanceFilterModal').style.display = 'none';
-}
-
+function openAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'flex'; }
+function closeAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'none'; }
 function setCategoryFilter(category, element) {
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active-filter'));
-    if (element && !element.classList.contains('btn-advance-filter')) {
-        element.classList.add('active-filter');
-    }
-    
+    if (element && !element.classList.contains('btn-advance-filter')) { element.classList.add('active-filter'); }
     currentCategory = category;
     filterModsMaster();
 }
-
-// LOGIKA FILTER SPESIFIK CUSTOM BARU
 function applyAdvanceFilterAction() {
     const selectedVersion = document.getElementById('modalVersionSelect').value;
     const selectedPlatform = document.getElementById('modalPlatformSelect').value;
     const cards = document.querySelectorAll('.mod-card-item');
-
-    cards.forEach(card => {
-        const cardCategory = card.getAttribute('data-category'); // 'java' atau 'mcpe'
-        const cardTitle = card.getAttribute('data-title'); // Judul text kecil
-        const cardVersion = card.getAttribute('data-version');
-
-        let matchPlatformAndType = false;
-
-        if (selectedPlatform === 'all') {
-            matchPlatformAndType = true;
-        } else {
-            // Memisahkan kata kunci pencarian, cth: 'java-racikan' -> platform: java, sub: racikan
-            const parts = selectedPlatform.split('-');
-            const reqPlatform = parts[0]; // java / mcpe
-            const reqKeyword = parts[1];  // racikan / mods / shaders / addon / map / texturepack
-
-            const basePlatformMatch = (cardCategory === reqPlatform);
-            
-            // Mencari kecocokan kata kunci di dalam Judul Mod atau Deskripsi Mod
-            let keywordMatch = cardTitle.includes(reqKeyword);
-            
-            // Kasus khusus singkatan addon / add-on
-            if (reqKeyword === 'addon') {
-                keywordMatch = cardTitle.includes('addon') || cardTitle.includes('add-on');
-            }
-
-            matchPlatformAndType = (basePlatformMatch && keywordMatch);
-        }
-
-        const matchVersion = (selectedVersion === 'all' || cardVersion.includes(selectedVersion));
-
-        if (matchPlatformAndType && matchVersion) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-
-    closeAdvanceModal();
-}
-
-// Filter pencarian ketik regular
-function filterModsMaster() {
-    const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
-    const cards = document.querySelectorAll('.mod-card-item');
-    
     cards.forEach(card => {
         const cardCategory = card.getAttribute('data-category');
         const cardTitle = card.getAttribute('data-title');
-        
+        const cardVersion = card.getAttribute('data-version');
+        let matchPlatformAndType = false;
+        if (selectedPlatform === 'all') { matchPlatformAndType = true; } else {
+            const parts = selectedPlatform.split('-');
+            const reqPlatform = parts[0];
+            const reqKeyword = parts[1];
+            const basePlatformMatch = (cardCategory === reqPlatform);
+            let keywordMatch = cardTitle.includes(reqKeyword);
+            if (reqKeyword === 'addon') { keywordMatch = cardTitle.includes('addon') || cardTitle.includes('add-on'); }
+            matchPlatformAndType = (basePlatformMatch && keywordMatch);
+        }
+        const matchVersion = (selectedVersion === 'all' || cardVersion.includes(selectedVersion));
+        if (matchPlatformAndType && matchVersion) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
+    });
+    closeAdvanceModal();
+}
+function filterModsMaster() {
+    const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
+    const cards = document.querySelectorAll('.mod-card-item');
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardTitle = card.getAttribute('data-title');
         const matchCategory = (currentCategory === 'all' || cardCategory === currentCategory);
         const matchSearch = cardTitle.includes(searchKeyword);
-        
-        if(matchCategory && matchSearch) {
-            card.style.display = 'flex';
-        } else {
-            card.style.display = 'none';
-        }
+        if(matchCategory && matchSearch) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
     });
 }
-
-window.onclick = function(event) {
-    const modal = document.getElementById('advanceFilterModal');
-    if (event.target == modal) {
-        closeAdvanceModal();
-    }
-}
+window.onclick = function(event) { const modal = document.getElementById('advanceFilterModal'); if (event.target == modal) { closeAdvanceModal(); } }
 </script>
 </body>
 </html>
