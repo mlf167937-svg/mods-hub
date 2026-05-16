@@ -30,7 +30,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Perbaikan: Menggunakan warna dasar hitam-biru gelap yang solid agar tidak bug hitam pekat */
         body {
             background-color: #0b0f19;
             color: #f8fafc;
@@ -50,7 +49,7 @@
             z-index: 999;
         }
 
-        /* Tombol Pengaturan Ukuran Kecil Pas */
+        /* Tombol Settings yang Diubah Namanya */
         .settings-container {
             position: relative;
         }
@@ -59,12 +58,15 @@
             background: #1f2937;
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #94a3b8;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             font-size: 13px;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .settings-btn:hover {
@@ -72,18 +74,18 @@
             color: white;
         }
 
-        /* Menu Dropdown Ganti Warna */
+        /* Dropdown Settings yang Diperluas Sesuai Request Bos */
         .settings-dropdown {
             display: none;
             position: absolute;
-            top: 130%;
+            top: 135%;
             left: 0;
-            background: #1f2937;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 130px;
-            border-radius: 12px;
-            padding: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 210px;
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
             z-index: 1000;
         }
 
@@ -93,16 +95,20 @@
 
         .settings-dropdown h4 {
             font-size: 11px;
-            color: #94a3b8;
+            color: #64748b;
             text-transform: uppercase;
             margin-bottom: 8px;
-            text-align: center;
+            letter-spacing: 0.5px;
         }
 
+        /* Bagian Ganti Warna */
         .theme-options {
             display: flex;
             gap: 10px;
-            justify-content: center;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .theme-dot {
@@ -111,12 +117,42 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
+            transition: transform 0.2s;
         }
-
+        
+        .theme-dot:hover { transform: scale(1.1); }
         .theme-dot.active { border-color: white; }
 
+        /* Bagian List Gamertag Info */
+        .gamertag-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .gamertag-item {
+            background: rgba(31, 41, 55, 0.5);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .gamertag-label {
+            color: #64748b;
+            font-size: 10px;
+            display: block;
+            margin-bottom: 1px;
+            font-weight: 600;
+        }
+
+        .gamertag-value {
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+
         .logo {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             color: var(--neon-color);
             text-shadow: 0 0 8px var(--neon-glow);
@@ -126,149 +162,6 @@
             max-width: 1200px;
             margin: auto;
             padding: 30px 20px;
-        }
-
-        /* Hero Banner Utama */
-        .hero-banner {
-            position: relative;
-            height: 280px;
-            border-radius: 20px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            background: #111827;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('/static/img/banner.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-            animation: bannerBerjalan 20s infinite alternate ease-in-out;
-        }
-
-        @keyframes bannerBerjalan {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08) translate(-4px, -4px); }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(11, 15, 25, 0.4) 0%, #0b0f19 100%);
-            z-index: 2;
-        }
-
-        .hero-content { position: relative; z-index: 3; max-width: 600px; }
-        .hero-content h1 {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: #ffffff;
-        }
-        .hero-content p { color: #94a3b8; font-size: 15px; }
-
-        .search-wrapper { position: relative; max-width: 400px; margin: 15px auto 0 auto; }
-        .search-input {
-            width: 100%;
-            padding: 10px 16px;
-            background: #111827;
-            border: 2px solid #1f2937;
-            border-radius: 10px;
-            color: white;
-            font-size: 14px;
-            outline: none;
-        }
-        .search-input:focus {
-            border-color: var(--neon-color);
-        }
-
-        /* Perbaikan Total Struktur Kontainer Tombol Kategori */
-        .filter-container {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            background: #1f2937;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 10px 22px;
-            border-radius: 10px;
-            color: #cbd5e1;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .filter-btn:hover {
-            background: #374151;
-            color: white;
-        }
-
-        /* Saat Aktif: Berwarna Penuh Mengikuti Tema Neon */
-        .filter-btn.active {
-            background: var(--neon-color);
-            border-color: var(--neon-color);
-            color: #0b0f19;
-            box-shadow: 0 0 10px var(--neon-glow);
-        }
-
-        /* Grid & Kartu Mod */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: #111827;
-            border: 1px solid #1f2937;
-            padding: 24px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card h2 { font-size: 20px; color: #ffffff; margin-bottom: 8px; }
-        .card:hover h2 { color: var(--neon-color); }
-        .card p { color: #94a3b8; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: #1f2937;
-            color: #cbd5e1;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 20px;
-            border-radius: 10px;
-            background: var(--neon-color);
-            text-decoration: none;
-            color: #0b0f19;
-            font-weight: 700;
-            font-size: 14px;
-            width: 100%;
         }
 
         .watermark {
@@ -288,14 +181,28 @@
 
 <div class="nav">
     <div class="settings-container">
-        <button class="settings-btn" onclick="toggleSettings()">⚙️ Tema</button>
+        <button class="settings-btn" onclick="toggleSettings()">⚙️ Settings</button>
         <div class="settings-dropdown" id="settingsDropdown">
-            <h4>Pilih Warna</h4>
+            
+            <h4>Pilihan Tema</h4>
             <div class="theme-options">
-                <div class="theme-dot active" style="background: #22c55e;" onclick="changeTheme('default', this)"></div>
-                <div class="theme-dot" style="background: #a855f7;" onclick="changeTheme('cyberpunk', this)"></div>
-                <div class="theme-dot" style="background: #06b6d4;" onclick="changeTheme('aurora', this)"></div>
+                <div class="theme-dot active" style="background: #22c55e;" onclick="changeTheme('default', this)" title="Hijau Default"></div>
+                <div class="theme-dot" style="background: #a855f7;" onclick="changeTheme('cyberpunk', this)" title="Ungu Cyberpunk"></div>
+                <div class="theme-dot" style="background: #06b6d4;" onclick="changeTheme('aurora', this)" title="Biru Aurora"></div>
             </div>
+
+            <h4>Gamertag MC</h4>
+            <div class="gamertag-section">
+                <div class="gamertag-item">
+                    <span class="gamertag-label">JAVA EDITION</span>
+                    <span class="gamertag-value">RexCraft</span>
+                </div>
+                <div class="gamertag-item">
+                    <span class="gamertag-label">BEDROCK / MCPE</span>
+                    <span class="gamertag-value">RexCraft6506</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
