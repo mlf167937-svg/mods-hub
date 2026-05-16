@@ -1,81 +1,152 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="max-width: 1000px; margin: 40px auto; padding: 0 20px; font-family: 'Inter', sans-serif;">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    body { background-color: #111213 !important; font-family: 'Inter', sans-serif; color: #ced4da; }
+    .modrinth-container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+    .back-btn { text-decoration: none; color: #a1a1aa; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 25px; transition: color 0.2s; }
+    .back-btn:hover { color: #00af5c; }
     
-    <div style="margin-bottom: 20px;">
-        <a href="/" style="text-decoration: none; color: #a1a1aa; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 5px;">
-            <i class="fas fa-chevron-left"></i> Kembali ke Penjelajah Mod
+    /* HEADER STYLING */
+    .project-header { display: flex; gap: 24px; align-items: center; margin-bottom: 30px; flex-wrap: wrap; }
+    .project-icon { width: 96px; height: 96px; background: #1c1e1f; border-radius: 16px; display: flex; align-items: center; justify-content: center; border: 1px solid #2d3134; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .project-title { font-size: 32px; color: #fff; font-weight: 800; margin: 0 0 8px 0; letter-spacing: -0.5px; }
+    
+    /* BADGE STYLING */
+    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .badge-custom { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .badge-green { background: rgba(0, 175, 92, 0.15); color: #00ff87; border: 1px solid rgba(0, 175, 92, 0.3); }
+    .badge-gray { background: #1c1e1f; color: #a1a1aa; border: 1px solid #2d3134; }
+
+    /* LAYOUT GRID */
+    .main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    .content-box { background: #161718; border-radius: 12px; border: 1px solid #242628; padding: 24px; }
+    .sidebar-box { background: #161718; border-radius: 12px; border: 1px solid #242628; padding: 20px; margin-bottom: 20px; }
+    
+    /* INTERACTION BUTTONS (LIKE & STATS) */
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .action-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px; border-radius: 8px; border: 1px solid #2d3134; background: #1c1e1f; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; text-decoration: none; }
+    .action-btn:hover { background: #25282a; border-color: #3f4448; }
+    .action-btn.liked { color: #ff4757; border-color: rgba(255, 71, 87, 0.3); background: rgba(255, 71, 87, 0.05); }
+
+    /* SELECTION & DOWNLOAD */
+    .input-label { block; color: #8a96a3; font-size: 12px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .custom-select { width: 100%; padding: 12px; background: #1c1e1f; border: 1px solid #2d3134; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a1a1aa'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; }
+    .custom-select:focus { border-color: #00af5c; }
+    
+    .download-button { display: flex; align-items: center; justify-content: space-between; background: #00af5c; color: #fff; text-decoration: none; padding: 14px 20px; border-radius: 8px; font-weight: 700; font-size: 15px; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 12px rgba(0, 175, 92, 0.15); }
+    .download-button:hover { background: #00c769; transform: translateY(-1px); }
+    .download-button:active { transform: translateY(0); }
+
+    .meta-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #242628; font-size: 13px; }
+    .meta-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .meta-label { color: #8a96a3; }
+    .meta-value { color: #fff; font-weight: 600; }
+
+    @media (max-width: 768px) {
+        .main-grid { grid-template-columns: 1fr !important; }
+        .project-header { text-align: center; justify-content: center; }
+    }
+</style>
+
+<div class="modrinth-container">
+    
+    <div>
+        <a href="/" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Kembali ke penjelajah berkas
         </a>
     </div>
 
-    <div style="display: flex; gap: 25px; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap;">
-        <div style="width: 120px; height: 120px; background: #242424; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid #333; flex-shrink: 0;">
-            <i class="fas fa-box-open" style="font-size: 50px; color: #00af5c;"></i>
+    <div class="project-header">
+        <div class="project-icon">
+            <i class="fas fa-cubes" style="font-size: 42px; color: #00af5c;"></i>
         </div>
         
-        <div style="flex: 1; min-width: 300px;">
-            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-                <span style="background: #00af5c; color: #fff; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase;">{{ mod.category }}</span>
-                <span style="background: #333; color: #ccc; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">{{ mod.version_range }}</span>
+        <div style="flex: 1; min-width: 280px;">
+            <div class="badge-row">
+                <span class="badge-custom badge-green">{{ mod.category }} edition</span>
+                <span class="badge-custom badge-gray"><i class="fas fa-tags" style="margin-right: 4px;"></i>{{ mod.version_range }}</span>
             </div>
-            <h1 style="font-size: 36px; color: #fff; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -1px;">{{ mod.title }}</h1>
-            <p style="color: #a1a1aa; font-size: 16px; margin: 0; line-height: 1.5; max-width: 700px;">{{ mod.desc }}</p>
+            <h1 class="project-title">{{ mod.title }}</h1>
+            <p style="color: #8a96a3; font-size: 15px; margin: 0; line-height: 1.5;">{{ mod.desc }}</p>
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 320px; gap: 30px;">
+    <div class="main-grid">
         
-        <div style="background: #181818; border-radius: 16px; border: 1px solid #2b2b2b; padding: 30px;">
-            <h3 style="color: #fff; margin-top: 0; margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid #2b2b2b; padding-bottom: 15px;">📃 Deskripsi Berkas</h3>
-            <div style="color: #d4d4d8; line-height: 1.7; font-size: 15px;">
+        <div class="content-box">
+            <h3 style="color: #fff; margin-top: 0; margin-bottom: 16px; font-size: 18px; font-weight: 700;">📃 Deskripsi Resmi</h3>
+            <div style="color: #cbd5e1; line-height: 1.7; font-size: 14px;">
                 {{ mod.desc }}
                 <br><br>
-                <b>Fitur Utama:</b>
-                <ul style="padding-left: 20px;">
-                    <li>Diuji coba pada versi Minecraft {{ mod.version_range }}</li>
-                    <li>Performa stabil dan dioptimalkan untuk FPS tinggi</li>
-                    <li>Instalasi mudah (Cek menu tutorial)</li>
+                <p>Berkas ini disediakan resmi oleh RexCraft Hub dengan jaminan optimisasi penuh agar tidak membebani performa *hardware* HP maupun PC Bos saat dimainkan di world/server.</p>
+                
+                <h4 style="color: #fff; font-size: 15px; margin-top: 20px; margin-bottom: 8px;">✨ Fitur & Kelebihan:</h4>
+                <ul style="padding-left: 20px; margin-top: 0;">
+                    <li>Mendukung penuh untuk range versi Minecraft {{ mod.version_range }}</li>
+                    <li>Sangat aman, anti-crash, dan ramah untuk RAM HP kentang</li>
+                    <li>Struktur folder bersih dan rapi (Sesuai panduan tutorial pemasangan)</li>
                 </ul>
             </div>
         </div>
 
         <div>
-            <div style="background: #181818; border-radius: 16px; border: 1px solid #2b2b2b; padding: 20px; margin-bottom: 20px;">
-                <h4 style="color: #fff; margin: 0 0 15px 0; font-size: 14px; text-transform: uppercase; color: #71717a; letter-spacing: 1px;">Unduhan Terbaru</h4>
-                
-                <div style="margin-bottom: 15px;">
-                    <select id="versionSelect" onchange="updateDownloadBtn()" style="width: 100%; padding: 12px; background: #111; border: 1px solid #333; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;">
+            <div class="stat-row">
+                <div class="action-btn" style="cursor: default;">
+                    <i class="fas fa-download" style="color: #00af5c;"></i>
+                    <span><b>2.4K</b> <span style="font-size: 12px; color: #8a96a3;">Unduhan</span></span>
+                </div>
+                <button class="action-btn" id="likeBtn" onclick="toggleLike()">
+                    <i class="fas fa-heart"></i>
+                    <span><b><span id="likeCount">148</span></b> <span style="font-size: 12px; color: #8a96a3;">Suka</span></span>
+                </button>
+            </div>
+
+            <div class="sidebar-box">
+                <div style="margin-bottom: 16px;">
+                    <label class="input-label" for="versionSelect">Pilih Variasi Versi</label>
+                    <select id="versionSelect" onchange="updateDownloadBtn()" class="custom-select">
                         {% for file in mod.files %}
                         <option value="{{ file.filename }}" data-size="{{ file.size }}" data-ver="{{ file.version }}">
-                            📦 Versi {{ file.version }}
+                            🟢 Versi {{ file.version }}
                         </option>
                         {% endfor %}
                     </select>
                 </div>
 
-                <div style="background: #111; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222;">
-                    <div style="font-size: 12px; color: #71717a; margin-bottom: 4px;">Nama File:</div>
+                <div style="background: #111213; padding: 12px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #242628;">
+                    <div style="font-size: 11px; color: #8a96a3; margin-bottom: 4px; text-transform: uppercase; font-weight: 600;">Nama Berkas</div>
                     <div id="lbl-filename" style="font-size: 13px; color: #fff; font-weight: 600; word-break: break-all;">Memuat...</div>
                 </div>
 
-                <a id="downloadBtn" href="#" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #00af5c; color: #fff; text-decoration: none; padding: 15px; border-radius: 10px; font-weight: 800; font-size: 15px; transition: 0.2s; box-shadow: 0 10px 15px -3px rgba(0, 175, 92, 0.2);">
-                    <i class="fas fa-download"></i> Unduh <span id="lbl-filesize">...</span>
+                <a id="downloadBtn" href="#" class="download-button">
+                    <span style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <span style="font-size: 14px; font-weight: 800;">Unduh Berkas</span>
+                        <span id="lbl-btn-sub" style="font-size: 11px; font-weight: 500; opacity: 0.8;">Memuat...</span>
+                    </span>
+                    <i class="fas fa-download" style="font-size: 18px;"></i>
                 </a>
             </div>
 
-            <div style="background: #181818; border-radius: 16px; border: 1px solid #2b2b2b; padding: 20px;">
-                <div style="margin-bottom: 15px;">
-                    <div style="font-size: 12px; color: #71717a;">Platform</div>
-                    <div style="color: #fff; font-weight: 600;">Minecraft {{ mod.category.upper() }}</div>
+            <div class="sidebar-box">
+                <div class="meta-item">
+                    <span class="meta-label">Tipe Berkas</span>
+                    <span class="meta-value" style="text-transform: uppercase;">{{ mod.category }}</span>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <div style="font-size: 12px; color: #71717a;">Status</div>
-                    <div style="color: #00af5c; font-weight: 600;">● Online & Verified</div>
+                <div class="meta-item">
+                    <span class="meta-label">Status Keamanan</span>
+                    <span class="meta-value" style="color: #00af5c;"><i class="fas fa-shield-alt" style="margin-right: 4px;"></i> Terverifikasi</span>
                 </div>
-                <div>
-                    <div style="font-size: 12px; color: #71717a;">Lisensi</div>
-                    <div style="color: #fff; font-weight: 600;">Custom RexCraft</div>
+                <div class="meta-item">
+                    <span class="meta-label">Tanggal Rilis</span>
+                    <span class="meta-value">Mei 2026</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Lisensi</span>
+                    <span class="meta-value">RexCraft Hak Cipta</span>
                 </div>
             </div>
         </div>
@@ -84,6 +155,24 @@
 </div>
 
 <script>
+let isLiked = false;
+
+function toggleLike() {
+    const likeBtn = document.getElementById('likeBtn');
+    const likeCountSpan = document.getElementById('likeCount');
+    let currentLikes = parseInt(likeCountSpan.innerText);
+    
+    if(!isLiked) {
+        likeBtn.classList.add('liked');
+        likeCountSpan.innerText = currentLikes + 1;
+        isLiked = true;
+    } else {
+        likeBtn.classList.remove('liked');
+        likeCountSpan.innerText = currentLikes - 1;
+        isLiked = false;
+    }
+}
+
 function updateDownloadBtn() {
     const select = document.getElementById('versionSelect');
     if(!select || select.options.length === 0) return;
@@ -93,8 +182,11 @@ function updateDownloadBtn() {
     const size = selectedOption.getAttribute('data-size');
     const version = selectedOption.getAttribute('data-ver');
     
+    // Update teks info file mentah
     document.getElementById('lbl-filename').innerText = filename;
-    document.getElementById('lbl-filesize').innerText = "(" + size + ")";
+    
+    // Update teks info sub-button unduhan ala Modrinth
+    document.getElementById('lbl-btn-sub').innerText = "Versi " + version + " • " + size;
     
     const category = "{{ mod.category }}";
     const modId = "{{ mod.id }}";
@@ -106,20 +198,4 @@ document.addEventListener("DOMContentLoaded", function() {
     updateDownloadBtn();
 });
 </script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<style>
-    body { background-color: #111 !important; }
-    .btn:hover { transform: translateY(-2px); background: #00ca6a !important; }
-    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px; }
-    
-    /* Responsif untuk layar HP */
-    @media (max-width: 768px) {
-        div[style*="grid-template-columns: 1fr 320px"] {
-            grid-template-columns: 1fr !important;
-        }
-    }
-</style>
 {% endblock %}
