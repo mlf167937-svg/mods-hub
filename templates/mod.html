@@ -1,107 +1,155 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mod.title }} | RexCraft Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-surface: #0f172a;
+            --border-color: rgba(51, 65, 85, 0.4);
+            --brand-green: #22c55e;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
 
-{% block content %}
-<style>
-    .rex-banner-wrapper { position: relative; width: 100%; height: 180px; background: linear-gradient(to bottom, rgba(17, 18, 19, 0.3), #111213), url('/static/img/banner.jpg') center/cover no-repeat; border-radius: 16px; margin-top: 15px; box-shadow: inset 0 0 40px rgba(0,0,0,0.8); }
-    .detail-container { background: #161718; border: 1px solid #242628; border-radius: 16px; padding: 25px; margin-top: -30px; position: relative; z-index: 10; }
-    .mod-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #242628; padding-bottom: 25px; }
-    .mod-icon-large { width: 90px; height: 90px; background: #1c1e1f; border-radius: 14px; border: 1px solid #2d3134; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-    .mod-icon-large img { width: 100%; height: 100%; object-fit: cover; }
-    .mod-title-text h1 { margin: 0 0 8px 0; color: #fff; font-size: 26px; font-weight: 800; }
-    .badge-category { background: rgba(0, 175, 92, 0.1); color: #00af5c; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-    .desc-box { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 12px; padding: 20px; margin-bottom: 30px; line-height: 1.6; }
-    .desc-box h3 { margin-top: 0; color: #fff; font-size: 16px; display: flex; align-items: center; gap: 8px; }
-    .btn-trigger-filter-spesifik { background: #00af5c; color: #fff; font-size: 16px; font-weight: 700; padding: 15px 25px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; transition: 0.2s; width: 100%; box-sizing: border-box; border: none; cursor: pointer; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0, 175, 92, 0.3); }
-    .btn-trigger-filter-spesifik:hover { background: #00c769; }
-    .rex-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; }
-    .rex-modal-box { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 16px; width: 90%; max-width: 450px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; animation: slideUp 0.3s ease; }
-    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
-    .modal-close-x { background: none; border: none; color: #a1a1aa; font-size: 20px; cursor: pointer; }
-    .modal-close-x:hover { color: #fff; }
-    .filter-select-group { margin-bottom: 16px; }
-    .filter-select-group label { display: block; font-size: 12px; font-weight: 600; color: #a1a1aa; margin-bottom: 6px; text-transform: uppercase; }
-    .rex-dropdown { width: 100%; background: #111213; border: 1px solid #2d3134; border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; }
-    .rex-dropdown:focus { border-color: #00af5c; }
-    .btn-execute-download { background: #00af5c; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-execute-download:hover { background: #00c769; }
-    .back-home-btn { display: inline-flex; align-items: center; gap: 8px; color: #8a96a3; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 15px; transition: 0.2s; }
-    .back-home-btn:hover { color: #fff; }
-</style>
+        body { background-color: var(--bg-main); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-secondary); margin: 0; padding: 0; }
+        .detail-wrapper { max-width: 750px; margin: 0 auto; padding: 20px 14px; }
+        
+        .back-nav-link { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+        
+        /* HEADER UTAMA ALA MODRINTH */
+        .modrinth-header-container { display: flex; gap: 18px; align-items: center; margin-bottom: 24px; }
+        .modrinth-logo-frame { width: 74px; height: 74px; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); }
+        .modrinth-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .mod-header-title { font-size: 24px; color: #fff; font-weight: 800; margin: 0 0 4px 0; }
+        
+        /* INTERACTION ROW: DOWNLOADS, LIKES & SHARE COUNTER */
+        .modrinth-stats-row { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+        .stat-item-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; }
+        .stat-item-badge i { color: var(--brand-green); }
+        
+        .btn-interact-heart { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #f87171; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .btn-interact-heart:hover { background: #ef4444; color: #fff; }
 
-<a href="/" class="back-home-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
-<div class="rex-banner-wrapper"></div>
+        /* TAB SELECTION EFFECT */
+        .modrinth-tabs-list { display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
+        .tab-item { padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; color: var(--text-secondary); border-bottom: 2px solid transparent; }
+        .tab-item.active-tab { color: var(--brand-green); border-color: var(--brand-green); }
 
-<div class="detail-container">
-    <div class="mod-header">
-        <div class="mod-icon-large">
+        /* CONTAINER DOKUMEN / DESKRIPSI */
+        .content-card-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; line-height: 1.6; font-size: 14px; color: #cbd5e1; margin-bottom: 24px; }
+        
+        /* LIST FILE VERSI DOWNLOAD (DAPAT DIKLIK) */
+        .version-list-section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .version-file-card {
+            background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; text-decoration: none; color: inherit; transition: 0.2s;
+        }
+        .version-file-card:hover { border-color: var(--brand-green); background: var(--bg-surface); }
+        .v-title { color: #fff; font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+        .v-meta { display: flex; gap: 6px; font-size: 11px; color: #64748b; }
+        .v-download-icon-box { width: 32px; height: 32px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brand-green); }
+    </style>
+</head>
+<body>
+
+<div class="detail-wrapper">
+    <a href="/" class="back-nav-link"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+
+    <div class="modrinth-header-container">
+        <div class="modrinth-logo-frame">
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" alt="Icon">
+                <img src="{{ mod.icon_url }}" alt="Logo">
             {% else %}
-                <i class="fas fa-cubes" style="font-size: 32px; color: #00af5c;"></i>
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-cubes" style="color:var(--brand-green); font-size:28px;"></i></div>
             {% endif %}
         </div>
-        <div class="mod-title-text">
-            <h1>{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h1>
-            <span class="badge-category">{{ mod.category }} edition</span>
+        <div>
+            <h1 class="mod-header-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h1>
+            <span style="font-size:11px; font-weight:800; background:rgba(34,197,94,0.1); color:var(--brand-green); padding:3px 8px; border-radius:6px; text-transform:uppercase;">{{ mod.category }} EDITION</span>
         </div>
     </div>
 
-    <button class="btn-trigger-filter-spesifik" onclick="openDownloadModal()">
-        <i class="fas fa-download"></i> Download Berkas
-    </button>
-
-    <div class="desc-box">
-        <h3><i class="fas fa-file-alt" style="color: #00af5c;"></i> Deskripsi Resmi Mod</h3>
-        <p style="margin: 0 0 15px 0;">{{ mod.desc }}</p>
-        <p style="margin: 0; font-weight: 600; color: #fff;">📋 Informasi Versi:</p>
-        <ul style="margin: 5px 0 0 0; padding-left: 20px; color: #8a96a3;">
-            <li>Mendukung penuh Minecraft {{ mod.version_range }}</li>
-        </ul>
-    </div>
-</div>
-
-<div class="rex-modal-overlay" id="downloadModal">
-    <div class="rex-modal-box">
-        <div class="modal-header-flex">
-            <div class="modal-title"><i class="fas fa-file-download" style="color: #00af5c;"></i> Pilih Versi Berkas</div>
-            <button class="modal-close-x" onclick="closeDownloadModal()"><i class="fas fa-times"></i></button>
+    <div class="modrinth-stats-row">
+        <div class="stat-item-badge">
+            <i class="fas fa-download"></i> <span>14.5K Downloads</span>
         </div>
-
-        <div class="filter-select-group">
-            <label><i class="fas fa-box"></i> Pilih File Loader</label>
-            <select id="fileTargetSelect" class="rex-dropdown">
-                {% for file in mod.files %}
-                    <option value="{{ file.filename }}">
-                        {% if 'fabric' in file.filename.lower() %}
-                            ✨ Berkas Fabric Engine (v{{ file.version }})
-                        {% elif 'forge' in file.filename.lower() %}
-                            🛠️ Berkas Forge Engine (v{{ file.version }})
-                        {% else %}
-                            📦 {{ file.filename[:30] }}{% if file.filename|length > 30 %}...{% endif %} (v{{ file.version }})
-                        {% endif %}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <p style="font-size: 11px; color: #8a96a3; margin: -5px 0 15px 0; line-height: 1.4;">
-            *Pilih loader yang cocok dengan Minecraft milikmu sebelum mengunduh.
-        </p>
-        <button class="btn-execute-download" onclick="executeFinalDownload()"><i class="fas fa-check"></i> Ambil Berkas Sekarang</button>
+        <button class="btn-interact-heart" id="heartBtn" onclick="triggerLikeAction()">
+            <i class="far fa-heart"></i> <span id="likeCount">342 Likes</span>
+        </button>
     </div>
+
+    <div class="modrinth-tabs-list">
+        <div class="tab-item active-tab">Description</div>
+        <div class="tab-item">Versions</div>
+    </div>
+
+    <div class="content-card-box">
+        <h3 style="margin-top:0; color:#fff; font-size:15px;"><i class="far fa-file-alt" style="color:var(--brand-green);"></i> Deskripsi Resmi Mod</h3>
+        <p>{{ mod.desc }}</p>
+        <p style="margin-bottom:0; font-size:13px; color:#64748b;">Berkas resmi dari database RexCraft. Sudah melewati uji coba komparasi performa sistem agar dijamin lancar, estetik, dan anti-lag saat dimainkan di Minecraft Anda.</p>
+    </div>
+
+    <div class="version-list-section-title">
+        <i class="fas fa-history" style="color:#c084fc;"></i> Tersedia Berkas Rilis Versi
+    </div>
+    
+    {% if mod.files %}
+        {% for file in mod.files %}
+        <a href="/download/{{ mod.category }}/{{ mod.id }}/{{ file }}" class="version-file-card">
+            <div>
+                <div class="v-title">{{ file }}</div>
+                <div class="v-meta">
+                    <span><i class="far fa-clock"></i> Minecraft {{ mod.version_range }}</span>
+                    <span>•</span>
+                    <span>Stable Release</span>
+                </div>
+            </div>
+            <div class="v-download-icon-box">
+                <i class="fas fa-download"></i>
+            </div>
+        </a>
+        {% endfor %}
+    {% else %}
+        <a href="/download/{{ mod.category }}/{{ mod.id }}/default" class="version-file-card">
+            <div>
+                <div class="v-title">Unduh Berkas Utama (.zip / .jar)</div>
+                <div class="v-meta">
+                    <span><i class="far fa-clock"></i> Minecraft {{ mod.version_range }}</span>
+                </div>
+            </div>
+            <div class="v-download-icon-box">
+                <i class="fas fa-download"></i>
+            </div>
+        </a>
+    {% endif %}
+
 </div>
 
 <script>
-function openDownloadModal() { document.getElementById('downloadModal').style.display = 'flex'; }
-function closeDownloadModal() { document.getElementById('downloadModal').style.display = 'none'; }
-function executeFinalDownload() {
-    const selectedFile = document.getElementById('fileTargetSelect').value;
-    if (selectedFile) {
-        window.location.href = "/download/{{ mod.category }}/{{ mod.id }}/" + selectedFile;
-        closeDownloadModal();
+let isLiked = false;
+let likes = 342;
+function triggerLikeAction() {
+    const btn = document.getElementById('heartBtn');
+    if(!isLiked) {
+        likes++;
+        btn.innerHTML = `<i class="fas fa-heart" style="color:#ef4444;"></i> <span>${likes} Likes</span>`;
+        btn.style.background = "#ef4444";
+        btn.style.color = "#fff";
+        isLiked = true;
+    } else {
+        likes--;
+        btn.innerHTML = `<i class="far fa-heart"></i> <span>${likes} Likes</span>`;
+        btn.style.background = "rgba(239, 68, 68, 0.1)";
+        btn.style.color = "#f87171";
+        isLiked = false;
     }
 }
-window.onclick = function(event) { const modal = document.getElementById('downloadModal'); if (event.target == modal) { closeDownloadModal(); } }
 </script>
-{% endblock %}
+</body>
+</html>
