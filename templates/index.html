@@ -26,14 +26,16 @@
             color: var(--text-secondary); 
             margin: 0; 
             padding: 0;
-            background-image: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 10% 40%, rgba(56, 189, 248, 0.03) 0%, transparent 35%);
             background-attachment: fixed;
         }
 
         .main-wrapper-container { 
-            max-width: 800px; 
+            max-width: 850px; 
             margin: 0 auto; 
-            padding: 20px 14px; 
+            padding: 24px 16px; 
             box-sizing: border-box; 
         }
         
@@ -42,10 +44,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             background: rgba(15, 23, 42, 0.4);
-            padding: 12px 16px;
-            border-radius: 16px;
+            padding: 12px 20px;
+            border-radius: 14px;
             border: 1px solid var(--border-color);
             backdrop-filter: var(--premium-blur);
         }
@@ -61,123 +63,162 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: 0.2s;
+            transition: all 0.2s ease;
         }
-        .btn-settings:hover { background: #1e293b; color: #fff; }
-        .brand-status { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 800; font-size: 15px; }
-        .status-dot-green { width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 8px var(--brand-green); }
+        .btn-settings:hover { 
+            background: rgba(30, 41, 59, 1); 
+            color: #fff; 
+            border-color: #475569;
+        }
+        .brand-status { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 16px; letter-spacing: -0.3px; }
+        .status-dot-green { 
+            width: 8px; height: 8px; background-color: var(--brand-green); border-radius: 50%; 
+            box-shadow: 0 0 12px var(--brand-green); animation: pulseGlow 2s infinite; 
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); box-shadow: 0 0 4px var(--brand-green); }
+            50% { transform: scale(1.1); box-shadow: 0 0 12px var(--brand-green); }
+            100% { transform: scale(0.95); box-shadow: 0 0 4px var(--brand-green); }
+        }
 
-        /* ==================== HERO BANNER REXCRAFT ==================== */
+        /* ==================== HERO BANNER REXCRAFT INDENTITAS ==================== */
         .rex-hero-banner {
             position: relative;
-            background: linear-gradient(135deg, #0f172a 0%, #070a14 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #060913 100%);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 38px 20px;
+            border-radius: 24px;
+            padding: 45px 24px;
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
         .rex-banner-overlay-logo {
-            font-size: 70px;
+            font-size: 85px;
             font-weight: 900;
-            color: rgba(34, 197, 94, 0.025);
-            letter-spacing: 8px;
+            color: rgba(34, 197, 94, 0.02);
+            letter-spacing: 10px;
             position: absolute;
             top: 45%; left: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
             user-select: none;
+            text-transform: uppercase;
         }
-        .rex-hero-title { font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 6px 0; letter-spacing: -0.5px; }
-        .rex-hero-subtitle { color: #64748b; font-size: 13px; margin: 0 0 20px 0; }
+        .rex-hero-title { 
+            font-size: 32px; font-weight: 800; color: #fff; margin: 0 0 8px 0; letter-spacing: -0.7px;
+            background: linear-gradient(to bottom right, #ffffff 40%, #cbd5e1 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .rex-hero-subtitle { color: #64748b; font-size: 14px; margin: 0 0 24px 0; font-weight: 500; }
         
         .tutorial-alert-pill {
             background: rgba(34, 197, 94, 0.06);
             border: 1px solid rgba(34, 197, 94, 0.2);
-            padding: 6px 14px;
-            border-radius: 10px;
-            color: #4ade80;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 20px;
-            transition: 0.2s;
+            padding: 8px 16px; border-radius: 12px; color: #4ade80; font-size: 12px; font-weight: 600;
+            text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px; transition: 0.2s;
         }
-        .tutorial-alert-pill:hover { background: rgba(34, 197, 94, 0.15); }
+        .tutorial-alert-pill:hover { background: rgba(34, 197, 94, 0.15); transform: translateY(-1px); }
 
-        /* INPUT FIELD SEARCH */
-        .search-container-inside { max-width: 480px; margin: 0 auto; position: relative; }
-        .search-container-inside i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #475569; }
+        /* SEARCH CONTAINER */
+        .search-container-inside { max-width: 520px; margin: 0 auto; position: relative; }
+        .search-container-inside i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #475569; font-size: 15px; transition: color 0.2s; }
         .rex-search-field {
-            width: 100%; background: rgba(6, 9, 19, 0.7); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 12px 16px 12px 44px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box;
-            transition: 0.2s;
+            width: 100%; background: rgba(6, 9, 19, 0.6); border: 1px solid var(--border-color);
+            border-radius: 14px; padding: 14px 16px 14px 48px; color: #fff; font-size: 14px; font-weight: 500; outline: none; box-sizing: border-box;
+            transition: all 0.3s;
         }
-        .rex-search-field:focus { border-color: var(--brand-green); background: rgba(6, 9, 19, 0.9); }
+        .rex-search-field:focus { border-color: rgba(34, 197, 94, 0.5); background: rgba(6, 9, 19, 0.9); box-shadow: 0 0 20px rgba(34, 197, 94, 0.1); }
+        .rex-search-field:focus + i { color: var(--brand-green); }
 
-        /* ==================== 4 FILTER BUTTONS GRID ==================== */
-        .filter-buttons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 24px; }
+        /* ==================== 4 PILIHAN FILTER BUTTON GRID ==================== */
+        .filter-buttons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 28px; }
         .filter-btn {
-            background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); color: var(--text-secondary);
-            padding: 10px 2px; border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; transition: 0.2s;
-        }
-        .filter-btn:hover { background: rgba(30, 41, 59, 0.5); color: #fff; }
-        .filter-btn.active-filter { background: rgba(34, 197, 94, 0.12); color: #4ade80; border-color: rgba(34, 197, 94, 0.4); }
-
-        /* ==================== PREMIUM CARD LIST MODS ==================== */
-        .mods-grid-container { display: flex; flex-direction: column; gap: 14px; }
-        .mod-card-item { 
-            background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; 
-            display: flex; gap: 16px; align-items: center; justify-content: space-between; transition: 0.2s;
+            background: rgba(15, 23, 42, 0.35); border: 1px solid var(--border-color); color: var(--text-secondary);
+            padding: 10px 4px; border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; transition: 0.2s;
             backdrop-filter: var(--premium-blur);
         }
-        .mod-card-item:hover { transform: translateY(-2px); border-color: rgba(34, 197, 94, 0.25); }
+        .filter-btn:hover { background: rgba(30, 41, 59, 0.5); color: var(--text-primary); border-color: #475569; }
+        .filter-btn.active-filter { background: rgba(34, 197, 94, 0.12); color: #4ade80; border-color: rgba(34, 197, 94, 0.5); box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.1); }
         
-        .mod-left-side-flex { display: flex; gap: 16px; align-items: center; flex-grow: 1; min-width: 0; }
-        .mod-avatar-box { width: 68px; height: 68px; background: #0f172a; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border-color); }
+        .btn-advance-filter { background: rgba(56, 189, 248, 0.03); border: 1px solid rgba(56, 189, 248, 0.15); color: #38bdf8; }
+        .btn-advance-filter:hover { background: rgba(56, 189, 248, 0.1); color: #fff; border-color: #38bdf8; }
+
+        /* ==================== PREMIUM CONTENT CARD MODS ==================== */
+        .mods-grid-container { display: flex; flex-direction: column; gap: 16px; }
+        .mod-card-item { 
+            background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 18px; 
+            display: flex; gap: 18px; align-items: center; justify-content: space-between; transition: all 0.3s;
+            backdrop-filter: var(--premium-blur);
+        }
+        .mod-card-item:hover {
+            transform: translateY(-2px); border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 12px 30px rgba(6, 9, 19, 0.5), 0 0 20px rgba(34, 197, 94, 0.04);
+        }
+        
+        .mod-left-side-flex { display: flex; gap: 18px; align-items: center; flex-grow: 1; min-width: 0; }
+        .mod-avatar-box { 
+            width: 72px; height: 72px; background: #0f172a; border: 1px solid var(--border-color);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;
+        }
         .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
         
         .mod-info-content { min-width: 0; flex-grow: 1; }
-        .tag-row-top { display: flex; gap: 5px; margin-bottom: 6px; flex-wrap: wrap; }
-        .mini-badge { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.2px; }
-        .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.15); }
-        .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.15); }
-        .badge-version { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
+        .tag-row-top { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+        .mini-badge { font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 7px; letter-spacing: 0.3px; }
+        .badge-java { background: rgba(56, 189, 248, 0.08); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.15); }
+        .badge-mcpe { background: rgba(249, 115, 22, 0.08); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.15); }
+        .badge-version { background: rgba(168, 85, 247, 0.08); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
+        .badge-files { background: rgba(34, 197, 94, 0.08); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
 
-        .mod-card-title { font-size: 18px; color: var(--text-primary); font-weight: 700; margin: 0 0 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .mod-card-desc { color: #64748b; font-size: 12px; margin: 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .mod-card-title { font-size: 19px; color: var(--text-primary); font-weight: 700; margin: 0 0 4px 0; letter-spacing: -0.4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .mod-card-desc { color: #64748b; font-size: 13px; margin: 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
         
-        /* FIX: UKURAN TOMBOL VIEW MOD COMPACT (TIDAK KEPANJANGAN) */
+        /* FIX: UKURAN TOMBOL VIEW MOD COMPACT PAS (GAK KEPANJANGAN) */
         .action-view-btn { 
-            background: #1e293b; color: #fff; font-size: 12px; font-weight: 700; padding: 10px 16px; 
-            border-radius: 10px; display: flex; align-items: center; gap: 6px; text-decoration: none; transition: 0.2s;
+            background: #1e293b; color: #fff; font-size: 12px; font-weight: 700; padding: 11px 18px; 
+            border-radius: 12px; display: flex; align-items: center; gap: 6px; text-decoration: none; transition: 0.2s;
             border: 1px solid var(--border-color); white-space: nowrap; flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .action-view-btn:hover { background: var(--brand-green); border-color: var(--brand-green); }
+        .action-view-btn:hover { background: var(--brand-green); border-color: var(--brand-green); box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3); }
 
-        /* ==================== SYSTEM SETTINGS MODAL ==================== */
+        /* ==================== ADVANCE FILTER POP-UP MODAL ==================== */
         .rex-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 5, 11, 0.85);
-            backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 14px; box-sizing: border-box;
+            backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 16px; box-sizing: border-box;
         }
-        .rex-modal-box { background: #0f172a; border: 1px solid var(--border-color); padding: 22px; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; color: #fff; font-weight: 700; font-size: 16px; }
-        .close-btn { background: rgba(255,255,255,0.05); border: none; color: #64748b; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .close-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .rex-modal-box {
+            background: #0f172a; border: 1px solid var(--border-color); border-radius: 24px;
+            width: 100%; max-width: 420px; padding: 28px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            animation: popSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-sizing: border-box;
+        }
+        @keyframes popSlide { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; letter-spacing: -0.4px; }
+        .modal-close-x { background: rgba(255,255,255,0.05); border: none; color: #64748b; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .modal-close-x:hover { color: #fff; background: rgba(255,255,255,0.1); }
 
-        /* RESPONSIVE LAYOUT HP */
-        @media (max-width: 650px) {
-            .mod-card-item { flex-direction: column; align-items: flex-start; gap: 14px; padding: 14px; }
+        .filter-select-group { margin-bottom: 20px; }
+        .filter-select-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .rex-dropdown { width: 100%; background: #060913; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; transition: border 0.2s; }
+        .rex-dropdown:focus { border-color: #38bdf8; }
+        
+        .btn-apply-advance {
+            background: var(--brand-green); color: #fff; width: 100%; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+        .btn-apply-advance:hover { background: var(--brand-green-hover); }
+
+        /* ==================== RESPONSIVE LAYOUT HP SMARTPHONE ==================== */
+        @media (max-width: 680px) { 
+            .mod-card-item { flex-direction: column; align-items: flex-start; gap: 16px; padding: 16px; }
             .mod-left-side-flex { width: 100%; }
             .action-view-btn { width: 100%; justify-content: center; box-sizing: border-box; padding: 12px; }
-            .filter-btn { font-size: 10px; padding: 8px 2px; }
-            .rex-hero-title { font-size: 24px; }
+            .filter-buttons-grid { gap: 5px; }
+            .filter-btn { font-size: 10px; padding: 8px 2px; border-radius: 8px; }
+            .rex-hero-title { font-size: 26px; }
         }
     </style>
 </head>
@@ -186,43 +227,59 @@
 <div class="main-wrapper-container">
 
     <div class="top-nav-bar">
-        <button class="btn-settings" onclick="toggleSettingsModal()"><i class="fas fa-sliders-h"></i> Settings</button>
+        <button class="btn-settings" onclick="openAdvanceModal()"><i class="fas fa-sliders-h"></i> Settings</button>
         <div class="brand-status">
             <div class="status-dot-green"></div>
-            <span>RexCraft Mods</span>
+            <span>RexCraft Engine</span>
         </div>
     </div>
 
     <div class="rex-hero-banner">
         <div class="rex-banner-overlay-logo">REXCRAFT ENGINE</div>
-        <h1 class="rex-hero-title">RexCraft Modding Hub</h1>
-        <p class="rex-hero-subtitle">Eksplorasi modifikasi Minecraft terlengkap, optimal, dan anti-lag buatan RexCraft Engine.</p>
-        <a href="/tutorial" class="tutorial-alert-pill"><i class="fas fa-book-open"></i> Panduan Pasang Mod</a>
+        <div class="rex-hero-content-wrapper">
+            <h1 class="rex-hero-title">RexCraft Modding Hub</h1>
+            <p class="rex-hero-subtitle">Unduh ratusan modifikasi, engine, dan berkas shader Minecraft pilihan terbaik.</p>
+            <a href="/tutorial" class="tutorial-alert-pill">
+                <i class="fas fa-book-open"></i> Bingung cara pasang berkas? Klik panduan lengkap
+            </a>
 
-        <div class="search-container-inside">
-            <i class="fas fa-search"></i>
-            <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Ketik nama modifikasi di sini..." onkeyup="filterModsMaster()">
+            <div class="search-container-inside">
+                <i class="fas fa-search"></i>
+                <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod, addon, shader..." onkeyup="filterModsMaster()">
+            </div>
         </div>
     </div>
 
     <div class="filter-buttons-grid">
-        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)"><i class="fas fa-globe"></i> Semua</button>
-        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)"><i class="fab fa-java"></i> Java</button>
-        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)"><i class="fas fa-mobile-alt"></i> Bedrock</button>
-        <button class="filter-btn" style="color: #38bdf8;" onclick="toggleSettingsModal()"><i class="fas fa-cog"></i> Advance</button>
+        <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
+            <i class="fas fa-globe"></i> Semua
+        </button>
+        <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
+            <i class="fab fa-java"></i> Java
+        </button>
+        <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
+            <i class="fas fa-mobile-alt"></i> MCPE
+        </button>
+        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">
+            <i class="fas fa-cog"></i> Advance
+        </button>
     </div>
 
     <div class="mods-grid-container" id="modsContainer">
         {% for mod in mods %}
-        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{% if mod.title %}{{ mod.title.lower() }}{% else %}{{ mod.name.lower() }}{% endif %}">
+        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{% if mod.title %}{{ mod.title.lower() }}{% else %}{{ mod.name.lower() }}{% endif %}" data-version="{{ mod.version_range }}">
+            
             <div class="mod-left-side-flex">
                 <div class="mod-avatar-box">
                     {% if mod.icon_url %}
-                        <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
+                        <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon Mod">
                     {% else %}
-                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-cube" style="color:var(--brand-green); font-size:24px;"></i></div>
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #0f172a;">
+                            <i class="fas fa-cube" style="font-size: 24px; color: var(--brand-green);"></i>
+                        </div>
                     {% endif %}
                 </div>
+
                 <div class="mod-info-content">
                     <div class="tag-row-top">
                         {% if mod.category == 'java' %}
@@ -231,64 +288,137 @@
                         <span class="mini-badge badge-mcpe">BEDROCK / MCPE</span>
                         {% endif %}
                         <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
+                        <span class="mini-badge badge-files"><i class="far fa-folder-open"></i> {{ mod.total_files if mod.total_files else '1' }} Files</span>
                     </div>
+
                     <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
                     <p class="mod-card-desc">{{ mod.desc }}</p>
                 </div>
             </div>
-            
+
             <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
-                <span>View Mod</span> <i class="fas fa-arrow-right" style="font-size:11px;"></i>
+                <span>View Mod</span> <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
             </a>
+
+        </div>
+        {% else %}
+        <div style="background: rgba(15,23,42,0.3); border: 2px dashed var(--border-color); padding: 48px; text-align: center; border-radius: 20px; color: #475569;">
+            <i class="fas fa-box-open" style="font-size: 44px; margin-bottom: 12px; color: var(--brand-green); opacity: 0.6;"></i>
+            <p style="margin: 0; font-weight: 600; font-size: 14px;">Belum ada berkas mod terdaftar di database RexCraft.</p>
         </div>
         {% endfor %}
     </div>
+
 </div>
 
-<div class="rex-modal-overlay" id="settingsModal">
+<div class="rex-modal-overlay" id="advanceFilterModal">
     <div class="rex-modal-box">
-        <div class="modal-header">
-            <span><i class="fas fa-cog" style="color: #38bdf8;"></i> Advance Control Panel</span>
-            <button class="close-btn" onclick="toggleSettingsModal()"><i class="fas fa-times"></i></button>
+        <div class="modal-header-flex">
+            <div class="modal-title"><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Advance Filter Panel</div>
+            <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
         </div>
-        <p style="font-size:12px; color:#64748b; margin:0 0 14px 0;">Konfigurasi Web Engine & Database:</p>
-        <div style="background:#060913; padding:12px; border-radius:10px; border:1px solid var(--border-color); font-size:12px; color:#fff; line-height: 1.7;">
-            <span style="color:#22c55e;">●</span> Status Server: <span style="font-weight:700; color:#22c55e;">Online</span><br>
-            <span style="color:#38bdf8;">●</span> Engine Core: <span style="font-weight:700;">RexEngine v2.5-Premium</span><br>
-            <span style="color:#c084fc;">●</span> Database Sync: <span style="font-weight:700; color:#e2e8f0;">Active (Render Cloud)</span>
+        
+        <div class="filter-select-group">
+            <label>Game Version</label>
+            <select id="modalVersionSelect" class="rex-dropdown">
+                <option value="all">Semua Versi (All Versions)</option>
+                <option value="1.21">Minecraft 1.21 / 1.21.1</option>
+                <option value="1.20">Minecraft 1.20+</option>
+                <option value="1.19">Minecraft 1.19+</option>
+            </select>
         </div>
+        
+        <div class="filter-select-group">
+            <label>Platform & Type Tag</label>
+            <select id="modalPlatformSelect" class="rex-dropdown">
+                <option value="all">Semua Jenis (All)</option>
+                <option value="java-racikan">Java mods racikan</option>
+                <option value="java-mods">Java mods</option>
+                <option value="java-texturepack">Java texturepack</option>
+                <option value="java-shaders">Java shaders</option>
+                <option value="java-map">Java map</option>
+                <option value="mcpe-addon">Mcpe add-on</option>
+                <option value="mcpe-shaders">Mcpe shaders</option>
+                <option value="mcpe-texturepack">Mcpe texturepack</option>
+                <option value="mcpe-map">Mcpe map</option>
+            </select>
+        </div>
+        
+        <div style="background:#060913; padding:12px; border-radius:10px; border:1px solid var(--border-color); font-size:11px; color:#64748b; line-height: 1.6; margin-bottom: 20px;">
+            <span style="color:#22c55e;">●</span> Server Core: <span style="color:#fff; font-weight:600;">RexEngine v2.5-Stable</span><br>
+            <span style="color:#38bdf8;">●</span> Sync Status: <span style="color:#fff; font-weight:600;">Connected</span>
+        </div>
+
+        <button class="btn-apply-advance" onclick="applyAdvanceFilterAction()">
+            <i class="fas fa-check-circle"></i> Terapkan Filter
+        </button>
     </div>
 </div>
 
 <script>
 let currentCategory = 'all';
 
-function toggleSettingsModal() {
-    const modal = document.getElementById('settingsModal');
-    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-}
+function openAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'flex'; }
+function closeAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'none'; }
 
 function setCategoryFilter(category, element) {
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
-    if(element) element.classList.add('active-filter');
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active-filter'));
+    if (element && !element.classList.contains('btn-advance-filter')) {
+        element.classList.add('active-filter');
+    }
     currentCategory = category;
     filterModsMaster();
 }
 
+function applyAdvanceFilterAction() {
+    const selectedVersion = document.getElementById('modalVersionSelect').value;
+    const selectedPlatform = document.getElementById('modalPlatformSelect').value;
+    const cards = document.querySelectorAll('.mod-card-item');
+
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category'); 
+        const cardTitle = card.getAttribute('data-title'); 
+        const cardVersion = card.getAttribute('data-version');
+
+        let matchPlatformAndType = false;
+        if (selectedPlatform === 'all') { 
+            matchPlatformAndType = true; 
+        } else {
+            const parts = selectedPlatform.split('-');
+            const reqPlatform = parts[0]; 
+            const reqKeyword = parts[1];  
+            const basePlatformMatch = (cardCategory === reqPlatform);
+            let keywordMatch = cardTitle.includes(reqKeyword);
+            if (reqKeyword === 'addon') { keywordMatch = cardTitle.includes('addon') || cardTitle.includes('add-on'); }
+            matchPlatformAndType = (basePlatformMatch && keywordMatch);
+        }
+        
+        const matchVersion = (selectedVersion === 'all' || cardVersion.includes(selectedVersion));
+        if (matchPlatformAndType && matchVersion) { 
+            card.style.display = 'flex'; 
+        } else { 
+            card.style.display = 'none'; 
+        }
+    });
+    closeAdvanceModal();
+}
+
 function filterModsMaster() {
     const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
-    document.querySelectorAll('.mod-card-item').forEach(card => {
-        const cat = card.getAttribute('data-category');
-        const title = card.getAttribute('data-title');
-        const matchCat = (currentCategory === 'all' || cat === currentCategory);
-        const matchSearch = title.includes(searchKeyword);
-        card.style.display = (matchCat && matchSearch) ? 'flex' : 'none';
+    const cards = document.querySelectorAll('.mod-card-item');
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardTitle = card.getAttribute('data-title');
+        const matchCategory = (currentCategory === 'all' || cardCategory === currentCategory);
+        const matchSearch = cardTitle.includes(searchKeyword);
+        if(matchCategory && matchSearch) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
     });
 }
 
 window.onclick = function(event) {
-    const modal = document.getElementById('settingsModal');
-    if (event.target == modal) { toggleSettingsModal(); }
+    const modal = document.getElementById('advanceFilterModal');
+    if (event.target == modal) { closeAdvanceModal(); }
 }
 </script>
 </body>
