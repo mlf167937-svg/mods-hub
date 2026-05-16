@@ -1,91 +1,80 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <style>
-    body { background-color: #111213 !important; font-family: 'Inter', sans-serif; color: #cbd5e1; }
-    
-    /* ==================== BANNER / HERO SECTION (FORCE DISPLAY) ==================== */
+    /* ==================== HERO BANNER SECTION ==================== */
     .rex-hero-banner {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        position: relative !important;
-        background: linear-gradient(135deg, #161718 0%, #1c1e1f 100%) !important;
-        border: 1px solid #242628 !important;
-        border-radius: 16px !important;
-        padding: 35px 20px !important;
-        text-align: center !important;
-        margin-top: 15px !important;
-        margin-bottom: 25px !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
-        z-index: 100 !important;
+        background: linear-gradient(135deg, #161718 0%, #1c1e1f 100%);
+        border: 1px solid #242628;
+        border-radius: 16px;
+        padding: 35px 20px;
+        text-align: center;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
     .rex-hero-title {
-        font-size: 32px !important;
-        font-weight: 800 !important;
-        color: #fff !important;
-        margin: 0 0 10px 0 !important;
-        letter-spacing: -0.5px !important;
+        font-size: 32px;
+        font-weight: 800;
+        color: #fff;
+        margin: 0 0 10px 0;
+        letter-spacing: -0.5px;
     }
     .rex-hero-subtitle {
-        color: #8a96a3 !important;
-        font-size: 14px !important;
-        margin: 0 0 20px 0 !important;
-        line-height: 1.5 !important;
-        max-width: 600px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+        color: #8a96a3;
+        font-size: 14px;
+        margin: 0 0 20px 0;
+        line-height: 1.5;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
     }
     .server-status-container {
-        display: flex !important;
-        justify-content: center !important;
-        gap: 12px !important;
-        align-items: center !important;
-        flex-wrap: wrap !important;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
     }
     .server-status-pill {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        background: rgba(0, 175, 92, 0.1) !important;
-        border: 1px solid rgba(0, 175, 92, 0.2) !important;
-        padding: 6px 14px !important;
-        border-radius: 20px !important;
-        color: #00ff87 !important;
-        font-size: 11px !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 175, 92, 0.1);
+        border: 1px solid rgba(0, 175, 92, 0.2);
+        padding: 6px 14px;
+        border-radius: 20px;
+        color: #00ff87;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
     }
     .status-dot-glow {
-        width: 8px !important;
-        height: 8px !important;
-        background-color: #00ff87 !important;
-        border-radius: 50% !important;
-        box-shadow: 0 0 8px #00ff87 !important;
+        width: 8px;
+        height: 8px;
+        background-color: #00ff87;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #00ff87;
     }
     .tutorial-nav-btn {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-        background: #1c1e1f !important;
-        border: 1px solid #2d3134 !important;
-        color: #fff !important;
-        padding: 6px 14px !important;
-        border-radius: 20px !important;
-        font-size: 12px !important;
-        font-weight: 600 !important;
-        text-decoration: none !important;
-        transition: 0.2s !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #1c1e1f;
+        border: 1px solid #2d3134;
+        color: #fff;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.2s;
     }
     .tutorial-nav-btn:hover {
-        background: #25282a !important;
-        border-color: #00af5c !important;
+        background: #25282a;
+        border-color: #00af5c;
     }
 
-    /* ==================== ADVANCED FILTER SYSTEM ==================== */
+    /* ==================== SISTEM PENCARIAN & FILTER SPESIFIK ==================== */
     .filter-bar-container {
         background: #161718;
         border: 1px solid #242628;
@@ -150,7 +139,7 @@
         border-color: #00af5c;
     }
 
-    /* ==================== LIST CARDS LAYOUT ==================== */
+    /* ==================== LAYOUT DAFTAR MODS ==================== */
     .mods-grid-container {
         display: flex;
         flex-direction: column;
@@ -199,7 +188,6 @@
         margin: 0 0 6px 0;
     }
     
-    /* BADGES METADATA */
     .tag-badges-flex {
         display: flex;
         gap: 6px;
@@ -231,7 +219,6 @@
         line-height: 1.5;
     }
     
-    /* BOTTOM VIEW DOWNLOAD BUTTON */
     .action-view-btn {
         background: #00af5c;
         color: #fff;
