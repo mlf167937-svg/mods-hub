@@ -3,121 +3,122 @@ import os
 
 app = Flask(__name__)
 
-# Folder penyimpanan utama
 BASE_UPLOAD = "static/uploads"
 JAVA_FOLDER = os.path.join(BASE_UPLOAD, "java")
 MCPE_FOLDER = os.path.join(BASE_UPLOAD, "mcpe")
 
-# Otomatis bikin folder di komputer lokal saat dijalankan
 os.makedirs(JAVA_FOLDER, exist_ok=True)
 os.makedirs(MCPE_FOLDER, exist_ok=True)
 
-# FORMAT UKURAN FILE
 def format_size(file_path):
-    size = os.path.getsize(file_path)
-    if size < 1024:
-        return f"{size} B"
-    elif size < 1024 * 1024:
-        return f"{size / 1024:.1f} KB"
-    elif size < 1024 * 1024 * 1024:
-        return f"{size / (1024 * 1024):.1f} MB"
-    else:
-        return f"{size / (1024 * 1024 * 1024):.1f} GB"
+    try:
+        size = os.path.getsize(file_path)
+        if size < 1024: return f"{size} B"
+        elif size < 1024 * 1024: return f"{size / 1024:.1f} KB"
+        else: return f"{size / (1024 * 1024):.1f} MB"
+    except:
+        return "0 MB"
 
-def scan_mods_by_category(folder_path, category_name):
-    """Fungsi mendeteksi file di dalam folder spesifik (java/mcpe)"""
-    mods_list = []
-    if os.path.exists(folder_path):
-        files = os.listdir(folder_path)
-        files.sort()
-        for filename in files:
-            if filename.startswith('.') or filename == 'test.txt':
-                continue
-                
-            clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
-            
-            # 1. Deteksi Versi Otomatis
-            version = "All Version"
-            if "1." in filename:
-                parts = filename.split('_')
-                for part in parts:
-                    if part.startswith('1.') or '1.' in part:
-                        version = os.path.splitext(part)[0]
+def get_file_info(filename, folder_path, category_name):
+    """Fungsi pembaca detail file (Versi & Loader) berdasarkan nama filenya"""
+    filename_lower = filename.lower()
+    
+    # 1. Deteksi Loader
+    loader = "Vanilla/Custom"
+    if "forge" in filename_lower: loader = "Forge"
+    elif "fabric" in filename_lower: loader = "Fabric"
+    elif "quilt" in filename_lower: loader = "Quilt"
+    elif "geyser" in filename_lower: loader = "Geyser"
 
-            # 2. Deteksi Mod Loader (Forge / Fabric / Quilt)
-            loader_tag = None
-            filename_lower = filename.lower()
-            if "forge" in filename_lower:
-                loader_tag = "Forge"
-            elif "fabric" in filename_lower:
-                loader_tag = "Fabric"
-            elif "quilt" in filename_lower:
-                loader_tag = "Quilt"
+    # 2. Deteksi Versi Game (mencari pola teks '1.xx')
+    version = "All Version"
+    if "1." in filename:
+        parts = filename_lower.replace('-', '_').split('_')
+        for part in parts:
+            if "1." in part:
+                version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '')
+                break
 
-            mods_list.append({
-                "title": clean_title,
-                "version": version,
-                "loader": loader_tag,
-                
-                # =================================================================================
-                # MODIFIKASI DESKRIPSI (OPSI 3): FOKUS PERFORMA, ESTETIK, DAN ANTI-LAG
-                # =================================================================================
-                "desc": f"Update berkas {category_name} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
-                # =================================================================================
-                
-                "file": filename,
-                "category": category_name.lower(),
-                "size": format_size(os.path.join(folder_path, filename))
-            })
-    return mods_list
+    return {
+        "filename": filename,
+        "version": version,
+        "loader": loader,
+        "size": format_size(os.path.join(folder_path, filename))
+    }
 
 @app.route("/")
 def home():
-    java_mods = scan_mods_by_category(JAVA_FOLDER, "Java")
-    mcpe_mods = scan_mods_by_category(MCPE_FOLDER, "MCPE")
-    all_mods = java_mods + mcpe_mods
+    """Menampilkan daftar MOD berdasarkan FOLDER, bukan lagi berdasarkan FILE"""
+    all_mods = []
+    
+    for category_path, cat_name in [(JAVA_FOLDER, "java"), (MCPE_FOLDER, "mcpe")]:
+        if os.path.exists(category_path):
+            folders = [f for f in os.listdir(category_path) if os.path.isdir(os.path.join(category_path, f))]
+            folders.sort()
+            
+            for folder_name in folders:
+                mod_path = os.path.join(category_path, folder_name)
+                files = [f for f in os.listdir(mod_path) if not f.startswith('.')]
+                
+                if not files: continue # Lewati jika folder kosong
+                
+                # Judul kartu diambil dari nama folder (ganti strip/garis bawah jadi spasi)
+                clean_title = folder_name.replace('_', ' ').replace('-', ' ').title()
+                
+                all_mods.append({
+                    "id": folder_name,
+                    "title": clean_title,
+                    "category": cat_name,
+                    "desc": f"Update berkas {cat_name.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
+                    "total_files": len(files)
+                })
+                
     return render_template("index.html", mods=all_mods)
 
-@app.route("/tutorial")
-def tutorial():
-    return render_template("tutorial.html")
-
-@app.route("/mod/<category>/<filename>")
-def mod_page(category, filename):
-    folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
-    if not os.path.exists(os.path.join(folder, filename)):
+@app.route("/mod/<category>/<mod_id>")
+def mod_page(category, mod_id):
+    """Halaman Detail ala Modrinth: Membaca seluruh file di dalam folder mod"""
+    base_folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
+    mod_path = os.path.join(base_folder, mod_id)
+    
+    if not os.path.exists(mod_path) or not os.path.isdir(mod_path):
         abort(404)
         
-    clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
+    clean_title = mod_id.replace('_', ' ').replace('-', ' ').title()
+    files = [f for f in os.listdir(mod_path) if not f.startswith('.')]
     
-    # Deteksi Mod Loader untuk halaman detail
-    loader_tag = None
-    filename_lower = filename.lower()
-    if "forge" in filename_lower:
-        loader_tag = "Forge"
-    elif "fabric" in filename_lower:
-        loader_tag = "Fabric"
-    elif "quilt" in filename_lower:
-        loader_tag = "Quilt"
+    # Ambil data spesifik dari setiap file di dalam folder
+    file_list = []
+    versions_set = set()
+    loaders_set = set()
+    
+    for f in files:
+        info = get_file_info(f, mod_path, category)
+        file_list.append(info)
+        versions_set.add(info["version"])
+        loaders_set.add(info["loader"])
 
-    mod = {
+    # Urutkan versi agar dari yang terbaru
+    sorted_versions = sorted(list(versions_set), reverse=True)
+    sorted_loaders = sorted(list(loaders_set))
+
+    mod_data = {
+        "id": mod_id,
         "title": clean_title,
-        "version": "Sesuai Nama File",
-        "loader": loader_tag,
-        
-        # Deskripsi halaman detail disesuaikan juga agar serasi
-        "desc": f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft kamu.",
-        
-        "file": filename,
         "category": category,
-        "size": format_size(os.path.join(folder, filename))
+        "desc": f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft kamu.",
+        "files": file_list,
+        "available_versions": sorted_versions,
+        "available_loaders": sorted_loaders
     }
-    return render_template("mod.html", mod=mod)
+    
+    return render_template("mod.html", mod=mod_data)
 
-@app.route("/download/<category>/<filename>")
-def download(category, filename):
-    folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
-    return send_from_directory(folder, filename, as_attachment=True)
+@app.route("/download/<category>/<mod_id>/<filename>")
+def download(category, mod_id, filename):
+    base_folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
+    mod_path = os.path.join(base_folder, mod_id)
+    return send_from_directory(mod_path, filename, as_attachment=True)
 
 if __name__ == "__main__":
     app.run()
