@@ -1,61 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="detail-container" style="max-width: 800px; margin: 40px auto; padding: 20px;">
+<div style="max-width: 1000px; margin: 40px auto; padding: 0 20px; font-family: 'Inter', sans-serif;">
     
-    <div class="card" style="margin-bottom: 25px; padding: 30px; background: #1e293b; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;">
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
-            <span class="badge" style="border-color: var(--neon-color); color: var(--neon-color); background: transparent; font-weight: 700;">
-                {{ mod.category.upper() }} EDITION
-            </span>
-            <span class="badge" style="background: rgba(168, 85, 247, 0.1); color: #c084fc; border-color: rgba(168, 85, 247, 0.2);">
-                🎮 MC {{ mod.version_range }}
-            </span>
+    <div style="margin-bottom: 20px;">
+        <a href="/" style="text-decoration: none; color: #a1a1aa; font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 5px;">
+            <i class="fas fa-chevron-left"></i> Kembali ke Penjelajah Mod
+        </a>
+    </div>
+
+    <div style="display: flex; gap: 25px; align-items: flex-start; margin-bottom: 40px; flex-wrap: wrap;">
+        <div style="width: 120px; height: 120px; background: #242424; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid #333; flex-shrink: 0;">
+            <i class="fas fa-box-open" style="font-size: 50px; color: #00af5c;"></i>
         </div>
         
-        <h1 style="font-size: 28px; color: #ffffff; font-weight: 800; margin: 10px 0;">{{ mod.title }}</h1>
-        <p style="color: #94a3b8; line-height: 1.6; font-size: 15px; margin-bottom: 0;">{{ mod.desc }}</p>
+        <div style="flex: 1; min-width: 300px;">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                <span style="background: #00af5c; color: #fff; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 800; text-transform: uppercase;">{{ mod.category }}</span>
+                <span style="background: #333; color: #ccc; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">{{ mod.version_range }}</span>
+            </div>
+            <h1 style="font-size: 36px; color: #fff; font-weight: 800; margin: 0 0 10px 0; letter-spacing: -1px;">{{ mod.title }}</h1>
+            <p style="color: #a1a1aa; font-size: 16px; margin: 0; line-height: 1.5; max-width: 700px;">{{ mod.desc }}</p>
+        </div>
     </div>
 
-    <div class="card" style="padding: 25px; background: #1e293b; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);">
-        <h2 style="font-size: 18px; color: var(--neon-color); font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-            📦 Pilih Versi Berkas
-        </h2>
-        <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Silakan pilih variasi versi di bawah ini yang sesuai dengan versi Minecraft yang Bos mainkan.</p>
-
-        <div style="margin-bottom: 20px;">
-            <label for="versionSelect" style="display: block; color: #94a3b8; font-size: 13px; margin-bottom: 8px; font-weight: 600;">Versi Tersedia:</label>
-            <select id="versionSelect" onchange="updateDownloadBtn()" style="width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #f8fafc; font-size: 14px; font-weight: 600; outline: none; cursor: pointer;">
-                {% for file in mod.files %}
-                <option value="{{ file.filename }}" data-size="{{ file.size }}" data-ver="{{ file.version }}">
-                    📦 Versi {{ file.version }} ({{ file.size }})
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.02); margin-bottom: 25px;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
-                <span style="color: #64748b;">Nama Berkas:</span>
-                <span id="lbl-filename" style="color: #cbd5e1; font-weight: 600; word-break: break-all; text-align: right; max-width: 70%;">Memuat...</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 13px;">
-                <span style="color: #64748b;">Ukuran File:</span>
-                <span id="lbl-filesize" style="color: var(--neon-color); font-weight: 700;">Memuat...</span>
+    <div style="display: grid; grid-template-columns: 1fr 320px; gap: 30px;">
+        
+        <div style="background: #181818; border-radius: 16px; border: 1px solid #2b2b2b; padding: 30px;">
+            <h3 style="color: #fff; margin-top: 0; margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid #2b2b2b; padding-bottom: 15px;">📃 Deskripsi Berkas</h3>
+            <div style="color: #d4d4d8; line-height: 1.7; font-size: 15px;">
+                {{ mod.desc }}
+                <br><br>
+                <b>Fitur Utama:</b>
+                <ul style="padding-left: 20px;">
+                    <li>Diuji coba pada versi Minecraft {{ mod.version_range }}</li>
+                    <li>Performa stabil dan dioptimalkan untuk FPS tinggi</li>
+                    <li>Instalasi mudah (Cek menu tutorial)</li>
+                </ul>
             </div>
         </div>
 
-        <a id="downloadBtn" href="#" class="btn" style="display: block; text-align: center; padding: 14px; font-size: 15px; font-weight: 700; border-radius: 8px; background: var(--neon-color); color: #000000; text-decoration: none; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.4); transition: transform 0.2s;">
-            🚀 Unduh Berkas Sekarang
-        </a>
-    </div>
+        <div>
+            <div style="background: #181818; border-radius: 16px; border: 1px solid #2b2b2b; padding: 20px; margin-bottom: 20px;">
+                <h4 style="color: #fff; margin: 0 0 15px 0; font-size: 14px; text-transform: uppercase; color: #71717a; letter-spacing: 1px;">Unduhan Terbaru</h4>
+                
+                <div style="margin-bottom: 15px;">
+                    <select id="versionSelect" onchange="updateDownloadBtn()" style="width: 100%; padding: 12px; background: #111; border: 1px solid #333; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;">
+                        {% for file in mod.files %}
+                        <option value="{{ file.filename }}" data-size="{{ file.size }}" data-ver="{{ file.version }}">
+                            📦 Versi {{ file.version }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-    <div style="text-align: center; margin-top: 30px;">
-        <a href="/" style="color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
-            ⬅️ Kembali ke Hub Utama
-        </a>
-    </div>
+                <div style="background: #111; padding: 12px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #222;">
+                    <div style="font-size: 12px; color: #71717a; margin-bottom: 4px;">Nama File:</div>
+                    <div id="lbl-filename" style="font-size: 13px; color: #fff; font-weight: 600; word-break: break-all;">Memuat...</div>
+                </div>
 
+                <a id="downloadBtn" href="#" class="btn" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #00af5c; color: #fff; text-decoration: none; padding: 15px; border-radius: 10px; font-weight: 800; font-size: 15px; transition: 0.2s; box-shadow: 0 10px 15px -3px rgba(0, 175, 92, 0.2);">
+                    <i class="fas fa-download"></i> Unduh <span id="lbl-filesize">...</span>
+                </a>
+            </div>
+
+            <div style="background: #181818; border-radius: 16px; border: 1px solid #2b2b2b; padding: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <div style="font-size: 12px; color: #71717a;">Platform</div>
+                    <div style="color: #fff; font-weight: 600;">Minecraft {{ mod.category.upper() }}</div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <div style="font-size: 12px; color: #71717a;">Status</div>
+                    <div style="color: #00af5c; font-weight: 600;">● Online & Verified</div>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: #71717a;">Lisensi</div>
+                    <div style="color: #fff; font-weight: 600;">Custom RexCraft</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <script>
@@ -68,24 +93,33 @@ function updateDownloadBtn() {
     const size = selectedOption.getAttribute('data-size');
     const version = selectedOption.getAttribute('data-ver');
     
-    // Sinkronisasi teks info file di box abu-abu
     document.getElementById('lbl-filename').innerText = filename;
-    document.getElementById('lbl-filesize').innerText = size;
+    document.getElementById('lbl-filesize').innerText = "(" + size + ")";
     
-    // Merakit URL Download dinamis menuju backend Flask app.py Bos
     const category = "{{ mod.category }}";
     const modId = "{{ mod.id }}";
-    const downloadUrl = "/download/" + category + "/" + modId + "/" + filename;
-    
-    // Menyuntikkan URL asli ke tombol unduh
     const btn = document.getElementById('downloadBtn');
-    btn.href = downloadUrl;
-    btn.innerHTML = "🚀 Unduh Versi " + version + " (" + size + ")";
+    btn.href = "/download/" + category + "/" + modId + "/" + filename;
 }
 
-// Jalankan fungsi otomatis saat halaman pertama kali dibuka biar data langsung muncul
 document.addEventListener("DOMContentLoaded", function() {
     updateDownloadBtn();
 });
 </script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    body { background-color: #111 !important; }
+    .btn:hover { transform: translateY(-2px); background: #00ca6a !important; }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23fff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-size: 20px; }
+    
+    /* Responsif untuk layar HP */
+    @media (max-width: 768px) {
+        div[style*="grid-template-columns: 1fr 320px"] {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
 {% endblock %}
