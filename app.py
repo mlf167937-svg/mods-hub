@@ -4,14 +4,13 @@ from flask import Flask, render_template, abort, send_from_directory
 
 app = Flask(__name__)
 
-# Mengatur lokasi folder penyimpanan berkas (Direktori static/uploads/)
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def get_file_info(filepath, filename):
     """
-    Fungsi pintar untuk membaca ukuran file dan membersihkan nama berkas 
-    menjadi teks versi yang rapi di menu dropdown.
+    Fungsi pintar untuk membaca ukuran file, versi, 
+    serta otomatis mendeteksi apakah mod ini untuk Fabric atau Forge.
     """
     try:
         size_bytes = os.path.getsize(filepath)
@@ -22,11 +21,19 @@ def get_file_info(filepath, filename):
     except OSError:
         size_str = "0 KB"
 
-    # Proses ekstraksi angka versi game dari nama berkas asli
+    # FITUR BARU: Deteksi otomatis Mod Loader dari nama file
+    name_lower = filename.lower()
+    if 'fabric' in name_lower:
+        loader = "Fabric"
+    elif 'forge' in name_lower:
+        loader = "Forge"
+    else:
+        loader = "Universal" # Jaga-jaga jika nama file tidak ditulis loader-nya
+
     clean_name = os.path.splitext(filename)[0]
     parts = re.split(r'[-_]', clean_name)
     
-    version = "1.20 - 1.21+" # Fallback standar jika tidak ditemukan angka versi
+    version = "1.20 - 1.21+"
     for part in parts:
         if re.search(r'\d+\.\d+', part):
             version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '').replace('.mcaddon', '')
@@ -37,14 +44,11 @@ def get_file_info(filepath, filename):
     return {
         'filename': filename,
         'version': version,
-        'size': size_str
+        'size': size_str,
+        'loader': loader  # Data loader dikirim ke HTML
     }
 
 def get_all_mods():
-    """
-    Mesin utama web yang otomatis membaca seluruh struktur folder di GitHub 
-    dan merangkumnya menjadi kartu-kartu mod di halaman utama.
-    """
     mods_data = []
     categories = ['java', 'mcpe']
     
@@ -63,13 +67,11 @@ def get_all_mods():
                 continue
 
             files_list = []
-            icon_file = None # Tempat menyimpan nama file gambar ikon custom
+            icon_file = None
             
             for filename in os.listdir(folder_path):
                 if filename.startswith('.'):
                     continue
-                
-                # FITUR BARU: Deteksi jika ada file gambar custom (.png / .jpg) di folder mod
                 if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                     icon_file = filename
                     continue
@@ -88,8 +90,6 @@ def get_all_mods():
                     version_range = files_list[0]['version']
 
                 display_title = folder_name.replace('_', ' ').replace('-', ' ').title()
-
-                # Atur path url untuk ikon custom, jika kosong pasang None
                 icon_url = f"/static/uploads/{category}/{folder_name}/{icon_file}" if icon_file else None
 
                 mods_data.append({
@@ -105,22 +105,17 @@ def get_all_mods():
                 
     return mods_data
 
-# ==================== RUTE / ROUTES FLASK ====================
-
 @app.route("/")
 def index():
-    """Halaman Utama Web RexCraft Mods Hub"""
     mods = get_all_mods()
     return render_template("index.html", mods=mods)
 
 @app.route("/tutorial")
 def tutorial():
-    """Halaman Resmi Panduan Cara Pasang Mod"""
     return render_template("tutorial.html")
 
 @app.route("/mod/<category>/<mod_id>")
 def mod_detail(category, mod_id):
-    """Halaman Detail Pilih Versi & Download Mod"""
     if category not in ['java', 'mcpe']:
         abort(404)
         
@@ -135,7 +130,6 @@ def mod_detail(category, mod_id):
         for filename in os.listdir(target_folder):
             if filename.startswith('.'):
                 continue
-            # Deteksi gambar ikon custom di halaman detail
             if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
                 icon_file = filename
                 continue
@@ -172,11 +166,9 @@ def mod_detail(category, mod_id):
 
 @app.route("/download/<category>/<mod_id>/<filename>")
 def download_file(category, mod_id, filename):
-    """Sistem Pengirim Berkas Aman (Mendukung .jar, .zip, .mcpack, .mcaddon)"""
     secure_dir = os.path.join(UPLOAD_FOLDER, category, mod_id)
     if not os.path.exists(os.path.join(secure_dir, filename)):
         abort(404)
-        
     return send_from_directory(secure_dir, filename, as_attachment=True)
 
 @app.route("/health")
