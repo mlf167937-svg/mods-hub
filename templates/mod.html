@@ -2,105 +2,35 @@
 
 {% block content %}
 <style>
-    /* ==================== HERO BANNER LOKAL ==================== */
-    .rex-banner-wrapper {
-        position: relative;
-        width: 100%;
-        height: 180px;
-        background: linear-gradient(to bottom, rgba(17, 18, 19, 0.3), #111213), 
-                    url('/static/img/banner.jpg') center/cover no-repeat;
-        border-radius: 16px;
-        margin-top: 15px;
-        box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
-    }
-
-    .detail-container { 
-        background: #161718; 
-        border: 1px solid #242628; 
-        border-radius: 16px; 
-        padding: 25px; 
-        margin-top: -30px; 
-        position: relative;
-        z-index: 10;
-    }
-    
+    .rex-banner-wrapper { position: relative; width: 100%; height: 180px; background: linear-gradient(to bottom, rgba(17, 18, 19, 0.3), #111213), url('/static/img/banner.jpg') center/cover no-repeat; border-radius: 16px; margin-top: 15px; box-shadow: inset 0 0 40px rgba(0,0,0,0.8); }
+    .detail-container { background: #161718; border: 1px solid #242628; border-radius: 16px; padding: 25px; margin-top: -30px; position: relative; z-index: 10; }
     .mod-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #242628; padding-bottom: 25px; }
     .mod-icon-large { width: 90px; height: 90px; background: #1c1e1f; border-radius: 14px; border: 1px solid #2d3134; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
     .mod-icon-large img { width: 100%; height: 100%; object-fit: cover; }
     .mod-title-text h1 { margin: 0 0 8px 0; color: #fff; font-size: 26px; font-weight: 800; }
     .badge-category { background: rgba(0, 175, 92, 0.1); color: #00af5c; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-    
     .desc-box { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 12px; padding: 20px; margin-bottom: 30px; line-height: 1.6; }
     .desc-box h3 { margin-top: 0; color: #fff; font-size: 16px; display: flex; align-items: center; gap: 8px; }
-    
-    /* TOMBOL UTAMA DOWNLOAD */
-    .btn-trigger-filter-spesifik {
-        background: #00af5c;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 700;
-        padding: 15px 25px;
-        border-radius: 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        text-decoration: none;
-        transition: 0.2s;
-        width: 100%;
-        box-sizing: border-box;
-        border: none;
-        cursor: pointer;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 15px rgba(0, 175, 92, 0.3);
-    }
+    .btn-trigger-filter-spesifik { background: #00af5c; color: #fff; font-size: 16px; font-weight: 700; padding: 15px 25px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; transition: 0.2s; width: 100%; box-sizing: border-box; border: none; cursor: pointer; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0, 175, 92, 0.3); }
     .btn-trigger-filter-spesifik:hover { background: #00c769; }
-
-    /* ==================== POP-UP MODAL FILTER SPESIFIK BERKAS ==================== */
-    .rex-modal-overlay {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(4px);
-        display: none; 
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-    }
-    .rex-modal-box {
-        background: #1c1e1f;
-        border: 1px solid #2d3134;
-        border-radius: 16px;
-        width: 90%;
-        max-width: 450px;
-        padding: 24px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        position: relative;
-        animation: slideUp 0.3s ease;
-    }
+    .rex-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; }
+    .rex-modal-box { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 16px; width: 90%; max-width: 450px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; animation: slideUp 0.3s ease; }
     @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    
     .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
     .modal-close-x { background: none; border: none; color: #a1a1aa; font-size: 20px; cursor: pointer; }
     .modal-close-x:hover { color: #fff; }
-
     .filter-select-group { margin-bottom: 16px; }
     .filter-select-group label { display: block; font-size: 12px; font-weight: 600; color: #a1a1aa; margin-bottom: 6px; text-transform: uppercase; }
     .rex-dropdown { width: 100%; background: #111213; border: 1px solid #2d3134; border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; }
     .rex-dropdown:focus { border-color: #00af5c; }
-
-    .btn-execute-download {
-        background: #00af5c; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
-    }
+    .btn-execute-download { background: #00af5c; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-execute-download:hover { background: #00c769; }
-
     .back-home-btn { display: inline-flex; align-items: center; gap: 8px; color: #8a96a3; text-decoration: none; font-size: 14px; font-weight: 600; margin-bottom: 15px; transition: 0.2s; }
     .back-home-btn:hover { color: #fff; }
 </style>
 
 <a href="/" class="back-home-btn"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
-
 <div class="rex-banner-wrapper"></div>
 
 <div class="detail-container">
@@ -113,21 +43,21 @@
             {% endif %}
         </div>
         <div class="mod-title-text">
-            <h1>{{ mod.title }}</h1>
+            <h1>{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h1>
             <span class="badge-category">{{ mod.category }} edition</span>
         </div>
     </div>
 
     <button class="btn-trigger-filter-spesifik" onclick="openDownloadModal()">
-        <i class="fas fa-download"></i> Download {{ mod.title }}
+        <i class="fas fa-download"></i> Download Berkas
     </button>
 
     <div class="desc-box">
         <h3><i class="fas fa-file-alt" style="color: #00af5c;"></i> Deskripsi Resmi Mod</h3>
         <p style="margin: 0 0 15px 0;">{{ mod.desc }}</p>
-        <p style="margin: 0; font-weight: 600; color: #fff;">📋 Informasi Lintasan Versi:</p>
+        <p style="margin: 0; font-weight: 600; color: #fff;">📋 Informasi Versi:</p>
         <ul style="margin: 5px 0 0 0; padding-left: 20px; color: #8a96a3;">
-            <li>Mendukung penuh ekosistem Minecraft {{ mod.version_range }}</li>
+            <li>Mendukung penuh Minecraft {{ mod.version_range }}</li>
         </ul>
     </div>
 </div>
@@ -135,58 +65,43 @@
 <div class="rex-modal-overlay" id="downloadModal">
     <div class="rex-modal-box">
         <div class="modal-header-flex">
-            <div class="modal-title">
-                <i class="fas fa-file-download" style="color: #00af5c;"></i> Pilih Berkas Spesifik
-            </div>
+            <div class="modal-title"><i class="fas fa-file-download" style="color: #00af5c;"></i> Pilih Versi Berkas</div>
             <button class="modal-close-x" onclick="closeDownloadModal()"><i class="fas fa-times"></i></button>
         </div>
 
         <div class="filter-select-group">
-            <label><i class="fas fa-box"></i> Berkas Berdasarkan Versi & Loader</label>
+            <label><i class="fas fa-box"></i> Pilih File Loader</label>
             <select id="fileTargetSelect" class="rex-dropdown">
                 {% for file in mod.files %}
                     <option value="{{ file.filename }}">
-                        [{{ mod.category | upper }}] Versi {{ file.version }} - {{ file.filename }} ({{ file.size }})
+                        {% if 'fabric' in file.filename.lower() %}
+                            ✨ Berkas Fabric Engine (v{{ file.version }})
+                        {% elif 'forge' in file.filename.lower() %}
+                            🛠️ Berkas Forge Engine (v{{ file.version }})
+                        {% else %}
+                            📦 {{ file.filename[:30] }}{% if file.filename|length > 30 %}...{% endif %} (v{{ file.version }})
+                        {% endif %}
                     </option>
                 {% endfor %}
             </select>
         </div>
-
         <p style="font-size: 11px; color: #8a96a3; margin: -5px 0 15px 0; line-height: 1.4;">
-            *Sistem mendeteksi otomatis daftar file racikan asli yang tersedia di server RexCraft untuk menghindari kegagalan file corrupt.
+            *Pilih loader yang cocok dengan Minecraft milikmu sebelum mengunduh.
         </p>
-
-        <button class="btn-execute-download" onclick="executeFinalDownload()">
-            <i class="fas fa-check"></i> Ambil Berkas Sekarang
-        </button>
+        <button class="btn-execute-download" onclick="executeFinalDownload()"><i class="fas fa-check"></i> Ambil Berkas Sekarang</button>
     </div>
 </div>
 
 <script>
-function openDownloadModal() {
-    document.getElementById('downloadModal').style.display = 'flex';
-}
-
-function closeDownloadModal() {
-    document.getElementById('downloadModal').style.display = 'none';
-}
-
+function openDownloadModal() { document.getElementById('downloadModal').style.display = 'flex'; }
+function closeDownloadModal() { document.getElementById('downloadModal').style.display = 'none'; }
 function executeFinalDownload() {
     const selectedFile = document.getElementById('fileTargetSelect').value;
     if (selectedFile) {
-        // Mengarahkan link download ke file yang benar-benar kamu pilih di dropdown
         window.location.href = "/download/{{ mod.category }}/{{ mod.id }}/" + selectedFile;
         closeDownloadModal();
-    } else {
-        alert("Pilihan berkas tidak valid atau tidak ditemukan!");
     }
 }
-
-window.onclick = function(event) {
-    const modal = document.getElementById('downloadModal');
-    if (event.target == modal) {
-        closeDownloadModal();
-    }
-}
+window.onclick = function(event) { const modal = document.getElementById('downloadModal'); if (event.target == modal) { closeDownloadModal(); } }
 </script>
 {% endblock %}
