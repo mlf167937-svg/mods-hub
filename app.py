@@ -9,7 +9,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def get_file_info(filepath, filename):
     """
-    Fungsi pintar untuk membaca ukuran file, versi, 
+    Fungsi untuk membaca ukuran file, versi, 
     serta otomatis mendeteksi apakah mod ini untuk Fabric atau Forge.
     """
     try:
@@ -50,8 +50,8 @@ def get_file_info(filepath, filename):
 
 def get_all_mods():
     """
-    Membaca seluruh struktur folder di GitHub, mengumpulkan daftar file,
-    dan mendeteksi loader apa saja yang tersedia untuk ditampilkan di halaman depan.
+    Membaca seluruh struktur folder, mengumpulkan daftar file,
+    dan mendeteksi loader apa saja yang tersedia untuk halaman utama.
     """
     mods_data = []
     categories = ['java', 'mcpe']
@@ -72,7 +72,7 @@ def get_all_mods():
 
             files_list = []
             icon_file = None
-            detected_loaders = set() # Menggunakan set agar loader yang sama tidak mendobel
+            detected_loaders = set()
             
             for filename in os.listdir(folder_path):
                 if filename.startswith('.'):
@@ -85,7 +85,6 @@ def get_all_mods():
                 if os.path.isfile(filepath):
                     file_info = get_file_info(filepath, filename)
                     files_list.append(file_info)
-                    # Catat loader yang ditemukan di folder ini
                     detected_loaders.add(file_info['loader'])
 
             if files_list:
@@ -108,7 +107,7 @@ def get_all_mods():
                     'desc': f"Update berkas {category.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
                     'files': files_list,
                     'icon_url': icon_url,
-                    'loaders': list(detected_loaders) # Ubah set ke list untuk dikirim ke index.html
+                    'loaders': list(detected_loaders)
                 })
                 
     return mods_data
@@ -160,12 +159,13 @@ def mod_detail(category, mod_id):
     display_title = mod_id.replace('_', ' ').replace('-', ' ').title()
     icon_url = f"/static/uploads/{category}/{mod_id}/{icon_file}" if icon_file else None
 
+    # DI SINI KATA PANGGILAN SUDAH DIUBAH MENJADI FORMAL DAN AMAN UNTUK PENGUNJUNG
     current_mod = {
         'id': mod_id,
         'title': display_title,
         'category': category,
         'version_range': version_range,
-        'desc': f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft kamu.",
+        'desc': f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft Anda.",
         'files': files_list,
         'icon_url': icon_url
     }
