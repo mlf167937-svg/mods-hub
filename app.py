@@ -12,23 +12,6 @@ MCPE_FOLDER = os.path.join(BASE_UPLOAD, "mcpe")
 os.makedirs(JAVA_FOLDER, exist_ok=True)
 os.makedirs(MCPE_FOLDER, exist_ok=True)
 
-# FORMAT UKURAN FILE
-def format_size(file_path):
-
-    size = os.path.getsize(file_path)
-
-    if size < 1024:
-        return f"{size} B"
-
-    elif size < 1024 * 1024:
-        return f"{size / 1024:.1f} KB"
-
-    elif size < 1024 * 1024 * 1024:
-        return f"{size / (1024 * 1024):.1f} MB"
-
-    else:
-        return f"{size / (1024 * 1024 * 1024):.1f} GB"
-
 def scan_mods_by_category(folder_path, category_name):
     """Fungsi mendeteksi file di dalam folder spesifik (java/mcpe)"""
     mods_list = []
@@ -51,10 +34,9 @@ def scan_mods_by_category(folder_path, category_name):
             mods_list.append({
                 "title": clean_title,
                 "version": version,
-                "desc": f"Modifikasi {category_name} dari RexCraft Mods. Unduh dan pasang ke Minecraft kamu.",
+                "desc": f"Modifikasi resmi {category_name} dari RexCraft Mods. Unduh dan pasang ke Minecraft kamu.",
                 "file": filename,
-                "category": category_name.lower(), # 'java' atau 'mcpe'
-                "size": format_size(os.path.join(folder_path, filename))
+                "category": category_name.lower() # 'java' atau 'mcpe'
             })
     return mods_list
 
@@ -82,8 +64,7 @@ def mod_page(category, filename):
         "version": "Sesuai Nama File",
         "desc": f"Modifikasi resmi Berjenis {category.upper()} dari RexCraft Mods.",
         "file": filename,
-        "category": category,
-        "size": format_size(os.path.join(folder, filename))
+        "category": category
     }
     return render_template("mod.html", mod=mod)
 
