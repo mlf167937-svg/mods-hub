@@ -2,129 +2,277 @@
 
 {% block content %}
 <style>
-    /* STYLING UTAMA HALAMAN DASHBOARD REXCRAFT MODS */
-    .filter-wrapper { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-    .filter-btn { background: #1c1e1f; border: 1px solid #2d3134; color: #a1a1aa; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.2s; }
-    .filter-btn:hover, .filter-btn.active-filter { background: #00af5c; color: #fff; border-color: #00af5c; }
+    /* ==================== HERO / BANNER SECTION ==================== */
+    .rex-hero-banner {
+        background: linear-gradient(135deg, #161718 0%, #1c1e1f 100%);
+        border: 1px solid #242628;
+        border-radius: 16px;
+        padding: 30px 20px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .rex-hero-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #fff;
+        margin: 0 0 8px 0;
+        letter-spacing: -0.5px;
+    }
+    .rex-hero-subtitle {
+        color: #8a96a3;
+        font-size: 14px;
+        margin: 0 0 15px 0;
+        line-height: 1.5;
+    }
+    .server-status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 175, 92, 0.1);
+        border: 1px solid rgba(0, 175, 92, 0.2);
+        padding: 6px 14px;
+        border-radius: 20px;
+        color: #00ff87;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .status-dot-glow {
+        width: 8px;
+        height: 8px;
+        background-color: #00ff87;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #00ff87;
+    }
 
-    .mods-grid-container { display: flex; flex-direction: column; gap: 16px; }
+    /* ==================== FILTER BUTTONS ==================== */
+    .filter-wrapper {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+    .filter-btn {
+        background: #161718;
+        border: 1px solid #242628;
+        color: #a1a1aa;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active-filter {
+        background: #00af5c;
+        color: #fff;
+        border-color: #00af5c;
+    }
+
+    /* ==================== MODS LIST LAYOUT ==================== */
+    .mods-grid-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .mod-card-item {
+        background: #161718;
+        border: 1px solid #242628;
+        border-radius: 16px;
+        padding: 20px;
+        display: flex;
+        gap: 20px;
+        transition: transform 0.2s, border-color 0.2s;
+        position: relative;
+    }
+    .mod-card-item:hover {
+        border-color: #3f4448;
+    }
+
+    /* AVATAR/ICON STYLE */
+    .mod-avatar-box {
+        width: 76px;
+        height: 76px;
+        background: #1c1e1f;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #2d3134;
+        flex-shrink: 0;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .mod-avatar-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mod-info-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .mod-card-title {
+        font-size: 22px;
+        color: #fff;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        letter-spacing: -0.3px;
+    }
+    .mod-card-desc {
+        color: #8a96a3;
+        font-size: 14px;
+        margin: 0 0 16px 0;
+        line-height: 1.5;
+    }
     
-    /* CARD TAMPILAN RESMI ALA MODRINTH */
-    .mod-card-item { background: #161718; border: 1px solid #242628; border-radius: 12px; padding: 18px; display: flex; gap: 18px; transition: transform 0.2s, border-color 0.2s; text-decoration: none; color: inherit; }
-    .mod-card-item:hover { transform: translateY(-2px); border-color: #3f4448; }
+    /* BADGES METADATA */
+    .tag-badges-flex {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    .meta-badge {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 9px;
+        border-radius: 6px;
+        text-transform: uppercase;
+    }
+    .badge-java-main { background: rgba(52, 152, 219, 0.1); color: #3498db; border: 1px solid rgba(52, 152, 219, 0.2); }
+    .badge-mcpe-main { background: rgba(230, 126, 34, 0.1); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.2); }
+    .badge-version-main { background: #1c1e1f; color: #cbd5e1; border: 1px solid #2d3134; }
+    .badge-files-main { background: rgba(0, 175, 92, 0.08); color: #00af5c; border: 1px solid rgba(0, 175, 92, 0.15); }
 
-    .mod-avatar-box { width: 72px; height: 72px; background: #1c1e1f; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid #2d3134; flex-shrink: 0; overflow: hidden; }
-    .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
-
-    .mod-info-content { flex-grow: 1; }
-    .mod-top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-    .mod-card-title { font-size: 18px; color: #fff; font-weight: 700; margin: 0; }
-    .mod-card-desc { color: #8a96a3; font-size: 13px; margin: 5px 0 12px 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    
-    /* BADGE TAGS DI LUAR KARTU */
-    .tag-badges-flex { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-    .meta-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; }
-    .badge-java-main { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid rgba(52, 152, 219, 0.3); }
-    .badge-mcpe-main { background: rgba(230, 126, 34, 0.15); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.3); }
-    .badge-version-main { background: #1c1e1f; color: #a1a1aa; border: 1px solid #2d3134; }
-    .badge-files-main { background: rgba(0, 175, 92, 0.1); color: #00af5c; border: 1px solid rgba(0, 175, 92, 0.2); }
-
-    /* TAG LOADER BARU DI LUAR KARTU */
-    .badge-loader-front { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; }
+    /* LOADERS BADGE */
+    .badge-loader-front { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 6px; text-transform: uppercase; }
     .front-fabric { background: #322519; color: #f1a550; border: 1px solid #4a3825; }
     .front-forge { background: #1c273a; color: #5b92e5; border: 1px solid #2b3d5c; }
     .front-bedrock { background: #1e2920; color: #2ecc71; border: 1px solid #27ae60; }
 
-    .action-view-btn { background: #1c1e1f; border: 1px solid #2d3134; color: #fff; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
-    .mod-card-item:hover .action-view-btn { background: #00af5c; border-color: #00af5c; }
+    /* GREEN DOWNLOAD BUTTON (PANDANGAN PERTAMA - DI BAWAH) */
+    .action-view-btn {
+        background: #00af5c;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: background 0.2s;
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        cursor: pointer;
+    }
+    .action-view-btn:hover {
+        background: #00c769;
+    }
 
     @media (max-width: 600px) {
-        .mod-card-item { flex-direction: column; gap: 12px; }
-        .mod-top-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .mod-card-item { flex-direction: column; gap: 16px; }
+        .mod-avatar-box { width: 64px; height: 64px; }
     }
 </style>
 
-<div>
-    <div class="filter-wrapper">
-        <button class="filter-btn active-filter" onclick="applyClientFilter('all', this)">
-            <i class="fas fa-globe"></i> Semua Berkas
-        </button>
-        <button class="filter-btn" onclick="applyClientFilter('java', this)">
-            <i class="fas fa-mug-hot"></i> Java Edition
-        </button>
-        <button class="filter-btn" onclick="applyClientFilter('mcpe', this)">
-            <i class="fas fa-mobile-alt"></i> Bedrock / MCPE
-        </button>
+<div class="rex-hero-banner">
+    <h1 class="rex-hero-title">RexCraft Mods Hub</h1>
+    <p class="rex-hero-subtitle">Pusat unduhan modifikasi Minecraft resmi racikan RexCraft. Dijamin aman, optimal, dan anti-lag.</p>
+    <div class="server-status-pill">
+        <div class="status-dot-glow"></div>
+        <span>RexCraft Web Online</span>
     </div>
+</div>
 
-    <div class="mods-grid-container" id="modsContainer">
-        {% for mod in mods %}
-        <a class="mod-card-item" data-category="{{ mod.category }}" href="/mod/{{ mod.category }}/{{ mod.id }}">
-            
-            <div class="mod-avatar-box">
-                {% if mod.icon_url %}
-                    <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
+<div class="filter-wrapper">
+    <button class="filter-btn active-filter" onclick="applyClientFilter('all', this)">
+        <i class="fas fa-globe"></i> Semua Berkas
+    </button>
+    <button class="filter-btn" onclick="applyClientFilter('java', this)">
+        <i class="fas fa-mug-hot"></i> Java Edition
+    </button>
+    <button class="filter-btn" onclick="applyClientFilter('mcpe', this)">
+        <i class="fas fa-mobile-alt"></i> Bedrock / MCPE
+    </button>
+</div>
+
+<div class="mods-grid-container" id="modsContainer">
+    {% for mod in mods %}
+    <div class="mod-card-item" data-category="{{ mod.category }}">
+        
+        <div class="mod-avatar-box">
+            {% if mod.icon_url %}
+                <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
+            {% else %}
+                {% if mod.category == 'java' %}
+                <i class="fas fa-mug-hot" style="font-size: 26px; color: #00af5c;"></i>
                 {% else %}
-                    {% if mod.category == 'java' %}
-                    <i class="fas fa-mug-hot" style="font-size: 28px; color: #00af5c;"></i>
-                    {% else %}
-                    <i class="fas fa-cubes" style="font-size: 28px; color: #00af5c;"></i>
-                    {% endif %}
+                <i class="fas fa-cubes" style="font-size: 26px; color: #00af5c;"></i>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="mod-info-content">
+            <h2 class="mod-card-title">{{ mod.title }}</h2>
+            
+            <div class="tag-badges-flex">
+                {% if mod.category == 'java' %}
+                <span class="meta-badge badge-java-main">JAVA</span>
+                {% else %}
+                <span class="meta-badge badge-mcpe-main">MCPE</span>
+                {% endif %}
+                
+                <span class="meta-badge badge-version-main"><i class="fas fa-code-branch"></i> {{ mod.version_range }}</span>
+                <span class="meta-badge badge-files-main"><i class="fas fa-folder-open"></i> {{ mod.total_files }} File</span>
+
+                {% if mod.category == 'java' %}
+                    {% for ld in mod.loaders %}
+                        {% if ld == 'Fabric' %}
+                        <span class="badge-loader-front front-fabric"><i class="fas fa-scroll"></i> Fabric</span>
+                        {% elif ld == 'Forge' %}
+                        <span class="badge-loader-front front-forge"><i class="fas fa-hammer"></i> Forge</span>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <span class="badge-loader-front front-bedrock"><i class="fas fa-cube"></i> Bedrock</span>
                 {% endif %}
             </div>
 
-            <div class="mod-info-content">
-                <div class="mod-top-row">
-                    <h2 class="mod-card-title">{{ mod.title }}</h2>
-                    <span class="action-view-btn">
-                        View Download <i class="fas fa-arrow-right"></i>
-                    </span>
-                </div>
-                
-                <p class="mod-card-desc">{{ mod.desc }}</p>
-                
-                <div class="tag-badges-flex">
-                    {% if mod.category == 'java' %}
-                    <span class="meta-badge badge-java-main">JAVA</span>
-                    {% else %}
-                    <span class="meta-badge badge-mcpe-main">MCPE</span>
-                    {% endif %}
-                    
-                    <span class="meta-badge badge-version-main"><i class="fas fa-code-branch"></i> {{ mod.version_range }}</span>
-                    <span class="meta-badge badge-files-main"><i class="fas fa-folder-open"></i> {{ mod.total_files }} Files</span>
-
-                    {% if mod.category == 'java' %}
-                        {% for ld in mod.loaders %}
-                            {% if ld == 'Fabric' %}
-                            <span class="badge-loader-front front-fabric"><i class="fas fa-scroll"></i> Fabric</span>
-                            {% elif ld == 'Forge' %}
-                            <span class="badge-loader-front front-forge"><i class="fas fa-hammer"></i> Forge</span>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        <span class="badge-loader-front front-bedrock"><i class="fas fa-cube"></i> Bedrock</span>
-                    {% endif %}
-                </div>
-            </div>
-
-        </a>
-        {% else %}
-        <div style="background: #161718; border: 1px dashed #2d3134; padding: 40px; text-align: center; border-radius: 12px; color: #8a96a3;">
-            <i class="fas fa-box-open" style="font-size: 40px; margin-bottom: 10px; color: #00af5c;"></i>
-            <p style="margin: 0; font-weight: 600;">Belum ada berkas mod di folder static/uploads/ Bos!</p>
+            <p class="mod-card-desc">{{ mod.desc }}</p>
+            
+            <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
+                📦 View Download
+            </a>
         </div>
-        {% endfor %}
+
     </div>
+    {% else %}
+    <div style="background: #161718; border: 1px dashed #242628; padding: 40px; text-align: center; border-radius: 12px; color: #8a96a3;">
+        <i class="fas fa-box-open" style="font-size: 40px; margin-bottom: 10px; color: #00af5c;"></i>
+        <p style="margin: 0; font-weight: 600;">Belum ada berkas mod di folder Bos!</p>
+    </div>
+    {% endfor %}
 </div>
 
 <script>
 function applyClientFilter(category, element) {
-    // Reset status aktif tombol filter
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active-filter'));
     element.classList.add('active-filter');
 
-    // Filter kartu mod secara realtime
     const cards = document.querySelectorAll('.mod-card-item');
     cards.forEach(card => {
         if(category === 'all') {
