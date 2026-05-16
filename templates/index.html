@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* ==================== VARIABLE WARNA PREMIUM ==================== */
         :root {
             --bg-main: #060913;
             --bg-surface: rgba(15, 23, 42, 0.65);
@@ -26,11 +27,17 @@
             margin: 0; 
             padding: 0;
             background-image: radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
         }
 
-        .main-wrapper-container { max-width: 800px; margin: 0 auto; padding: 20px 14px; box-sizing: border-box; }
+        .main-wrapper-container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px 14px; 
+            box-sizing: border-box; 
+        }
         
-        /* BRAND NAV BAR WITH LOGO */
+        /* ==================== TOP NAVIGATION BAR ==================== */
         .top-nav-bar {
             display: flex;
             justify-content: space-between;
@@ -60,30 +67,30 @@
         .brand-status { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 800; font-size: 15px; }
         .status-dot-green { width: 8px; height: 8px; background: var(--brand-green); border-radius: 50%; box-shadow: 0 0 8px var(--brand-green); }
 
-        /* HERO BANNER DENGAN IDENTITAS REXCRAFT */
+        /* ==================== HERO BANNER REXCRAFT ==================== */
         .rex-hero-banner {
             position: relative;
             background: linear-gradient(135deg, #0f172a 0%, #070a14 100%);
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            padding: 35px 20px;
+            padding: 38px 20px;
             text-align: center;
             margin-bottom: 24px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .rex-banner-overlay-logo {
-            font-size: 65px;
+            font-size: 70px;
             font-weight: 900;
-            color: rgba(34, 197, 94, 0.03);
-            letter-spacing: 6px;
+            color: rgba(34, 197, 94, 0.025);
+            letter-spacing: 8px;
             position: absolute;
             top: 45%; left: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
             user-select: none;
         }
-        .rex-hero-title { font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 6px 0; }
+        .rex-hero-title { font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 6px 0; letter-spacing: -0.5px; }
         .rex-hero-subtitle { color: #64748b; font-size: 13px; margin: 0 0 20px 0; }
         
         .tutorial-alert-pill {
@@ -99,68 +106,78 @@
             align-items: center;
             gap: 6px;
             margin-bottom: 20px;
+            transition: 0.2s;
         }
+        .tutorial-alert-pill:hover { background: rgba(34, 197, 94, 0.15); }
 
-        /* INPUT FIELD PENCARIAN */
+        /* INPUT FIELD SEARCH */
         .search-container-inside { max-width: 480px; margin: 0 auto; position: relative; }
         .search-container-inside i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #475569; }
         .rex-search-field {
             width: 100%; background: rgba(6, 9, 19, 0.7); border: 1px solid var(--border-color);
             border-radius: 12px; padding: 12px 16px 12px 44px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box;
+            transition: 0.2s;
         }
-        .rex-search-field:focus { border-color: var(--brand-green); }
+        .rex-search-field:focus { border-color: var(--brand-green); background: rgba(6, 9, 19, 0.9); }
 
-        /* 4 BUTTON FILTER KECIL PRESTISIUS */
+        /* ==================== 4 FILTER BUTTONS GRID ==================== */
         .filter-buttons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 24px; }
         .filter-btn {
             background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); color: var(--text-secondary);
-            padding: 8px 2px; border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap;
+            padding: 10px 2px; border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; transition: 0.2s;
         }
+        .filter-btn:hover { background: rgba(30, 41, 59, 0.5); color: #fff; }
         .filter-btn.active-filter { background: rgba(34, 197, 94, 0.12); color: #4ade80; border-color: rgba(34, 197, 94, 0.4); }
 
-        /* MODS PREMIUM CARD LAYOUT */
+        /* ==================== PREMIUM CARD LIST MODS ==================== */
         .mods-grid-container { display: flex; flex-direction: column; gap: 14px; }
         .mod-card-item { 
             background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; 
             display: flex; gap: 16px; align-items: center; justify-content: space-between; transition: 0.2s;
+            backdrop-filter: var(--premium-blur);
         }
         .mod-card-item:hover { transform: translateY(-2px); border-color: rgba(34, 197, 94, 0.25); }
         
-        .mod-left-side-flex { display: flex; gap: 16px; align-items: center; flex-grow: 1; }
+        .mod-left-side-flex { display: flex; gap: 16px; align-items: center; flex-grow: 1; min-width: 0; }
         .mod-avatar-box { width: 68px; height: 68px; background: #0f172a; border-radius: 12px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border-color); }
         .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
         
-        .tag-row-top { display: flex; gap: 5px; margin-bottom: 6px; }
-        .mini-badge { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 6px; }
-        .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
-        .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; }
-        .badge-version { background: rgba(168, 85, 247, 0.1); color: #c084fc; }
+        .mod-info-content { min-width: 0; flex-grow: 1; }
+        .tag-row-top { display: flex; gap: 5px; margin-bottom: 6px; flex-wrap: wrap; }
+        .mini-badge { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 6px; letter-spacing: 0.2px; }
+        .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.15); }
+        .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.15); }
+        .badge-version { background: rgba(168, 85, 247, 0.1); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
 
-        .mod-card-title { font-size: 18px; color: var(--text-primary); font-weight: 700; margin: 0 0 4px 0; }
+        .mod-card-title { font-size: 18px; color: var(--text-primary); font-weight: 700; margin: 0 0 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .mod-card-desc { color: #64748b; font-size: 12px; margin: 0; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* UKURAN TOMBOL VIEW MOD DISETTING TIDAK KEPANJANGAN */
+        /* FIX: UKURAN TOMBOL VIEW MOD COMPACT (TIDAK KEPANJANGAN) */
         .action-view-btn { 
             background: #1e293b; color: #fff; font-size: 12px; font-weight: 700; padding: 10px 16px; 
             border-radius: 10px; display: flex; align-items: center; gap: 6px; text-decoration: none; transition: 0.2s;
-            border: 1px solid var(--border-color); white-space: nowrap;
+            border: 1px solid var(--border-color); white-space: nowrap; flex-shrink: 0;
         }
         .action-view-btn:hover { background: var(--brand-green); border-color: var(--brand-green); }
 
-        /* SETTINGS & SYSTEM OVERLAY MODAL */
+        /* ==================== SYSTEM SETTINGS MODAL ==================== */
         .rex-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
-            display: none; align-items: center; justify-content: center; z-index: 999; padding: 14px; box-sizing: border-box;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(3, 5, 11, 0.85);
+            backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 14px; box-sizing: border-box;
         }
-        .rex-modal-box { background: #0f172a; border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; width: 100%; max-width: 380px; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; color: #fff; font-weight: 700; }
-        .close-btn { background: none; border: none; color: #64748b; font-size: 16px; cursor: pointer; }
+        .rex-modal-box { background: #0f172a; border: 1px solid var(--border-color); padding: 22px; border-radius: 18px; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; color: #fff; font-weight: 700; font-size: 16px; }
+        .close-btn { background: rgba(255,255,255,0.05); border: none; color: #64748b; font-size: 14px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .close-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
 
-        @media (max-width: 600px) {
-            .mod-card-item { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .action-view-btn { width: 100%; justify-content: center; box-sizing: border-box; }
-            .filter-btn { font-size: 10px; }
+        /* RESPONSIVE LAYOUT HP */
+        @media (max-width: 650px) {
+            .mod-card-item { flex-direction: column; align-items: flex-start; gap: 14px; padding: 14px; }
+            .mod-left-side-flex { width: 100%; }
+            .action-view-btn { width: 100%; justify-content: center; box-sizing: border-box; padding: 12px; }
+            .filter-btn { font-size: 10px; padding: 8px 2px; }
+            .rex-hero-title { font-size: 24px; }
         }
     </style>
 </head>
@@ -172,19 +189,19 @@
         <button class="btn-settings" onclick="toggleSettingsModal()"><i class="fas fa-sliders-h"></i> Settings</button>
         <div class="brand-status">
             <div class="status-dot-green"></div>
-            <span>RexCraft Engine</span>
+            <span>RexCraft Mods</span>
         </div>
     </div>
 
     <div class="rex-hero-banner">
-        <div class="rex-banner-overlay-logo">REXCRAFT</div>
+        <div class="rex-banner-overlay-logo">REXCRAFT ENGINE</div>
         <h1 class="rex-hero-title">RexCraft Modding Hub</h1>
-        <p class="rex-hero-subtitle">Modifikasi Minecraft Terlengkap, Optimal, dan Anti-Lag.</p>
-        <a href="/tutorial" class="tutorial-alert-pill"><i class="fas fa-book"></i> Panduan Pasang Mod</a>
+        <p class="rex-hero-subtitle">Eksplorasi modifikasi Minecraft terlengkap, optimal, dan anti-lag buatan RexCraft Engine.</p>
+        <a href="/tutorial" class="tutorial-alert-pill"><i class="fas fa-book-open"></i> Panduan Pasang Mod</a>
 
         <div class="search-container-inside">
             <i class="fas fa-search"></i>
-            <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Ketik nama modifikasi disini..." onkeyup="filterModsMaster()">
+            <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Ketik nama modifikasi di sini..." onkeyup="filterModsMaster()">
         </div>
     </div>
 
@@ -219,8 +236,9 @@
                     <p class="mod-card-desc">{{ mod.desc }}</p>
                 </div>
             </div>
+            
             <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
-                <span>View Mod</span> <i class="fas fa-chevron-right" style="font-size:10px;"></i>
+                <span>View Mod</span> <i class="fas fa-arrow-right" style="font-size:11px;"></i>
             </a>
         </div>
         {% endfor %}
@@ -230,30 +248,33 @@
 <div class="rex-modal-overlay" id="settingsModal">
     <div class="rex-modal-box">
         <div class="modal-header">
-            <span><i class="fas fa-cog"></i> Kontrol Sistem & Filter</span>
+            <span><i class="fas fa-cog" style="color: #38bdf8;"></i> Advance Control Panel</span>
             <button class="close-btn" onclick="toggleSettingsModal()"><i class="fas fa-times"></i></button>
         </div>
-        <p style="font-size:13px; color:#64748b; margin-bottom:12px;">Konfigurasi Engine Pencarian:</p>
-        <div style="background:#060913; padding:10px; border-radius:8px; border:1px solid var(--border-color); font-size:12px; color:#fff;">
-            🟢 Status Server: Online<br>
-            🛠️ Engine Versi: Core v2.4a<br>
-            📦 Penyimpanan Cloud: Terhubung
+        <p style="font-size:12px; color:#64748b; margin:0 0 14px 0;">Konfigurasi Web Engine & Database:</p>
+        <div style="background:#060913; padding:12px; border-radius:10px; border:1px solid var(--border-color); font-size:12px; color:#fff; line-height: 1.7;">
+            <span style="color:#22c55e;">●</span> Status Server: <span style="font-weight:700; color:#22c55e;">Online</span><br>
+            <span style="color:#38bdf8;">●</span> Engine Core: <span style="font-weight:700;">RexEngine v2.5-Premium</span><br>
+            <span style="color:#c084fc;">●</span> Database Sync: <span style="font-weight:700; color:#e2e8f0;">Active (Render Cloud)</span>
         </div>
     </div>
 </div>
 
 <script>
 let currentCategory = 'all';
+
 function toggleSettingsModal() {
     const modal = document.getElementById('settingsModal');
     modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
 }
+
 function setCategoryFilter(category, element) {
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
     if(element) element.classList.add('active-filter');
     currentCategory = category;
     filterModsMaster();
 }
+
 function filterModsMaster() {
     const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
     document.querySelectorAll('.mod-card-item').forEach(card => {
@@ -263,6 +284,11 @@ function filterModsMaster() {
         const matchSearch = title.includes(searchKeyword);
         card.style.display = (matchCat && matchSearch) ? 'flex' : 'none';
     });
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('settingsModal');
+    if (event.target == modal) { toggleSettingsModal(); }
 }
 </script>
 </body>
