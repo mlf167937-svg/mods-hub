@@ -111,18 +111,15 @@ def tutorial():
 @app.route("/mod/<category>/<mod_id>")
 def mod_detail(category, mod_id):
     """Halaman Detail Pilih Versi & Download Mod (VERSI FIX ANTI-EROR 500)"""
-    # Validasi kategori untuk mencegah eksploitasi path folder
     if category not in ['java', 'mcpe']:
         abort(404)
         
     target_folder = os.path.join(UPLOAD_FOLDER, category, mod_id)
     
-    # Cek apakah foldernya benar-benar ada di GitHub
     if not os.path.exists(target_folder) or not os.path.isdir(target_folder):
         abort(404)
         
     files_list = []
-    # Langsung scan isi folder target secara realtime agar 100% akurat
     try:
         for filename in os.listdir(target_folder):
             if filename.startswith('.'):
@@ -133,14 +130,11 @@ def mod_detail(category, mod_id):
     except Exception:
         abort(500)
 
-    # Jika folder ternyata kosong, jangan tampilkan halaman download
     if not files_list:
         abort(404)
 
-    # Urutkan file berdasarkan versi terbaru
     files_list.sort(key=lambda x: x['version'], reverse=True)
     
-    # Hitung range versi untuk judul atas halaman
     if len(files_list) > 1:
         version_range = f"{files_list[-1]['version']} - {files_list[0]['version']}"
     else:
@@ -148,7 +142,6 @@ def mod_detail(category, mod_id):
         
     display_title = mod_id.replace('_', ' ').replace('-', ' ').title()
 
-    # Merakit paket data mod untuk dikirim langsung ke mod.html
     current_mod = {
         'id': mod_id,
         'title': display_title,
@@ -174,7 +167,6 @@ def health_check():
     """Rute pembantu untuk memastikan Render tetap hidup lancar"""
     return "OK", 200
 
-@app.閲覧_error(404) # Back-up proteksi penulisan dekorator jika ada eror bawaan framework
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
