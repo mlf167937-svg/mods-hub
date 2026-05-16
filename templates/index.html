@@ -3,23 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RexCraft Mods</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>RexCraft Mods | Premium Modding Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ==================== GLOBAL STYLES ==================== */
-        body { 
-            background-color: #0b0f19; 
-            font-family: 'Inter', sans-serif; 
-            color: #cbd5e1; 
-            margin: 0; 
-            padding: 0; 
+        /* ==================== PREMIUM MODERN ROOT & VARIABLES ==================== */
+        :root {
+            --bg-main: #060913;
+            --bg-surface: rgba(15, 23, 42, 0.65);
+            --border-color: rgba(51, 65, 85, 0.4);
+            --border-glow: rgba(34, 197, 94, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --brand-green: #22c55e;
+            --brand-green-hover: #16a34a;
+            --premium-blur: blur(12px);
         }
+
+        body { 
+            background-color: var(--bg-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: var(--text-secondary); 
+            margin: 0; 
+            padding: 0;
+            background-image: 
+                radial-gradient(circle at 80% 10%, rgba(34, 197, 94, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 10% 60%, rgba(56, 189, 248, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
         .main-wrapper-container { 
-            max-width: 800px; 
+            max-width: 850px; 
             margin: 0 auto; 
-            padding: 20px; 
+            padding: 24px 16px; 
             box-sizing: border-box; 
         }
         
@@ -28,57 +45,82 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 12px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: var(--premium-blur);
         }
         .btn-settings {
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: #94a3b8;
-            padding: 8px 16px;
-            border-radius: 8px;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--border-color);
+            color: #cbd5e1;
+            padding: 8px 14px;
+            border-radius: 10px;
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-settings:hover {
+            background: rgba(30, 41, 59, 1);
+            color: #fff;
+            border-color: #475569;
         }
         .brand-status {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: #22c55e;
-            font-weight: 700;
-            font-size: 15px;
+            gap: 10px;
+            color: var(--text-primary);
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: -0.3px;
+        }
+        .brand-status span {
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .status-dot-green {
-            width: 10px;
-            height: 10px;
-            background-color: #22c55e;
+            width: 8px;
+            height: 8px;
+            background-color: var(--brand-green);
             border-radius: 50%;
-            box-shadow: 0 0 8px #22c55e;
+            box-shadow: 0 0 12px var(--brand-green);
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.95); box-shadow: 0 0 4px var(--brand-green); }
+            50% { transform: scale(1.1); box-shadow: 0 0 14px var(--brand-green); }
+            100% { transform: scale(0.95); box-shadow: 0 0 4px var(--brand-green); }
         }
 
-        /* ==================== HERO BANNER ==================== */
+        /* ==================== HERO BANNER PREMIUM ==================== */
         .rex-hero-banner {
             position: relative;
-            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.6), rgba(11, 15, 25, 0.98)), 
-                        url('/static/img/banner.jpg') center/cover no-repeat;
-            border: 1px solid #1e293b;
-            border-radius: 16px;
-            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(6, 9, 19, 0.95));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 48px 24px;
             text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+            margin-bottom: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             overflow: hidden;
         }
         
         .rex-bg-text-overlay {
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 70px;
+            font-size: 90px;
             font-weight: 900;
-            color: rgba(255, 255, 255, 0.02);
-            letter-spacing: 8px;
+            color: rgba(255, 255, 255, 0.015);
+            letter-spacing: 12px;
             white-space: nowrap;
             pointer-events: none;
             text-transform: uppercase;
@@ -86,120 +128,157 @@
         }
 
         .rex-hero-content-wrapper { position: relative; z-index: 2; }
-        .rex-hero-title { font-size: 30px; font-weight: 800; color: #fff; margin: 0 0 8px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .rex-hero-subtitle { color: #94a3b8; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5; }
+        .rex-hero-title { 
+            font-size: 34px; 
+            font-weight: 800; 
+            color: #fff; 
+            margin: 0 0 10px 0; 
+            letter-spacing: -0.7px;
+            background: linear-gradient(to bottom right, #ffffff 30%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rex-hero-subtitle { color: #64748b; font-size: 14px; margin: 0 0 24px 0; line-height: 1.6; font-weight: 500; }
         
         .tutorial-alert-pill {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 8px 16px;
-            border-radius: 8px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            padding: 8px 18px;
+            border-radius: 12px;
             color: #4ade80;
             font-size: 12px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
-            margin-bottom: 20px;
-            backdrop-filter: blur(4px);
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
+        }
+        .tutorial-alert-pill:hover {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.4);
+            transform: translateY(-1px);
         }
 
         /* ==================== SEARCH FIELD ==================== */
         .search-container-inside {
-            max-width: 550px;
+            max-width: 520px;
             margin: 0 auto;
             position: relative;
         }
         .search-container-inside i {
             position: absolute;
-            left: 16px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
-            color: #64748b;
+            color: #475569;
+            font-size: 15px;
+            transition: color 0.2s;
         }
         .rex-search-field {
             width: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid #334155;
-            border-radius: 10px;
-            padding: 14px 14px 14px 45px;
+            background: rgba(6, 9, 19, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px 16px 14px 48px;
             color: #fff;
             font-size: 14px;
+            font-weight: 500;
             outline: none;
             box-sizing: border-box;
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .rex-search-field:focus { border-color: #22c55e; }
+        .rex-search-field:focus { 
+            border-color: rgba(34, 197, 94, 0.5); 
+            background: rgba(6, 9, 19, 0.9);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+        }
+        .rex-search-field:focus + i { color: var(--brand-green); }
 
-        /* ==================== BUTTONS FILTER (UKURAN LEBIH KECIL) ==================== */
+        /* ==================== BUTTONS FILTER (MINIMALIS & SEJAJAR) ==================== */
         .filter-buttons-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Menjadi 4 kolom sejajar berjejer rapi */
-            gap: 8px; /* Jarak antar tombol agak dirapatkan */
-            margin-bottom: 25px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 28px;
         }
         .filter-btn {
-            background: #141b2d;
-            border: 1px solid #1e293b;
-            color: #94a3b8;
-            padding: 8px 4px; /* Padding vertikal & horizontal diperkecil */
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 11px; /* Ukuran teks diperkecil dari 13px ke 11px */
+            background: rgba(15, 23, 42, 0.35);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 10px 4px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 11px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            transition: 0.2s;
-            white-space: nowrap; /* Teks tidak akan kepotong/turun kebawah */
+            gap: 5px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            backdrop-filter: var(--premium-blur);
         }
-        .filter-btn:hover { background: #1e293b; color: #fff; }
+        .filter-btn:hover { 
+            background: rgba(30, 41, 59, 0.5); 
+            color: var(--text-primary);
+            border-color: #475569;
+        }
         .filter-btn.active-filter {
-            background: #22c55e;
-            color: #fff;
-            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: inset 0 0 12px rgba(34, 197, 94, 0.1);
         }
         
         .btn-advance-filter {
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.2);
+            background: rgba(56, 189, 248, 0.03);
+            border: 1px solid rgba(56, 189, 248, 0.15);
             color: #38bdf8;
         }
         .btn-advance-filter:hover {
-            background: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
             color: #fff;
             border-color: #38bdf8;
         }
 
-        /* ==================== MODS CARD LAYOUT ==================== */
+        /* ==================== MODS CARD LAYOUT PREMIUM ==================== */
         .mods-grid-container { 
             display: flex; 
             flex-direction: column; 
-            gap: 20px; 
+            gap: 16px; 
         }
         .mod-card-item { 
-            background: #0f172a; 
-            border: 1px solid #1e293b; 
-            border-radius: 16px; 
-            padding: 22px; 
+            background: var(--bg-surface); 
+            border: 1px solid var(--border-color); 
+            border-radius: 20px; 
+            padding: 20px; 
             display: flex;
             gap: 20px;
-            align-items: flex-start;
+            align-items: center;
             position: relative;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, box-shadow 0.3s;
+            backdrop-filter: var(--premium-blur);
         }
+        .mod-card-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(34, 197, 94, 0.3);
+            box-shadow: 0 12px 30px rgba(6, 9, 19, 0.6), 0 0 20px rgba(34, 197, 94, 0.05);
+        }
+
         .mod-avatar-box { 
-            width: 76px; 
-            height: 76px; 
-            background: #1e293b; 
-            border-radius: 14px; 
+            width: 80px; 
+            height: 80px; 
+            background: #0f172a; 
+            border: 1px solid var(--border-color);
+            border-radius: 16px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             overflow: hidden; 
             flex-shrink: 0;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
         }
         .mod-avatar-img { 
             width: 100%; 
@@ -212,91 +291,104 @@
             flex-direction: column;
         }
         
-        /* BADGES */
-        .tag-row-top { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-        .mini-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
-        .badge-java { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
-        .badge-mcpe { background: rgba(249, 115, 22, 0.1); color: #f97316; }
-        .badge-version { background: rgba(147, 51, 234, 0.1); color: #c084fc; }
-        .badge-files { background: rgba(34, 197, 94, 0.1); color: #4ade80; }
+        /* PREMIUM MINIMALIST BADGES */
+        .tag-row-top { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+        .mini-badge { font-size: 9px; font-weight: 800; padding: 4px 8px; border-radius: 7px; letter-spacing: 0.3px; }
+        .badge-java { background: rgba(56, 189, 248, 0.08); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.15); }
+        .badge-mcpe { background: rgba(249, 115, 22, 0.08); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.15); }
+        .badge-version { background: rgba(168, 85, 247, 0.08); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.15); }
+        .badge-files { background: rgba(34, 197, 94, 0.08); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.15); }
 
-        .mod-card-title { font-size: 22px; color: #fff; font-weight: 700; margin: 0 0 6px 0; line-height: 1.2; }
-        .mod-card-desc { color: #94a3b8; font-size: 13px; margin: 0 0 18px 0; line-height: 1.5; }
+        .mod-card-title { font-size: 20px; color: var(--text-primary); font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.4px; }
+        .mod-card-desc { color: #64748b; font-size: 13px; margin: 0 0 0 0; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* VIEW DOWNLOAD LINK BUTTON (DIUBAH KEMBALI JADI LINK KE HALAMAN WEB DETAIL) */
+        /* LINK BUTTON TO DETAILED PAGE */
         .action-view-btn { 
-            background: #22c55e; 
+            background: var(--brand-green); 
             color: #fff; 
             font-size: 13px; 
             font-weight: 700; 
-            padding: 12px; 
-            border-radius: 10px; 
+            padding: 12px 24px; 
+            border-radius: 12px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 6px; 
+            gap: 8px; 
             text-decoration: none; 
-            transition: 0.2s; 
-            width: 100%; 
-            box-sizing: border-box; 
-            margin-top: auto;
+            transition: all 0.2s ease; 
+            flex-shrink: 0;
             border: none;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
         }
-        .action-view-btn:hover { background: #16a34a; }
+        .action-view-btn:hover { 
+            background: var(--brand-green-hover); 
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+        }
 
-        /* ==================== INTERFACE ADVANCE FILTER MODAL ==================== */
+        /* ==================== ADVANCE FILTER MODAL ==================== */
         .rex-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(6px);
+            background: rgba(3, 5, 11, 0.85);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            padding: 15px;
+            padding: 16px;
             box-sizing: border-box;
         }
         .rex-modal-box {
             background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
             width: 100%;
             max-width: 420px;
-            padding: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            animation: popSlide 0.25s ease-out;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            animation: popSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-sizing: border-box;
         }
-        @keyframes popSlide { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes popSlide { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .modal-title { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .modal-close-x { background: none; border: none; color: #64748b; font-size: 20px; cursor: pointer; }
-        .modal-close-x:hover { color: #fff; }
+        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-title { font-size: 18px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px; letter-spacing: -0.4px; }
+        .modal-close-x { background: rgba(255,255,255,0.05); border: none; color: #64748b; font-size: 16px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .modal-close-x:hover { color: #fff; background: rgba(255,255,255,0.1); }
 
-        .filter-select-group { margin-bottom: 16px; }
-        .filter-select-group label { display: block; font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; text-transform: uppercase; }
-        .rex-dropdown { width: 100%; background: #0b0f19; border: 1px solid #334155; border-radius: 8px; padding: 12px; color: #fff; font-size: 14px; outline: none; cursor: pointer; }
+        .filter-select-group { margin-bottom: 20px; }
+        .filter-select-group label { display: block; font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .rex-dropdown { width: 100%; background: #060913; border: 1px solid var(--border-color); border-radius: 12px; padding: 12px 16px; color: #fff; font-size: 14px; font-weight: 500; outline: none; cursor: pointer; transition: border 0.2s; }
+        .rex-dropdown:focus { border-color: #38bdf8; }
         
         .btn-apply-advance {
-            background: #22c55e; color: #fff; width: 100%; border: none; padding: 12px; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+            background: var(--brand-green); color: #fff; width: 100%; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
         }
-        .btn-apply-advance:hover { background: #16a34a; }
+        .btn-apply-advance:hover { background: var(--brand-green-hover); }
 
-        /* RESPONSIVE LAYOUT MOBILE PHONE */
-        @media (max-width: 600px) { 
-            /* Tombol filter tetap dipaksa berjejer 4 baris kecil di HP agar tidak melorot */
+        /* ==================== RESPONSIVE LAYOUT SMARTPHONE ==================== */
+        @media (max-width: 680px) { 
+            .mod-card-item { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 16px;
+                padding: 18px;
+            }
+            .action-view-btn {
+                width: 100%;
+            }
             .filter-buttons-grid { 
                 grid-template-columns: repeat(4, 1fr); 
-                gap: 4px;
+                gap: 5px;
             }
             .filter-btn {
-                font-size: 9px; /* Teks otomatis mengecil jadi 9px di HP biar muat */
-                padding: 6px 2px;
+                font-size: 10px;
+                padding: 8px 2px;
+                border-radius: 8px;
             }
-            .mod-card-item { padding: 16px; gap: 14px; }
+            .rex-hero-title { font-size: 26px; }
         }
     </style>
 </head>
@@ -305,7 +397,7 @@
 <div class="main-wrapper-container">
 
     <div class="top-nav-bar">
-        <button class="btn-settings"><i class="fas fa-cog"></i> Settings</button>
+        <button class="btn-settings"><i class="fas fa-sliders-h"></i> Settings</button>
         <div class="brand-status">
             <div class="status-dot-green"></div>
             <span>RexCraft Mods</span>
@@ -315,29 +407,31 @@
     <div class="rex-hero-banner">
         <div class="rex-bg-text-overlay">REXCRAFT</div>
         <div class="rex-hero-content-wrapper">
-            <h1 class="rex-hero-title">RexCraft Mods Hub</h1>
-            <p class="rex-hero-subtitle">Cari berkas modifikasi Minecraft favoritmu dengan instan.</p>
-            <a href="/tutorial" class="tutorial-alert-pill">📩 Bingung cara pasang mod? Klik panduan di sini!</a>
+            <h1 class="rex-hero-title">RexCraft Modding Hub</h1>
+            <p class="rex-hero-subtitle">Unduh ratusan modifikasi, engine, dan berkas shader Minecraft pilihan terbaik.</p>
+            <a href="/tutorial" class="tutorial-alert-pill">
+                <i class="fas fa-book-open"></i> Bingung cara pasang berkas? Klik panduan lengkap
+            </a>
 
             <div class="search-container-inside">
                 <i class="fas fa-search"></i>
-                <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod atau shader..." onkeyup="filterModsMaster()">
+                <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Cari nama mod, addon, shader..." onkeyup="filterModsMaster()">
             </div>
         </div>
     </div>
 
     <div class="filter-buttons-grid">
         <button class="filter-btn active-filter" data-type="all" onclick="setCategoryFilter('all', this)">
-            🌏 Semua
+            <i class="fas fa-globe"></i> Semua
         </button>
         <button class="filter-btn" data-type="java" onclick="setCategoryFilter('java', this)">
-            ☕ Java
+            <i class="fab fa-java"></i> Java
         </button>
         <button class="filter-btn" data-type="mcpe" onclick="setCategoryFilter('mcpe', this)">
-            📱 MCPE
+            <i class="fas fa-mobile-alt"></i> MCPE
         </button>
         <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">
-            ⚙️ Advance
+            <i class="fas fa-cog"></i> Advance
         </button>
     </div>
 
@@ -347,10 +441,10 @@
             
             <div class="mod-avatar-box">
                 {% if mod.icon_url %}
-                    <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon">
+                    <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon Mod">
                 {% else %}
-                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #1e293b;">
-                        <i class="fas fa-cubes" style="font-size: 26px; color: #22c55e;"></i>
+                    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #0f172a;">
+                        <i class="fas fa-cube" style="font-size: 28px; color: var(--brand-green);"></i>
                     </div>
                 {% endif %}
             </div>
@@ -358,27 +452,27 @@
             <div class="mod-info-content">
                 <div class="tag-row-top">
                     {% if mod.category == 'java' %}
-                    <span class="mini-badge badge-java">JAVA</span>
+                    <span class="mini-badge badge-java">JAVA EDITION</span>
                     {% else %}
-                    <span class="mini-badge badge-mcpe">MCPE</span>
+                    <span class="mini-badge badge-mcpe">BEDROCK / MCPE</span>
                     {% endif %}
                     <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
-                    <span class="mini-badge badge-files">📁 {{ mod.total_files }} File</span>
+                    <span class="mini-badge badge-files"><i class="far fa-folder-open"></i> {{ mod.total_files }} Files</span>
                 </div>
 
                 <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
                 <p class="mod-card-desc">{{ mod.desc }}</p>
-                
-                <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
-                    📦 View Download
-                </a>
             </div>
+
+            <a href="/mod/{{ mod.category }}/{{ mod.id }}" class="action-view-btn">
+                <span>View Mod</span> <i class="fas fa-arrow-right" style="font-size: 11px;"></i>
+            </a>
 
         </div>
         {% else %}
-        <div style="background: #0f172a; border: 1px dashed #1e293b; padding: 40px; text-align: center; border-radius: 12px; color: #94a3b8;">
-            <i class="fas fa-box-open" style="font-size: 40px; margin-bottom: 10px; color: #22c55e;"></i>
-            <p style="margin: 0; font-weight: 600;">Belum ada berkas mod di dalam folder penyimpanan.</p>
+        <div style="background: rgba(15,23,42,0.3); border: 2px dashed var(--border-color); padding: 48px; text-align: center; border-radius: 20px; color: #475569;">
+            <i class="fas fa-box-open" style="font-size: 44px; margin-bottom: 12px; color: var(--brand-green); opacity: 0.6;"></i>
+            <p style="margin: 0; font-weight: 600; font-size: 14px;">Belum ada berkas mod terdaftar di database.</p>
         </div>
         {% endfor %}
     </div>
@@ -388,11 +482,11 @@
 <div class="rex-modal-overlay" id="advanceFilterModal">
     <div class="rex-modal-box">
         <div class="modal-header-flex">
-            <div class="modal-title"><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Filter Pencarian Spesifik</div>
+            <div class="modal-title"><i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Advance Filter</div>
             <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
         </div>
         <div class="filter-select-group">
-            <label>Select Game Version</label>
+            <label>Game Version</label>
             <select id="modalVersionSelect" class="rex-dropdown">
                 <option value="all">Semua Versi (All Versions)</option>
                 <option value="1.21">Minecraft 1.21 / 1.21.1</option>
@@ -400,7 +494,7 @@
             </select>
         </div>
         <div class="filter-select-group">
-            <label>Select Platform & Type</label>
+            <label>Platform & Type Tag</label>
             <select id="modalPlatformSelect" class="rex-dropdown">
                 <option value="all">Semua Jenis (All)</option>
                 <option value="java-racikan">Java mods racikan</option>
@@ -415,7 +509,7 @@
             </select>
         </div>
         <button class="btn-apply-advance" onclick="applyAdvanceFilterAction()">
-            <i class="fas fa-check-circle"></i> Terapkan Filter Spesifik
+            <i class="fas fa-check-circle"></i> Terapkan Filter
         </button>
     </div>
 </div>
