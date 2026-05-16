@@ -14,18 +14,13 @@ os.makedirs(MCPE_FOLDER, exist_ok=True)
 
 # FORMAT UKURAN FILE
 def format_size(file_path):
-
     size = os.path.getsize(file_path)
-
     if size < 1024:
         return f"{size} B"
-
     elif size < 1024 * 1024:
         return f"{size / 1024:.1f} KB"
-
     elif size < 1024 * 1024 * 1024:
         return f"{size / (1024 * 1024):.1f} MB"
-
     else:
         return f"{size / (1024 * 1024 * 1024):.1f} GB"
 
@@ -67,6 +62,13 @@ def home():
     # Gabungkan semua mod untuk dikirim ke template
     all_mods = java_mods + mcpe_mods
     return render_template("index.html", mods=all_mods)
+
+# =========================================================
+# REVISI PEGAWAI: MENAMBAHKAN HALAMAN CARA PEMASANGAN MOD
+# =========================================================
+@app.route("/tutorial")
+def tutorial():
+    return render_template("tutorial.html")
 
 @app.route("/mod/<category>/<filename>")
 def mod_page(category, filename):
