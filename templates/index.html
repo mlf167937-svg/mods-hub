@@ -19,24 +19,34 @@
 </div>
 
 <div class="filter-container">
-    <button class="filter-btn active" onclick="setCategory('all', this)">🌍 Semua Mod</button>
-    <button class="filter-btn" onclick="setCategory('java', this)">☕ Java Edition</button>
-    <button class="filter-btn" onclick="setCategory('mcpe', this)">📱 Bedrock / MCPE</button>
+    <button class="filter-btn active" id="btn-all" onclick="setSubCategory('all', 'all', this)">🌍 Semua Berkas</button>
+    <button class="filter-btn" onclick="setSubCategory('java', 'all', this)">☕ Java Edition</button>
+    <button class="filter-btn" onclick="setSubCategory('mcpe', 'all', this)">📱 Bedrock / MCPE</button>
+</div>
+
+<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 10px auto; max-width: 1200px; display: none;">
+    <h3 style="font-size: 14px; color: var(--neon-color); margin-bottom: 12px; font-weight: 700;">⚙️ Pengaturan Filter Spesifik</h3>
+    
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'texture', this)">📱 MCPE Texture Pack</button>
+        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'shader', this)">📱 MCPE Shaders</button>
+        
+        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'mod_racikan', this)">☕ Java Mod Racikan</button>
+        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'map', this)">☕ Java Maps</button>
+    </div>
 </div>
 
 <div class="grid">
     {% for mod in mods %}
-    <div class="card mod-item platform-{{ mod.category }}">
+    <div class="card mod-item platform-{{ mod.category }}" data-folder-id="{{ mod.id|lower }}">
         <div>
             <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom: 4px;">
                 <div class="badge" style="border-color: var(--neon-color); color: var(--neon-color); background: transparent;">
                     {{ mod.category.upper() }}
                 </div>
-                
                 <div class="badge" style="background: rgba(168, 85, 247, 0.1); color: #c084fc; border-color: rgba(168, 85, 247, 0.2);">
                     MC {{ mod.version_range }}
                 </div>
-
                 <div class="badge" style="background: rgba(34, 197, 94, 0.1); color: var(--neon-color); border-color: rgba(34, 197, 94, 0.2);">
                     🗂️ {{ mod.total_files }} File
                 </div>
@@ -51,30 +61,75 @@
     {% else %}
     <div class="card" style="grid-column:1/-1; text-align:center; padding:40px;">
         <h2 style="color:#64748b;">Belum ada folder mod di GitHub Bos.</h2>
-        <p style="color:#475569; margin-top:8px;">Pastikan struktur folder di static/uploads/ sudah benar.</p>
     </div>
     {% endfor %}
 </div>
 
 <script>
 let currentCategory = 'all';
+let currentSub = 'all'; // Menyimpan filter sub-kategori (texture, shader, dll)
 
-function setCategory(cat, element) {
+// Fungsi otomatis untuk menghubungkan tombol Settings bawaan web dengan kotak filter ini
+document.addEventListener("DOMContentLoaded", function() {
+    // Cari tombol settings di pojok kiri atas web Bos
+    const settingsBtn = document.querySelector('a[href="/tutorial"]')?.parentElement?.querySelector('button') || document.querySelector('.btn-settings') || document.getElementsbyClassName('btn')[0];
+    
+    // Trik pemicu: Jika tombol settings diklik, menu filter rahasia di atas langsung terbuka/tertutup!
+    const allButtons = document.querySelectorAll('button, a');
+    allButtons.forEach(btn => {
+        if(btn.innerText.includes('Settings')) {
+            btn.setAttribute('onclick', 'toggleSettingsFilter()');
+        }
+    });
+});
+
+function toggleSettingsFilter() {
+    const filterBox = document.getElementById('settingsFilterBox');
+    if(filterBox.style.display === 'none') {
+        filterBox.style.display = 'block';
+    } else {
+        filterBox.style.display = 'none';
+    }
+}
+
+function setSubCategory(cat, sub, element) {
+    // Atur status aktif tombol
     let buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
     element.classList.add('active');
+    
     currentCategory = cat;
+    currentSub = sub;
     searchAndFilter();
 }
 
 function searchAndFilter() {
     let keyword = document.getElementById('searchBox').value.toLowerCase();
     let items = document.querySelectorAll('.mod-item');
+    
     items.forEach(item => {
         let title = item.querySelector('.mod-title').innerText.toLowerCase();
+        let folderId = item.getAttribute('data-folder-id');
+        
+        // Cek kategori utama (All, Java, atau MCPE)
         let matchCategory = (currentCategory === 'all' || item.classList.contains('platform-' + currentCategory));
+        
+        // Cek sub-kategori berdasarkan kata kunci di nama folder GitHub Bos
+        let matchSub = false;
+        if (currentSub === 'all') {
+            matchSub = true;
+        } else {
+            // Memeriksa isi id folder (Contoh: 'texture_bare_bones' mengandung kata 'texture')
+            if (folderId.includes(currentSub)) {
+                matchSub = true;
+            }
+        }
+        
+        // Cek kolom pencarian ketikan kata kunci
         let matchKeyword = title.includes(keyword);
-        if (matchCategory && matchKeyword) {
+        
+        // Tampilkan jika semua syarat terpenuhi
+        if (matchCategory && matchSub && matchKeyword) {
             item.style.display = 'flex';
         } else {
             item.style.display = 'none';
