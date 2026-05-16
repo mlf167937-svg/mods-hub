@@ -49,10 +49,9 @@
             box-shadow: 0 0 8px #22c55e;
         }
 
-        /* ==================== HERO BANNER (FIX MENGGUNAKAN GAMBAR LOKAL KAMU) ==================== */
+        /* HERO BANNER DENGAN BACKGROUND IMAGE LOKAL */
         .rex-hero-banner {
             position: relative;
-            /* Memanggil gambar banner.jpg dari folder static kamu */
             background: linear-gradient(to bottom, rgba(15, 23, 42, 0.5), rgba(11, 15, 25, 0.95)), 
                         url('/static/img/banner.jpg') center/cover no-repeat;
             border: 1px solid #1e293b;
@@ -79,7 +78,7 @@
             z-index: 1;
         }
 
-        .rex-hero-content-wrapper { position: relative; z-index: 2; }
+        .rex-hero-content-wrapper { relative; z-index: 2; }
         .rex-hero-title { font-size: 30px; font-weight: 800; color: #fff; margin: 0 0 8px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .rex-hero-subtitle { color: #94a3b8; font-size: 13px; margin: 0 0 15px 0; line-height: 1.5; }
         
@@ -127,7 +126,7 @@
         }
         .rex-search-field:focus { border-color: #22c55e; }
 
-        /* GRID BUTTON FILTERS */
+        /* GRID TOMBOL FILTER */
         .filter-buttons-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -156,7 +155,6 @@
             border-color: #22c55e;
         }
         
-        /* Gaya tombol Advance Filter Biru */
         .btn-advance-filter {
             background: rgba(56, 189, 248, 0.05);
             border: 1px solid rgba(56, 189, 248, 0.2);
@@ -168,7 +166,7 @@
             border-color: #38bdf8;
         }
 
-        /* CARDS LAYOUT */
+        /* LAYOUT KARTU MODS */
         .mods-grid-container { display: flex; flex-direction: column; gap: 20px; }
         .mod-card-item { 
             background: #0f172a; 
@@ -204,7 +202,7 @@
         }
         .action-view-btn:hover { background: #16a34a; }
 
-        /* ==================== MODAL POP-UP ADVANCE FILTER (MODRINTH STYLE) ==================== */
+        /* MODAL POP-UP ADVANCE FILTER SPECIAL */
         .rex-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -298,7 +296,7 @@
 
     <div class="mods-grid-container" id="modsContainer">
         {% for mod in mods %}
-        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{{ mod.title.lower() }}">
+        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{{ mod.title.lower() }}" data-version="{{ mod.version_range }}">
             
             <div class="mod-avatar-box">
                 {% if mod.icon_url %}
@@ -343,27 +341,26 @@
     <div class="rex-modal-box">
         <div class="modal-header-flex">
             <div class="modal-title">
-                <i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Select Platform & Version
+                <i class="fas fa-sliders-h" style="color: #38bdf8;"></i> Filter Pencarian Spesifik
             </div>
             <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
         </div>
 
         <div class="filter-select-group">
-            <label><i class="fas fa-gamepad"></i> Select game version</label>
+            <label><i class="fas fa-gamepad"></i> Select Game Version</label>
             <select id="modalVersionSelect" class="rex-dropdown">
-                <option value="all">All Versions</option>
+                <option value="all">Semua Versi (All Versions)</option>
                 <option value="1.21">Minecraft 1.21 / 1.21.1</option>
                 <option value="1.20">Minecraft 1.20+</option>
             </select>
         </div>
 
         <div class="filter-select-group">
-            <label><i class="fas fa-layer-group"></i> Select platform</label>
+            <label><i class="fas fa-layer-group"></i> Select Platform</label>
             <select id="modalPlatformSelect" class="rex-dropdown">
-                <option value="all">All Platforms</option>
-                <option value="fabric">Fabric Engine</option>
-                <option value="forge">Forge Engine</option>
-                <option value="bedrock">Bedrock / MCPE</option>
+                <option value="all">Semua Platform (All)</option>
+                <option value="java">Java Edition Only</option>
+                <option value="mcpe">Bedrock / MCPE Only</option>
             </select>
         </div>
 
@@ -384,11 +381,6 @@ function closeAdvanceModal() {
     document.getElementById('advanceFilterModal').style.display = 'none';
 }
 
-function applyAdvanceFilterAction() {
-    // Menjalankan penyaringan dan menutup modal otomatis
-    closeAdvanceModal();
-}
-
 function setCategoryFilter(category, element) {
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active-filter'));
@@ -400,6 +392,42 @@ function setCategoryFilter(category, element) {
     filterModsMaster();
 }
 
+// LOGIKA FILTER ADVANCE YANG SEKARANG SUDAH BERFUNGSI AKTIF
+function applyAdvanceFilterAction() {
+    const selectedVersion = document.getElementById('modalVersionSelect').value;
+    const selectedPlatform = document.getElementById('modalPlatformSelect').value;
+    const cards = document.querySelectorAll('.mod-card-item');
+
+    // Update kategori utama agar sinkron dengan pilihan platform di modal
+    currentCategory = selectedPlatform;
+
+    // Sinkronisasi status tombol menu luar biar gak bingung
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active-filter');
+        if(btn.getAttribute('data-type') === selectedPlatform) {
+            btn.classList.add('active-filter');
+        }
+    });
+
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardVersion = card.getAttribute('data-version');
+
+        const matchPlatform = (selectedPlatform === 'all' || cardCategory === selectedPlatform);
+        const matchVersion = (selectedVersion === 'all' || cardVersion.includes(selectedVersion));
+
+        if (matchPlatform && matchVersion) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    closeAdvanceModal();
+}
+
+// Filter pencarian ketik utama
 function filterModsMaster() {
     const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
     const cards = document.querySelectorAll('.mod-card-item');
@@ -419,7 +447,6 @@ function filterModsMaster() {
     });
 }
 
-// Menutup modal jika klik di bagian luar area box hitam
 window.onclick = function(event) {
     const modal = document.getElementById('advanceFilterModal');
     if (event.target == modal) {
