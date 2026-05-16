@@ -28,16 +28,28 @@
     </button>
 </div>
 
-<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 15px auto; max-width: 650px; display: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);">
-    <h3 style="font-size: 14px; color: var(--neon-color); margin-bottom: 12px; font-weight: 700; text-align: center;">⚙️ Pengaturan Filter Spesifik</h3>
+<div id="settingsFilterBox" style="background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; margin: 15px auto; max-width: 800px; display: none; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);">
+    <h3 style="font-size: 14px; color: var(--neon-color); margin-bottom: 15px; font-weight: 700; text-align: center;">⚙️ Pengaturan Filter Spesifik</h3>
     
-    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'texture', this)">📱 MCPE Texture Pack</button>
-        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'shader', this)">📱 MCPE Shaders</button>
-        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'mc_addon', this)">📱 MCPE Add-On / Mods</button>
-        
-        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'mod_racikan', this)">☕ Java Mod Racikan</button>
-        <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'map', this)">☕ Java Maps</button>
+    <div style="margin-bottom: 15px;">
+        <h4 style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600;">📱 Bedrock / MCPE Filters</h4>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'texture', this)">📱 MCPE Texture Pack</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'shader', this)">📱 MCPE Shaders</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'mc_addon', this)">📱 MCPE Add-On / Mods</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('mcpe', 'map', this)">📱 MCPE Maps</button>
+        </div>
+    </div>
+
+    <div>
+        <h4 style="font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 600;">☕ Java Edition Filters</h4>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'java_mod_biasa', this)">☕ Java Mod (Biasa)</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'mod_racikan', this)">☕ Java Mod Racikan</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'texture', this)">☕ Java Texture Pack</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'shader', this)">☕ Java Shaders</button>
+            <button class="filter-btn" style="font-size: 12px; padding: 6px 12px;" onclick="setSubCategory('java', 'map', this)">☕ Java Maps</button>
+        </div>
     </div>
 </div>
 
@@ -101,8 +113,10 @@ function searchAndFilter() {
         let title = item.querySelector('.mod-title').innerText.toLowerCase();
         let folderId = item.getAttribute('data-folder-id');
         
+        // 1. Validasi Kategori Utama (All, Java, atau MCPE)
         let matchCategory = (currentCategory === 'all' || item.classList.contains('platform-' + currentCategory));
         
+        // 2. Validasi Sub-Kategori Spesifik
         let matchSub = false;
         if (currentSub === 'all') {
             matchSub = true;
@@ -115,12 +129,16 @@ function searchAndFilter() {
                 matchSub = true;
             }
         } else if (currentSub === 'mc_addon') {
-            // DETEKSI OTOMATIS ADD-ON / MODS MCPE (Aman untuk folder brutal_legends_mcaddon milik Bos!)
-            if (folderId.includes('addon') || folderId.includes('addons') || folderId.includes('mcaddon') || folderId.includes('mod') || folderId.includes('mods')) {
+            if (folderId.includes('addon') || folderId.includes('addons') || folderId.includes('mcaddon')) {
                 matchSub = true;
             }
         } else if (currentSub === 'mod_racikan') {
-            if (folderId.includes('mod') || folderId.includes('mods') || folderId.includes('racikan')) {
+            if (folderId.includes('racikan')) {
+                matchSub = true;
+            }
+        } else if (currentSub === 'java_mod_biasa') {
+            // Logika Cerdas: Harus mengandung mod/mods tapi TIDAK BOLEH mengandung kata racikan
+            if ((folderId.includes('mod') || folderId.includes('mods')) && !folderId.includes('racikan')) {
                 matchSub = true;
             }
         } else if (currentSub === 'map') {
@@ -129,8 +147,10 @@ function searchAndFilter() {
             }
         }
         
+        // 3. Validasi Teks Kolom Pencarian
         let matchKeyword = title.includes(keyword);
         
+        // Eksekusi Akhir Tampilan
         if (matchCategory && matchSub && matchKeyword) {
             item.style.display = 'flex';
         } else {
