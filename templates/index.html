@@ -173,7 +173,7 @@
             border-color: #38bdf8;
         }
 
-        /* ==================== MODS CARD LAYOUT (FIXED SIDE-BY-SIDE) ==================== */
+        /* ==================== MODS CARD LAYOUT (SIDE-BY-SIDE) ==================== */
         .mods-grid-container { 
             display: flex; 
             flex-direction: column; 
@@ -258,7 +258,7 @@
             box-sizing: border-box;
         }
         .rex-modal-box {
-            background: #1c1e1f; /* Warna Gelap Khas Modrinth */
+            background: #1c1e1f; /* Warna Gelap Modrinth */
             border: 1px solid #2d3134;
             border-radius: 16px;
             width: 100%;
@@ -316,7 +316,7 @@
             color: #fff;
         }
 
-        /* FINAL DOWNLOAD BUTTON BUTTON */
+        /* FINAL DOWNLOAD BUTTON */
         .btn-modrinth-download {
             background: #00af5c;
             color: #fff;
@@ -403,7 +403,12 @@
                 <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
                 <p class="mod-card-desc">{{ mod.desc }}</p>
                 
-                <button class="action-view-btn" onclick="openModrinthDownload('{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}', '{{ mod.category }}', '{{ mod.id }}', {{ mod.files | tojson | safe }})">
+                <button class="action-view-btn" 
+                        data-mod-title="{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}"
+                        data-mod-category="{{ mod.category }}"
+                        data-mod-id="{{ mod.id }}"
+                        data-mod-files='{{ mod.files | tojson | safe }}'
+                        onclick="openModrinthDownload(this)">
                     📦 View Download
                 </button>
             </div>
@@ -483,41 +488,54 @@ let currentCategory = 'all';
 let currentActiveModCategory = '';
 let currentActiveModId = '';
 
-// --- FUNGSI POP-UP DOWNLOAD KUSTOM ALA MODRINTH ---
-function openModrinthDownload(modTitle, category, id, filesArray) {
+// --- FUNGSI UTAMA POP-UP DOWNLOAD KUSTOM MODRINTH (FIXED) ---
+function openModrinthDownload(buttonElement) {
+    // Membaca data attribute HTML secara aman tanpa merusak tag string
+    const modTitle = buttonElement.getAttribute('data-mod-title');
+    currentActiveModCategory = buttonElement.getAttribute('data-mod-category');
+    currentActiveModId = buttonElement.getAttribute('data-mod-id');
+    const rawFiles = buttonElement.getAttribute('data-mod-files');
+    
     document.getElementById('modalModTitleName').innerText = "Download " + modTitle;
-    currentActiveModCategory = category;
-    currentActiveModId = id;
     
     const dropdownSelect = document.getElementById('modrinthFileSelect');
-    dropdownSelect.innerHTML = ""; // Reset opsi lama
+    dropdownSelect.innerHTML = ""; // Reset data opsi list di dalam pop-up
 
-    if (filesArray && filesArray.length > 0) {
-        filesArray.forEach(file => {
+    try {
+        const filesArray = JSON.parse(rawFiles);
+
+        if (filesArray && filesArray.length > 0) {
+            filesArray.forEach(file => {
+                const option = document.createElement('option');
+                option.value = file.filename;
+                
+                let labelText = "";
+                const nameLower = file.filename.toLowerCase();
+                
+                if (nameLower.includes('fabric')) {
+                    labelText = "✨ Fabric Engine - Versi " + file.version;
+                } else if (nameLower.includes('forge')) {
+                    labelText = "🛠️ Forge Engine - Versi " + file.version;
+                } else {
+                    labelText = "📦 Pack File - Versi " + file.version;
+                }
+                
+                option.innerText = labelText;
+                dropdownSelect.appendChild(option);
+            });
+        } else {
             const option = document.createElement('option');
-            option.value = file.filename;
-            
-            // Format teks dropdown pintar biar rapi ga kepanjangan
-            let labelText = "";
-            const nameLower = file.filename.toLowerCase();
-            
-            if (nameLower.includes('fabric')) {
-                labelText = "✨ Fabric Engine - Versi " + file.version;
-            } else if (nameLower.includes('forge')) {
-                labelText = "🛠️ Forge Engine - Versi " + file.version;
-            } else {
-                labelText = "📦 Pack File - Versi " + file.version;
-            }
-            
-            option.innerText = labelText;
+            option.innerText = "Tidak ada berkas tersedia";
             dropdownSelect.appendChild(option);
-        });
-    } else {
+        }
+    } catch (error) {
+        console.error("Gagal parsing JSON file mod:", error);
         const option = document.createElement('option');
-        option.innerText = "Tidak ada berkas tersedia";
+        option.innerText = "Gagal memuat daftar berkas";
         dropdownSelect.appendChild(option);
     }
 
+    // Munculkan Pop-up ke layar
     document.getElementById('modrinthDownloadModal').style.display = 'flex';
 }
 
@@ -527,16 +545,15 @@ function closeModrinthDownload() {
 
 function submitModrinthDownload() {
     const selectedFile = document.getElementById('modrinthFileSelect').value;
-    if (selectedFile && selectedFile !== "Tidak ada berkas tersedia") {
-        // Redirect download file langsung dari database backend tanpa pindah halaman html
+    if (selectedFile && selectedFile !== "Tidak ada berkas tersedia" && selectedFile !== "Gagal memuat daftar berkas") {
         window.location.href = "/download/" + currentActiveModCategory + "/" + currentActiveModId + "/" + selectedFile;
         closeModrinthDownload();
     } else {
-        alert("Maaf, berkas tidak valid atau belum di-upload!");
+        alert("Maaf, file download tidak valid!");
     }
 }
 
-// --- FUNGSI UTILITAS SEARCH & ADVANCE FILTER ---
+// --- FUNGSI UTILITY SEARCH & FILTERS ---
 function openAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'flex'; }
 function closeAdvanceModal() { document.getElementById('advanceFilterModal').style.display = 'none'; }
 
@@ -586,7 +603,7 @@ function filterModsMaster() {
     });
 }
 
-// Klik area hitam luar modal buat nutup otomatis
+// Klik luar kotak otomatis nutup pop-up
 window.onclick = function(event) {
     const modal1 = document.getElementById('modrinthDownloadModal');
     const modal2 = document.getElementById('advanceFilterModal');
