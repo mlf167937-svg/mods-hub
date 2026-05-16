@@ -44,7 +44,7 @@ def scan_mods_by_category(folder_path, category_name):
                     if part.startswith('1.') or '1.' in part:
                         version = os.path.splitext(part)[0]
 
-            # 2. REVISI PEGAWAI: Deteksi Mod Loader (Forge / Fabric / Quilt)
+            # 2. Deteksi Mod Loader (Forge / Fabric / Quilt)
             loader_tag = None
             filename_lower = filename.lower()
             if "forge" in filename_lower:
@@ -57,8 +57,14 @@ def scan_mods_by_category(folder_path, category_name):
             mods_list.append({
                 "title": clean_title,
                 "version": version,
-                "loader": loader_tag, # Akan bernilai Forge/Fabric/Quilt atau None
-                "desc": f"Modifikasi {category_name} dari RexCraft Mods. Unduh dan pasang ke Minecraft kamu.",
+                "loader": loader_tag,
+                
+                # =================================================================================
+                # MODIFIKASI DESKRIPSI (OPSI 3): FOKUS PERFORMA, ESTETIK, DAN ANTI-LAG
+                # =================================================================================
+                "desc": f"Update berkas {category_name} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
+                # =================================================================================
+                
                 "file": filename,
                 "category": category_name.lower(),
                 "size": format_size(os.path.join(folder_path, filename))
@@ -84,19 +90,24 @@ def mod_page(category, filename):
         
     clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
     
-    # Deteksi Mod Loader untuk halaman detail juga
+    # Deteksi Mod Loader untuk halaman detail
     loader_tag = None
     filename_lower = filename.lower()
     if "forge" in filename_lower:
         loader_tag = "Forge"
     elif "fabric" in filename_lower:
         loader_tag = "Fabric"
+    elif "quilt" in filename_lower:
+        loader_tag = "Quilt"
 
     mod = {
         "title": clean_title,
         "version": "Sesuai Nama File",
         "loader": loader_tag,
-        "desc": f"Modifikasi resmi Berjenis {category.upper()} dari RexCraft Mods.",
+        
+        # Deskripsi halaman detail disesuaikan juga agar serasi
+        "desc": f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft kamu.",
+        
         "file": filename,
         "category": category,
         "size": format_size(os.path.join(folder, filename))
