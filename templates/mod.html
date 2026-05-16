@@ -2,13 +2,13 @@
 
 {% block content %}
 <style>
-    /* ==================== HERO BANNER GAMBAR (MODRINTH STYLE) ==================== */
+    /* ==================== HERO BANNER LOKAL ==================== */
     .rex-banner-wrapper {
         position: relative;
         width: 100%;
         height: 180px;
         background: linear-gradient(to bottom, rgba(17, 18, 19, 0.3), #111213), 
-                    url('https://images.unsplash.com/photo-1627856013091-fed6e4e30025?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+                    url('/static/img/banner.jpg') center/cover no-repeat;
         border-radius: 16px;
         margin-top: 15px;
         box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
@@ -19,7 +19,7 @@
         border: 1px solid #242628; 
         border-radius: 16px; 
         padding: 25px; 
-        margin-top: -30px; /* Menimpa banner agar estetik */
+        margin-top: -30px; 
         position: relative;
         z-index: 10;
     }
@@ -33,7 +33,7 @@
     .desc-box { background: #1c1e1f; border: 1px solid #2d3134; border-radius: 12px; padding: 20px; margin-bottom: 30px; line-height: 1.6; }
     .desc-box h3 { margin-top: 0; color: #fff; font-size: 16px; display: flex; align-items: center; gap: 8px; }
     
-    /* MAIN BUTTON TRIGGER POP-UP FILTER */
+    /* TOMBOL UTAMA DOWNLOAD */
     .btn-trigger-filter-spesifik {
         background: #00af5c;
         color: #fff;
@@ -56,13 +56,13 @@
     }
     .btn-trigger-filter-spesifik:hover { background: #00c769; }
 
-    /* ==================== POP-UP MODAL FILTER SPESIFIK ==================== */
+    /* ==================== POP-UP MODAL FILTER SPESIFIK BERKAS ==================== */
     .rex-modal-overlay {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.75);
+        background: rgba(0, 0, 0, 0.8);
         backdrop-filter: blur(4px);
-        display: none; /* Sembunyi awal */
+        display: none; 
         align-items: center;
         justify-content: center;
         z-index: 9999;
@@ -125,12 +125,9 @@
     <div class="desc-box">
         <h3><i class="fas fa-file-alt" style="color: #00af5c;"></i> Deskripsi Resmi Mod</h3>
         <p style="margin: 0 0 15px 0;">{{ mod.desc }}</p>
-        <p style="margin: 0 0 15px 0;">Paket modifikasi buatan RexCraft ini sudah dioptimalkan penuh untuk menjaga stabilitas render engine Minecraft Anda agar terbebas dari kendala <i>frame drop</i> ataupun <i>force close</i> saat dimainkan.</p>
-        
-        <p style="margin: 0; font-weight: 600; color: #fff;">📋 Informasi Tambahan:</p>
+        <p style="margin: 0; font-weight: 600; color: #fff;">📋 Informasi Lintasan Versi:</p>
         <ul style="margin: 5px 0 0 0; padding-left: 20px; color: #8a96a3;">
             <li>Mendukung penuh ekosistem Minecraft {{ mod.version_range }}</li>
-            <li>Lolos uji sistem proteksi dan ramah memori RAM</li>
         </ul>
     </div>
 </div>
@@ -139,34 +136,28 @@
     <div class="rex-modal-box">
         <div class="modal-header-flex">
             <div class="modal-title">
-                <i class="fas fa-filter" style="color: #00af5c;"></i> Filter Spesifik Berkas
+                <i class="fas fa-file-download" style="color: #00af5c;"></i> Pilih Berkas Spesifik
             </div>
             <button class="modal-close-x" onclick="closeDownloadModal()"><i class="fas fa-times"></i></button>
         </div>
 
         <div class="filter-select-group">
-            <label><i class="fas fa-gamepad"></i> Select Game Version</label>
-            <select id="versionSelect" class="rex-dropdown">
+            <label><i class="fas fa-box"></i> Berkas Berdasarkan Versi & Loader</label>
+            <select id="fileTargetSelect" class="rex-dropdown">
                 {% for file in mod.files %}
-                <option value="{{ file.filename }}">{{ file.version }} ({{ file.size }})</option>
+                    <option value="{{ file.filename }}">
+                        [{{ mod.category | upper }}] Versi {{ file.version }} - {{ file.filename }} ({{ file.size }})
+                    </option>
                 {% endfor %}
             </select>
         </div>
 
-        <div class="filter-select-group">
-            <label><i class="fas fa-wrench"></i> Select Platform / Loader</label>
-            <select id="platformSelect" class="rex-dropdown">
-                {% if mod.category == 'java' %}
-                    <option value="fabric">Fabric Engine</option>
-                    <option value="forge">Forge Engine</option>
-                {% else %}
-                    <option value="bedrock">Bedrock / MCPE</option>
-                {% endif %}
-            </select>
-        </div>
+        <p style="font-size: 11px; color: #8a96a3; margin: -5px 0 15px 0; line-height: 1.4;">
+            *Sistem mendeteksi otomatis daftar file racikan asli yang tersedia di server RexCraft untuk menghindari kegagalan file corrupt.
+        </p>
 
         <button class="btn-execute-download" onclick="executeFinalDownload()">
-            <i class="fas fa-file-download"></i> Ambil Berkas Sekarang
+            <i class="fas fa-check"></i> Ambil Berkas Sekarang
         </button>
     </div>
 </div>
@@ -177,23 +168,20 @@ function openDownloadModal() {
 }
 
 function closeDownloadModal() {
-    document.getElementById('downloadModal').style.opacity = '0';
-    setTimeout(() => {
-        document.getElementById('downloadModal').style.display = 'none';
-        document.getElementById('downloadModal').style.opacity = '1';
-    }, 200);
+    document.getElementById('downloadModal').style.display = 'none';
 }
 
 function executeFinalDownload() {
-    const selectedFile = document.getElementById('versionSelect').value;
+    const selectedFile = document.getElementById('fileTargetSelect').value;
     if (selectedFile) {
-        // Otomatis mengarahkan ke link download berkas aslinya
+        // Mengarahkan link download ke file yang benar-benar kamu pilih di dropdown
         window.location.href = "/download/{{ mod.category }}/{{ mod.id }}/" + selectedFile;
         closeDownloadModal();
+    } else {
+        alert("Pilihan berkas tidak valid atau tidak ditemukan!");
     }
 }
 
-// Tutup modal jika klik di luar area box hitam
 window.onclick = function(event) {
     const modal = document.getElementById('downloadModal');
     if (event.target == modal) {
