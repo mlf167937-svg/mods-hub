@@ -36,6 +36,7 @@ def scan_mods_by_category(folder_path, category_name):
                 
             clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
             
+            # 1. Deteksi Versi Otomatis
             version = "All Version"
             if "1." in filename:
                 parts = filename.split('_')
@@ -43,29 +44,34 @@ def scan_mods_by_category(folder_path, category_name):
                     if part.startswith('1.') or '1.' in part:
                         version = os.path.splitext(part)[0]
 
+            # 2. REVISI PEGAWAI: Deteksi Mod Loader (Forge / Fabric / Quilt)
+            loader_tag = None
+            filename_lower = filename.lower()
+            if "forge" in filename_lower:
+                loader_tag = "Forge"
+            elif "fabric" in filename_lower:
+                loader_tag = "Fabric"
+            elif "quilt" in filename_lower:
+                loader_tag = "Quilt"
+
             mods_list.append({
                 "title": clean_title,
                 "version": version,
+                "loader": loader_tag, # Akan bernilai Forge/Fabric/Quilt atau None
                 "desc": f"Modifikasi {category_name} dari RexCraft Mods. Unduh dan pasang ke Minecraft kamu.",
                 "file": filename,
-                "category": category_name.lower(), # 'java' atau 'mcpe'
+                "category": category_name.lower(),
                 "size": format_size(os.path.join(folder_path, filename))
             })
     return mods_list
 
 @app.route("/")
 def home():
-    # Scan masing-masing folder
     java_mods = scan_mods_by_category(JAVA_FOLDER, "Java")
     mcpe_mods = scan_mods_by_category(MCPE_FOLDER, "MCPE")
-    
-    # Gabungkan semua mod untuk dikirim ke template
     all_mods = java_mods + mcpe_mods
     return render_template("index.html", mods=all_mods)
 
-# =========================================================
-# REVISI PEGAWAI: MENAMBAHKAN HALAMAN CARA PEMASANGAN MOD
-# =========================================================
 @app.route("/tutorial")
 def tutorial():
     return render_template("tutorial.html")
@@ -73,15 +79,23 @@ def tutorial():
 @app.route("/mod/<category>/<filename>")
 def mod_page(category, filename):
     folder = JAVA_FOLDER if category == "java" else MCPE_FOLDER
-    
-    # Validasi apakah file memang ada
     if not os.path.exists(os.path.join(folder, filename)):
         abort(404)
         
     clean_title = os.path.splitext(filename)[0].replace('_', ' ').replace('-', ' ')
+    
+    # Deteksi Mod Loader untuk halaman detail juga
+    loader_tag = None
+    filename_lower = filename.lower()
+    if "forge" in filename_lower:
+        loader_tag = "Forge"
+    elif "fabric" in filename_lower:
+        loader_tag = "Fabric"
+
     mod = {
         "title": clean_title,
         "version": "Sesuai Nama File",
+        "loader": loader_tag,
         "desc": f"Modifikasi resmi Berjenis {category.upper()} dari RexCraft Mods.",
         "file": filename,
         "category": category,
