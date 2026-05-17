@@ -9,26 +9,26 @@
     <style>
         :root { --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836; --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; }
         body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding: 20px; }
-        .container { max-width: 600px; margin: 40px auto; display: flex; flex-direction: column; height: 80vh; }
+        .container { max-width: 650px; margin: 40px auto; display: flex; flex-direction: column; height: 82vh; padding: 0 20px; }
         .back-nav { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-muted); font-size: 14px; margin-bottom: 16px; font-weight: 600; }
-        .chat-box { flex-grow: 1; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
-        .chat-bubble { max-width: 80%; padding: 12px 14px; border-radius: 10px; font-size: 13.5px; line-height: 1.5; }
+        .chat-box { flex-grow: 1; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
+        .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; line-height: 1.5; }
         .chat-bubble.ai { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; align-self: flex-start; }
-        .chat-bubble.user { background: var(--theme-color); color: #000; font-weight: 500; align-self: flex-end; }
+        .chat-bubble.user { background: var(--theme-color); color: #000; font-weight: 600; align-self: flex-end; }
         .input-row { display: flex; gap: 8px; }
-        .chat-input { flex-grow: 1; background: var(--bg-surface); border: 1px solid var(--border-color); padding: 14px; border-radius: 8px; color: #fff; outline: none; }
+        .chat-input { flex-grow: 1; background: var(--bg-surface); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px; color: #fff; outline: none; font-size: 13.5px; }
         .chat-input:focus { border-color: var(--theme-color); }
-        .send-btn { background: var(--theme-color); color: #000; border: none; padding: 0 20px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        .send-btn { background: var(--theme-color); color: #000; border: none; padding: 0 22px; border-radius: 10px; font-weight: 700; font-size: 13.5px; cursor: pointer; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="/" class="back-nav"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
         <div class="chat-box" id="chatBox">
-            <div class="chat-bubble ai">Halo! Saya RexCraft AI Assistant. Ada yang bisa saya bantu terkait sirkuit optimasi engine Minecraft atau cara pemasangan mod?</div>
+            <div class="chat-bubble ai">Halo! Saya RexCraft AI Assistant. Tanyakan apa saja tentang optimasi sirkuit engine visual game Minecraft atau kendala render aset!</div>
         </div>
         <div class="input-row">
-            <input type="text" class="chat-input" id="chatInp" placeholder="Tanyakan sesuatu...">
+            <input type="text" class="chat-input" id="chatInp" placeholder="Ketik pesan optimasi Anda...">
             <button class="send-btn" onclick="sendMsg()">Kirim</button>
         </div>
     </div>
@@ -44,9 +44,9 @@
 
             setTimeout(() => {
                 let aB = document.createElement('div'); aB.className = 'chat-bubble ai';
-                aB.innerText = "Untuk meningkatkan kestabilan sirkuit engine visual game Minecraft, disarankan menggunakan loader FABRIC lalu pasang mod Sodium yang sudah diuji resmi di repositori RexCraft Hub.";
+                aB.innerText = "Untuk kestabilan maksimal sirkuit engine visual dunia Minecraft, disarankan memadukan loader Fabric dengan mod Sodium & Lithium yang tersedia di halaman utama repositori RexCraft Hub.";
                 box.appendChild(aB); box.scrollTop = box.scrollHeight;
-            }, 700);
+            }, 600);
         }
     </script>
 </body>
