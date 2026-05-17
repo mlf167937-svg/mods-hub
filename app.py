@@ -1,191 +1,95 @@
-import os
-import re
-from flask import Flask, render_template, abort, send_from_directory
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 
 app = Flask(__name__)
 
-# Konfigurasi Folder
-UPLOAD_FOLDER = os.path.join('static', 'uploads')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Buat folder otomatis jika belum ada
-os.makedirs(os.path.join(UPLOAD_FOLDER, 'java'), exist_ok=True)
-os.makedirs(os.path.join(UPLOAD_FOLDER, 'mcpe'), exist_ok=True)
-
-def get_file_info(filepath, filename):
-    """Baca info ukuran, versi, loader mod"""
-    try:
-        size_bytes = os.path.getsize(filepath)
-        if size_bytes >= 1024 * 1024:
-            size_str = f"{size_bytes / (1024 * 1024):.1f} MB"
-        else:
-            size_str = f"{size_bytes / 1024:.1f} KB"
-    except OSError:
-        size_str = "0 KB"
-
-    name_lower = filename.lower()
-    if 'fabric' in name_lower:
-        loader = "Fabric"
-    elif 'forge' in name_lower:
-        loader = "Forge"
-    else:
-        loader = "Universal"
-
-    clean_name = os.path.splitext(filename)[0]
-    parts = re.split(r'[-_]', clean_name)
-    
-    version = "1.20 - 1.21+"
-    for part in parts:
-        if re.search(r'\d+\.\d+', part):
-            version = part.replace('.jar', '').replace('.zip', '').replace('.mcpack', '').replace('.mcaddon', '')
-            if version.lower().startswith('v') and len(version) > 1:
-                version = version[1:]
-            break
-            
-    return {
-        'filename': filename,
-        'version': version,
-        'size': size_str,
-        'loader': loader
+# DATA MOCK DATABASE UTAMA REXCRAFT ENGINE
+# Menampung detail mod, kategori (java/mcpe), dan parameter filter
+MODS_DATABASE = [
+    {
+        "id": 1,
+        "name": "Complementary Unbound Shaders",
+        "title": "Complementary Unbound v5.1.1",
+        "category": "java",
+        "version_range": "1.20 - 1.21",
+        "desc": "Shader premium dengan optimasi luar biasa, bayangan realistis, efek air dinamis, dan support untuk mega project cyberpunk.",
+        "icon_url": "https://media.forgecdn.net/avatars/573/190/637926127394143492.png",
+        "download_url": "https://edge.forgecdn.net/files/5321/412/ComplementaryUnbound_r5.1.1.zip",
+        "total_files": 3
+    },
+    {
+        "id": 2,
+        "name": "Cyberpunk Mega-City Map Pack",
+        "title": "Cyberpunk City High-Rise v2.0",
+        "category": "java",
+        "version_range": "1.21",
+        "desc": "Map perkotaan futuristik dengan susunan multi-tower megah mengelilingi core energi utama, dibangun menggunakan deepslate dan tuff.",
+        "icon_url": "", # Kosong untuk menguji fallback icon bawaan di HTML
+        "download_url": "#",
+        "total_files": 1
+    },
+    {
+        "id": 3,
+        "name": "Fabulously Optimized Pack",
+        "title": "Fabulously Optimized Engine Pack",
+        "category": "java",
+        "version_range": "1.19 - 1.21",
+        "desc": "Kumpulan mod performa (Sodium, Lithium, dll) racikan khusus untuk mendongkrak FPS saat merender chunk dalam jumlah besar.",
+        "icon_url": "https://media.forgecdn.net/avatars/398/12/637604312458428135.png",
+        "download_url": "#",
+        "total_files": 12
+    },
+    {
+        "id": 4,
+        "name": "Bedrock Cyber-UI Addon",
+        "title": "Cyber-UI & HUD Pack Addon",
+        "category": "mcpe",
+        "version_range": "1.20 - 1.21",
+        "desc": "Mengubah total tampilan antarmuka Minecraft Bedrock/PE menjadi bertema scifi futuristik dengan dominasi warna hijau neon.",
+        "icon_url": "https://media.forgecdn.net/avatars/412/820/637651034928129032.png",
+        "download_url": "#",
+        "total_files": 2
+    },
+    {
+        "id": 5,
+        "name": "Realistic Physics Mcpe Pack",
+        "title": "Realistic Item Physics Add-on",
+        "category": "mcpe",
+        "version_range": "1.21",
+        "desc": "Add-on interaktif untuk Minecraft Pocket Edition yang memberikan efek gravitasi nyata pada balok dan item saat dihancurkan.",
+        "icon_url": "",
+        "download_url": "#",
+        "total_files": 1
     }
+]
 
-def get_all_mods():
-    """Ambil semua data mod dari folder"""
-    mods_data = []
-    categories = ['java', 'mcpe']
-    
-    for category in categories:
-        category_path = os.path.join(UPLOAD_FOLDER, category)
-        if not os.path.exists(category_path):
-            continue
-
-        for folder_name in os.listdir(category_path):
-            folder_path = os.path.join(category_path, folder_name)
-            
-            if folder_name.startswith('.') or not os.path.isdir(folder_path):
-                continue
-
-            files_list = []
-            icon_file = None
-            detected_loaders = set()
-            
-            for filename in os.listdir(folder_path):
-                if filename.startswith('.'):
-                    continue
-                if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
-                    icon_file = filename
-                    continue
-                    
-                filepath = os.path.join(folder_path, filename)
-                if os.path.isfile(filepath):
-                    file_info = get_file_info(filepath, filename)
-                    files_list.append(file_info)
-                    detected_loaders.add(file_info['loader'])
-
-            if files_list:
-                files_list.sort(key=lambda x: x['version'], reverse=True)
-                
-                if len(files_list) > 1:
-                    version_range = f"{files_list[-1]['version']} - {files_list[0]['version']}"
-                else:
-                    version_range = files_list[0]['version']
-
-                display_title = folder_name.replace('_', ' ').replace('-', ' ').title()
-                icon_url = f"/static/uploads/{category}/{folder_name}/{icon_file}" if icon_file else None
-
-                mods_data.append({
-                    'id': folder_name,
-                    'title': display_title,
-                    'category': category,
-                    'version_range': version_range,
-                    'total_files': len(files_list),
-                    'desc': f"Update berkas {category.upper()} terbaru. Dioptimalkan khusus agar lancar, estetik, dan anti-lag saat dimainkan.",
-                    'files': files_list,
-                    'icon_url': icon_url,
-                    'loaders': list(detected_loaders)
-                })
-                
-    return mods_data
-
-# Rute Halaman
-@app.route("/")
+# 1. ROUTE UTAMA: HALAMAN BERANDA
+@app.route('/')
 def index():
-    mods = get_all_mods()
-    return render_template("index.html", mods=mods)
+    # Mengirim seluruh database mod ke index.html agar dirender oleh Jinja loop
+    return render_template('index.html', mods=MODS_DATABASE)
 
-@app.route("/tutorial")
-def tutorial():
-    return render_template("tutorial.html")
-
-@app.route("/mod/<category>/<mod_id>")
-def mod_detail(category, mod_id):
-    if category not in ['java', 'mcpe']:
-        abort(404)
-        
-    target_folder = os.path.join(UPLOAD_FOLDER, category, mod_id)
-    if not os.path.exists(target_folder) or not os.path.isdir(target_folder):
-        abort(404)
-        
-    files_list = []
-    icon_file = None
+# 2. ROUTE DETAIL MOD: COCOK DENGAN LINK /mod/<id> DI INDEX.HTML
+@app.route('/mod/<int:mod_id>')
+def mod_detail(mod_id):
+    # Mencari mod berdasarkan ID unik di dalam list database
+    selected_mod = next((m for m in MODS_DATABASE if m['id'] == mod_id), None)
     
-    try:
-        for filename in os.listdir(target_folder):
-            if filename.startswith('.'):
-                continue
-            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
-                icon_file = filename
-                continue
-            filepath = os.path.join(target_folder, filename)
-            if os.path.isfile(filepath):
-                files_list.append(get_file_info(filepath, filename))
-    except Exception:
-        abort(500)
-
-    if not files_list:
-        abort(404)
-
-    files_list.sort(key=lambda x: x['version'], reverse=True)
-    
-    if len(files_list) > 1:
-        version_range = f"{files_list[-1]['version']} - {files_list[0]['version']}"
+    if selected_mod:
+        return render_template('mod.html', mod=selected_mod)
     else:
-        version_range = files_list[0]['version']
-        
-    display_title = mod_id.replace('_', ' ').replace('-', ' ').title()
-    icon_url = f"/static/uploads/{category}/{mod_id}/{icon_file}" if icon_file else None
+        # Jika ID tidak ditemukan, kembalikan ke beranda
+        return redirect(url_for('index'))
 
-    current_mod = {
-        'id': mod_id,
-        'title': display_title,
-        'category': category,
-        'version_range': version_range,
-        'desc': f"Berkas resmi berjenis {category.upper()} dari RexCraft Mods. Sudah melewati uji coba agar aman dan lancar di Minecraft Anda.",
-        'files': files_list,
-        'icon_url': icon_url
-    }
-    
-    return render_template("mod.html", mod=current_mod)
+# 3. ROUTE TUTORIAL (TAMBAHAN COMPATIBILITY BIAR TIDAK 404)
+@app.route('/tutorial')
+def tutorial():
+    return "<h3>Panduan Instalasi RexCraft Hub: Ekstrak berkas zip/jar ke direktori .minecraft/mods atau com.mojang/behavior_packs.</h3>"
 
-@app.route("/download/<category>/<mod_id>/<filename>")
-def download_file(category, mod_id, filename):
-    secure_dir = os.path.join(UPLOAD_FOLDER, category, mod_id)
-    if not os.path.exists(os.path.join(secure_dir, filename)):
-        abort(404)
-    return send_from_directory(secure_dir, filename, as_attachment=True)
+# 4. API ENDPOINT (OPSIONAL - JIKA ANDA INGIN MENGEMBANGKAN FITUR LIVE SEARCH LEWAT AJAX)
+@app.route('/api/mods', methods=['GET'])
+def get_all_mods():
+    return jsonify(MODS_DATABASE)
 
-@app.route("/health")
-def health_check():
-    return "✅ RexCraft Online", 200
-
-# Halaman Error
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
-
-@app.errorhandler(500)
-def server_error(e):
-    return render_template('404.html', error="Server sedang bermasalah"), 500
-
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    # Menjalankan server pada port default dengan mode debug aktif
+    app.run(debug=True, port=5000)
