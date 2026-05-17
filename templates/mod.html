@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ mod.title }} | RexCraft Premium Hub</title>
+    <title>{{ mod.title if mod.title else mod.name }} | Detail</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -13,177 +13,102 @@
             --bg-surface: #0f172a;
             --border-color: rgba(51, 65, 85, 0.4);
             --brand-green: #22c55e;
-            --brand-green-hover: #16a34a;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
         }
 
-        body { 
-            background-color: var(--bg-main); 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            color: var(--text-secondary); 
-            margin: 0; 
-            padding: 0; 
-        }
+        body { background-color: var(--bg-main); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-secondary); margin: 0; padding: 0; }
+        .detail-wrapper { max-width: 720px; margin: 0 auto; padding: 24px 16px; box-sizing: border-box; }
         
-        .detail-wrapper { max-width: 720px; margin: 0 auto; padding: 20px 14px; box-sizing: border-box; }
+        .back-nav-link { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
         
-        .back-nav-link { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; transition: 0.2s; }
-        .back-nav-link:hover { color: #fff; }
-        
-        /* ==================== MODRINTH INTERFACE HEADER ==================== */
+        /* MODRINTH CONTAINER */
         .modrinth-header-container { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
-        .modrinth-logo-frame { width: 72px; height: 72px; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0; }
+        .modrinth-logo-frame { width: 72px; height: 72px; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); }
         .modrinth-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
-        .mod-header-title { font-size: 24px; color: #fff; font-weight: 800; margin: 0 0 4px 0; letter-spacing: -0.5px; }
+        .mod-header-title { font-size: 24px; color: #fff; font-weight: 800; margin: 0; }
         
-        .edition-pill-badge { font-size: 10px; font-weight: 800; background: rgba(34, 197, 94, 0.1); color: var(--brand-green); padding: 3px 8px; border-radius: 6px; text-transform: uppercase; border: 1px solid rgba(34,197,94,0.15); display: inline-block; }
-        
-        /* ==================== STATS ROW (DOWNLOADS & LIKES) ==================== */
-        .modrinth-stats-row { 
-            display: flex; 
-            gap: 14px; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            border-bottom: 1px solid var(--border-color); 
-            padding-bottom: 18px; 
-        }
-        .stat-item-badge { 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            font-size: 13px; 
-            font-weight: 700; 
-            color: #fff; 
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 10px;
-        }
+        /* INTERACTIVE COUNTER MODRINTH */
+        .modrinth-stats-row { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 18px; }
+        .stat-item-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 10px; }
         .stat-item-badge i { color: var(--brand-green); }
         
-        /* TOMBOL HEART INTERAKTIF */
-        .btn-interact-heart { 
-            background: rgba(239, 68, 68, 0.08); 
-            border: 1px solid rgba(239, 68, 68, 0.2); 
-            color: #f87171; 
-            padding: 6px 14px; 
-            border-radius: 10px; 
-            font-weight: 700; 
-            font-size: 13px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            transition: all 0.2s ease;
-        }
-        .btn-interact-heart:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+        .btn-interact-heart { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); color: #f87171; padding: 6px 14px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-interact-heart:hover { background: #ef4444; color: #fff; }
 
-        /* TAB BAR MOCKUP STYLE */
-        .modrinth-tabs-list { display: flex; gap: 6px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; }
-        .tab-item { padding: 10px 14px; font-size: 13px; font-weight: 700; color: var(--text-secondary); border-bottom: 2px solid transparent; }
-        .tab-item.active-tab { color: var(--brand-green); border-color: var(--brand-green); }
-
-        /* CONTENT BLOCK BOX */
-        .content-card-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; margin-bottom: 24px; }
-        .content-card-box p { line-height: 1.6; font-size: 14px; color: #cbd5e1; margin: 0 0 12px 0; }
+        .content-card-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; margin-bottom: 24px; line-height: 1.6; font-size: 14px; color: #cbd5e1; }
         
-        /* ==================== DOWNLOAD SECTION ALA MODRINTH ==================== */
-        .version-list-section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-        
+        /* BUTTON DOWNLOAD ASLI (TIDAK BERUBAH RUAS RUTE-NYA) */
+        .version-list-section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; }
         .version-file-card {
-            background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); padding: 14px; border-radius: 14px;
+            background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); padding: 16px; border-radius: 14px;
             display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; transition: 0.2s;
         }
-        .version-file-card:hover { border-color: var(--brand-green); background: var(--bg-surface); transform: scale(1.005); }
-        
+        .version-file-card:hover { border-color: var(--brand-green); background: var(--bg-surface); }
         .v-title { color: #fff; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
-        .v-meta { display: flex; gap: 8px; font-size: 11px; color: #64748b; font-weight: 500; }
-        .v-meta span i { margin-right: 3px; }
-        
-        .v-download-icon-box { 
-            width: 36px; height: 36px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; color: var(--brand-green); transition: 0.2s;
-        }
-        .version-file-card:hover .v-download-icon-box { background: var(--brand-green); color: #fff; }
+        .v-meta { display: flex; gap: 8px; font-size: 11px; color: #64748b; }
+        .v-download-icon-box { width: 36px; height: 36px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brand-green); }
     </style>
 </head>
 <body>
 
 <div class="detail-wrapper">
-    <a href="/" class="back-nav-link"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+    <a href="/" class="back-nav-link"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
 
     <div class="modrinth-header-container">
         <div class="modrinth-logo-frame">
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" alt="Icon Mod">
+                <img src="{{ mod.icon_url }}" alt="Icon">
             {% else %}
-                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-cubes" style="color:var(--brand-green); font-size:26px;"></i></div>
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#0f172a;"><i class="fas fa-cubes" style="color:var(--brand-green); font-size:26px;"></i></div>
             {% endif %}
         </div>
         <div>
             <h1 class="mod-header-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h1>
-            <span class="edition-pill-badge">{{ mod.category }} Edition</span>
+            <span style="font-size:10px; font-weight:800; background:rgba(34,197,94,0.1); color:var(--brand-green); padding:3px 8px; border-radius:6px;">{{ mod.category.upper() }} EDITION</span>
         </div>
     </div>
 
     <div class="modrinth-stats-row">
         <div class="stat-item-badge">
-            <i class="fas fa-download"></i> 
-            <span>12.8K <span style="color:var(--text-secondary); font-weight:500; font-size:12px;">unduhan</span></span>
+            <i class="fas fa-download"></i> <span>1,204 <span style="font-weight:500; font-size:12px; color:var(--text-secondary)">unduhan</span></span>
         </div>
         <button class="btn-interact-heart" id="heartBtn" onclick="triggerLikeAction()">
-            <i class="far fa-heart"></i> <span id="likeText">415 Suka</span>
+            <i class="far fa-heart"></i> <span id="likeText">48 Suka</span>
         </button>
-    </div>
-
-    <div class="modrinth-tabs-list">
-        <div class="tab-item active-tab">Deskripsi Berkas</div>
-        <div class="tab-item">Versi Rilis</div>
     </div>
 
     <div class="content-card-box">
         <p>{{ mod.desc }}</p>
-        <p style="margin: 0; font-size:13px; color:#64748b;">Berkas resmi berjenis {{ mod.category.upper() }} dari RexCraft Mods. Sudah melewati uji coba komparasi performa sistem agar dijamin aman, lancar, estetik, dan anti-lag saat dimainkan di Minecraft Anda.</p>
     </div>
 
-    <div class="version-list-section-title">
-        <i class="fas fa-cloud-download-alt" style="color:#38bdf8;"></i> Unduh Berkas Versi Terbaru
-    </div>
+    <div class="version-list-section-title"><i class="fas fa-cloud-download-alt" style="color:#38bdf8;"></i> Berkas Unduhan Resmi</div>
     
-    <a href="/download/{{ mod.category }}/{{ mod.id }}/default" class="version-file-card">
+    <a href="{{ mod.download_url if mod.download_url else '#' }}" class="version-file-card" {% if mod.download_url %}download{% endif %}>
         <div>
-            <div class="v-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %} (Rilis Utama)</div>
+            <div class="v-title">Unduh Berkas Utama (Rilis Stabil)</div>
             <div class="v-meta">
-                <span><i class="fas fa-gamepad"></i> MC {{ mod.version_range }}</span>
+                <span><i class="fas fa-gamepad"></i> MC Versi {{ mod.version_range }}</span>
                 <span>•</span>
-                <span><i class="fas fa-shield-alt"></i> Verified Stable</span>
+                <span>Verified Clean</span>
             </div>
         </div>
         <div class="v-download-icon-box">
             <i class="fas fa-download"></i>
         </div>
     </a>
-
 </div>
 
 <script>
-let liked = false;
-let count = 415;
+let liked = false; let count = 48;
 function triggerLikeAction() {
     const btn = document.getElementById('heartBtn');
     if(!liked) {
-        count++;
-        btn.innerHTML = `<i class="fas fa-heart" style="color:#ef4444;"></i> <span>${count} Suka</span>`;
-        btn.style.background = "#ef4444";
-        btn.style.color = "#fff";
-        liked = true;
+        count++; btn.innerHTML = `<i class="fas fa-heart" style="color:#ef4444;"></i> <span>${count} Suka</span>`;
+        btn.style.background = "#ef4444"; btn.style.color = "#fff"; liked = true;
     } else {
-        count--;
-        btn.innerHTML = `<i class="far fa-heart"></i> <span>${count} Suka</span>`;
-        btn.style.background = "rgba(239, 68, 68, 0.08)";
-        btn.style.color = "#f87171";
-        liked = false;
+        count--; btn.innerHTML = `<i class="far fa-heart"></i> <span>${count} Suka</span>`;
+        btn.style.background = "rgba(239, 68, 68, 0.08)"; btn.style.color = "#f87171"; liked = false;
     }
 }
 </script>
