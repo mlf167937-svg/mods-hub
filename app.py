@@ -6,7 +6,7 @@ from flask import Flask, render_template, abort
 app = Flask(__name__)
 
 # =========================================================================
-# DATABASE REPOSITORI MODS LOCAL (JAVA & MCPE BEDROCK INTEGRATION)
+# DATABASE REAL REXCRAFT (JAVA & MCPE BARE BONES INTEGRATION)
 # =========================================================================
 MODS_DATABASE = [
     {
@@ -17,24 +17,47 @@ MODS_DATABASE = [
         "desc": "Berkas modifikasi hasil racikan kustom RexCraft Engine, dijamin super stabil, optimal, dan anti-lag.",
         "version_range": "1.20 - 1.21+",
         "icon_url": "/static/upload/java/mod_racikan/icon.png",
-        "download_url": "/static/upload/java/mod_racikan/mod.zip",
-        "file_size": "4.2 MB",
-        "total_downloads": "1,240",
-        "project_type": "Modpack / Optimization"
+        "project_type": "Modpack / Optimization",
+        # DAFTAR PILIHAN VERSI DOWNLOAD ALA MODRINTH
+        "versions": [
+            {
+                "version_name": "Mod Racikan Release v1.0.2 (Stable)",
+                "game_version": "1.21+",
+                "file_size": "4.2 MB",
+                "download_url": "/static/upload/java/mod_racikan/mod.zip"
+            },
+            {
+                "version_name": "Mod Racikan Patch v1.0.1 (Legacy)",
+                "game_version": "1.20.4",
+                "file_size": "4.0 MB",
+                "download_url": "/static/upload/java/mod_racikan/mod_old.zip"
+            }
+        ]
     },
     {
         "id": 2,
         "category": "mcpe",
-        "name": "mod-bedrock-racikan",
-        "title": "Addon MCPE Bedrock Racikan v1.0",
-        "desc": "Addon kustom khusus Minecraft Bedrock / Pocket Edition. Tinggal pasang di Android/iOS/Windows 10, lancar jaya!",
-        "version_range": "1.20 - 1.21+",
-        # Jika Bos belum punya icon mcpe, arahkan ke folder yang sama dulu atau ganti nanti
-        "icon_url": "/static/upload/java/mod_racikan/icon.png", 
-        "download_url": "/static/upload/java/mod_racikan/mod.zip", # <--- Ganti jadi file .mcaddon / .zip MCPE Bos nanti
-        "file_size": "2.8 MB",
-        "total_downloads": "850",
-        "project_type": "Addon / Resource Pack"
+        "name": "bare-bones-mcpe",
+        "title": "Bare Bones Texture Pack (MCPE/Bedrock)",
+        "desc": "Tekstur legendaris yang membawa visual Minecraft Anda menjadi sebersih dan sehalus cuplikan trailer resmi Mojang. Ringan, estetik, dan anti-lag!",
+        "version_range": "1.19 - 1.21+",
+        "icon_url": "/static/upload/java/mod_racikan/icon.png", # <--- Silakan sesuaikan jalur icon bare bones Bos kalau ada
+        "project_type": "Texture Pack / Addon",
+        # DAFTAR PILIHAN VERSI DOWNLOAD BARE BONES MCPE
+        "versions": [
+            {
+                "version_name": "Bare Bones Bedrock Edition v1.21",
+                "game_version": "1.21+",
+                "file_size": "2.8 MB",
+                "download_url": "/static/upload/java/mod_racikan/mod.zip" # <--- Arahkan ke file mcpack/zip bare bones 1.21 Bos
+            },
+            {
+                "version_name": "Bare Bones Bedrock Edition v1.20",
+                "game_version": "1.20",
+                "file_size": "2.5 MB",
+                "download_url": "/static/upload/java/mod_racikan/mod.zip" # <--- Arahkan ke file mcpack/zip bare bones 1.20 Bos
+            }
+        ]
     }
 ]
 
