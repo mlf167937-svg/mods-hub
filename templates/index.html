@@ -1,60 +1,726 @@
-{% extends 'base.html' %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RexCraft Premium Engine | Modding Platform v2.5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+           1. ROOT SYSTEM AND COLOR THEMES (PREMIUM ENGINE DESIGN)
+           ========================================================================== */
+        :root {
+            --bg-main: #060913;
+            --bg-surface: rgba(15, 23, 42, 0.65);
+            --bg-card: rgba(30, 41, 59, 0.4);
+            --border-color: rgba(51, 65, 85, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --brand-green: #22c55e;
+            --brand-green-hover: #16a34a;
+            --brand-blue: #38bdf8;
+            --brand-purple: #c084fc;
+            --brand-orange: #f97316;
+            --brand-red: #ef4444;
+            --premium-blur: blur(14px);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-<style>
-.top-nav-bar {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;
-    background: rgba(15, 23, 42, 0.4); padding: 12px 20px; border-radius: 14px;
-    border: 1px solid var(--border-color); backdrop-filter: var(--premium-blur);
-}
-.btn-settings {
-    background: rgba(30, 41, 59, 0.7); border: 1px solid var(--border-color); color: #cbd5e1;
-    padding: 8px 14px; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;
-    display: flex; align-items: center; gap: 6px; transition: 0.2s;
-}
-.btn-settings:hover { background: rgba(30, 41, 59, 1); color: #fff; }
-.brand-status { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 16px; }
-.status-dot-green { width: 8px; height: 8px; background-color: var(--brand-green); border-radius: 50%; box-shadow: 0 0 12px var(--brand-green); }
+        /* LIGHT THEME VARIABLES OVERRIDE */
+        body.light-theme {
+            --bg-main: #f1f5f9;
+            --bg-surface: rgba(255, 255, 255, 0.8);
+            --bg-card: rgba(241, 245, 249, 0.9);
+            --border-color: rgba(203, 213, 225, 0.8);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+        }
 
-.rex-hero-banner {
-    position: relative; background: linear-gradient(135deg, #0f172a 0%, #060913 100%);
-    border: 1px solid var(--border-color); border-radius: 24px; padding: 45px 24px; text-align: center; margin-bottom: 28px; overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-.rex-banner-overlay-logo {
-    font-size: 80px; font-weight: 900; color: rgba(34, 197, 94, 0.025); letter-spacing: 10px;
-    position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; user-select: none;
-}
-.rex-hero-title { font-size: 32px; font-weight: 800; color: #fff; margin: 0 0 8px 0; letter-spacing: -0.7px; }
-.rex-hero-subtitle { color: #64748b; font-size: 14px; margin: 0 0 24px 0; }
+        /* NEON CYBER THEME VARIABLES OVERRIDE */
+        body.neon-theme {
+            --bg-main: #020205;
+            --bg-surface: rgba(10, 10, 20, 0.8);
+            --border-color: rgba(34, 197, 94, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #a7f3d0;
+            --bg-card: rgba(6, 78, 59, 0.2);
+        }
 
-.tutorial-alert-pill {
-    background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.2);
-    padding: 8px 16px; border-radius: 12px; color: #4ade80; font-size: 12px; font-weight: 600;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 24px;
+        /* ==========================================================================
+           2. GLOBAL RESET & BASE STYLES
+           ========================================================================== */
+        body { 
+            background-color: var(--bg-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: var(--text-secondary); 
+            margin: 0; 
+            padding: 0;
+            overflow-x: hidden;
+            transition: var(--transition-smooth);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.02) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .main-wrapper-container { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            padding: 30px 18px; 
+            box-sizing: border-box; 
+        }
+
+        /* Scrollbar Styling Custom */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-green); }
+
+        /* ==========================================================================
+           3. TOP NAVIGATION HEADER BAR
+           ========================================================================== */
+        .top-nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: var(--bg-surface);
+            padding: 14px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: var(--premium-blur);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: var(--transition-smooth);
+        }
+        
+        .btn-settings {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+        .btn-settings:hover { 
+            background: var(--text-primary); 
+            color: var(--bg-main);
+            transform: translateY(-1px);
+        }
+        
+        .brand-status { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            color: var(--text-primary); 
+            font-weight: 800; 
+            font-size: 17px; 
+            letter-spacing: -0.4px; 
+        }
+        .status-dot-green { 
+            width: 10px; height: 10px; 
+            background-color: var(--brand-green); 
+            border-radius: 50%; 
+            box-shadow: 0 0 14px var(--brand-green);
+            animation: pulseSystemGlow 2s infinite;
+        }
+        @keyframes pulseSystemGlow {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 16px var(--brand-green); }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        /* ==========================================================================
+           4. HERO BANNER BRANDING (REXCRAFT ENGINE UTAMA)
+           ========================================================================== */
+        .rex-hero-banner {
+            position: relative;
+            background: linear-gradient(135deg, #0f172a 0%, #070a14 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 26px;
+            padding: 55px 30px;
+            text-align: center;
+            margin-bottom: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+        }
+        body.light-theme .rex-hero-banner {
+            background: linear-gradient(135deg, #cbd5e1 0%, #f1f5f9 100%);
+        }
+        .rex-banner-overlay-logo {
+            font-size: 95px;
+            font-weight: 900;
+            color: rgba(34, 197, 94, 0.03);
+            letter-spacing: 12px;
+            position: absolute;
+            top: 45%; left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            user-select: none;
+            text-transform: uppercase;
+        }
+        body.neon-theme .rex-banner-overlay-logo {
+            color: rgba(34, 197, 94, 0.06);
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+        .rex-hero-title { 
+            font-size: 36px; 
+            font-weight: 800; 
+            color: #fff; 
+            margin: 0 0 10px 0; 
+            letter-spacing: -0.8px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        body.light-theme .rex-hero-title { -webkit-text-fill-color: #0f172a; color: #0f172a; }
+        .rex-hero-subtitle { color: var(--text-secondary); font-size: 15px; margin: 0 0 28px 0; font-weight: 500; }
+        
+        .tutorial-alert-pill {
+            background: rgba(34, 197, 94, 0.06);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            padding: 10px 20px;
+            border-radius: 14px;
+            color: #4ade80;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            transition: var(--transition-smooth);
+        }
+        .tutorial-alert-pill:hover { 
+            background: rgba(34, 197, 94, 0.15); 
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 197, 94, 0.1);
+        }
+
+        /* SEARCH HUB INPUT CONTAINER */
+        .search-container-inside { max-width: 550px; margin: 0 auto; position: relative; }
+        .search-container-inside i { 
+            position: absolute; left: 20px; top: 50%; 
+            transform: translateY(-50%); color: var(--text-muted); 
+            font-size: 16px; transition: var(--transition-smooth);
+        }
+        .rex-search-field {
+            width: 100%; 
+            background: rgba(6, 9, 19, 0.6); 
+            border: 1px solid var(--border-color);
+            border-radius: 16px; 
+            padding: 16px 20px 16px 54px; 
+            color: #fff; 
+            font-size: 15px; 
+            font-weight: 500; 
+            outline: none; 
+            box-sizing: border-box;
+            transition: var(--transition-smooth);
+        }
+        body.light-theme .rex-search-field { background: #fff; color: #0f172a; }
+        .rex-search-field:focus { 
+            border-color: var(--brand-green); 
+            background: rgba(6, 9, 19, 0.85); 
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.15); 
+        }
+        .rex-search-field:focus + i { color: var(--brand-green); }
+
+        /* ==========================================================================
+           5. CONTROLS & FILTER GRID TABS (4 STRATEGIS BUTTONS)
+           ========================================================================== */
+        .filter-buttons-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; 
+            margin-bottom: 32px; 
+        }
+        .filter-btn {
+            background: var(--bg-surface); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-secondary);
+            padding: 12px 6px; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            font-size: 12px; 
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 6px; 
+            white-space: nowrap; 
+            transition: var(--transition-smooth);
+            backdrop-filter: var(--premium-blur);
+        }
+        .filter-btn:hover { 
+            background: rgba(30, 41, 59, 0.6); 
+            color: var(--text-primary); 
+            border-color: var(--text-muted); 
+        }
+        .filter-btn.active-filter { 
+            background: rgba(34, 197, 94, 0.12); 
+            color: #4ade80; 
+            border-color: rgba(34, 197, 94, 0.5); 
+            box-shadow: inset 0 0 10px rgba(34, 197, 94, 0.1);
+        }
+        .btn-advance-filter { background: rgba(56, 189, 248, 0.02); border-color: rgba(56, 189, 248, 0.2); color: var(--brand-blue); }
+        .btn-advance-filter:hover { background: rgba(56, 189, 248, 0.1); border-color: var(--brand-blue); color: #fff; }
+
+        /* ==========================================================================
+           6. CARDS ENGINE SYSTEM LIST (MODRINTH UI MATCH)
+           ========================================================================== */
+        .mods-grid-container { display: flex; flex-direction: column; gap: 18px; }
+        
+        .mod-card-item { 
+            background: var(--bg-surface); 
+            border: 1px solid var(--border-color); 
+            border-radius: 22px; 
+            padding: 20px; 
+            display: flex; 
+            gap: 20px; 
+            align-items: center; 
+            justify-content: space-between; 
+            transition: var(--transition-smooth);
+            backdrop-filter: var(--premium-blur);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .mod-card-item:hover {
+            transform: translateY(-3px); 
+            border-color: rgba(34, 197, 94, 0.35);
+            box-shadow: 0 15px 35px rgba(6, 9, 19, 0.6), 0 0 25px rgba(34, 197, 94, 0.05);
+        }
+        
+        .mod-left-side-flex { display: flex; gap: 20px; align-items: center; flex-grow: 1; min-width: 0; }
+        
+        .mod-avatar-box { 
+            width: 78px; height: 78px; 
+            background: #0f172a; 
+            border: 1px solid var(--border-color);
+            border-radius: 16px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            flex-shrink: 0;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        }
+        body.light-theme .mod-avatar-box { background: #e2e8f0; }
+        .mod-avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .mod-info-content { min-width: 0; flex-grow: 1; }
+        
+        /* Badges Meta-Data Row */
+        .tag-row-top { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+        .mini-badge { font-size: 9px; font-weight: 800; padding: 4px 9px; border-radius: 8px; letter-spacing: 0.4px; text-transform: uppercase; }
+        .badge-java { background: rgba(56, 189, 248, 0.08); color: var(--brand-blue); border: 1px solid rgba(56, 189, 248, 0.18); }
+        .badge-mcpe { background: rgba(249, 115, 22, 0.08); color: var(--brand-orange); border: 1px solid rgba(249, 115, 22, 0.18); }
+        .badge-version { background: rgba(168, 85, 247, 0.08); color: var(--brand-purple); border: 1px solid rgba(168, 85, 247, 0.18); }
+        
+        /* STATS INDIKATOR MODEL MODRINTH (UNDUHAN & METRICS) */
+        .modrinth-mini-metrics {
+            display: flex; gap: 12px; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--text-muted);
+        }
+        .metric-unit { display: flex; align-items: center; gap: 4px; }
+        .metric-unit i { font-size: 11px; }
+        .metric-unit.dl-count i { color: var(--brand-green); }
+        .metric-unit.like-count i { color: var(--brand-red); }
+
+        .mod-card-title { 
+            font-size: 20px; 
+            color: var(--text-primary); 
+            font-weight: 700; 
+            margin: 0 0 6px 0; 
+            letter-spacing: -0.4px; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+        }
+        .mod-card-desc { 
+            color: var(--text-secondary); 
+            font-size: 13px; 
+            margin: 0; 
+            display: -webkit-box; 
+            -webkit-line-clamp: 1; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+            line-height: 1.5; 
+        }
+        
+        /* ==========================================================================
+           7. VIEW MOD ACTION BUTTON (PROPORSI PAS & RESPONSIF)
+           ========================================================================== */
+        .action-view-btn { 
+            background: rgba(30, 41, 59, 0.8); 
+            color: #fff; 
+            font-size: 13px; 
+            font-weight: 700; 
+            padding: 12px 20px; 
+            border-radius: 14px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-decoration: none; 
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-color); 
+            white-space: nowrap; 
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .action-view-btn:hover { 
+            background: var(--brand-green); 
+            border-color: var(--brand-green); 
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+            transform: translateX(2px);
+        }
+
+        /* Empty Database State UI */
+        .empty-db-state-card {
+            background: rgba(15,23,42,0.2); border: 2px dashed var(--border-color); padding: 60px 20px; text-align: center; border-radius: 24px; color: var(--text-muted);
+        }
+        .empty-db-state-card i { font-size: 50px; margin-bottom: 16px; color: var(--brand-green); opacity: 0.5; }
+
+        /* ==========================================================================
+           8. ADVANCE SYSTEM SETTINGS MODAL POPUP (FIXED & ADVANCED)
+           ========================================================================== */
+        .rex-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(3, 5, 11, 0.88);
+            backdrop-filter: blur(10px); 
+            display: none; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 9999; 
+            padding: 16px; 
+            box-sizing: border-box;
+        }
+        .rex-modal-box {
+            background: #0f172a; 
+            border: 1px solid var(--border-color); 
+            border-radius: 26px;
+            width: 100%; 
+            max-width: 460px; 
+            padding: 30px; 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            box-sizing: border-box;
+            animation: modalFadeAnimation 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes modalFadeAnimation {
+            from { transform: scale(0.94); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        body.light-theme .rex-modal-box { background: #fff; }
+        
+        .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .modal-title { font-size: 19px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; }
+        .modal-close-x { background: rgba(255,255,255,0.05); border: none; color: var(--text-muted); font-size: 16px; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition-smooth); }
+        body.light-theme .modal-close-x { background: #f1f5f9; }
+        .modal-close-x:hover { color: #fff; background: var(--brand-red); }
+
+        /* Form Configuration Fields Custom */
+        .config-form-scroll-zone { max-height: 400px; overflow-y: auto; padding-right: 4px; margin-bottom: 24px; }
+        .config-form-scroll-zone::-webkit-scrollbar { width: 4px; }
+        
+        .filter-select-group { margin-bottom: 20px; }
+        .filter-select-group label { display: block; font-size: 11px; font-weight: 800; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.6px; }
+        
+        .rex-input-text, .rex-dropdown { 
+            width: 100%; background: #060913; border: 1px solid var(--border-color); border-radius: 14px; 
+            padding: 13px 16px; color: #fff; font-size: 14px; font-weight: 500; outline: none; box-sizing: border-box; transition: var(--transition-smooth); 
+        }
+        body.light-theme .rex-input-text, body.light-theme .rex-dropdown { background: #f8fafc; color: #0f172a; }
+        .rex-input-text:focus, .rex-dropdown:focus { border-color: var(--brand-blue); box-shadow: 0 0 12px rgba(56, 189, 248, 0.2); }
+        
+        .social-link-input-wrapper { position: relative; display: flex; align-items: center; margin-bottom: 10px; }
+        .social-link-input-wrapper i { position: absolute; left: 16px; color: var(--text-muted); font-size: 14px; }
+        .social-link-input-wrapper .rex-input-text { padding-left: 44px; }
+
+        /* FOOTER BRAND INFO DI MODAL */
+        .modal-server-info-box {
+            background: #060913; padding: 14px; border-radius: 12px; border: 1px solid var(--border-color); font-size: 12px; font-family: 'JetBrains Mono', monospace; line-height: 1.7; margin-bottom: 24px;
+        }
+        body.light-theme .modal-server-info-box { background: #f8fafc; }
+
+        .btn-apply-advance { 
+            background: var(--brand-green); color: #fff; width: 100%; border: none; padding: 15px; border-radius: 14px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25); transition: var(--transition-smooth);
+        }
+        .btn-apply-advance:hover { background: var(--brand-green-hover); transform: translateY(-1px); }
+
+        /* ==========================================================================
+           9. RESPONSIVE DESIGN (MEDIA QUERIES FOR ULTRA COMPACT SCREEN)
+           ========================================================================== */
+        @media (max-width: 700px) { 
+            .mod-card-item { flex-direction: column; align-items: flex-start; gap: 18px; padding: 18px; border-radius: 18px; }
+            .mod-left-side-flex { width: 100%; }
+            .action-view-btn { width: 100%; justify-content: center; box-sizing: border-box; padding: 14px; border-radius: 12px; }
+            .filter-buttons-grid { gap: 6px; margin-bottom: 24px; }
+            .filter-btn { font-size: 11px; padding: 10px 2px; border-radius: 10px; }
+            .rex-hero-title { font-size: 28px; }
+            .rex-hero-banner { padding: 40px 18px; border-radius: 20px; }
+            .rex-banner-overlay-logo { font-size: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper-container">
+
+    <div class="top-nav-bar">
+        <button class="btn-settings" onclick="openAdvanceModal()"><i class="fas fa-sliders-h"></i> Settings</button>
+        <div class="brand-status">
+            <div class="status-dot-green"></div>
+            <span id="navBrandTitle">RexCraft Engine</span>
+        </div>
+    </div>
+
+    <div class="rex-hero-banner">
+        <div class="rex-banner-overlay-logo" id="bannerOverlayText">REXCRAFT HUB</div>
+        <div class="rex-hero-inner-content">
+            <h1 class="rex-hero-title" id="bannerHeroTitle">RexCraft Modding Hub</h1>
+            <p class="rex-hero-subtitle">Platform digital distribusi modifikasi, engine optimasi, dan shader pack Minecraft anti-lag.</p>
+            <a href="/tutorial" class="tutorial-alert-pill">
+                <i class="fas fa-shield-halved"></i> Sistem Terverifikasi Stabil. Cek Panduan Pasang File
+            </a>
+
+            <div class="search-container-inside">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" id="rexSearchField" class="rex-search-field" placeholder="Ketik nama modifikasi atau tipe berkas..." onkeyup="filterModsMaster()">
+            </div>
+        </div>
+    </div>
+
+    <div class="filter-buttons-grid">
+        <button class="filter-btn active-filter" id="filterBtnAll" onclick="setCategoryFilter('all', this)">
+            <i class="fas fa-globe"></i> Semua
+        </button>
+        <button class="filter-btn" id="filterBtnJava" onclick="setCategoryFilter('java', this)">
+            <i class="fab fa-java"></i> Java
+        </button>
+        <button class="filter-btn" id="filterBtnMcpe" onclick="setCategoryFilter('mcpe', this)">
+            <i class="fas fa-mobile-screen"></i> MCPE
+        </button>
+        <button class="filter-btn btn-advance-filter" onclick="openAdvanceModal()">
+            <i class="fas fa-gears"></i> Advance
+        </button>
+    </div>
+
+    <div class="mods-grid-container" id="modsContainer">
+        {% for mod in mods %}
+        <div class="mod-card-item" data-category="{{ mod.category }}" data-title="{% if mod.title %}{{ mod.title.lower() }}{% else %}{{ mod.name.lower() }}{% endif %}" data-version="{{ mod.version_range }}">
+            
+            <div class="mod-left-side-flex">
+                <div class="mod-avatar-box">
+                    {% if mod.icon_url %}
+                        <img src="{{ mod.icon_url }}" class="mod-avatar-img" alt="Icon Mod">
+                    {% else %}
+                        <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-cube" style="font-size: 26px; color: var(--brand-green);"></i>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mod-info-content">
+                    <div class="tag-row-top">
+                        <span class="mini-badge {% if mod.category == 'java' %}badge-java{% else %}badge-mcpe{% endif %}">
+                            {{ mod.category.upper() }} EDITION
+                        </span>
+                        <span class="mini-badge badge-version">MC {{ mod.version_range }}</span>
+                    </div>
+
+                    <h2 class="mod-card-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h2>
+                    <p class="mod-card-desc">{{ mod.desc }}</p>
+                    
+                    <div class="modrinth-mini-metrics">
+                        <div class="metric-unit dl-count">
+                            <i class="fas fa-download"></i> <span>1.4K+ downloads</span>
+                        </div>
+                        <div class="metric-unit like-count">
+                            <i class="fas fa-heart"></i> <span>84 likes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="/mod/{{ mod.id }}" class="action-view-btn">
+                <span>View Mod</span> <i class="fas fa-chevron-right" style="font-size: 11px;"></i>
+            </a>
+
+        </div>
+        {% else %}
+        <div class="empty-db-state-card">
+            <i class="fas fa-box-open"></i>
+            <p style="margin: 0; font-weight: 700; font-size: 15px;">Database kosong. Belum ada item modifikasi dari RexCraft Engine.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<div class="rex-modal-overlay" id="advanceFilterModal">
+    <div class="rex-modal-box">
+        
+        <div class="modal-header-flex">
+            <div class="modal-title"><i class="fas fa-sliders-h" style="color: var(--brand-blue);"></i> Control Settings</div>
+            <button class="modal-close-x" onclick="closeAdvanceModal()"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="config-form-scroll-zone">
+            
+            <div class="filter-select-group">
+                <label><i class="fas fa-user-gear"></i> Owner / Nama MC Pembuat</label>
+                <input type="text" id="ownerMcNameInput" class="rex-input-text" placeholder="Masukkan nama MC Anda (e.g. RexCraft)..." value="RexCraft">
+            </div>
+            
+            <div class="filter-select-group">
+                <label><i class="fas fa-palette"></i> Pilih Tema Tampilan Web</label>
+                <select id="webThemeDropdown" class="rex-dropdown" onchange="executeThemeShiftEngine(this.value)">
+                    <option value="dark">Dark Slate Premium (Default)</option>
+                    <option value="light">Light Crisp Mode</option>
+                    <option value="neon">Cyberpunk Neon Emerald</option>
+                </select>
+            </div>
+            
+            <div class="filter-select-group">
+                <label><i class="fas fa-share-nodes"></i> Link Sosial Media</label>
+                <div class="social-link-input-wrapper">
+                    <i class="fab fa-discord"></i>
+                    <input type="text" id="medsosDiscord" class="rex-input-text" placeholder="https://discord.gg/yourlink" value="https://discord.gg/rexcraft">
+                </div>
+                <div class="social-link-input-wrapper">
+                    <i class="fab fa-youtube"></i>
+                    <input type="text" id="medsosYoutube" class="rex-input-text" placeholder="https://youtube.com/@channel" value="https://youtube.com/@rexcraft">
+                </div>
+                <div class="social-link-input-wrapper">
+                    <i class="fab fa-whatsapp"></i>
+                    <input type="text" id="medsosWhatsapp" class="rex-input-text" placeholder="https://wa.me/number" value="https://wa.me/rexcraft">
+                </div>
+            </div>
+
+            <div class="filter-select-group">
+                <label><i class="fas fa-filter"></i> Saring Versi Minecraft</label>
+                <select id="modalVersionSelect" class="rex-dropdown">
+                    <option value="all">Semua Versi Game</option>
+                    <option value="1.21">Minecraft 1.21+</option>
+                    <option value="1.20">Minecraft 1.20+</option>
+                    <option value="1.19">Minecraft 1.19+</option>
+                </select>
+            </div>
+            
+        </div>
+
+        <div class="modal-server-info-box">
+            <span style="color: var(--brand-green);">■</span> Owner: <span id="logMcName" style="color: var(--text-primary); font-weight:700;">RexCraft</span><br>
+            <span style="color: var(--brand-blue);">■</span> Core Engine: <span style="color: var(--text-primary);">v2.5-NoBug-Build</span><br>
+            <span style="color: var(--brand-purple);">■</span> Database Link: <span style="color: var(--brand-green); font-weight:700;">CONNECTED</span>
+        </div>
+
+        <button class="btn-apply-advance" onclick="applyMasterSystemChanges()">
+            <i class="fas fa-save"></i> Simpan & Terapkan Pengaturan
+        </button>
+
+    </div>
+</div>
+
+<script>
+let currentCategory = 'all';
+
+// MODAL CONTROLLER OVERLAY MANAGEMENT
+function openAdvanceModal() { 
+    document.getElementById('advanceFilterModal').style.display = 'flex'; 
 }
 
-.search-container-inside { max-width: 520px; margin: 0 auto; position: relative; }
-.search-container-inside i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #475569; }
-.rex-search-field {
-    width: 100%; background: rgba(6, 9, 19, 0.6); border: 1px solid var(--border-color);
-    border-radius: 14px; padding: 14px 16px 14px 48px; color: #fff; font-size: 14px; outline: none;
+function closeAdvanceModal() { 
+    document.getElementById('advanceFilterModal').style.display = 'none'; 
 }
-.rex-search-field:focus { border-color: rgba(34, 197, 94, 0.5); }
 
-.filter-buttons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 28px; }
-.filter-btn {
-    background: rgba(15, 23, 42, 0.35); border: 1px solid var(--border-color); color: var(--text-secondary);
-    padding: 10px 4px; border-radius: 10px; font-weight: 700; font-size: 11px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 5px; white-space: nowrap; transition: 0.2s;
+// REALTIME THEME INTERACTION CHANGE CORE
+function executeThemeShiftEngine(themeValue) {
+    document.body.classList.remove('light-theme', 'neon-theme');
+    if (themeValue === 'light') {
+        document.body.classList.add('light-theme');
+    } else if (themeValue === 'neon') {
+        document.body.classList.add('neon-theme');
+    }
 }
-.filter-btn.active-filter { background: rgba(34, 197, 94, 0.12); color: #4ade80; border-color: rgba(34, 197, 94, 0.5); }
 
-.mods-grid-container { display: flex; flex-direction: column; gap: 16px; }
-.mod-card-item { 
-    background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 18px; 
-    display: flex; gap: 18px; align-items: center; justify-content: space-between; transition: all 0.3s;
+// THEME INTEGRATION SUBMIT CONTROLLER ENGINE
+function applyMasterSystemChanges() {
+    const mcName = document.getElementById('ownerMcNameInput').value;
+    
+    // Update live branding elements inside home based on user preferences
+    if (mcName.trim() !== "") {
+        document.getElementById('navBrandTitle').innerText = mcName + " Engine";
+        document.getElementById('bannerHeroTitle').innerText = mcName + " Modding Hub";
+        document.getElementById('bannerOverlayText').innerText = mcName + " HUB";
+        document.getElementById('logMcName').innerText = mcName;
+    }
+    
+    // Trigger internal advance filtration search algorithms
+    const selectedVersion = document.getElementById('modalVersionSelect').value;
+    const cards = document.querySelectorAll('.mod-card-item');
+
+    cards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardVersion = card.getAttribute('data-version');
+        
+        const matchCategory = (currentCategory === 'all' || cardCategory === currentCategory);
+        const matchVersion = (selectedVersion === 'all' || cardVersion.includes(selectedVersion));
+        
+        if (matchCategory && matchVersion) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    closeAdvanceModal();
+    alert("Sistem Berhasil Diperbarui!\nOwner MC: " + mcName + "\nPengaturan Tema & Sosial Media Aktif.");
 }
-.mod-card-item:hover { transform: translateY(-2px); border-color: var(--brand-green); }
-.mod-left-side-flex { display: flex; gap: 18px; align-items: center; flex-grow: 1; min-width: 0; }
-.mod-avatar-box { width: 72px; height
+
+// TABS CATEGORY NAVIGATION FILTER METHOD
+function setCategoryFilter(category, element) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
+    if (element) {
+        element.classList.add('active-filter');
+    }
+    currentCategory = category;
+    filterModsMaster();
+}
+
+// ADVANCED LIVE SEARCH MASTER ENGINE FILTER
+function filterModsMaster() {
+    const searchKeyword = document.getElementById('rexSearchField').value.toLowerCase();
+    const cards = document.querySelectorAll('.mod-card-item');
+    
+    cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        const title = card.getAttribute('data-title');
+        
+        const matchCat = (currentCategory === 'all' || cat === currentCategory);
+        const matchSearch = title.includes(searchKeyword);
+        
+        if (matchCat && matchSearch) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// WINDOW CLICK INTERACTION DETECTOR CLOSURE
+window.onclick = function(event) {
+    const modal = document.getElementById('advanceFilterModal');
+    if (event.target == modal) { 
+        closeAdvanceModal(); 
+    }
+}
+</script>
+</body>
+</html>
