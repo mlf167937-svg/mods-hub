@@ -4,14 +4,16 @@ from flask import Flask, render_template, abort, send_from_directory
 
 app = Flask(__name__)
 
+# Konfigurasi Folder
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# Buat folder otomatis jika belum ada
+os.makedirs(os.path.join(UPLOAD_FOLDER, 'java'), exist_ok=True)
+os.makedirs(os.path.join(UPLOAD_FOLDER, 'mcpe'), exist_ok=True)
+
 def get_file_info(filepath, filename):
-    """
-    Fungsi untuk membaca ukuran file, versi, 
-    serta otomatis mendeteksi apakah mod ini untuk Fabric atau Forge.
-    """
+    """Baca info ukuran, versi, loader mod"""
     try:
         size_bytes = os.path.getsize(filepath)
         if size_bytes >= 1024 * 1024:
@@ -21,7 +23,6 @@ def get_file_info(filepath, filename):
     except OSError:
         size_str = "0 KB"
 
-    # Deteksi otomatis Mod Loader dari nama file
     name_lower = filename.lower()
     if 'fabric' in name_lower:
         loader = "Fabric"
@@ -49,16 +50,10 @@ def get_file_info(filepath, filename):
     }
 
 def get_all_mods():
-    """
-    Membaca seluruh struktur folder, mengumpulkan daftar file,
-    dan mendeteksi loader apa saja yang tersedia untuk halaman utama.
-    """
+    """Ambil semua data mod dari folder"""
     mods_data = []
     categories = ['java', 'mcpe']
     
-    if not os.path.exists(UPLOAD_FOLDER):
-        return mods_data
-
     for category in categories:
         category_path = os.path.join(UPLOAD_FOLDER, category)
         if not os.path.exists(category_path):
@@ -77,7 +72,7 @@ def get_all_mods():
             for filename in os.listdir(folder_path):
                 if filename.startswith('.'):
                     continue
-                if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+                if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
                     icon_file = filename
                     continue
                     
@@ -112,6 +107,7 @@ def get_all_mods():
                 
     return mods_data
 
+# Rute Halaman
 @app.route("/")
 def index():
     mods = get_all_mods()
@@ -137,7 +133,7 @@ def mod_detail(category, mod_id):
         for filename in os.listdir(target_folder):
             if filename.startswith('.'):
                 continue
-            if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
                 icon_file = filename
                 continue
             filepath = os.path.join(target_folder, filename)
@@ -159,7 +155,6 @@ def mod_detail(category, mod_id):
     display_title = mod_id.replace('_', ' ').replace('-', ' ').title()
     icon_url = f"/static/uploads/{category}/{mod_id}/{icon_file}" if icon_file else None
 
-    # DI SINI KATA PANGGILAN SUDAH DIUBAH MENJADI FORMAL DAN AMAN UNTUK PENGUNJUNG
     current_mod = {
         'id': mod_id,
         'title': display_title,
@@ -181,11 +176,16 @@ def download_file(category, mod_id, filename):
 
 @app.route("/health")
 def health_check():
-    return "OK", 200
+    return "✅ RexCraft Online", 200
 
+# Halaman Error
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('404.html', error="Server sedang bermasalah"), 500
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
