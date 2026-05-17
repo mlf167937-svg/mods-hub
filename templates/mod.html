@@ -17,8 +17,8 @@
             --mr-border: #242736;
             --mr-text-main: #f1f5f9;
             --mr-text-muted: #a1a1aa;
-            --mr-green: #14b8a6; /* Khas Modrinth Brand Tint */
-            --mr-green-hover: #0d9488;
+            --mr-green: #00af9c; 
+            --mr-green-hover: #00c4ae;
             --mr-badge-bg: #1e293b;
             --font-mr: 'Inter', sans-serif;
         }
@@ -33,7 +33,7 @@
             padding-bottom: 60px;
         }
 
-        /* ── NAVBAR TOP MODRINTH STYLE ── */
+        /* ── NAVBAR TOP ── */
         .mr-nav-top {
             background-color: var(--mr-bg-surface);
             border-bottom: 1px solid var(--mr-border);
@@ -45,6 +45,7 @@
             margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
         .mr-back-link {
             color: var(--mr-text-muted);
@@ -61,10 +62,10 @@
         .mr-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
-        /* ── PROJECT HEADER BLOCK ── */
+        /* ── PROJECT HEADER ── */
         .mr-header {
             display: flex;
             gap: 24px;
@@ -101,7 +102,7 @@
 
         .mr-badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
         .mr-tag {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 6px;
@@ -111,7 +112,7 @@
             color: var(--mr-text-main);
         }
 
-        /* ── MODRINTH TABS NAVIGATION ── */
+        /* ── TABS ── */
         .mr-tabs {
             display: flex;
             gap: 8px;
@@ -127,22 +128,19 @@
             font-weight: 600;
             cursor: pointer;
             border-bottom: 3px solid transparent;
-            transition: all 0.2s;
         }
         .mr-tab-btn.active {
             color: var(--mr-text-main);
             border-bottom-color: var(--mr-green);
         }
-        .mr-tab-btn:hover:not(.active) { color: var(--mr-text-main); }
 
-        /* ── 2 COLUMN MAIN GRID ── */
+        /* ── RESPONSIVE GRID LAYOUT ── */
         .mr-grid {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 32px;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
         }
 
-        /* LEFT CONTENT BLOCKS */
         .mr-card-main {
             background-color: var(--mr-bg-surface);
             border: 1px solid var(--mr-border);
@@ -162,25 +160,30 @@
             line-height: 1.6;
         }
 
-        /* ── MODRINTH SIGNATURE TABLE ── */
-        .mr-table-wrapper { width: 100%; overflow-x: auto; }
+        /* ── FIXED MODRINTH TABLE (ANTI MIRING DI HP) ── */
+        .mr-table-wrapper { 
+            width: 100%; 
+            overflow-x: auto; 
+            -webkit-overflow-scrolling: touch;
+        }
         .mr-version-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
             font-size: 14px;
+            min-width: 600px; /* Menjaga tabel tidak ringsek di layar kecil */
         }
         .mr-version-table th {
-            padding: 10px 14px;
+            padding: 12px 16px;
             color: var(--mr-text-muted);
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             border-bottom: 1px solid var(--mr-border);
-            background-color: rgba(255, 255, 255, 0.02);
+            background-color: rgba(255, 255, 255, 0.01);
         }
         .mr-version-table td {
-            padding: 14px;
+            padding: 16px;
             border-bottom: 1px solid var(--mr-border);
             vertical-align: middle;
         }
@@ -190,7 +193,6 @@
         
         .file-title { font-weight: 600; color: var(--mr-text-main); }
         
-        /* Dynamic Loader Badges */
         .loader-badge {
             font-size: 11px;
             font-weight: 800;
@@ -204,42 +206,52 @@
         .loader-universal { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; }
 
         .game-ver-tag {
-            background-color: var(--mr-badge-bg);
-            color: var(--mr-text-main);
-            padding: 2px 8px;
+            background-color: #1a1c28;
+            color: #cbd5e1;
+            padding: 3px 8px;
             border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             border: 1px solid var(--mr-border);
         }
 
-        .mr-download-icon-btn {
+        /* ── BUTTON DOWNLOAD MODRINTH 100% LOOKS ── */
+        .mr-download-btn-box {
+            background-color: rgba(0, 175, 156, 0.1);
             color: var(--mr-green);
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            transition: color 0.1s;
+            border: 1px solid rgba(0, 175, 156, 0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.15s ease;
         }
-        .mr-download-icon-btn:hover { color: #2dd4bf; }
+        .mr-download-btn-box:hover {
+            background-color: var(--mr-green);
+            color: #ffffff;
+            border-color: var(--mr-green);
+        }
 
-        /* RIGHT SIDEBAR PANEL */
+        /* ── SIDEBAR PANEL ── */
         .mr-sidebar-card {
             background-color: var(--mr-bg-surface);
             border: 1px solid var(--mr-border);
             border-radius: 8px;
             padding: 20px;
+            margin-bottom: 20px;
             height: fit-content;
         }
         .mr-sidebar-card h3 {
-            font-size: 14px;
-            color: var(--mr-text-main);
+            font-size: 12px;
+            color: var(--mr-text-muted);
             text-transform: uppercase;
             margin-bottom: 16px;
             letter-spacing: 0.5px;
+            font-weight: 700;
         }
         .sidebar-row {
             display: flex;
@@ -252,6 +264,26 @@
         .row-label { color: var(--mr-text-muted); }
         .row-val { color: var(--mr-text-main); font-weight: 600; }
 
+        /* BUTTON LINK MEDSOS */
+        .social-link-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--mr-bg-card);
+            border: 1px solid var(--mr-border);
+            color: var(--mr-text-main);
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: background 0.2s;
+        }
+        .social-link-btn:hover {
+            background-color: var(--mr-border);
+        }
+
         @media (max-width: 850px) {
             .mr-grid { grid-template-columns: 1fr; }
             .mr-header { flex-direction: column; align-items: center; text-align: center; }
@@ -263,7 +295,8 @@
 
     <div class="mr-nav-top">
         <div class="nav-container">
-            <a href="/" class="mr-back-link"><i class="fas fa-search"></i> Back to search</a>
+            <a href="/" class="mr-back-link"><i class="fas fa-search"></i> Kembali ke Dashboard</a>
+            <a href="/tutorial" class="mr-back-link" style="color: var(--mr-green);"><i class="fas fa-book"></i> Panduan Tutorial</a>
         </div>
     </div>
 
@@ -279,9 +312,9 @@
             </div>
             <div class="mr-title-block">
                 <h1>{{ mod.title }}</h1>
-                <div class="mr-meta-author">By <span>RexCraft Hub</span></div>
+                <div class="mr-meta-author">Oleh <span>{% if mod.category == 'java' %}RexCraft{% else %}RexCraft6506{% endif %}</span></div>
                 <div class="mr-badge-row">
-                    <span class="mr-tag" style="color: var(--mr-green); border-color: rgba(20, 184, 166, 0.3);">Verified</span>
+                    <span class="mr-tag" style="color: var(--mr-green); border-color: rgba(0, 175, 156, 0.3);">Verified Clean</span>
                     <span class="mr-tag">{{ mod.project_type }}</span>
                     <span class="mr-tag">Client & Server</span>
                 </div>
@@ -289,8 +322,8 @@
         </div>
 
         <div class="mr-tabs">
-            <button class="mr-tab-btn active"><i class="fas fa-file-alt" style="margin-right: 6px;"></i> Description</button>
-            <button class="mr-tab-btn"><i class="fas fa-history" style="margin-right: 6px;"></i> Versions</button>
+            <button class="mr-tab-btn active"><i class="fas fa-file-alt" style="margin-right: 6px;"></i> Deskripsi</button>
+            <button class="mr-tab-btn"><i class="fas fa-history" style="margin-right: 6px;"></i> Daftar Versi</button>
         </div>
 
         <div class="mr-grid">
@@ -298,21 +331,21 @@
             <div class="main-content-area">
                 
                 <div class="mr-card-main">
-                    <h2>About this project</h2>
-                    <p>{{ mod.desc }} All builds here are optimized specifically for minimal footprints, fluid frame timings, and zero game loop blocks.</p>
+                    <h2>Tentang Berkas Ini</h2>
+                    <p>{{ mod.desc }} Semua file pengoptimalan di repositori jaringan RexCraft dikompilasi secara khusus demi menjamin stabilitas performa, kelancaran frametime, serta bebas dari bug.</p>
                 </div>
 
                 <div class="mr-card-main" style="padding: 16px 0;">
-                    <h2 style="padding: 0 24px 8px 24px; margin-bottom: 8px;">Recent Releases</h2>
+                    <h2 style="padding: 0 24px 8px 24px; margin-bottom: 8px;">Semua Versi Rilis</h2>
                     <div class="mr-table-wrapper">
                         <table class="mr-version-table">
                             <thead>
                                 <tr>
-                                    <th style="padding-left: 24px;">Version Name</th>
-                                    <th>Loaders</th>
-                                    <th>Game Version</th>
-                                    <th>Size</th>
-                                    <th style="text-align: center; padding-right: 24px;">Download</th>
+                                    <th style="padding-left: 24px; width: 40%;">Nama Versi</th>
+                                    <th style="width: 15%;">Loader</th>
+                                    <th style="width: 15%;">Versi Game</th>
+                                    <th style="width: 15%;">Ukuran</th>
+                                    <th style="text-align: center; padding-right: 24px; width: 15%;">Unduh</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -333,9 +366,9 @@
                                             </span>
                                         </td>
                                         <td><span class="game-ver-tag">{{ version.game_version }}</span></td>
-                                        <td style="color: var(--mr-text-muted); font-size: 13.5px;">{{ version.file_size }}</td>
+                                        <td style="color: var(--mr-text-muted); font-size: 13.5px; font-weight: 500;">{{ version.file_size }}</td>
                                         <td style="text-align: center; padding-right: 24px;">
-                                            <a href="{{ version.download_url }}" class="mr-download-icon-btn" download>
+                                            <a href="{{ version.download_url }}" class="mr-download-btn-box" download title="Download File">
                                                 <i class="fas fa-download"></i>
                                             </a>
                                         </td>
@@ -344,7 +377,7 @@
                                 {% else %}
                                     <tr>
                                         <td colspan="5" style="text-align: center; color: var(--mr-text-muted); padding: 30px;">
-                                            No downloadable artifacts found inside this specific package directory.
+                                            Belum ada berkas unduhan yang terdeteksi di dalam folder proyek ini.
                                         </td>
                                     </tr>
                                 {% endif %}
@@ -356,18 +389,25 @@
             </div>
 
             <div class="mr-sidebar-area">
+                
                 <div class="mr-sidebar-card">
-                    <h3>Technical Info</h3>
+                    <h3>Media Sosial Resmi</h3>
+                    <a href="https://www.youtube.com/@RexCraft6506" target="_blank" class="social-link-btn">
+                        <i class="fab fa-youtube" style="color: #ff0000; font-size: 16px;"></i> YouTube Channel
+                    </a>
+                    <a href="https://www.tiktok.com/@rexcraft6506" target="_blank" class="social-link-btn">
+                        <i class="fab fa-tiktok" style="color: #ff0050; font-size: 16px;"></i> TikTok Official
+                    </a>
+                </div>
+
+                <div class="mr-sidebar-card">
+                    <h3>Informasi Teknis</h3>
                     <div class="sidebar-row">
                         <span class="row-label">Platform</span>
-                        <span class="row-val" style="text-transform: uppercase;">{{ mod.category }}</span>
+                        <span class="row-val" style="text-transform: uppercase;">{{ mod.category }} Edition</span>
                     </div>
                     <div class="sidebar-row">
-                        <span class="row-label">Environment</span>
-                        <span class="row-val">Hybrid Core</span>
-                    </div>
-                    <div class="sidebar-row">
-                        <span class="row-label">License</span>
+                        <span class="row-label">Lisensi</span>
                         <span class="row-val" style="color: var(--mr-green);">Custom Open</span>
                     </div>
                     <div class="sidebar-row">
@@ -375,6 +415,7 @@
                         <span class="row-val" style="color: #4ade80;">Production</span>
                     </div>
                 </div>
+
             </div>
 
         </div>
