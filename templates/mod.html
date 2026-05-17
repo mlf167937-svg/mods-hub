@@ -10,25 +10,40 @@
         :root { --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836; --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding-bottom: 60px; }
+        
         .navbar { background: var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
         .back-link { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; }
-        .container { max-width: 600px; margin: 40px auto; padding: 0 20px; text-align: center; }
-        .mod-big-icon { width: 80px; height: 80px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .mod-big-icon img { width: 100%; height: 100%; object-fit: cover; }
-        h1 { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 4px; }
-        .stats-row { display: flex; gap: 10px; justify-content: center; margin: 16px 0 30px 0; }
-        .badge-info { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         
-        .tabs-header { display: flex; gap: 20px; border-bottom: 2px solid var(--border-color); margin-bottom: 20px; justify-content: center; }
+        .container { max-width: 650px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        
+        /* FIX ICON CONTAINER CONTAINER */
+        .mod-big-icon { width: 84px; height: 84px; background: #1c1e24; border: 1px solid var(--border-color); border-radius: 16px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .mod-big-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
+        .mod-big-icon i { font-size: 32px; color: var(--theme-color); z-index: 1; }
+        
+        h1 { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+        
+        /* FIX STATS LAYOUT HORIZONTAL (MODRINTH STYLE) */
+        .stats-row { display: flex; gap: 10px; justify-content: center; margin: 16px 0 30px 0; }
+        .badge-info { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .badge-like { cursor: pointer; transition: 0.2s; }
+        .badge-like:hover { border-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
+        
+        .tabs-header { display: flex; gap: 24px; border-bottom: 2px solid var(--border-color); margin-bottom: 20px; justify-content: center; }
         .tab-item { color: var(--text-muted); padding: 8px 4px; font-size: 14px; font-weight: 700; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
         .tab-item.active { color: var(--theme-color); border-color: var(--theme-color); }
+        
         .tab-panel { display: none; text-align: left; }
         .tab-panel.active { display: block; }
         
-        .card-box { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 18px; line-height: 1.5; font-size: 14px; color: var(--text-muted); }
-        .version-node { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .dl-btn { background: var(--theme-color); color: #000; padding: 8px 14px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 800; border: none; cursor: pointer; }
-        .wa-btn { display: block; background: #25d366; color: #fff; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 700; text-align: center; margin-top: 10px; }
+        .card-box { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; line-height: 1.6; font-size: 14px; color: var(--text-main); }
+        
+        .version-node { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .dl-btn { background: var(--theme-color); color: #000; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 12.5px; font-weight: 800; border: none; cursor: pointer; transition: 0.2s; }
+        .dl-btn:hover { opacity: 0.9; }
+        
+        .wa-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25d366; color: #fff; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; text-align: center; margin-top: 16px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2); }
+        .wa-btn:hover { background: #20ba5a; }
     </style>
 </head>
 <body>
@@ -40,17 +55,16 @@
 
     <div class="container">
         <div class="mod-big-icon">
+            <i class="fas fa-cube"></i>
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
-            {% else %}
-                <i class="fas fa-cube" style="font-size: 28px; color: var(--theme-color);"></i>
+                <img src="{{ mod.icon_url }}" onerror="this.style.display='none'">
             {% endif %}
         </div>
         <h1>{{ mod.title }}</h1>
         
         <div class="stats-row">
-            <div class="badge-info"><i class="fas fa-download"></i> {{ mod.downloads }}</div>
-            <div class="badge-info" style="cursor:pointer;" onclick="addLike('{{ mod.id }}')"><i class="fas fa-heart" style="color:#ef4444"></i> <span id="lkDisplay">{{ mod.likes }}</span></div>
+            <div class="badge-info"><i class="fas fa-download" style="color: var(--theme-color)"></i> {{ mod.downloads }} Unduhan</div>
+            <div class="badge-info badge-like" onclick="addLike('{{ mod.id }}')"><i class="fas fa-heart" style="color:#ef4444"></i> <span id="lkDisplay">{{ mod.likes }}</span> Suka</div>
         </div>
 
         <div class="tabs-header">
@@ -68,21 +82,21 @@
                 {% for v in versions %}
                 <div class="version-node">
                     <div>
-                        <div style="font-weight:700; color:#fff; font-size:13.5px;">{{ v.filename }}</div>
-                        <div style="font-size:11px; margin-top:2px;">Ukuran: {{ v.size }}</div>
+                        <div style="font-weight:700; color:#fff; font-size:14px;">{{ v.filename }}</div>
+                        <div style="font-size:11.5px; color: var(--text-muted); margin-top:4px;">Ukuran: {{ v.size }}</div>
                     </div>
-                    <button onclick="triggerDl('{{ v.download_url }}')" class="dl-btn">Download</button>
+                    <button onclick="triggerDl('{{ v.download_url }}')" class="dl-btn"><i class="fas fa-download"></i> Unduh</button>
                 </div>
                 {% endfor %}
             {% else %}
-                <div class="card-box" style="text-align:center;">Tidak ada file unduhan terdeteksi.</div>
+                <div class="card-box" style="text-align:center; color: var(--text-muted);">Tidak ada berkas berkode .zip/.jar/.mcpack terdeteksi.</div>
             {% endif %}
         </div>
 
         <div class="tab-panel" id="p-err">
             <div class="card-box">
-                <p>Menemukan kendala atau error sirkuit saat pemasangan mod? Klik tombol di bawah untuk melapor langsung ke WhatsApp Komunitas.</p>
-                <a href="https://wa.me/6283873024650" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> Chat WhatsApp Komunitas</a>
+                <p style="margin-bottom: 10px;">Menemukan kendala, crash sikit, atau error sirkuit saat pemasangan berkas modifikasi? Klik tombol resmi di bawah untuk melapor langsung ke WhatsApp Komunitas RexCraft.</p>
+                <a href="https://wa.me/6283873024650?text=Halo%20RexCraft,%20saya%20menemukan%20bug/kendala%20di%20web" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> Chat WhatsApp Masukan Proyek</a>
             </div>
         </div>
     </div>
@@ -98,7 +112,7 @@
         }
         function triggerDl(url) {
             fetch(url).then(res => res.json()).then(data => {
-                if(data.status === 'redirect') { window.location.href = data.url; setTimeout(() => { window.location.reload(); }, 1000); }
+                if(data.status === 'redirect') { window.location.href = data.url; setTimeout(() => { window.location.reload(); }, 1200); }
             });
         }
         function addLike(id) {
