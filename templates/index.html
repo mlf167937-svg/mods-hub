@@ -10,8 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836;
-            --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; --theme-alpha: rgba(0, 175, 156, 0.15);
+            --bg-dark: #07080b; 
+            --bg-surface: #111217; 
+            --bg-card: #161920; 
+            --border-color: #242836;
+            --text-main: #f1f5f9; 
+            --text-muted: #94a3b8; 
+            --theme-color: #00af9c; 
+            --theme-alpha: rgba(0, 175, 156, 0.15);
         }
         .theme-green { --theme-color: #00af9c; --theme-alpha: rgba(0, 175, 156, 0.15); }
         .theme-blue { --theme-color: #3b82f6; --theme-alpha: rgba(59, 130, 246, 0.15); }
@@ -108,7 +114,6 @@
                         <div class="dropdown-item-info" style="color:var(--text-muted); font-style:italic; font-size:11.5px; margin-top:4px;"><i class="fas fa-donate" style="width:16px;"></i> Donasi (Nanti)</div>
                     </div>
                 </div>
-
             </div>
         </div>
     </nav>
@@ -139,9 +144,9 @@
                 <div class="mod-icon">
                     <i class="fas fa-cube"></i>
                     {% if mod.icon_url %}
-                        <img src="{{ mod.icon_url }}" onerror="this.style.display='none'">
+                        <img src="{{ mod.icon_url }}" onerror="this.remove();">
                     {% elif mod.image %}
-                        <img src="{{ mod.image }}" onerror="this.style.display='none'">
+                        <img src="{{ mod.image }}" onerror="this.remove();">
                     {% endif %}
                 </div>
                 <div class="mod-info">
