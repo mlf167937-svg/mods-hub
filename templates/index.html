@@ -18,53 +18,57 @@
         .theme-purple { --theme-color: #a855f7; --theme-alpha: rgba(168, 85, 247, 0.15); }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; }
+        body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        .navbar { background: var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .navbar { background: var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         .nav-logo { font-size: 18px; font-weight: 800; text-decoration: none; color: #fff; }
         .nav-logo span { color: var(--theme-color); }
-        .nav-links { display: flex; gap: 12px; }
-        .nav-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+        .nav-links { display: flex; gap: 8px; align-items: center; }
+        .nav-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .nav-btn:hover { background: var(--bg-card); border-color: var(--theme-color); }
 
         .setting-wrapper { position: relative; }
-        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 240px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 220px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
         .setting-dropdown-box.active { display: flex; }
         .theme-options { display: flex; gap: 8px; margin-top: 4px; }
-        .color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
+        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
         .color-dot.active { border-color: #fff; }
 
-        /* FIX TEXT SELECTION BLUE BUG & HERO LAYER */
-        .rex-banner-hero { position: relative; background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 60px 20px; text-align: center; -webkit-user-select: none; -ms-user-select: none; user-select: none; z-index: 1; }
+        .rex-banner-hero { position: relative; background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 50px 20px; text-align: center; -webkit-user-select: none; -ms-user-select: none; user-select: none; z-index: 1; }
         .badge-update { display: inline-block; background: var(--theme-alpha); color: var(--theme-color); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 14px; }
         h1 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 10px; }
         .rex-banner-hero p { font-size: 13.5px; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.5; }
 
-        .search-filter-container { max-width: 600px; margin: -25px auto 30px auto; padding: 0 20px; position: relative; z-index: 10; }
+        .search-filter-container { max-width: 650px; margin: -25px auto 30px auto; padding: 0 20px; position: relative; z-index: 10; }
         .search-box-wrapper { position: relative; margin-bottom: 14px; }
         .search-box-wrapper i { position: absolute; left: 16px; top: 15px; color: var(--text-muted); }
-        .search-input { width: 100%; background: var(--bg-card); border: 1px solid var(--border-color); padding: 14px 16px 14px 44px; border-radius: 10px; color: #fff; font-size: 14px; outline: none; }
+        .search-input { width: 100%; background: var(--bg-card); border: 1px solid var(--border-color); padding: 14px 16px 14px 44px; border-radius: 10px; color: #fff; font-size: 14px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .search-input:focus { border-color: var(--theme-color); }
         
         .autocomplete-suggestions { position: absolute; top: 52px; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; display: none; z-index: 50; }
-        .suggestion-item { padding: 12px 16px; font-size: 13.5px; cursor: pointer; }
+        .suggestion-item { padding: 12px 16px; font-size: 13.5px; cursor: pointer; color: var(--text-main); }
         .suggestion-item:hover { background: var(--bg-surface); color: var(--theme-color); }
 
-        .filter-tabs { display: flex; gap: 8px; }
-        .filter-btn { background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+        .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .filter-btn { background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: 0.2s; }
         .filter-btn.active { background: var(--theme-color); color: #000; border-color: var(--theme-color); }
 
-        .proyek-grid-section { max-width: 600px; margin: 0 auto; padding: 0 20px 60px 20px; }
-        .grid-layout { display: flex; flex-direction: column; gap: 12px; }
-        .mod-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; gap: 16px; text-decoration: none; color: inherit; transition: 0.2s; }
+        .proyek-section { max-width: 650px; margin: 0 auto; padding: 0 20px 60px 20px; }
+        .grid-layout { display: flex; flex-direction: column; gap: 14px; }
+        
+        /* FIX ICON BOX BERKAS */
+        .mod-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; gap: 16px; text-decoration: none; color: inherit; transition: 0.2s; align-items: center; }
         .mod-card:hover { transform: translateY(-2px); border-color: var(--theme-color); background: var(--bg-card); }
-        .mod-icon { width: 54px; height: 54px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
-        .mod-icon img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .mod-icon { width: 60px; height: 60px; background: #1c1e24; border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
+        .mod-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
+        .mod-icon i { font-size: 24px; color: var(--theme-color); z-index: 1; }
+        
         .mod-info { flex-grow: 1; min-width: 0; }
         .title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .mod-card-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .mod-card-title { font-size: 16px; font-weight: 700; color: #fff; }
         .mod-card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .tag-row { display: flex; gap: 6px; }
+        .tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
         .tag-node { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; background: #1e293b; color: #94a3b8; }
         .tag-loader { background: var(--theme-alpha); color: var(--theme-color); }
     </style>
@@ -99,43 +103,40 @@
     <div class="search-filter-container">
         <div class="search-box-wrapper">
             <i class="fas fa-search"></i>
-            <input type="text" class="search-input" id="searchInp" placeholder="Cari arsip mod..." onkeyup="searchEngine()">
+            <input type="text" class="search-input" id="searchInp" placeholder="Cari arsip berkas..." onkeyup="searchEngine()">
             <div class="autocomplete-suggestions" id="autoBox"></div>
         </div>
         <div class="filter-tabs">
-            <button class="filter-btn active" onclick="filterPlatform('semua', this)">Semua</button>
-            <button class="filter-btn" onclick="filterPlatform('java', this)">Java</button>
-            <button class="filter-btn" onclick="filterPlatform('mcpe', this)">MCPE / Bedrock</button>
+            <button class="filter-btn active" onclick="filterPlatform('semua', this)">Semua Berkas</button>
+            <button class="filter-btn" onclick="filterPlatform('java', this)">Java Edition</button>
+            <button class="filter-btn" onclick="filterPlatform('mcpe', this)">Bedrock / MCPE</button>
         </div>
     </div>
 
     <main class="proyek-section">
-        <div class="proyek-grid-section">
-            <div class="grid-layout">
-                {% for mod in mods %}
-                <a href="/mod/{{ mod.id }}" class="mod-card" data-platform="{{ mod.category }}">
-                    <div class="mod-icon">
-                        {% if mod.icon_url %}
-                            <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
-                        {% else %}
-                            <i class="fas fa-cube" style="font-size: 20px; color: var(--theme-color)"></i>
-                        {% endif %}
+        <div class="grid-layout">
+            {% for mod in mods %}
+            <a href="/mod/{{ mod.id }}" class="mod-card" data-platform="{{ mod.category }}">
+                <div class="mod-icon">
+                    <i class="fas fa-cube"></i>
+                    {% if mod.icon_url %}
+                        <img src="{{ mod.icon_url }}" onerror="this.style.display='none'">
+                    {% endif %}
+                </div>
+                <div class="mod-info">
+                    <div class="title-row">
+                        <div class="mod-card-title">{{ mod.title }}</div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 600;"><i class="fas fa-download"></i> {{ mod.downloads }}</div>
                     </div>
-                    <div class="mod-info">
-                        <div class="title-row">
-                            <div class="mod-card-title">{{ mod.title }}</div>
-                            <div style="font-size:11px; color:var(--text-muted)"><i class="fas fa-download"></i> {{ mod.downloads }}</div>
-                        </div>
-                        <div class="mod-card-desc">{{ mod.desc }}</div>
-                        <div class="tag-row">
-                            <div class="tag-node">{{ mod.category|upper }}</div>
-                            <div class="tag-node tag-loader">{{ mod.loader }}</div>
-                            <div class="tag-node" style="background:rgba(255,255,255,0.03)">{{ mod.version_game }}</div>
-                        </div>
+                    <div class="mod-card-desc">{{ mod.desc }}</div>
+                    <div class="tag-row">
+                        <div class="tag-node">{{ mod.category|upper }}</div>
+                        <div class="tag-node tag-loader">{{ mod.loader }}</div>
+                        <div class="tag-node" style="background:rgba(255,255,255,0.04); color:#fff;">{{ mod.version_game }}</div>
                     </div>
-                </a>
-                {% endfor %}
-            </div>
+                </div>
+            </a>
+            {% endfor %}
         </div>
     </main>
 
