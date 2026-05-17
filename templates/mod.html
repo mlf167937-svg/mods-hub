@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { 
-            --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836; 
-            --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; 
+            --bg-dark: #07080b; 
+            --bg-surface: #111217; 
+            --bg-card: #161920; 
+            --border-color: #242836; 
+            --text-main: #f1f5f9; 
+            --text-muted: #94a3b8; 
+            --theme-color: #00af9c; 
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding-bottom: 60px; }
@@ -17,22 +22,21 @@
         .navbar { background: var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top:0; z-index:100; }
         .back-link { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; }
         
-        /* HEADER UTAMA */
         .mod-header-banner { max-width: 1000px; margin: 30px auto 10px auto; padding: 0 20px; display: flex; align-items: center; gap: 20px; text-align: left; }
         .mod-big-icon { width: 80px; height: 80px; background: #1c1e24; border: 1px solid var(--border-color); border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; flex-shrink: 0; }
         .mod-big-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index:2; }
         .mod-big-icon i { font-size: 30px; color: var(--theme-color); z-index:1; }
         h1 { font-size: 24px; font-weight: 800; color: #fff; }
 
-        /* MULTI COLUMN LAYOUT (MODRINTH STYLE) */
+        /* MODRINTH LAYOUT DENGAN SUSUNAN RESPONSIVE BERSIH */
         .modrinth-layout { max-width: 1000px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
         
         @media (max-width: 768px) {
-            .modrinth-layout { grid-template-columns: 1fr; }
+            .modrinth-layout { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+            .mod-sidebar { order: -1; /* Memaksa komponen aksi dan stats naik ke atas saat di HP */ }
             .mod-header-banner { flex-direction: column; text-align: center; }
         }
 
-        /* BAGIAN KIRI: KONTEN / NAVIGASI */
         .tabs-header { display: flex; gap: 24px; border-bottom: 2px solid var(--border-color); margin-bottom: 20px; }
         .tab-item { color: var(--text-muted); padding: 8px 4px; font-size: 14px; font-weight: 700; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
         .tab-item.active { color: var(--theme-color); border-color: var(--theme-color); }
@@ -45,7 +49,6 @@
         .dl-btn { background: var(--theme-color); color: #000; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 12.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
         .dl-btn:hover { opacity: 0.9; }
 
-        /* BAGIAN KANAN: SIDEBAR UTAMA */
         .mod-sidebar { display: flex; flex-direction: column; gap: 16px; }
         .sidebar-widget { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; }
         .widget-title { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px; }
@@ -76,7 +79,9 @@
         <div class="mod-big-icon">
             <i class="fas fa-cube"></i>
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" onerror="this.style.display='none'">
+                <img src="{{ mod.icon_url }}" onerror="this.remove();">
+            {% elif mod.image %}
+                <img src="{{ mod.image }}" onerror="this.remove();">
             {% endif %}
         </div>
         <div>
@@ -89,8 +94,8 @@
         
         <main class="mod-content">
             <div class="tabs-header">
-                <div class="tab-item active" onclick="switchTab('desc', this)">Deskripsi</div>
-                <div class="tab-item" onclick="switchTab('vers', this)">Daftar Versi</div>
+                <div class="tab-item active" onclick="switchTab('desc')">Deskripsi</div>
+                <div class="tab-item" onclick="switchTab('vers')">Daftar Versi</div>
             </div>
 
             <div class="tab-panel active" id="p-desc">
@@ -107,7 +112,7 @@
                             <div style="font-weight:700; color:#fff; font-size:14px;">{{ v.filename }}</div>
                             <div style="font-size:11.5px; color: var(--text-muted); margin-top:4px;">Ukuran: {{ v.size }}</div>
                         </div>
-                        <a href="{{ v.download_url }}" class="dl-btn"><i class="fas fa-download"></i> Unduh</a>
+                        <a href="{{ v.download_url }}" class="dl-btn" download><i class="fas fa-download"></i> Unduh</a>
                     </div>
                     {% endfor %}
                 {% else %}
@@ -117,11 +122,10 @@
         </main>
 
         <aside class="mod-sidebar">
-            
             <div class="sidebar-widget">
                 <div class="action-button-group">
-                    <button class="act-btn act-btn-dl" onclick="switchTab('vers', document.querySelectorAll('.tab-item')[1])">
-                        <i class="fas fa-download"></i> Unduh
+                    <button class="act-btn act-btn-dl" onclick="scrollToVersions()">
+                        <i class="fas fa-download"></i> Unduh Berkas
                     </button>
                     <button class="act-btn act-btn-like" onclick="addLike('{{ mod.id }}')">
                         <i class="fas fa-heart" style="color:#ef4444"></i> <span id="lkDisplay">{{ mod.likes }}</span>
@@ -154,24 +158,28 @@
                     <div class="meta-item"><span class="meta-lbl">Donasi</span><span class="meta-val" style="color:var(--text-muted); font-style:italic;">Nanti</span></div>
                 </div>
             </div>
-
         </aside>
 
     </div>
 
     <script>
-        function switchTab(t, el) {
+        function switchTab(t) {
             let tabs = document.getElementsByClassName('tab-item');
             let panels = document.getElementsByClassName('tab-panel');
             for(let tb of tabs) tb.classList.remove('active');
             for(let p of panels) p.classList.remove('active');
             
-            // Sync highlight tab di kiri
             if(t === 'desc') tabs[0].classList.add('active');
             if(t === 'vers') tabs[1].classList.add('active');
             
             document.getElementById('p-' + t).classList.add('active');
         }
+
+        function scrollToVersions() {
+            switchTab('vers');
+            document.getElementById('p-vers').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function addLike(id) {
             fetch('/like_action/' + id, { method: 'POST' }).then(res => res.json()).then(data => {
                 if(data.success) document.getElementById('lkDisplay').innerText = data.new_likes;
