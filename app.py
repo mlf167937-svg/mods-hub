@@ -1,24 +1,20 @@
 # =========================================================================
-# REXCRAFT MODS HUB - ENGINE CORE DYNAMIC SCANNER (SINKRONISASI TOTAL)
+# REXCRAFT MODS HUB - CORE ENGINE REVISION ULTIMATE
 # =========================================================================
 import os
 from flask import Flask, render_template, abort
+# Menggunakan modul pengecekan versi standar bawaan untuk sortir versi MC
+from distutils.version import LooseVersion
 
 app = Flask(__name__)
 
-# SUDAH SINKRON DENGAN JALUR SCREENSHOT GITHUB BOS (PAKAI HURUF 'S')
 BASE_UPLOAD_DIR = os.path.join('static', 'uploads')
 
 def parse_file_info(file_name):
-    """
-    Fungsi otomatis untuk memisahkan nama loader dan versi game
-    dari format nama file kustom RexCraft.
-    """
     name_lower = file_name.lower()
     loader = "Universal"
     version = "Unknown"
     
-    # 1. Identifikasi Sistem Mod Loader
     if "fabric" in name_lower:
         loader = "Fabric"
     elif "neoforge" in name_lower or "neo-forge" in name_lower:
@@ -28,7 +24,6 @@ def parse_file_info(file_name):
     elif "quilt" in name_lower:
         loader = "Quilt"
 
-    # 2. Identifikasi Angka Versi Game Minecraft
     parts = name_lower.replace('-', '_').split('_')
     for part in parts:
         if part and part[0].isdigit() and '.' in part:
@@ -41,25 +36,20 @@ def get_dynamic_mods():
     mods_list = []
     mod_id_counter = 1
     
-    # Proteksi jika folder uploads belum ter-push sempurna
     if not os.path.exists(BASE_UPLOAD_DIR):
         return mods_list
 
-    # Scan Kategori Utama
     for category in ['java', 'mcpe']:
         category_path = os.path.join(BASE_UPLOAD_DIR, category)
         if not os.path.exists(category_path):
             continue
             
-        # Scan Folder Proyek Mod
         for mod_folder in os.listdir(category_path):
             mod_path = os.path.join(category_path, mod_folder)
             
             if os.path.isdir(mod_path):
-                # Ubah teks folder menjadi Judul Profesional (contoh: mods_racikan -> Mods Racikan)
                 display_title = mod_folder.replace('-', ' ').replace('_', ' ').title()
                 
-                # Dynamic Link Asset Icon (.png)
                 icon_url = f"/static/uploads/{category}/{mod_folder}/icon.png"
                 if not os.path.exists(os.path.join(mod_path, 'icon.png')):
                     icon_url = None
@@ -67,19 +57,15 @@ def get_dynamic_mods():
                 versions = []
                 game_versions_found = []
                 
-                # Jalankan Loop Scanner Berkas Mod Sejajar
                 for file_name in os.listdir(mod_path):
                     file_full_path = os.path.join(mod_path, file_name)
                     
-                    # Hanya proses file berkas murni dan abaikan sistem hidden file Linux
                     if os.path.isfile(file_full_path) and file_name != 'icon.png' and not file_name.startswith('.'):
-                        
                         loader, game_version = parse_file_info(file_name)
                         
                         if game_version != "Unknown":
                             game_versions_found.append(game_version)
                         
-                        # Kalkulasi Ukuran File Otomatis Berbasis Kapasitas Penyimpanan Real
                         try:
                             size_bytes = os.path.getsize(file_full_path)
                             if size_bytes < 1024 * 1024:
@@ -89,7 +75,6 @@ def get_dynamic_mods():
                         except:
                             file_size = "Unknown"
                         
-                        # Format rapi nama rilisan berkas
                         clean_display_name = file_name.split('.zip')[0].split('.jar')[0].split('.mcpack')[0].replace('_', ' ').title()
 
                         versions.append({
@@ -100,11 +85,13 @@ def get_dynamic_mods():
                             "download_url": f"/static/uploads/{category}/{mod_folder}/{file_name}"
                         })
 
-                # Urutkan Versi Berkas dari Rilisan Game Paling Mutakhir
-                versions.sort(key=lambda x: x['game_version'], reverse=True)
+                # URUTKAN VERSI BERKAS INTERNAL PAKAI LOOSEVERSION (Anti Selip Angka)
+                versions.sort(key=lambda x: LooseVersion(x['game_version']), reverse=True)
                 
+                # JALUR PENGURUTAN RANGE VERSI DI HALAMAN DEPAN
                 if game_versions_found:
-                    unique_versions = sorted(list(set(game_versions_found)))
+                    # Ambil list versi unik, bersihkan, lalu sortir dengan LooseVersion
+                    unique_versions = sorted(list(set(game_versions_found)), key=LooseVersion)
                     if len(unique_versions) > 1:
                         version_range = f"{unique_versions[0]} - {unique_versions[-1]}"
                     else:
@@ -128,7 +115,7 @@ def get_dynamic_mods():
     return mods_list
 
 # =========================================================================
-# FLASK WEB ROUTING INTERACTION SYSTEM
+# ROUTING CONTROLLER
 # =========================================================================
 @app.route('/')
 def home_dashboard():
@@ -138,11 +125,39 @@ def home_dashboard():
 def mod_detail_page(mod_id):
     all_mods = get_dynamic_mods()
     selected_mod = next((item for item in all_mods if item["id"] == mod_id), None)
-            
     if selected_mod is None:
         abort(404)
-        
     return render_template('mod.html', mod=selected_mod)
+
+# SOLUSI KELUHAN 2: MENGHILANGKAN LAYAR PUTIH 404 PANDUAN TUTORIAL
+@app.route('/tutorial')
+def tutorial_page():
+    return """
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Panduan Tutorial - RexCraft</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+        <style>
+            body { background-color: #07080b; color: #f1f5f9; font-family: 'Inter', sans-serif; padding: 40px 20px; text-align: center; }
+            .box { max-width: 600px; margin: 60px auto; background: #111217; padding: 30px; border-radius: 12px; border: 1px solid #242836; }
+            h1 { color: #00af9c; margin-bottom: 16px; }
+            p { color: #94a3b8; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+            .btn { background: #00af9c; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-block; }
+            .btn:hover { background: #00d4bd; }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <h1>📖 Panduan Instalasi Berkas</h1>
+            <p>Halaman tutorial RexCraft sedang dalam masa penyusunan asset gambar. Untuk memasang Mod / Texture Pack, silakan ekstrak berkas .zip atau .jar yang telah diunduh ke dalam folder internal direktori game Minecraft Anda (.minecraft/mods atau games/com.mojang/).</p>
+            <a href="/" class="btn">Kembali ke Beranda</a>
+        </div>
+    </body>
+    </html>
+    """
 
 @app.errorhandler(404)
 def page_not_found(error):
