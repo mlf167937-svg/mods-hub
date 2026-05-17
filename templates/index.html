@@ -24,14 +24,13 @@
     .mod-tags { display: flex; gap: 10px; font-size: 12px; font-weight: 600; flex-wrap: wrap; }
     .tag { background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; }
     .tag.platform { color: var(--theme-color); background: rgba(0, 175, 156, 0.1); }
-    .tag.version-tag { color: #fff; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
 </style>
 
 <div class="hero">
     <img src="/static/img/banner.jpg" onerror="this.style.display='none'">
     <div class="hero-content">
-        <h1>Mods modifed RexCraft</h1>
-        <input type="text" class="search-box" id="search" placeholder="Cari mods akurat..." onkeyup="filterMods()">
+        <h1>Mods modified RexCraft</h1>
+        <input type="text" class="search-box" id="search" placeholder="Cari mods..." onkeyup="filterMods()">
     </div>
 </div>
 
@@ -43,29 +42,22 @@
 
 <div class="mod-grid" id="modGrid">
     {% for mod in mods %}
-    <a href="/mod/{{ mod.id }}" class="mod-card" data-platform="{{ mod.platform }}" data-title="{{ mod.title|lower }}">
-        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon_filename }}" class="mod-icon" onerror="this.src='https://via.placeholder.com/80/1c1e26/00af9c?text=Mod'">
+    <a href="/mod/{{ mod.platform }}/{{ mod.folder_name }}" class="mod-card" data-platform="{{ mod.platform }}" data-title="{{ mod.title|lower }}">
+        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" class="mod-icon" onerror="this.src='https://via.placeholder.com/80/1c1e26/00af9c?text=Mod'">
         <div class="mod-info">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                <div class="mod-title">{{ mod.title }}</div>
-                <div style="color: var(--text-muted); font-size: 14px; font-weight: bold;"><i class="fas fa-download"></i> {{ mod.total_downloads }}</div>
-            </div>
+            <div class="mod-title">{{ mod.title }}</div>
             <div class="mod-desc">{{ mod.desc }}</div>
             <div class="mod-tags">
                 <span class="tag platform">{{ mod.platform|upper }}</span>
-                <span class="tag" style="background: rgba(0,0,0,0.3);">{{ mod.category|capitalize }}</span>
-                {% if mod.app_versions %}
-                    {% for v in mod.app_versions.split(',') %}
-                        <span class="tag version-tag">v{{ v }}</span>
-                    {% endfor %}
-                {% endif %}
+                <span class="tag" style="background: rgba(0,0,0,0.3);">{{ mod.category }}</span>
+                <span class="tag" style="color: #cbd5e1;">{{ mod.files|length }} File Tersedia</span>
             </div>
         </div>
     </a>
     {% else %}
     <div style="text-align: center; padding: 50px; color: var(--text-muted); background: var(--bg-card); border-radius: 12px; border: 1px dashed var(--border);">
         <i class="fas fa-folder-open" style="font-size: 40px; margin-bottom: 15px; color: var(--border);"></i>
-        <p>Belum ada mod di repositori GitHub.</p>
+        <p>Belum ada folder mod terunggah di GitHub.</p>
     </div>
     {% endfor %}
 </div>
