@@ -27,14 +27,18 @@
         .nav-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .nav-btn:hover { background: var(--bg-card); border-color: var(--theme-color); }
 
+        /* DROPDOWN MENU KANAN ATAS */
         .setting-wrapper { position: relative; }
-        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 220px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 230px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: left; }
         .setting-dropdown-box.active { display: flex; }
         .theme-options { display: flex; gap: 8px; margin-top: 4px; }
         .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
         .color-dot.active { border-color: #fff; }
 
-        .rex-banner-hero { position: relative; background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 50px 20px; text-align: center; -webkit-user-select: none; -ms-user-select: none; user-select: none; z-index: 1; }
+        .dropdown-link { font-size: 12.5px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; padding: 4px 0; }
+        .dropdown-link:hover { color: var(--theme-color); }
+
+        .rex-banner-hero { position: relative; background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 50px 20px; text-align: center; user-select: none; z-index: 1; }
         .badge-update { display: inline-block; background: var(--theme-alpha); color: var(--theme-color); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 14px; }
         h1 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 10px; }
         .rex-banner-hero p { font-size: 13.5px; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.5; }
@@ -56,7 +60,6 @@
         .proyek-section { max-width: 650px; margin: 0 auto; padding: 0 20px 60px 20px; }
         .grid-layout { display: flex; flex-direction: column; gap: 14px; }
         
-        /* FIX ICON BOX BERKAS */
         .mod-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; gap: 16px; text-decoration: none; color: inherit; transition: 0.2s; align-items: center; }
         .mod-card:hover { transform: translateY(-2px); border-color: var(--theme-color); background: var(--bg-card); }
         
@@ -82,14 +85,30 @@
             <a href="/ai" class="nav-btn"><i class="fas fa-robot"></i> AI</a>
             <div class="setting-wrapper">
                 <button class="nav-btn" onclick="toggleSetting()"><i class="fas fa-cog"></i> Menu</button>
+                
                 <div class="setting-dropdown-box" id="settingDropdown">
-                    <div style="font-size:11px; font-weight:700; color:var(--text-muted)">AKSEN WARNA</div>
-                    <div class="theme-options">
+                    <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 4px;">AKSEN WARNA</div>
+                    <div class="theme-options" style="margin-bottom: 12px;">
                         <div class="color-dot active" style="background:#00af9c;" onclick="setTheme('green', this)"></div>
                         <div class="color-dot" style="background:#3b82f6;" onclick="setTheme('blue', this)"></div>
                         <div class="color-dot" style="background:#a855f7;" onclick="setTheme('purple', this)"></div>
                     </div>
+                    
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 4px;">
+                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px;">INFO HUB / KREATOR</div>
+                        <div style="font-size: 12px; color: #fff; margin-bottom: 6px;"><i class="fas fa-gamepad" style="color:var(--theme-color); width:16px;"></i> GT: RexCraft</div>
+                        <a href="https://wa.me/6283873024650?text=Halo%20RexCraft,%20saya%20ingin%20bertanya" target="_blank" class="dropdown-link">
+                            <i class="fab fa-whatsapp" style="color:#25d366; width:16px;"></i> +62 838-7302-4650
+                        </a>
+                        <a href="https://saweria.co/" target="_blank" class="dropdown-link">
+                            <i class="fas fa-donate" style="color:#f59e0b; width:16px;"></i> Tautan Donasi
+                        </a>
+                        <a href="https://tiktok.com/" target="_blank" class="dropdown-link">
+                            <i class="fab fa-tiktok" style="color:#ff0050; width:16px;"></i> Media Sosial
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </nav>
