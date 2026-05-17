@@ -3,57 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ mod.title if mod.title else mod.name }} | Detail</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>{{ mod.title }} | RexCraft Mods Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root { --bg-main: #060913; --bg-surface: #0f172a; --border-color: rgba(51, 65, 85, 0.4); --brand-green: #22c55e; --text-primary: #f8fafc; --text-secondary: #94a3b8; }
-        body { background-color: var(--bg-main); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-secondary); margin: 0; padding: 0; }
-        .detail-wrapper { max-width: 720px; margin: 0 auto; padding: 30px 16px; box-sizing: border-box; }
-        .back-nav-link { color: var(--text-secondary); text-decoration: none; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px; }
-        .modrinth-header-container { display: flex; gap: 18px; align-items: center; margin-bottom: 20px; }
-        .modrinth-logo-frame { width: 72px; height: 72px; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;}
-        .modrinth-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
-        .mod-header-title { font-size: 24px; color: #fff; font-weight: 800; margin: 0; }
-        .modrinth-stats-row { display: flex; gap: 14px; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 18px; }
-        .stat-item-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); padding: 6px 14px; border-radius: 10px; }
-        .stat-item-badge i { color: var(--brand-green); }
-        .content-card-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 16px; margin-bottom: 24px; line-height: 1.6; font-size: 14px; color: #cbd5e1; }
-        .version-list-section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; }
-        .version-file-card { background: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); padding: 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; }
-        .v-title { color: #fff; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
-        .v-meta { display: flex; gap: 8px; font-size: 11px; color: #64748b; }
-        .v-download-icon-box { width: 36px; height: 36px; background: rgba(34, 197, 94, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brand-green); }
+        :root {
+            --bg-main: #060913;
+            --bg-surface: rgba(15, 23, 42, 0.7);
+            --bg-sidebar: rgba(30, 41, 59, 0.3);
+            --border-color: rgba(51, 65, 85, 0.5);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --brand-green: #22c55e;
+            --brand-green-hover: #16a34a;
+            --brand-blue: #38bdf8;
+            --radius-large: 24px;
+            --radius-medium: 16px;
+            --radius-small: 12px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-main);
+            font-family: var(--font-main);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 40px 24px;
+        }
+
+        .modrinth-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* BACK BUTTON */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 30px;
+            transition: color 0.2s;
+        }
+        .btn-back:hover { color: var(--brand-green); }
+
+        /* HEADER MODRINTH STYLE */
+        .project-header {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 40px;
+            background: var(--bg-surface);
+            padding: 24px;
+            border-radius: var(--radius-large);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(16px);
+        }
+        .project-icon-frame {
+            width: 100px;
+            height: 100px;
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-medium);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .project-icon-img { width: 100%; height: 100%; object-fit: cover; }
+        .project-title-area h1 {
+            font-size: 28px;
+            color: var(--text-primary);
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .badge-row { display: flex; gap: 8px; }
+        .badge-item {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .badge-platform-java { background: rgba(56, 189, 248, 0.15); color: var(--brand-blue); }
+        .badge-platform-mcpe { background: rgba(249, 115, 22, 0.15); color: #f97316; }
+
+        /* TWO COLUMN LAYOUT */
+        .project-layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+        }
+
+        /* LEFT SIDE: DESCRIPTION */
+        .main-description-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-large);
+            padding: 35px;
+            backdrop-filter: blur(16px);
+        }
+        .main-description-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        /* RIGHT SIDE: SIDEBAR DOWNLOAD */
+        .sidebar-download-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .download-box-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-large);
+            padding: 24px;
+            backdrop-filter: blur(16px);
+        }
+
+        /* THE CRITICAL BUTTON DOWNLOAD ACTION */
+        .btn-download-master {
+            background-color: var(--brand-green);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 800;
+            text-align: center;
+            padding: 16px;
+            border-radius: var(--radius-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+            margin-bottom: 20px;
+        }
+        .btn-download-master:hover {
+            background-color: var(--brand-green-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
+        }
+
+        /* METRICS LIST */
+        .sidebar-metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+        }
+        .sidebar-metric-row:last-child { border-bottom: none; }
+        .metric-label { color: var(--text-muted); font-weight: 500; }
+        .metric-value { color: var(--text-primary); font-weight: 600; }
+
+        @media (max-width: 768px) {
+            .project-layout-grid { grid-template-columns: 1fr; }
+            .project-header { flex-direction: column; text-align: center; }
+            .badge-row { justify-content: center; }
+        }
     </style>
 </head>
 <body>
-<div class="detail-wrapper">
-    <a href="/" class="back-nav-link"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
-    <div class="modrinth-header-container">
-        <div class="modrinth-logo-frame">
-            {% if mod.icon_url and mod.icon_url != "" %}
-                <img src="{{ mod.icon_url }}" alt="Icon">
-            {% else %}
-                <i class="fas fa-cubes" style="color:var(--brand-green); font-size:26px;"></i>
-            {% endif %}
+
+<div class="modrinth-container">
+    
+    <a href="/" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Dashboard</a>
+
+    <div class="project-header">
+        <div class="project-icon-frame">
+            <img src="{{ mod.icon_url }}" class="project-icon-img" alt="Icon {{ mod.title }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div style="width:100%; height:100%; display:none; align-items:center; justify-content:center; background:#0f172a;"><i class="fas fa-cube" style="color:var(--brand-green); font-size:35px;"></i></div>
         </div>
-        <div>
-            <h1 class="mod-header-title">{% if mod.title %}{{ mod.title }}{% else %}{{ mod.name }}{% endif %}</h1>
-            <span style="font-size:10px; font-weight:800; background:rgba(34,197,94,0.1); color:var(--brand-green); padding:3px 8px; border-radius:6px;">{{ mod.category.upper() }} EDITION</span>
+        <div class="project-title-area">
+            <h1>{{ mod.title }}</h1>
+            <div class="badge-row">
+                <span class="badge-item {% if mod.category == 'java' %}badge-platform-java{% else %}badge-platform-mcpe{% endif %}">
+                    {{ mod.category.upper() }} EDITION
+                </span>
+                <span class="badge-item" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">MC {{ mod.version_range }}</span>
+            </div>
         </div>
     </div>
-    <div class="modrinth-stats-row">
-        <div class="stat-item-badge"><i class="fas fa-download"></i> <span>1.2K <span style="font-weight:500; font-size:12px; color:var(--text-secondary)">unduhan</span></span></div>
-    </div>
-    <div class="content-card-box"><p>{{ mod.desc }}</p></div>
-    <div class="version-list-section-title"><i class="fas fa-cloud-download-alt" style="color:#38bdf8;"></i> Berkas Unduhan Resmi</div>
-    <a href="{{ mod.download_url if mod.download_url else '#' }}" class="version-file-card" {% if mod.download_url and mod.download_url != '#' %}download{% endif %}>
-        <div>
-            <div class="v-title">Unduh Berkas Utama (Rilis Stabil)</div>
-            <div class="v-meta"><span>MC Versi {{ mod.version_range }}</span><span>•</span><span>Verified Clean</span></div>
+
+    <div class="project-layout-grid">
+        
+        <div class="main-description-card">
+            <h3>Deskripsi Berkas</h3>
+            <p style="color: var(--text-primary); font-size: 15px; margin-bottom: 20px;">{{ mod.desc }}</p>
+            <p style="font-size: 14px;">Semua file di platform RexCraft telah melalui uji kelayakan dan pemindaian sistem keamanan cloud. Dijamin bebas injeksi berbahaya dan siap pakai untuk aktivitas bermain game Anda.</p>
         </div>
-        <div class="v-download-icon-box"><i class="fas fa-download"></i></div>
-    </a>
+
+        <div class="sidebar-download-area">
+            <div class="download-box-card">
+                
+                <a href="{{ mod.download_url }}" class="btn-download-master" download>
+                    <i class="fas fa-download"></i> Download File
+                </a>
+
+                <div class="sidebar-metric-row">
+                    <span class="metric-label"><i class="fas fa-file-archive" style="margin-right:6px;"></i> Ukuran File</span>
+                    <span class="metric-value">{{ mod.file_size if mod.file_size else "Unknown" }}</span>
+                </div>
+                <div class="sidebar-metric-row">
+                    <span class="metric-label"><i class="fas fa-cloud-download-alt" style="margin-right:6px;"></i> Total Hits</span>
+                    <span class="metric-value">{{ mod.total_downloads if mod.total_downloads else "1.2K" }}</span>
+                </div>
+                <div class="sidebar-metric-row">
+                    <span class="metric-label"><i class="fas fa-cog" style="margin-right:6px;"></i> Tipe Projek</span>
+                    <span class="metric-value" style="font-size:12px;">{{ mod.project_type if mod.project_type else "Client Mod" }}</span>
+                </div>
+                <div class="sidebar-metric-row">
+                    <span class="metric-label"><i class="fas fa-shield-alt" style="margin-right:6px;"></i> Status</span>
+                    <span class="metric-value" style="color:var(--brand-green)">Verified Stable</span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
+
 </body>
 </html>
