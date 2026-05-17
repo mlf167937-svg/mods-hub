@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ mod.title }} - RexCraft Hub</title>
+    <title>{{ mod.title }} - Detail Mod</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -11,17 +11,17 @@
     
     <style>
         :root {
-            --bg-dark: #090a0f;
-            --bg-surface: #12141c;
-            --bg-card: #181b26;
-            --border-color: #222735;
-            --text-main: #f8fafc;
+            --bg-dark: #07080b;
+            --bg-surface: #111217;
+            --bg-card: #161920;
+            --border-color: #242836;
+            --text-main: #f1f5f9;
             --text-muted: #94a3b8;
-            --mr-green: #00af9c;
-            --mr-green-hover: #00d4bd;
-            --mr-green-alpha: rgba(0, 175, 156, 0.15);
+            --theme-color: #00af9c;
             --java-blue: #38bdf8;
+            --mcpe-orange: #f97316;
             --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,308 +32,150 @@
             padding-bottom: 60px;
         }
 
-        .rex-navbar {
-            background-color: var(--bg-surface);
+        .mod-navbar {
+            background: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
-            padding: 16px 20px;
-        }
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
+            padding: 14px 20px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
-        .nav-brand {
-            font-size: 18px;
-            font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-        }
-        .nav-brand span { color: var(--mr-green); }
         .back-link {
             color: var(--text-muted);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
         }
         .back-link:hover { color: #fff; }
 
-        .mod-header-container {
-            max-width: 1000px;
-            margin: 30px auto 0 auto;
+        .detail-container {
+            max-width: 800px;
+            margin: 40px auto;
             padding: 0 20px;
             text-align: center;
         }
-        .mod-large-icon {
-            width: 96px;
-            height: 96px;
+
+        .mod-big-icon {
+            width: 120px;
+            height: 120px;
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            margin: 0 auto 16px auto;
+            margin: 0 auto 20px auto;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
         }
-        .mod-large-icon img { width: 100%; height: 100%; object-fit: cover; }
-        .mod-large-icon i { font-size: 42px; color: var(--mr-green); }
 
-        .mod-header-container h1 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 6px; }
-        .mod-author { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
-        .mod-author span { color: var(--mr-green); font-weight: 600; }
+        h1 { font-size: 32px; font-weight: 800; margin-bottom: 6px; }
+        .author-text { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+        .author-text span { color: var(--theme-color); font-weight: 600; }
 
-        /* METRICS COUNTER GRID (LIKE & DOWNLOAD AUTOMATION) */
-        .metrics-row {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 24px;
+        .meta-badges { display: flex; gap: 8px; justify-content: center; margin-bottom: 30px; }
+        .badge {
+            font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; text-transform: uppercase;
         }
-        .metric-pill {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #fff;
-        }
-        .metric-pill.clickable {
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .metric-pill.clickable:hover {
-            background: var(--bg-card);
-            border-color: #ef4444;
-        }
-        .metric-pill i.fa-download { color: var(--mr-green); }
-        .metric-pill i.fa-heart { color: #ef4444; }
+        .badge.verified { background: rgba(0, 175, 156, 0.15); color: var(--theme-color); border: 1px solid var(--theme-color); }
+        .badge.platform { background: rgba(56, 189, 248, 0.15); color: var(--java-blue); }
 
-        /* TAB SEPARATOR */
-        .tab-nav-wrapper {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .tab-buttons { display: flex; gap: 20px; }
-        .tab-btn {
-            background: none; border: none;
-            color: var(--text-muted);
-            padding: 12px 4px;
-            font-family: var(--font-main);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-        }
-        .tab-btn.active { color: var(--text-main); }
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px; left: 0; right: 0;
-            height: 2px;
-            background: var(--mr-green);
-        }
-
-        /* CONTENT CONTENT MANAGEMENT */
-        .content-body-area {
-            max-width: 1000px;
-            margin: 24px auto;
-            padding: 0 20px;
-        }
-        .panel-content { display: none; }
-        .panel-content.active { display: block; }
-
-        .desc-text-box {
+        .content-box {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
-            font-size: 14.5px;
-            color: #cbd5e1;
-            line-height: 1.6;
+            padding: 24px;
+            text-align: left;
+            margin-bottom: 24px;
         }
+        .content-box h3 { font-size: 18px; margin-bottom: 12px; color: #fff; }
+        .content-box p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
 
-        /* DOWNLOAD MATRIX TABLE - MODRINTH STYLE */
-        .download-list-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .download-row-card {
-            background: var(--bg-surface);
+        /* TABEL LIST VERSI DOWNLOAD */
+        .version-row {
+            background: var(--bg-dark);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 14px 16px;
+            padding: 14px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .version-name { font-size: 14px; font-weight: 600; color: #fff; }
+        .version-size { font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); }
+        
+        .download-btn {
+            background: var(--theme-color);
+            color: #000;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.2s;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            transition: background 0.2s;
+            gap: 6px;
         }
-        .download-row-card:hover { background: var(--bg-card); }
-        
-        .file-meta-info { display: flex; flex-direction: column; gap: 4px; }
-        .file-title-text { font-size: 14px; font-weight: 700; color: #fff; }
-        
-        .file-badges { display: flex; gap: 6px; align-items: center; }
-        .mini-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
-        .mini-badge.loader-tag { background: var(--mr-green-alpha); color: var(--mr-green); }
-        .mini-badge.version-tag { background: var(--bg-dark); color: var(--text-muted); border: 1px solid var(--border-color); }
-        .file-size-txt { font-size: 12px; color: var(--text-muted); }
-
-        .download-action-btn {
-            background: var(--mr-green-alpha);
-            color: var(--mr-green);
-            border: 1px solid rgba(0, 175, 156, 0.3);
-            width: 36px; height: 36px;
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .download-action-btn:hover {
-            background: var(--mr-green);
-            color: #000;
-        }
+        .download-btn:hover { background: var(--theme-color-hover); transform: translateY(-1px); }
     </style>
 </head>
 <body>
 
-    <nav class="rex-navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-brand" style="text-decoration:none"><i class="fas fa-cubes" style="color:var(--mr-green)"></i> RexCraft<span>Hub</span></a>
-            <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Kembali</a>
-        </div>
+    <nav class="mod-navbar">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Penjelajah</a>
+        <div style="font-weight: 700; font-size: 14px;">RexCraft<span style="color:var(--theme-color)">Hub</span></div>
     </nav>
 
-    <header class="mod-header-container">
-        <div class="mod-large-icon">
+    <div class="detail-container">
+        
+        <div class="mod-big-icon">
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
+                <img src="{{ mod.icon_url }}" alt="{{ mod.title }}" style="width: 100%; height: 100%; object-fit: cover;">
             {% else %}
-                <i class="fas fa-cube"></i>
+                <i class="fas fa-cube" style="font-size: 48px; color: var(--theme-color);"></i>
             {% endif %}
         </div>
+
         <h1>{{ mod.title }}</h1>
-        <p class="mod-author">Dibuat oleh <span>{{ mod.author if mod.author else 'RexCraft' }}</span></p>
+        <div class="author-text">Dibuat oleh <span>RexCraft Hub</span></div>
 
-        <div class="metrics-row">
-            <div class="metric-pill">
-                <i class="fas fa-download"></i> 
-                <span id="downloadGlobalCounter">{{ mod.downloads if mod.downloads else 1200 }} Unduhan</span>
-            </div>
-            <div class="metric-pill clickable" onclick="triggerClientLike()">
-                <i class="fas fa-heart"></i> 
-                <span id="likeGlobalCounter">{{ mod.likes if mod.likes else 48 }} Suka</span>
-            </div>
-        </div>
-    </header>
-
-    <div class="tab-nav-wrapper">
-        <div class="tab-buttons">
-            <button class="tab-btn active" onclick="switchSubPanel('deskripsi', this)">Deskripsi</button>
-            <button class="tab-btn" onclick="switchSubPanel('versions', this)">Daftar Versi ({{ files|length if files else 0 }})</button>
-        </div>
-    </div>
-
-    <main class="content-body-area">
-        <div id="panel-deskripsi" class="panel-content active">
-            <article class="desc-text-box">
-                {{ mod.long_desc if mod.long_desc else mod.desc }}
-            </article>
+        <div class="meta-badges">
+            <span class="badge verified"><i class="fas fa-check-circle"></i> Verified Clean</span>
+            <span class="badge platform">{{ mod.category }}</span>
         </div>
 
-        <div id="panel-versions" class="panel-content">
-            <div class="download-list-wrapper">
-                {% if files %}
-                    {% for file in files %}
-                    <div class="download-row-card">
-                        <div class="file-meta-info">
-                            <div class="file-title-text">{{ file.filename }}</div>
-                            <div class="file-badges">
-                                <span class="mini-badge loader-tag">{{ file.loader if file.loader else mod.loaders[0] if mod.loaders else 'FABRIC' }}</span>
-                                <span class="mini-badge version-tag">v{{ file.game_version if file.game_version else mod.version_range }}</span>
-                                <span class="file-size-txt">&bull; {{ file.size if file.size else '7.0 MB' }}</span>
-                            </div>
+        <div class="content-box">
+            <h3>About this project</h3>
+            <p>{{ mod.desc }}</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Arsip Unduhan Valid</h3>
+            <div style="margin-top: 10px;">
+                {% if versions %}
+                    {% for version in versions %}
+                    <div class="version-row">
+                        <div style="text-align: left;">
+                            <div class="version-name"><i class="far fa-file-archive" style="color:var(--theme-color); margin-right: 6px;"></i> {{ version.filename }}</div>
+                            <span class="version-size">Kapasitas: {{ version.size if version.size else 'N/A' }}</span>
                         </div>
-                        <a href="{{ file.download_url if file.download_url else '#' }}" class="download-action-btn" onclick="registerDownloadTrigger()" download>
-                            <i class="fas fa-download"></i>
-                        </a>
+                        <div>
+                            <a href="{{ version.download_url }}" class="download-btn">
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                        </div>
                     </div>
                     {% endfor %}
                 {% else %}
-                    <div class="download-row-card">
-                        <div class="file-meta-info">
-                            <div class="file-title-text">{{ mod.title }} Build Stable Pack</div>
-                            <div class="file-badges">
-                                <span class="mini-badge loader-tag">FABRIC</span>
-                                <span class="mini-badge version-tag">v{{ mod.version_range }}</span>
-                                <span class="file-size-txt">&bull; 4.2 MB</span>
-                            </div>
-                        </div>
-                        <a href="#" class="download-action-btn" onclick="registerDownloadTrigger()">
-                            <i class="fas fa-download"></i>
-                        </a>
-                    </div>
+                    <p style="color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0;">
+                        <i class="fas fa-info-circle"></i> Tidak ada berkas unduhan .zip/.jar terdeteksi untuk proyek ini.
+                    </p>
                 {% endif %}
             </div>
         </div>
-    </main>
 
-    <script>
-        // Fungsi Tab Switcher
-        function switchSubPanel(targetId, element) {
-            let panels = document.getElementsByClassName('panel-content');
-            for(let panel of panels) { panel.classList.remove('active'); }
-            
-            let buttons = document.getElementsByClassName('tab-btn');
-            for(let btn of buttons) { btn.classList.remove('active'); }
+    </div>
 
-            document.getElementById('panel-' + targetId).classList.add('active');
-            if(element) element.classList.add('active');
-        }
-
-        // Otomatisasi Penambahan Unduhan ketika User Mengklik Tombol Download
-        function registerDownloadTrigger() {
-            let counterElement = document.getElementById('downloadGlobalCounter');
-            if (counterElement) {
-                let text = counterElement.innerText;
-                let currentCount = parseInt(text.replace(/[^0-8]/g, '')) || 0;
-                
-                // Tambah 1 angka secara instan di sisi client
-                currentCount++;
-                counterElement.innerText = currentCount + " Unduhan";
-            }
-        }
-
-        // Otomatisasi Sistem Like Instan
-        let userHasLiked = false;
-        function triggerClientLike() {
-            let counterElement = document.getElementById('likeGlobalCounter');
-            if (counterElement) {
-                let text = counterElement.innerText;
-                let currentCount = parseInt(text.replace(/[^0-8]/g, '')) || 0;
-
-                if (!userHasLiked) {
-                    currentCount++;
-                    counterElement.innerText = currentCount + " Suka";
-                    document.querySelector('.metric-pill.clickable').style.borderColor = '#ef4444';
-                    userHasLiked = true;
-                } else {
-                    currentCount--;
-                    counterElement.innerText = currentCount + " Suka";
-                    document.querySelector('.metric-pill.clickable').style.borderColor = 'var(--border-color)';
-                    userHasLiked = false;
-                }
-            }
-        }
-    </script>
 </body>
 </html>
