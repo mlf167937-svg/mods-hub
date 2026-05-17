@@ -20,7 +20,6 @@
             --text-muted: #94a3b8;
             --text-dark: #64748b;
             
-            /* TEMA UTAMA DEFAULT (GREEN) */
             --theme-color: #00af9c;
             --theme-color-hover: #00d4bd;
             --theme-alpha: rgba(0, 175, 156, 0.12);
@@ -35,7 +34,6 @@
             --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* VARIAN WARNA TEMA JAVASCRIPT BINDING */
         body.theme-green {
             --theme-color: #00af9c;
             --theme-color-hover: #00d4bd;
@@ -60,7 +58,6 @@
             line-height: 1.5;
         }
 
-        /* NAVBAR SYSTEM */
         .rex-navbar {
             background-color: rgba(17, 18, 23, 0.9);
             backdrop-filter: blur(8px);
@@ -86,7 +83,6 @@
         .nav-brand span { color: var(--theme-color); }
         .nav-menu { display: flex; align-items: center; gap: 16px; position: relative; }
 
-        /* SETTING WIDGET DROPDOWN */
         .setting-trigger-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -128,7 +124,6 @@
             margin-bottom: 6px;
         }
 
-        /* Theme Color Pill Selectors */
         .theme-selector-row { display: flex; gap: 6px; }
         .theme-pill {
             flex: 1; padding: 6px; border: 1px solid var(--border-color);
@@ -139,14 +134,12 @@
         .theme-pill.active-blue { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
         .theme-pill.active-purple { border-color: #a855f7; color: #a855f7; background: rgba(168, 85, 247, 0.1); }
 
-        /* Gamertag Info Box */
         .gamertag-info-node {
             background: var(--bg-dark); border: 1px solid var(--border-color);
             border-radius: 6px; padding: 8px 10px; font-size: 12px; display: flex; justify-content: space-between; margin-bottom: 4px;
         }
         .gamertag-info-node span { font-weight: 600; color: #fff; }
 
-        /* Social Link Buttons */
         .social-link-btn {
             background: var(--bg-dark); border: 1px solid var(--border-color);
             color: #fff; padding: 8px; border-radius: 6px; font-size: 12px;
@@ -156,7 +149,6 @@
         .social-link-btn.yt:hover { background: #ef4444; border-color: #ef4444; color: #fff; }
         .social-link-btn.tt:hover { background: #fff; border-color: #fff; color: #000; }
 
-        /* Donate Box Button */
         .donate-box-btn {
             background: var(--theme-alpha); border: 1px solid var(--theme-color);
             color: var(--theme-color); text-align: center; padding: 10px; border-radius: 6px;
@@ -164,7 +156,6 @@
         }
         .donate-box-btn:hover { background: var(--theme-color); color: #000; }
 
-        /* BANNER HERO */
         .rex-banner-hero {
             position: relative;
             background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface);
@@ -177,10 +168,8 @@
         .rex-banner-hero h1 span { color: var(--theme-color); }
         .rex-banner-hero p { color: var(--text-muted); font-size: 15px; max-width: 620px; margin: 0 auto; line-height: 1.6; }
 
-        /* MAIN CONTAINER */
         .rex-main-body { max-width: 1200px; margin: 32px auto; padding: 0 20px; }
 
-        /* CONTROL FILTER BAR */
         .advanced-control-bar {
             background: var(--bg-surface); border: 1px solid var(--border-color);
             border-radius: 12px; padding: 16px; margin-bottom: 24px;
@@ -201,7 +190,6 @@
         }
         .adv-filter-btn.active { background: var(--theme-alpha); border-color: var(--theme-color); color: #fff; }
 
-        /* GRID CONTENT CARDS */
         .rex-cards-matrix-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
 
         .mod-matrix-card {
@@ -215,8 +203,8 @@
             width: 64px; height: 64px; background: var(--bg-dark);
             border: 1px solid var(--border-color); border-radius: 10px;
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            overflow: hidden;
         }
-        .card-graphic-container i { font-size: 24px; color: var(--theme-color); }
 
         .card-core-details { display: flex; flex-direction: column; width: 100%; }
         .card-core-details h2 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
@@ -227,6 +215,12 @@
         .sys-label.plat-java { background: var(--java-blue-alpha); color: var(--java-blue); }
         .sys-label.plat-mcpe { background: var(--mcpe-orange-alpha); color: var(--mcpe-orange); }
         .sys-label.loader-tag { background: var(--theme-alpha); color: var(--theme-color); }
+
+        .fallback-empty-card {
+            background: var(--bg-surface); border: 2px dashed var(--border-color);
+            border-radius: 12px; padding: 40px; text-align: center; color: var(--text-muted); grid-column: 1 / -1;
+        }
+        .fallback-empty-card i { font-size: 32px; margin-bottom: 12px; color: var(--text-dark); }
 
         @media(min-width: 768px) {
             .advanced-control-bar { flex-direction: row; align-items: center; }
@@ -294,8 +288,8 @@
                 <input type="text" class="master-search-field" id="matrixSearchInput" placeholder="Cari arsip modifikasi..." onkeyup="executeMatrixEngineFilter()">
             </div>
             <div class="adv-filter-group">
-                <button class="adv-filter-btn active" id="flt-all" onclick="setMatrixCategory('all', this)">Semua</button>
-                <button class="adv-filter-btn" id="flt-java" onclick="setMatrixCategory('java', this)">Java</button>
+                <button class="adv-filter-btn active" id="flt-all" onclick="setMatrixCategory('all', this)">Semua Berkas</button>
+                <button class="adv-filter-btn" id="flt-java" onclick="setMatrixCategory('java', this)">Java Edition</button>
                 <button class="adv-filter-btn" id="flt-mcpe" onclick="setMatrixCategory('mcpe', this)">Bedrock / MCPE</button>
             </div>
         </div>
@@ -304,12 +298,24 @@
             {% if mods %}
                 {% for mod in mods %}
                 <a href="/mod/{{ mod.id }}" class="mod-matrix-card" data-name="{{ mod.title|lower }}" data-platform="{{ mod.category }}">
+                    
                     <div class="card-graphic-container">
-                        <i class="fas fa-cube"></i>
+                        {% if mod.icon_url %}
+                            <img src="{{ mod.icon_url }}" alt="{{ mod.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                            <i class="fas fa-cube" style="font-size: 24px; color: var(--theme-color);"></i>
+                        {% endif %}
                     </div>
+
                     <div class="card-core-details">
                         <h2>{{ mod.title }}</h2>
                         <p>{{ mod.desc }}</p>
+
+                        <div style="display: flex; gap: 12px; margin-bottom: 10px; font-size: 12px; color: var(--text-muted); align-items: center;">
+                            <span><i class="fas fa-download"></i> {{ mod.downloads if mod.downloads else '0' }} Unduhan</span>
+                            <span><i class="fas fa-shield-alt" style="color: var(--theme-color);"></i> Verified Hub</span>
+                        </div>
+
                         <div class="card-labels-flex">
                             <span class="sys-label plat-{% if mod.category == 'java' %}java{% else %}mcpe{% endif %}">{{ mod.category }}</span>
                             <span class="sys-label loader-tag">FABRIC</span>
@@ -320,7 +326,7 @@
             {% else %}
                 <div class="fallback-empty-card" id="fallbackEmptyBox">
                     <i class="fas fa-folder-open"></i>
-                    <p>Repositori internal kosong. Belum ada berkas terindeks.</p>
+                    <p>Berkas kosong. Belum ada mod terdaftar di dalam repositori local.</p>
                 </div>
             {% endif %}
         </div>
