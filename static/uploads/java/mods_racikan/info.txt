@@ -1,1 +1,7 @@
+Judul: RexCraft Ultra Performance Pack
+Kategori: Optimization
+Deskripsi: Modpack racikan khusus dari RexCraft yang dirancang untuk membuat Minecraft Anda menjadi super ringan, lancar, dan bebas lag! 
 
+Di dalamnya sudah terpasang berbagai mod optimisasi mutakhir yang berfokus pada peningkatan FPS, perbaikan manajemen RAM, serta peringan sistem rendering grafis tanpa merusak keindahan visual game. Sangat cocok untuk PC atau HP spek kentang agar bisa bermain dengan mulus.
+
+Catatan penting: Ini adalah mod dasar untuk performa. kalian bebas menumpuk atau menambahkan mod lain (seperti mod fitur, map, atau shader) di atas racikan ini sesuai dengan keinginan masing-masing.
