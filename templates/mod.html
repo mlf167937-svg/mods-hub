@@ -6,51 +6,49 @@
     <title>{{ mod.title }} - RexCraft Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
-           1. LAYOUT ARCHITECTURE INITIALIZATION
+           MODRINTH LAYOUT SYSTEM INTERFACE SPECIFICS
            ========================================================================== */
         :root {
-            --bg-dark: #07080b;
-            --bg-surface: #111217;
-            --bg-card: #161920;
-            --border-color: #242836;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --text-dark: #64748b;
-            --theme-color: #00af9c;
-            --theme-alpha: rgba(0, 175, 156, 0.12);
-            --radius-md: 10px;
-            --radius-lg: 14px;
+            --bg-dark-engine: #07080b;
+            --bg-surface-engine: #111217;
+            --bg-card-engine: #161920;
+            --border-color-engine: #242836;
+            --text-main-engine: #f1f5f9;
+            --text-muted-engine: #94a3b8;
+            --text-dark-engine: #64748b;
+            --theme-color-engine: #00af9c;
+            --theme-alpha-engine: rgba(0, 175, 156, 0.12);
+            --radius-md-engine: 10px;
+            --radius-lg-engine: 14px;
             --font-primary: 'Inter', sans-serif;
             --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-primary); padding-bottom: 80px; }
+        body { background-color: var(--bg-dark-engine); color: var(--text-main-engine); font-family: var(--font-primary); padding-bottom: 100px; }
 
-        /* ==========================================================================
-           2. HEADER COMPONENTS
-           ========================================================================== */
-        .navbar {
-            background-color: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 24px;
-            height: 65px;
+        /* HEADER COMPONENTS APPARATUS */
+        .navbar-utility-belt {
+            background-color: var(--bg-surface-engine);
+            border-bottom: 1px solid var(--border-color-engine);
+            padding: 0 30px;
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 999;
         }
 
-        .back-link {
-            color: var(--text-muted);
+        .back-link-node {
+            color: var(--text-muted-engine);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -58,25 +56,26 @@
             transition: var(--transition-smooth);
         }
 
-        .back-link:hover {
-            color: var(--theme-color);
+        .back-link-node:hover {
+            color: var(--theme-color-engine);
         }
 
-        .mod-header-banner {
-            max-width: 1050px;
-            margin: 35px auto 15px auto;
+        /* HEADER MASTHEAD INFO DISPLAY */
+        .modrinth-masthead-header {
+            max-width: 1140px;
+            margin: 40px auto 20px auto;
             padding: 0 24px;
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 26px;
         }
 
-        .mod-big-icon-container {
-            width: 84px;
-            height: 84px;
+        .modrinth-icon-viewport {
+            width: 90px;
+            height: 90px;
             background-color: #1a1c23;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color-engine);
+            border-radius: var(--radius-lg-engine);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,17 +84,17 @@
             flex-shrink: 0;
         }
 
-        .mod-big-icon-container img {
+        .modrinth-icon-viewport img.graphics-target {
             width: 100%;
             height: 100%;
             object-fit: cover;
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 5;
+            z-index: 10;
         }
 
-        .mod-big-icon-container .fallback-big-cube {
+        .modrinth-icon-viewport .fallback-vector-box-sub {
             position: absolute;
             top: 0;
             left: 0;
@@ -108,48 +107,52 @@
             z-index: 2;
         }
 
-        .mod-big-icon-container .fallback-big-cube i {
-            font-size: 34px;
-            color: var(--theme-color);
+        .modrinth-icon-viewport .fallback-vector-box-sub i {
+            font-size: 38px;
+            color: var(--theme-color-engine);
         }
 
-        .mod-header-text h1 {
-            font-size: 26px;
+        .modrinth-masthead-text-block h1 {
+            font-size: 30px;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: -0.5px;
         }
 
-        .mod-header-text p {
-            font-size: 13.5px;
-            color: var(--text-muted);
+        .modrinth-masthead-text-block p {
+            font-size: 14px;
+            color: var(--text-muted-engine);
             margin-top: 4px;
         }
 
         /* ==========================================================================
-           3. TWIN COLUMN GRID SYSTEM (MODRINTH ACCURATE)
+           MODRINTH TWIN COLUMN LAYOUT CONFIGURATION
            ========================================================================== */
-        .modrinth-layout-grid {
-            max-width: 1050px;
+        .modrinth-layout-grid-system {
+            max-width: 1140px;
             margin: 0 auto;
-            padding: 20px 24px;
+            padding: 10px 24px;
             display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 28px;
+            grid-template-columns: 1fr 350px;
+            gap: 32px;
         }
 
-        /* TAB MANAGEMENT AREA */
-        .tabs-header-pipeline {
+        /* MAIN CONTENT VIEWPANEL INTERFACE */
+        .main-content-viewport-column {
+            min-width: 0;
+        }
+
+        .tabs-navigation-pipeline-container {
             display: flex;
-            gap: 28px;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 24px;
+            gap: 30px;
+            border-bottom: 2px solid var(--border-color-engine);
+            margin-bottom: 26px;
         }
 
-        .tab-node-item {
-            color: var(--text-muted);
-            padding: 10px 4px;
-            font-size: 14.5px;
+        .tab-pipeline-trigger-node {
+            color: var(--text-muted-engine);
+            padding: 12px 6px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             border-bottom: 2px solid transparent;
@@ -157,136 +160,137 @@
             transition: var(--transition-smooth);
         }
 
-        .tab-node-item:hover {
+        .tab-pipeline-trigger-node:hover {
             color: #ffffff;
         }
 
-        .tab-node-item.active {
-            color: var(--theme-color);
-            border-color: var(--theme-color);
+        .tab-pipeline-trigger-node.active-tab-pipeline {
+            color: var(--theme-color-engine);
+            border-color: var(--theme-color-engine);
         }
 
-        .tab-panel-viewport {
+        .viewport-panel-card-box {
             display: none;
         }
 
-        .tab-panel-viewport.active {
+        .viewport-panel-card-box.active-panel-view {
             display: block;
         }
 
-        .card-rich-box {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            line-height: 1.6;
-            font-size: 14.5px;
+        .description-rich-render-card {
+            background-color: var(--bg-surface-engine);
+            border: 1px solid var(--border-color-engine);
+            border-radius: var(--radius-lg-engine);
+            padding: 26px;
+            line-height: 1.7;
+            font-size: 15px;
             color: #e2e8f0;
         }
 
-        /* FILE ARCHIVE LIST COMPONENT */
-        .version-row-card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 16px 20px;
+        /* VERSIONS REPOSITORY ARTIFACT NODE ROWS */
+        .version-artifact-row-node {
+            background-color: var(--bg-surface-engine);
+            border: 1px solid var(--border-color-engine);
+            border-radius: var(--radius-lg-engine);
+            padding: 18px 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             transition: var(--transition-smooth);
         }
 
-        .version-row-card:hover {
-            border-color: var(--text-dark);
-            background-color: var(--bg-card);
+        .version-artifact-row-node:hover {
+            border-color: var(--text-dark-engine);
+            background-color: var(--bg-card-engine);
         }
 
-        .version-meta-left {
+        .artifact-meta-left-block {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
-        .version-filename {
+        .artifact-filename-string {
             font-weight: 700;
             color: #ffffff;
-            font-size: 14.5px;
+            font-size: 15px;
             font-family: monospace;
         }
 
-        .version-specs-tags {
+        .artifact-badges-row-flex {
             display: flex;
             gap: 8px;
             align-items: center;
         }
 
-        .spec-pill {
+        .badge-pill-specification {
             font-size: 11px;
-            font-weight: 700;
-            padding: 2px 6px;
+            font-weight: 800;
+            padding: 3px 8px;
             border-radius: 4px;
             text-transform: uppercase;
         }
 
-        .direct-download-action-btn {
-            background-color: var(--theme-color);
+        /* PERBAIKAN DIRECT ANCHOR DOWNLOAD BUTTON */
+        .execute-download-anchor-btn {
+            background-color: var(--theme-color-engine);
             color: #07080b;
-            padding: 10px 18px;
-            border-radius: var(--radius-md);
+            padding: 12px 22px;
+            border-radius: var(--radius-md-engine);
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 13.5px;
+            font-weight: 900;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
             transition: var(--transition-smooth);
         }
 
-        .direct-download-action-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px var(--theme-alpha);
+        .execute-download-anchor-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px var(--theme-alpha-engine);
+            opacity: 0.95;
         }
 
-        /* ==========================================================================
-           4. SIDEBAR INTERNAL COMPONENT
-           ========================================================================== */
-        .sidebar-column-wrapper {
+        /* SIDEBAR INTERACTIVE PANEL RIGHT SIDE */
+        .sidebar-widget-vertical-stack {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
-        .sidebar-widget-box {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 20px;
+        .sidebar-widget-container-box {
+            background-color: var(--bg-surface-engine);
+            border: 1px solid var(--border-color-engine);
+            border-radius: var(--radius-lg-engine);
+            padding: 22px;
         }
 
-        .widget-header-title {
+        .sidebar-widget-title-header {
             font-size: 11.5px;
-            font-weight: 800;
-            color: var(--text-dark);
+            font-weight: 900;
+            color: var(--text-dark-engine);
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             letter-spacing: 0.8px;
         }
 
-        .primary-action-group {
+        .action-buttons-flex-wrapper {
             display: flex;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
-        .action-node-btn {
+        .sidebar-action-trigger-node {
             flex: 1;
-            padding: 13px;
-            border-radius: var(--radius-md);
-            font-size: 13.5px;
+            padding: 14px;
+            border-radius: var(--radius-md-engine);
+            font-size: 14px;
             font-weight: 700;
             text-align: center;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-color-engine);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -297,246 +301,247 @@
             transition: var(--transition-smooth);
         }
 
-        .action-node-btn-primary {
-            background-color: var(--theme-color);
+        .sidebar-action-trigger-node-primary {
+            background-color: var(--theme-color-engine);
             color: #07080b;
             border: none;
         }
 
-        .action-node-btn-like:hover {
+        .sidebar-action-trigger-node-like:hover {
             border-color: #ef4444;
-            background-color: rgba(239, 68, 68, 0.05);
+            background-color: rgba(239, 68, 68, 0.04);
             color: #ef4444;
         }
 
-        .metadata-rows-list {
+        .metadata-table-structural-rows {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .metadata-node-item {
+        .metadata-structural-node {
             display: flex;
             justify-content: space-between;
-            font-size: 13.5px;
-            padding-bottom: 10px;
+            font-size: 14px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
 
-        .metadata-node-item:last-child {
+        .metadata-structural-node:last-child {
             border: none;
             padding: 0;
         }
 
-        .metadata-label {
-            color: var(--text-muted);
+        .metadata-structural-label {
+            color: var(--text-muted-engine);
         }
 
-        .metadata-value {
+        .metadata-structural-value {
             font-weight: 600;
             color: #ffffff;
         }
 
-        /* SOCIAL CHANNELS INTERFACE */
-        .social-link-row {
+        .social-communication-channel-anchor {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 12px 14px;
-            border-radius: var(--radius-md);
+            background-color: var(--bg-card-engine);
+            border: 1px solid var(--border-color-engine);
+            padding: 14px;
+            border-radius: var(--radius-md-engine);
             text-decoration: none;
             color: #ffffff;
-            font-size: 13.5px;
-            margin-bottom: 10px;
+            font-size: 14px;
+            margin-bottom: 12px;
             font-weight: 500;
             transition: var(--transition-smooth);
         }
 
-        .social-link-row:last-child {
-            margin-bottom: 0;
+        .social-communication-channel-anchor:hover {
+            border-color: var(--theme-color-engine);
+            padding-left: 20px;
         }
 
-        .social-link-row:hover {
-            border-color: var(--theme-color);
-            padding-left: 18px;
-        }
-
-        /* ==========================================================================
-           5. MOBILE COMPATIBILITY PIPELINE
-           ========================================================================== */
-        @media (max-width: 820px) {
-            .modrinth-layout-grid {
-                grid-template-columns: 1fr;
-                display: flex;
-                flex-direction: column;
-            }
-            .sidebar-column-wrapper {
-                order: -1; /* Memaksa sidebar aksi naik ke atas saat di layar HP */
-            }
-            .mod-header-banner {
-                flex-direction: column;
-                text-align: center;
-                margin-top: 20px;
-            }
+        /* MEDIA ADAPTATION RESPONSIBILITIES HP */
+        @media (max-width: 860px) {
+            .modrinth-layout-grid-system { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+            .sidebar-widget-vertical-stack { order: -1; }
+            .modrinth-masthead-header { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="/" class="back-link">
-            <i class="fas fa-arrow-left"></i> Kembali ke Penjelajah
+    <nav class="navbar-utility-belt">
+        <a href="/" class="back-link-node">
+            <i class="fas fa-arrow-left"></i> Kembali ke Pusat Arsip
         </a>
-        <div style="font-weight: 900; font-size: 15px; letter-spacing: -0.3px;">
-            RexCraft<span style="color: var(--theme-color)">Hub</span>
+        <div style="font-weight: 900; font-size: 16px; letter-spacing: -0.3px;">
+            RexCraft<span style="color: var(--theme-color-engine)">Hub</span>
         </div>
     </nav>
 
-    <header class="mod-header-banner">
-        <div class="mod-big-icon-container">
-            <div class="fallback-big-cube"><i class="fas fa-cube"></i></div>
+    <header class="modrinth-masthead-header">
+        <div class="modrinth-icon-viewport">
+            <div class="fallback-vector-box-sub"><i class="fas fa-cube"></i></div>
+            
             {% if mod.icon_url %}
-                <img src="{{ mod.icon_url }}" onload="this.parentNode.querySelector('.fallback-big-cube').style.display='none';" onerror="this.parentNode.querySelector('.fallback-big-cube').style.display='flex'; this.remove();">
+                <img src="/static/uploads/Java/mods_racikan/{{ mod.icon_url }}" class="graphics-target" onload="this.parentNode.querySelector('.fallback-vector-box-sub').style.display='none';" onerror="this.src='/static/uploads/Java/mods_racikan/icon.png'; this.onerror=function(){ this.parentNode.querySelector('.fallback-vector-box-sub').style.display='flex'; this.remove(); };">
             {% elif mod.image %}
-                <img src="{{ mod.image }}" onload="this.parentNode.querySelector('.fallback-big-cube').style.display='none';" onerror="this.parentNode.querySelector('.fallback-big-cube').style.display='flex'; this.remove();">
+                <img src="/static/uploads/Java/mods_racikan/{{ mod.image }}" class="graphics-target" onload="this.parentNode.querySelector('.fallback-vector-box-sub').style.display='none';" onerror="this.src='/static/uploads/Java/mods_racikan/icon.png'; this.onerror=function(){ this.parentNode.querySelector('.fallback-vector-box-sub').style.display='flex'; this.remove(); };">
+            {% else %}
+                <img src="/static/uploads/Java/mods_racikan/icon.png" class="graphics-target" onload="this.parentNode.querySelector('.fallback-vector-box-sub').style.display='none';" onerror="this.parentNode.querySelector('.fallback-vector-box-sub').style.display='flex'; this.remove();">
             {% endif %}
         </div>
-        <div class="mod-header-text">
+        <div class="modrinth-masthead-text-block">
             <h1>{{ mod.title }}</h1>
-            <p>Dibuat oleh <span style="color: var(--theme-color); font-weight:600;">RexCraft Hub</span> &bull; Repositori Resmi Terverifikasi Aman</p>
+            <p>Arsip Berkas Resmi &bull; Distribusi Terverifikasi Aman <span style="color: var(--theme-color-engine); font-weight:700;">RexCraft Hub</span></p>
         </div>
     </header>
 
-    <div class="modrinth-layout-grid">
+    <div class="modrinth-layout-grid-system">
         
-        <main class="main-viewport-content">
-            <div class="tabs-header-pipeline">
-                <div class="tab-node-item active" id="tab-desc" onclick="switchActiveTabPanel('desc')">Deskripsi Proyek</div>
-                <div class="tab-node-item" id="tab-vers" onclick="switchActiveTabPanel('vers')">Arsip Versi Berkas</div>
+        <main class="main-content-viewport-column">
+            <div class="tabs-navigation-pipeline-container">
+                <div class="tab-pipeline-trigger-node active-tab-pipeline" id="nav-desc" onclick="switchActiveViewportPanel('desc')">Deskripsi Teknis</div>
+                <div class="tab-pipeline-trigger-node" id="nav-vers" onclick="switchActiveViewportPanel('vers')">Berkas & Versi Eksekusi</div>
             </div>
 
-            <div class="tab-panel-viewport active" id="panel-desc">
-                <div class="card-rich-box">
-                    <p style="white-space: pre-wrap; font-size: 14.5px; line-height: 1.7;">{{ mod.desc }}</p>
+            <div class="viewport-panel-card-box active-panel-view" id="panel-desc">
+                <div class="description-rich-render-card">
+                    <p style="white-space: pre-wrap; font-size: 15px; line-height: 1.8; color:#cbd5e1;">{{ mod.desc }}</p>
                 </div>
             </div>
 
-            <div class="tab-panel-viewport" id="panel-vers">
+            <div class="viewport-panel-card-box" id="panel-vers">
                 {% if versions %}
                     {% for v in versions %}
-                    <div class="version-row-card">
-                        <div class="version-meta-left">
-                            <div class="version-filename">{{ v.filename }}</div>
-                            <div class="version-specs-tags" style="margin-top: 6px;">
-                                <span class="spec-pill" style="background-color: var(--theme-alpha); color: var(--theme-color);">{{ mod.loader }}</span>
-                                <span class="spec-pill" style="background-color: rgba(255,255,255,0.05); color: #fff;">{{ mod.version_game }}</span>
-                                <span class="spec-pill" style="color: var(--text-muted);">Ukuran: {{ v.size }}</span>
+                    <div class="version-artifact-row-node">
+                        <div class="artifact-meta-left-block">
+                            <div class="artifact-filename-string">
+                                <i class="fas fa-file-zipper" style="color:var(--theme-color-engine); margin-right:6px;"></i>
+                                {{ v.filename if v.filename else "Mods.zip" }}
+                            </div>
+                            <div class="artifact-badges-row-flex">
+                                <span class="badge-pill-specification" style="background-color: var(--theme-alpha-engine); color: var(--theme-color-engine);">{{ mod.loader }}</span>
+                                <span class="badge-pill-specification" style="background-color: rgba(255,255,255,0.06); color: #ffffff;">{{ mod.version_game }}</span>
+                                <span class="badge-pill-specification" style="color: var(--text-muted-engine);">Ukuran Arisip: {{ v.size if v.size else "Unknown Size" }}</span>
                             </div>
                         </div>
-                        <a href="{{ v.download_url }}" class="direct-download-action-btn" download>
-                            <i class="fas fa-download"></i> Unduh Berkas
+                        
+                        <a href="{{ v.download_url }}" class="execute-download-anchor-btn" download>
+                            <i class="fas fa-download"></i> Unduh File Asli
                         </a>
                     </div>
                     {% endfor %}
                 {% else %}
-                    <div class="card-rich-box" style="text-align: center; color: var(--text-muted); padding: 40px 20px;">
-                        <i class="fas fa-info-circle" style="font-size: 24px; margin-bottom: 8px; display: block; color: var(--text-dark);"></i>
-                        Tidak ada arsip berkas unduhan eksternal (.zip / .jar) yang tersemat pada proyek backend ini.
+                    <div class="version-artifact-row-node">
+                        <div class="artifact-meta-left-block">
+                            <div class="artifact-filename-string"><i class="fas fa-file-zipper" style="color:var(--theme-color-engine); margin-right:6px;"></i> Mods.zip</div>
+                            <div class="artifact-badges-row-flex">
+                                <span class="badge-pill-specification" style="background-color: var(--theme-alpha-engine); color: var(--theme-color-engine);">{{ mod.loader }}</span>
+                                <span class="badge-pill-specification" style="background-color: rgba(255,255,255,0.06); color: #ffffff;">{{ mod.version_game }}</span>
+                            </div>
+                        </div>
+                        <a href="{{ mod.download_url if mod.download_url else '#' }}" class="execute-download-anchor-btn" download>
+                            <i class="fas fa-download"></i> Unduh File Master
+                        </a>
                     </div>
                 {% endif %}
             </div>
         </main>
 
         <aside class="sidebar-column-wrapper">
-            
-            <div class="sidebar-widget-box">
-                <div class="primary-action-group">
-                    <button class="action-node-btn action-node-btn-primary" onclick="triggerScrollToVersionsPanel()">
-                        <i class="fas fa-cloud-download-alt"></i> Unduh Sekarang
-                    </button>
-                    <button class="action-node-btn action-node-btn-like" onclick="executeLikeAPI('{{ mod.id }}')">
-                        <i class="fas fa-heart"></i> <span id="likeCounterNode">{{ mod.likes }}</span>
-                    </button>
+            <div class="sidebar-widget-vertical-stack">
+                
+                <div class="sidebar-widget-container-box">
+                    <div class="action-buttons-flex-wrapper">
+                        <button class="sidebar-action-trigger-node sidebar-action-trigger-node-primary" onclick="scrollDirectlyToVersionsViewPanel()">
+                            <i class="fas fa-cloud-arrow-down"></i> Ambil Berkas
+                        </button>
+                        <button class="sidebar-action-trigger-node sidebar-action-trigger-node-like" onclick="executeLikeDatabasePush('{{ mod.id }}')">
+                            <i class="fas fa-heart"></i> <span id="likeTextDisplayNode">{{ mod.likes }}</span>
+                        </button>
+                    </div>
+                    
+                    <div class="metadata-table-structural-rows">
+                        <div class="metadata-structural-node">
+                            <span class="metadata-structural-label">Total Unduhan</span>
+                            <span class="metadata-structural-value">{{ mod.downloads }} Unit</span>
+                        </div>
+                        <div class="metadata-structural-node">
+                            <span class="metadata-structural-label">Kategori Berkas</span>
+                            <span class="metadata-structural-value" style="text-transform: uppercase; color: var(--theme-color-engine);">{{ mod.category }}</span>
+                        </div>
+                        <div class="metadata-structural-node">
+                            <span class="metadata-structural-label">Client Loader</span>
+                            <span class="metadata-structural-value">{{ mod.loader }}</span>
+                        </div>
+                        <div class="metadata-structural-node">
+                            <span class="metadata-structural-label">Kompatibilitas Versi</span>
+                            <span class="metadata-structural-value">{{ mod.version_game }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget-container-box">
+                    <div class="sidebar-widget-title-header">Informasi Developer Hub</div>
+                    
+                    <a href="https://youtube.com/" target="_blank" class="social-communication-channel-anchor">
+                        <span><i class="fab fa-youtube" style="color: #ff0000; margin-right: 8px;"></i> YouTube Hub</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark-engine);"></i>
+                    </a>
+                    <a href="https://tiktok.com/" target="_blank" class="social-communication-channel-anchor">
+                        <span><i class="fab fa-tiktok" style="color: #ffffff; margin-right: 8px;"></i> Akun TikTok</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark-engine);"></i>
+                    </a>
+                    <a href="https://wa.me/6283873024650" target="_blank" class="social-communication-channel-anchor">
+                        <span><i class="fab fa-whatsapp" style="color: #25d366; margin-right: 8px;"></i> WhatsApp Resmi</span>
+                        <i class="fas fa-chevron-right" style="font-size: 10px; color: var(--text-dark-engine);"></i>
+                    </a>
+
+                    <div class="metadata-table-structural-rows" style="margin-top: 18px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 16px;">
+                        <div class="metadata-structural-node">
+                            <span class="metadata-structural-label">Gamertag Java</span>
+                            <span class="metadata-structural-value" style="font-family: monospace; color: var(--theme-color-engine);">RexCraft</span>
+                        </div>
+                        <div class="metadata-structural-node">
+                            <span class="metadata-structural-label">Gamertag MCPE</span>
+                            <span class="metadata-structural-value" style="font-family: monospace; color: var(--theme-color-engine);">RexCraft6506</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="metadata-rows-list">
-                    <div class="metadata-node-item">
-                        <span class="metadata-label">Total Unduhan</span>
-                        <span class="metadata-value">{{ mod.downloads }} kali</span>
-                    </div>
-                    <div class="metadata-node-item">
-                        <span class="metadata-label">Target Eksekusi</span>
-                        <span class="metadata-value" style="text-transform: uppercase; color: var(--theme-color);">{{ mod.category }}</span>
-                    </div>
-                    <div class="metadata-node-item">
-                        <span class="metadata-label">Mod Loader</span>
-                        <span class="metadata-value">{{ mod.loader }}</span>
-                    </div>
-                    <div class="metadata-node-item">
-                        <span class="metadata-label">Kompatibilitas Game</span>
-                        <span class="metadata-value">{{ mod.version_game }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar-widget-box">
-                <div class="widget-header-title">Informasi Developer & Kontak</div>
-                
-                <a href="https://youtube.com/" target="_blank" class="social-link-row">
-                    <span><i class="fab fa-youtube" style="color: #ff0000; margin-right: 8px;"></i> Channel YouTube</span>
-                    <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark);"></i>
-                </a>
-                <a href="https://tiktok.com/" target="_blank" class="social-link-row">
-                    <span><i class="fab fa-tiktok" style="color: #ffffff; margin-right: 8px;"></i> Akun TikTok</span>
-                    <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark);"></i>
-                </a>
-                <a href="https://wa.me/6283873024650?text=Halo%20Admin%20RexCraft" target="_blank" class="social-link-row">
-                    <span><i class="fab fa-whatsapp" style="color: #25d366; margin-right: 8px;"></i> WhatsApp Resmi</span>
-                    <i class="fas fa-chevron-right" style="font-size: 10px; color: var(--text-dark);"></i>
-                </a>
-
-                <div class="metadata-rows-list" style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 14px;">
-                    <div class="metadata-node-item">
-                        <span class="metadata-label">Gamertag Java</span>
-                        <span class="metadata-value" style="font-family: monospace; color: var(--theme-color);">RexCraft</span>
-                    </div>
-                    <div class="metadata-node-item">
-                        <span class="metadata-label">Gamertag Bedrock</span>
-                        <span class="metadata-value" style="font-family: monospace; color: var(--theme-color);">RexCraft6506</span>
-                    </div>
-                </div>
             </div>
         </aside>
 
     </div>
 
     <script>
-        function switchActiveTabPanel(targetId) {
-            let tabNodes = document.getElementsByClassName('tab-node-item');
-            let panelNodes = document.getElementsByClassName('tab-panel-viewport');
+        function switchActiveViewportPanel(panelId) {
+            let triggers = document.getElementsByClassName('tab-pipeline-trigger-node');
+            let views = document.getElementsByClassName('viewport-panel-card-box');
             
-            for(let tab of tabNodes) { tab.classList.remove('active'); }
-            for(let panel of panelNodes) { panel.classList.remove('active'); }
+            for(let tr of triggers) { tr.classList.remove('active-tab-pipeline'); }
+            for(let vw of views) { vw.classList.remove('active-panel-view'); }
             
-            document.getElementById('tab-' + targetId).classList.add('active');
-            document.getElementById('panel-' + targetId).classList.add('active');
+            document.getElementById('nav-' + panelId).classList.add('active-tab-pipeline');
+            document.getElementById('panel-' + panelId).classList.add('active-panel-view');
         }
 
-        function triggerScrollToVersionsPanel() {
-            switchActiveTabPanel('vers');
+        function scrollDirectlyToVersionsViewPanel() {
+            switchActiveViewportPanel('vers');
             document.getElementById('panel-vers').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        function executeLikeAPI(modId) {
+        function executeLikeDatabasePush(modId) {
             fetch('/like_action/' + modId, { method: 'POST' })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
                 if(data.success) {
-                    document.getElementById('likeCounterNode').innerText = data.new_likes;
+                    document.getElementById('likeTextDisplayNode').innerText = data.new_likes;
                 }
-            }).catch(err => console.error("Gagal mengirim aksi interaksi basis data:", err));
+            }).catch(e => console.error("Database pipeline connection exception error:", e));
         }
     </script>
 </body>
