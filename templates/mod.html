@@ -2,8 +2,8 @@
 {% block content %}
 <style>
     .mod-header { display: flex; gap: 20px; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-    .mod-header img { width: 120px; height: 120px; border-radius: 16px; object-fit: cover; }
-    .mod-header h1 { font-size: 32px; font-weight: 800; }
+    .mod-header img { width: 120px; height: 120px; border-radius: 16px; object-fit: cover; background: var(--bg-card); border: 1px solid var(--border); }
+    .mod-header h1 { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
     
     .layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
     
@@ -14,48 +14,49 @@
     
     .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 15px; border-radius: 8px; font-weight: 800; font-size: 16px; cursor: pointer; text-decoration: none; border: none; margin-bottom: 15px; transition: 0.2s; }
     .btn-download { background: var(--theme-color); color: #000; }
-    .btn-download:hover { opacity: 0.8; }
+    .btn-download:hover { opacity: 0.8; transform: translateY(-2px); }
     .btn-like { background: rgba(255, 60, 60, 0.1); color: #ff3c3c; border: 1px solid rgba(255, 60, 60, 0.3); }
     .btn-like:hover { background: rgba(255, 60, 60, 0.2); }
 
-    .meta-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-    .meta-row:last-child { border: none; }
+    .meta-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .meta-row:last-child { border: none; padding-bottom: 0; }
     .meta-row span { color: var(--text-muted); }
-    .meta-row b { color: #fff; }
+    .meta-row b { color: #fff; text-align: right; }
 
-    @media (max-width: 768px) { .layout { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .layout { grid-template-columns: 1fr; } .mod-header { flex-direction: column; text-align: center; } }
 </style>
 
 <div class="mod-header">
-    <img src="/static/uploads/{{ mod.platform }}/{{ mod.id }}/{{ mod.icon_filename }}">
+    <img src="/static/uploads/{{ mod.platform }}/{{ mod.id }}/{{ mod.icon_filename }}" onerror="this.src='https://via.placeholder.com/120/1c1e26/00af9c?text=Mod'">
     <div>
         <h1>{{ mod.title }}</h1>
-        <p style="color: var(--text-muted);">Diunggah oleh RexCraft &bull; {{ mod.category }}</p>
+        <p style="color: var(--text-muted);">Diunggah oleh <b style="color:#fff;">RexCraft</b> &bull; Kategori: <span style="text-transform: capitalize; color: var(--theme-color);">{{ mod.category }}</span></p>
     </div>
 </div>
 
 <div class="layout">
     <div class="desc-box">
-        <h3 style="margin-bottom: 15px; color: #fff;">Deskripsi</h3>
-        <p>{{ mod.desc }}</p>
+        <h3 style="margin-bottom: 15px; color: #fff; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Deskripsi Modifikasi</h3>
+        <p style="white-space: pre-wrap;">{{ mod.desc }}</p>
     </div>
 
     <div class="sidebar-mod">
         <div class="stat-box">
-            <a href="/download/{{ mod.id }}" class="btn btn-download" onclick="setTimeout(()=>location.reload(), 1500)">
-                <i class="fas fa-download"></i> Download File
+            <a href="/download/{{ mod.id }}" class="btn btn-download" onclick="setTimeout(()=>location.reload(), 2000)">
+                <i class="fas fa-download"></i> Download Berkas
             </a>
             <button class="btn btn-like" onclick="likeMod({{ mod.id }})">
-                <i class="fas fa-heart"></i> Like (<span id="likeCount">{{ mod.likes }}</span>)
+                <i class="fas fa-heart"></i> Suka (<span id="likeCount">{{ mod.likes }}</span>)
             </button>
         </div>
 
         <div class="stat-box">
-            <h4 style="margin-bottom: 15px;">Informasi File</h4>
-            <div class="meta-row"><span>Downloads</span> <b id="dlCount">{{ mod.downloads }}</b></div>
-            <div class="meta-row"><span>Platform</span> <b style="text-transform: uppercase;">{{ mod.platform }}</b></div>
-            <div class="meta-row"><span>Versi Game</span> <b>{{ mod.version }}</b></div>
-            <div class="meta-row"><span>Loader</span> <b>{{ mod.loader }}</b></div>
+            <h4 style="margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Informasi Metadata</h4>
+            <div class="meta-row"><span>Total Unduhan</span> <b id="dlCount">{{ mod.downloads }}</b></div>
+            <div class="meta-row"><span>Platform Game</span> <b style="text-transform: uppercase;">{{ mod.platform }}</b></div>
+            <div class="meta-row"><span>Versi Kompatibel</span> <b>{{ mod.version }}</b></div>
+            <div class="meta-row"><span>Mesin Loader</span> <b>{{ mod.loader }}</b></div>
+            <div class="meta-row"><span>Nama File</span> <b style="font-family: monospace; font-size: 12px; word-break: break-all;">{{ mod.file_filename }}</b></div>
         </div>
     </div>
 </div>
