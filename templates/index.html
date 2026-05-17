@@ -20,11 +20,10 @@
             --text-muted: #94a3b8;
             --text-dark: #64748b;
             
-            /* Modrinth Cyan-Green Palette */
-            --mr-green: #00af9c;
-            --mr-green-hover: #00d4bd;
-            --mr-green-alpha: rgba(0, 175, 156, 0.12);
-            --mr-green-glow: rgba(0, 175, 156, 0.3);
+            /* TEMA UTAMA DEFAULT (GREEN) */
+            --theme-color: #00af9c;
+            --theme-color-hover: #00d4bd;
+            --theme-alpha: rgba(0, 175, 156, 0.12);
             
             --java-blue: #38bdf8;
             --java-blue-alpha: rgba(56, 189, 248, 0.12);
@@ -36,21 +35,35 @@
             --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* VARIAN WARNA TEMA JAVASCRIPT BINDING */
+        body.theme-green {
+            --theme-color: #00af9c;
+            --theme-color-hover: #00d4bd;
+            --theme-alpha: rgba(0, 175, 156, 0.12);
+        }
+        body.theme-blue {
+            --theme-color: #38bdf8;
+            --theme-color-hover: #7dd3fc;
+            --theme-alpha: rgba(56, 189, 248, 0.12);
+        }
+        body.theme-purple {
+            --theme-color: #a855f7;
+            --theme-color-hover: #c084fc;
+            --theme-alpha: rgba(168, 85, 247, 0.12);
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
         body {
             background-color: var(--bg-dark);
             font-family: var(--font-main);
             color: var(--text-main);
             line-height: 1.5;
-            overflow-x: hidden;
         }
 
         /* NAVBAR SYSTEM */
         .rex-navbar {
             background-color: rgba(17, 18, 23, 0.9);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--border-color);
             padding: 14px 20px;
             position: sticky;
@@ -69,492 +82,240 @@
             font-weight: 800;
             color: #fff;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-        .nav-brand span { color: var(--mr-green); }
-        .nav-menu { display: flex; align-items: center; gap: 16px; }
-        .nav-link {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .nav-link:hover, .nav-link.active { color: #fff; }
-        .nav-link.highlight {
-            color: var(--mr-green);
-            background: var(--mr-green-alpha);
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid rgba(0, 175, 156, 0.2);
-        }
-        .nav-link.highlight:hover { background: var(--mr-green); color: #000; }
+        .nav-brand span { color: var(--theme-color); }
+        .nav-menu { display: flex; align-items: center; gap: 16px; position: relative; }
 
-        /* =========================================================================
-           EXCLUSIVE GIANT HERO BANNER WITH DOT MATRIX
-           ========================================================================= */
-        .rex-banner-hero {
-            position: relative;
-            background: radial-gradient(circle at 50% 0%, rgba(0, 175, 156, 0.15) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            padding: 60px 20px;
-            text-align: center;
-            overflow: hidden;
-        }
-        .rex-banner-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 24px 24px;
-            pointer-events: none;
-        }
-        .banner-content {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            z-index: 5;
-        }
-        .banner-badge {
-            background-color: var(--mr-green-alpha);
-            color: var(--mr-green);
-            border: 1px solid rgba(0, 175, 156, 0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
-        }
-        .rex-banner-hero h1 {
-            font-size: 36px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            color: #fff;
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-        .rex-banner-hero h1 span {
-            background: linear-gradient(135deg, #fff 40%, var(--mr-green-hover) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .rex-banner-hero p {
-            color: var(--text-muted);
-            font-size: 15px;
-            max-width: 620px;
-            margin: 0 auto 24px auto;
-            line-height: 1.6;
-        }
-        .banner-action-row {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .action-btn {
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 13.5px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition-smooth);
-        }
-        .action-btn.primary { background: var(--mr-green); color: #000; }
-        .action-btn.primary:hover { background: var(--mr-green-hover); }
-        .action-btn.secondary { background: var(--bg-card); color: #fff; border: 1px solid var(--border-color); }
-        .action-btn.secondary:hover { background: var(--bg-card-hover); border-color: var(--text-dark); }
-
-        /* =========================================================================
-           MAIN INTERACTIVE CONTAINER SYSTEM
-           ========================================================================= */
-        .rex-main-body {
-            max-width: 1200px;
-            margin: 32px auto;
-            padding: 0 20px;
-        }
-
-        /* ADVANCED CONTROL CONTROLLER BAR */
-        .advanced-control-bar {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-        
-        .search-input-wrapper {
-            position: relative;
-            width: 100%;
-        }
-        .search-input-wrapper i {
-            position: absolute;
-            left: 14px; top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-        .master-search-field {
-            width: 100%;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            padding: 12px 14px 12px 42px;
-            border-radius: 8px;
-            color: #fff;
-            font-family: var(--font-main);
-            font-size: 14px;
-            outline: none;
-            transition: var(--transition-smooth);
-        }
-        .master-search-field:focus { border-color: var(--mr-green); }
-
-        /* ADVANCED FILTER ROW BUTTONS */
-        .filter-settings-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .adv-filter-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .adv-filter-btn {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: var(--transition-smooth);
-        }
-        .adv-filter-btn:hover { color: #fff; background: var(--bg-card); }
-        .adv-filter-btn.active {
-            background: var(--mr-green-alpha);
-            border-color: var(--mr-green);
-            color: #fff;
-        }
-
-        .settings-widget-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .sort-select-menu {
-            background: var(--bg-dark);
+        /* SETTING WIDGET DROPDOWN */
+        .setting-trigger-btn {
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: #fff;
             padding: 8px 12px;
             border-radius: 6px;
-            font-size: 12.5px;
-            outline: none;
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
-        }
-
-        /* GRID CONTENT CARDS ARCHITECTURE */
-        .rex-cards-matrix-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 14px;
-        }
-
-        /* DYNAMIC MODRINTH MOD CARD */
-        .mod-matrix-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
             display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            position: relative;
+            align-items: center;
+            gap: 6px;
             transition: var(--transition-smooth);
-            cursor: pointer;
         }
-        .mod-matrix-card:hover {
-            transform: translateY(-2px);
-            background: var(--bg-card-hover);
-            border-color: var(--text-dark);
-        }
+        .setting-trigger-btn:hover { border-color: var(--theme-color); }
 
-        .card-graphic-container {
-            width: 68px; height: 68px;
-            background: var(--bg-dark);
+        .setting-dropdown-box {
+            position: absolute;
+            top: 45px; right: 0;
+            width: 280px;
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .card-graphic-container img { width: 100%; height: 100%; object-fit: cover; }
-        .card-graphic-container i { font-size: 26px; color: var(--mr-green); }
-
-        .card-core-details {
-            display: flex;
+            padding: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+            display: none;
             flex-direction: column;
-            width: 100%;
-            overflow: hidden;
+            gap: 14px;
+            z-index: 500;
         }
-        .card-core-details h2 { font-size: 16.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-        .card-core-details p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.45; }
+        .setting-dropdown-box.show { display: flex; }
 
-        /* BADGES LOADER AND VERSION STACKS */
-        .card-labels-flex {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .sys-label {
-            font-size: 10px;
+        .setting-section-title {
+            font-size: 11px;
             font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
+            color: var(--text-dark);
             text-transform: uppercase;
-            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
         }
+
+        /* Theme Color Pill Selectors */
+        .theme-selector-row { display: flex; gap: 6px; }
+        .theme-pill {
+            flex: 1; padding: 6px; border: 1px solid var(--border-color);
+            border-radius: 6px; font-size: 11px; font-weight: 600; text-align: center;
+            cursor: pointer; background: var(--bg-dark); color: var(--text-muted);
+        }
+        .theme-pill.active-green { border-color: #00af9c; color: #00af9c; background: rgba(0, 175, 156, 0.1); }
+        .theme-pill.active-blue { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+        .theme-pill.active-purple { border-color: #a855f7; color: #a855f7; background: rgba(168, 85, 247, 0.1); }
+
+        /* Gamertag Info Box */
+        .gamertag-info-node {
+            background: var(--bg-dark); border: 1px solid var(--border-color);
+            border-radius: 6px; padding: 8px 10px; font-size: 12px; display: flex; justify-content: space-between; margin-bottom: 4px;
+        }
+        .gamertag-info-node span { font-weight: 600; color: #fff; }
+
+        /* Social Link Buttons */
+        .social-link-btn {
+            background: var(--bg-dark); border: 1px solid var(--border-color);
+            color: #fff; padding: 8px; border-radius: 6px; font-size: 12px;
+            text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-weight: 600; transition: var(--transition-smooth);
+        }
+        .social-link-btn.yt:hover { background: #ef4444; border-color: #ef4444; color: #fff; }
+        .social-link-btn.tt:hover { background: #fff; border-color: #fff; color: #000; }
+
+        /* Donate Box Button */
+        .donate-box-btn {
+            background: var(--theme-alpha); border: 1px solid var(--theme-color);
+            color: var(--theme-color); text-align: center; padding: 10px; border-radius: 6px;
+            font-size: 12px; font-weight: 700; text-decoration: none; transition: var(--transition-smooth);
+        }
+        .donate-box-btn:hover { background: var(--theme-color); color: #000; }
+
+        /* BANNER HERO */
+        .rex-banner-hero {
+            position: relative;
+            background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .banner-content { max-width: 800px; margin: 0 auto; }
+        .rex-banner-hero h1 { font-size: 36px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+        .rex-banner-hero h1 span { color: var(--theme-color); }
+        .rex-banner-hero p { color: var(--text-muted); font-size: 15px; max-width: 620px; margin: 0 auto; line-height: 1.6; }
+
+        /* MAIN CONTAINER */
+        .rex-main-body { max-width: 1200px; margin: 32px auto; padding: 0 20px; }
+
+        /* CONTROL FILTER BAR */
+        .advanced-control-bar {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 16px; margin-bottom: 24px;
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .search-input-wrapper { position: relative; width: 100%; }
+        .search-input-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        .master-search-field {
+            width: 100%; background: var(--bg-dark); border: 1px solid var(--border-color);
+            padding: 12px 14px 12px 42px; border-radius: 8px; color: #fff; outline: none;
+        }
+        .master-search-field:focus { border-color: var(--theme-color); }
+
+        .adv-filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+        .adv-filter-btn {
+            background: var(--bg-dark); border: 1px solid var(--border-color); color: var(--text-muted);
+            padding: 8px 14px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+        }
+        .adv-filter-btn.active { background: var(--theme-alpha); border-color: var(--theme-color); color: #fff; }
+
+        /* GRID CONTENT CARDS */
+        .rex-cards-matrix-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+
+        .mod-matrix-card {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 18px; display: flex; gap: 16px; align-items: flex-start;
+            text-decoration: none; color: var(--text-main); transition: var(--transition-smooth);
+        }
+        .mod-matrix-card:hover { transform: translateY(-2px); background: var(--bg-card-hover); }
+
+        .card-graphic-container {
+            width: 64px; height: 64px; background: var(--bg-dark);
+            border: 1px solid var(--border-color); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .card-graphic-container i { font-size: 24px; color: var(--theme-color); }
+
+        .card-core-details { display: flex; flex-direction: column; width: 100%; }
+        .card-core-details h2 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .card-core-details p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; }
+
+        .card-labels-flex { display: flex; gap: 6px; flex-wrap: wrap; }
+        .sys-label { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; font-family: var(--font-mono); }
         .sys-label.plat-java { background: var(--java-blue-alpha); color: var(--java-blue); }
         .sys-label.plat-mcpe { background: var(--mcpe-orange-alpha); color: var(--mcpe-orange); }
-        .sys-label.loader-tag { background: var(--mr-green-alpha); color: var(--mr-green); }
-        .sys-label.ver-tag { background: var(--bg-dark); color: #cbd5e1; border: 1px solid var(--border-color); }
-
-        /* INDEPENDENT RIGHT DOWNLOAD STRIP BUTTON */
-        .card-download-trigger-btn {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            color: var(--mr-green);
-            width: 40px; height: 40px;
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            align-self: center;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            flex-shrink: 0;
-        }
-        .mod-matrix-card:hover .card-download-trigger-btn {
-            background: var(--mr-green);
-            color: #000;
-            border-color: var(--mr-green);
-        }
-
-        /* EMPTY STATUS FALLBACK */
-        .fallback-empty-card {
-            text-align: center;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            padding: 50px 20px;
-            border-radius: 12px;
-            color: var(--text-muted);
-        }
-        .fallback-empty-card i { font-size: 42px; color: var(--text-dark); margin-bottom: 12px; }
-
-        /* =========================================================================
-           ADVANCED MODAL POP-UP DIALOG (PILIH VERSI RELEASE)
-           ========================================================================= */
-        .rex-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 5, 8, 0.85);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .rex-modal-overlay.active { display: flex; }
-
-        .modal-container-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            max-width: 520px;
-            width: 100%;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);
-            animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes modalPop {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.01);
-        }
-        .modal-header h3 { font-size: 15px; font-weight: 700; color: #fff; }
-        .close-modal-btn {
-            background: none; border: none; color: var(--text-muted);
-            cursor: pointer; font-size: 16px; transition: color 0.15s;
-        }
-        .close-modal-btn:hover { color: #fff; }
-
-        .modal-body-scroller {
-            padding: 16px;
-            max-height: 380px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* POP-UP FILE SELECTION LIST ROWS */
-        .popup-file-row {
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px 14px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-decoration: none;
-            transition: var(--transition-smooth);
-        }
-        .popup-file-row:hover {
-            border-color: var(--mr-green);
-            background: var(--bg-card);
-        }
-        .popup-file-left { display: flex; flex-direction: column; gap: 4px; }
-        .popup-file-title { font-size: 13.5px; font-weight: 700; color: #fff; }
-        .popup-meta-chips { display: flex; gap: 6px; align-items: center; }
-        
-        .popup-dl-icon {
-            color: var(--mr-green);
-            background: var(--mr-green-alpha);
-            width: 32px; height: 32px;
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 13px;
-        }
-        .popup-file-row:hover .popup-dl-icon {
-            background: var(--mr-green);
-            color: #000;
-        }
-
-        /* FOOTER MODULE */
-        .rex-footer {
-            text-align: center;
-            margin-top: 60px;
-            border-top: 1px solid var(--border-color);
-            padding: 24px 20px;
-            font-size: 12.5px;
-            color: var(--text-dark);
-        }
+        .sys-label.loader-tag { background: var(--theme-alpha); color: var(--theme-color); }
 
         @media(min-width: 768px) {
-            .rex-banner-hero { padding: 80px 20px; }
-            .rex-banner-hero h1 { font-size: 44px; }
             .advanced-control-bar { flex-direction: row; align-items: center; }
             .search-input-wrapper { flex: 1; }
             .rex-cards-matrix-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
-<body>
+<body class="theme-green" onclick="closeDropdownOutside(event)">
 
     <nav class="rex-navbar">
         <div class="nav-container">
             <a href="/" class="nav-brand"><i class="fas fa-cubes"></i> RexCraft<span>Hub</span></a>
             <div class="nav-menu">
-                <a href="#penjelajah" class="nav-link active">Penjelajah</a>
-                <a href="/tutorial" class="nav-link highlight"><i class="fas fa-book"></i> Tutorial Pasang</a>
+                <button class="setting-trigger-btn" id="settingTriggerBtn" onclick="toggleSettingMenu(event)">
+                    <i class="fas fa-cog"></i> Pengaturan
+                </button>
+                
+                <div class="setting-dropdown-box" id="settingDropdownBox">
+                    <div>
+                        <div class="setting-section-title">Tema Situs</div>
+                        <div class="theme-selector-row">
+                            <div class="theme-pill" id="pill-green" onclick="switchSiteTheme('green')">Green</div>
+                            <div class="theme-pill" id="pill-blue" onclick="switchSiteTheme('blue')">Blue</div>
+                            <div class="theme-pill" id="pill-purple" onclick="switchSiteTheme('purple')">Purple</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="setting-section-title">Gamertag MC</div>
+                        <div class="gamertag-info-node"><i class="fab fa-java" style="color:var(--java-blue)"></i> Java: <span>RexCraft</span></div>
+                        <div class="gamertag-info-node"><i class="fas fa-mobile-alt" style="color:var(--mcpe-orange)"></i> MCPE: <span>RexCraft6506</span></div>
+                    </div>
+
+                    <div>
+                        <div class="setting-section-title">Sosial Media</div>
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                            <a href="https://www.youtube.com/@RexCraft6506" target="_blank" class="social-link-btn yt"><i class="fab fa-youtube"></i> YouTube Channel</a>
+                            <a href="https://www.tiktok.com" target="_blank" class="social-link-btn tt"><i class="fab fa-tiktok"></i> TikTok Profile</a>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <div class="setting-section-title">Dukungan Kreator</div>
+                        <a href="#" class="donate-box-btn" onclick="alert('Link Donasi Saweria/Sosialbuzz akan segera hadir!')">
+                            <i class="fas fa-heart"></i> Donate me to make me happier
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="rex-banner-hero">
         <div class="banner-content">
-            <div class="banner-badge">
-                <i class="fas fa-bolt"></i> REXCRAFT BIG UPDATE V2.0 PRODUCTION LIVE
-            </div>
             <h1>Repositori Pusat <span>Optimasi & Modifikasi</span></h1>
-            <p>Situs distribusi berkas modifikasi, shader pack, dan optimasi engine Minecraft terverifikasi untuk mendongkrak frame sirkuit game client Anda.</p>
-            <div class="banner-action-row">
-                <a href="#penjelajah" class="action-btn primary"><i class="fas fa-compass"></i> Jelajahi Modifikasi</a>
-                <a href="/tutorial" class="action-btn secondary"><i class="fas fa-scroll"></i> Panduan Pemasangan</a>
-            </div>
+            <p>Situs distribusi berkas modifikasi, shader pack, dan optimasi engine Minecraft terverifikasi mirip Modrinth.</p>
         </div>
     </div>
 
-    <main class="rex-main-body" id="penjelajah">
-        
+    <main class="rex-main-body">
         <div class="advanced-control-bar">
             <div class="search-input-wrapper">
                 <i class="fas fa-search"></i>
-                <input type="text" class="master-search-field" id="matrixSearchInput" placeholder="Cari arsip mod, shader, paket fps kustom..." onkeyup="executeMatrixEngineFilter()">
+                <input type="text" class="master-search-field" id="matrixSearchInput" placeholder="Cari arsip modifikasi..." onkeyup="executeMatrixEngineFilter()">
             </div>
-
-            <div class="filter-settings-flex">
-                <div class="adv-filter-group">
-                    <button class="adv-filter-btn active" id="flt-all" onclick="setMatrixCategory('all', this)"><i class="fas fa-border-all"></i> Semua</button>
-                    <button class="adv-filter-btn" id="flt-java" onclick="setMatrixCategory('java', this)"><i class="fab fa-java"></i> Java</button>
-                    <button class="adv-filter-btn" id="flt-mcpe" onclick="setMatrixCategory('mcpe', this)"><i class="fas fa-mobile-alt"></i> Bedrock / MCPE</button>
-                </div>
-
-                <div class="settings-widget-group">
-                    <select class="sort-select-menu" id="matrixSortSelect" onchange="executeMatrixEngineFilter()">
-                        <option value="az">Nama (A-Z)</option>
-                        <option value="za">Nama (Z-A)</option>
-                    </select>
-                </div>
+            <div class="adv-filter-group">
+                <button class="adv-filter-btn active" id="flt-all" onclick="setMatrixCategory('all', this)">Semua</button>
+                <button class="adv-filter-btn" id="flt-java" onclick="setMatrixCategory('java', this)">Java</button>
+                <button class="adv-filter-btn" id="flt-mcpe" onclick="setMatrixCategory('mcpe', this)">Bedrock / MCPE</button>
             </div>
         </div>
 
         <div class="rex-cards-matrix-grid" id="matrixContainerDisplayGrid">
             {% if mods %}
                 {% for mod in mods %}
-                <div class="mod-matrix-card" data-name="{{ mod.title|lower }}" data-platform="{{ mod.category }}" onclick="openVersionReleaseModal('{{ mod.title }}', '{{ mod.category }}', 'v{{ mod.version_range }}')">
+                <a href="/mod/{{ mod.id }}" class="mod-matrix-card" data-name="{{ mod.title|lower }}" data-platform="{{ mod.category }}">
                     <div class="card-graphic-container">
-                        {% if mod.icon_url %}
-                            <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
-                        {% else %}
-                            <i class="fas fa-cube"></i>
-                        {% endif %}
+                        <i class="fas fa-cube"></i>
                     </div>
                     <div class="card-core-details">
                         <h2>{{ mod.title }}</h2>
                         <p>{{ mod.desc }}</p>
-                        
                         <div class="card-labels-flex">
                             <span class="sys-label plat-{% if mod.category == 'java' %}java{% else %}mcpe{% endif %}">{{ mod.category }}</span>
-                            {% if mod.loaders %}
-                                {% for loader in mod.loaders %}
-                                <span class="sys-label loader-tag">{{ loader }}</span>
-                                {% endfor %}
-                            {% endif %}
-                            <span class="sys-label ver-tag">v{{ mod.version_range }}</span>
+                            <span class="sys-label loader-tag">FABRIC</span>
                         </div>
                     </div>
-                    
-                    <div class="card-download-trigger-btn">
-                        <i class="fas fa-download"></i>
-                    </div>
-                </div>
+                </a>
                 {% endfor %}
             {% else %}
                 <div class="fallback-empty-card" id="fallbackEmptyBox">
@@ -565,71 +326,41 @@
         </div>
     </main>
 
-    <div class="rex-modal-overlay" id="versionReleasePopupModal" onclick="closeVersionReleaseModalOutside(event)">
-        <div class="modal-container-box">
-            <div class="modal-header">
-                <h3 id="modalTargetTitleName">Pilih Versi Berkas Rilis</h3>
-                <button class="close-modal-btn" onclick="toggleCloseModalDirect()"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="modal-body-scroller" id="modalDynamicFilesContainer">
-                </div>
-        </div>
-    </div>
-
-    <footer class="rex-footer">
-        &copy; 2026 RexCraft Hub. Hak Cipta Dilindungi Undang-Undang. Komunitas Minecraft Indonesia.
-    </footer>
-
     <script>
         let selectedCategoryFilter = 'all';
+        let Zion = document.getElementById('settingDropdownBox');
+
+        function toggleSettingMenu(event) {
+            event.stopPropagation();
+            Zion.classList.toggle('show');
+        }
+
+        function closeDropdownOutside(event) {
+            if (!Zion.contains(event.target) && event.target.id !== "settingTriggerBtn") {
+                Zion.classList.remove('show');
+            }
+        }
+
+        function switchSiteTheme(colorName) {
+            document.body.className = "theme-" + colorName;
+            document.getElementById('pill-green').className = "theme-pill " + (colorName === 'green' ? 'active-green' : '');
+            document.getElementById('pill-blue').className = "theme-pill " + (colorName === 'blue' ? 'active-blue' : '');
+            document.getElementById('pill-purple').className = "theme-pill " + (colorName === 'purple' ? 'active-purple' : '');
+        }
+        switchSiteTheme('green');
 
         function executeMatrixEngineFilter() {
             let searchKeyword = document.getElementById('matrixSearchInput').value.toLowerCase();
             let cards = Array.from(document.getElementsByClassName('mod-matrix-card'));
-            let activeCount = 0;
-            let gridContainer = document.getElementById('matrixContainerDisplayGrid');
-
             cards.forEach(card => {
                 let name = card.getAttribute('data-name');
                 let platform = card.getAttribute('data-platform');
-
-                let matchSearch = name.includes(searchKeyword);
-                let matchFilter = (selectedCategoryFilter === 'all' || platform === selectedCategoryFilter);
-
-                if (matchSearch && matchFilter) {
+                if (name.includes(searchKeyword) && (selectedCategoryFilter === 'all' || platform === selectedCategoryFilter)) {
                     card.style.display = "flex";
-                    activeCount++;
                 } else {
                     card.style.display = "none";
                 }
             });
-
-            // Sorting Engine Logic
-            let sortingStrategy = document.getElementById('matrixSortSelect').value;
-            cards.sort((alpha, beta) => {
-                let titleAlpha = alpha.getAttribute('data-name');
-                let titleBeta = beta.getAttribute('data-name');
-                return sortingStrategy === 'az' ? titleAlpha.localeCompare(titleBeta) : titleBeta.localeCompare(titleAlpha);
-            });
-
-            cards.forEach(card => {
-                if(card.style.display === "flex") gridContainer.appendChild(card);
-            });
-
-            // Tampilkan fallback kosong jika data lenyap saat difilter
-            let fallbackElement = document.getElementById('fallbackEmptyBox');
-            if (activeCount === 0) {
-                if(!fallbackElement && gridContainer) {
-                    gridContainer.innerHTML += `
-                        <div class="fallback-empty-card" id="fallbackEmptyBox">
-                            <i class="fas fa-search-minus"></i>
-                            <p>Modifikasi pencarian Anda tidak ditemukan.</p>
-                        </div>
-                    `;
-                }
-            } else {
-                if(fallbackElement) fallbackElement.remove();
-            }
         }
 
         function setMatrixCategory(category, element) {
@@ -637,56 +368,7 @@
             let buttons = document.getElementsByClassName('adv-filter-btn');
             for(let btn of buttons) { btn.classList.remove('active'); }
             if(element) element.classList.add('active');
-
             executeMatrixEngineFilter();
-        }
-
-        /* =========================================================================
-           POP-UP MODAL ENGINE RIG LOGIC (MENGATASI KESALAHAN POP UP VERSION)
-           ========================================================================= */
-        function openVersionReleaseModal(title, platform, versionRange) {
-            document.getElementById('modalTargetTitleName').innerText = title + " - Pilihan Rilis";
-            
-            // Generate list file rilis otomatis berdasarkan metadata item yang diklik
-            let scrollerContainer = document.getElementById('modalDynamicFilesContainer');
-            let loaderLabel = platform === 'java' ? 'FABRIC' : 'MCPE CORE';
-            
-            scrollerContainer.innerHTML = `
-                <a href="#" class="popup-file-row" onclick="alert('Unduhan Dimulai!');">
-                    <div class="popup-file-left">
-                        <div class="popup-file-title">${title} Stable Pack (Terbaru)</div>
-                        <div class="popup-meta-chips">
-                            <span class="sys-label loader-tag">${loaderLabel}</span>
-                            <span class="sys-label ver-tag">${versionRange}</span>
-                            <span style="font-size:11px; color:var(--text-muted)">&bull; 5.4 MB</span>
-                        </div>
-                    </div>
-                    <div class="popup-dl-icon"><i class="fas fa-download"></i></div>
-                </a>
-                <a href="#" class="popup-file-row" onclick="alert('Unduhan Versi Lama Dimulai!');">
-                    <div class="popup-file-left">
-                        <div class="popup-file-title">${title} Legacy Build</div>
-                        <div class="popup-meta-chips">
-                            <span class="sys-label loader-tag">${loaderLabel}</span>
-                            <span class="sys-label ver-tag">${versionRange}</span>
-                            <span style="font-size:11px; color:var(--text-muted)">&bull; 4.1 MB</span>
-                        </div>
-                    </div>
-                    <div class="popup-dl-icon"><i class="fas fa-download"></i></div>
-                </a>
-            `;
-
-            document.getElementById('versionReleasePopupModal').classList.add('active');
-        }
-
-        function toggleCloseModalDirect() {
-            document.getElementById('versionReleasePopupModal').classList.remove('active');
-        }
-
-        function closeVersionReleaseModalOutside(event) {
-            if (event.target.id === "versionReleasePopupModal") {
-                toggleCloseModalDirect();
-            }
         }
     </script>
 </body>
