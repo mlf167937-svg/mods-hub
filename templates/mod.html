@@ -2,76 +2,323 @@
 {% block content %}
 <style>
     :root {
-        --theme-color: #22c55e; /* Hijau Emerald */
-        --theme-color-hover: #16a34a;
+        --theme-color: #00af9c; /* Hijau khas Modrinth */
+        --theme-color-hover: #008f80;
+        --bg-modal: #16181d;
     }
 
-    .mod-header { display: flex; gap: 20px; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-    .mod-header img { width: 120px; height: 120px; border-radius: 16px; object-fit: cover; background: var(--bg-card); border: 1px solid var(--border); }
-    .mod-header h1 { font-size: 32px; font-weight: 800; margin-bottom: 5px; }
-    
-    .layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
-    .desc-box { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); line-height: 1.6; text-align: justify; color: #cbd5e1; margin-bottom: 30px; }
-    
-    .sidebar-mod { display: flex; flex-direction: column; gap: 20px; }
-    .stat-box { background: var(--bg-card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+    /* Layout Utama ala Modrinth Mobile */
+    .modrinth-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 10px;
+        margin-bottom: 30px;
+    }
 
-    .version-list-title { font-size: 22px; font-weight: 800; margin-bottom: 15px; color: #fff; }
-    .version-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); border: 1px solid var(--border); padding: 15px 20px; border-radius: 10px; margin-bottom: 10px; transition: 0.2s; }
-    .version-row:hover { border-color: var(--theme-color); }
-    .version-meta { display: flex; align-items: center; gap: 15px; }
-    .v-name { font-weight: 600; font-size: 15px; color: #fff; font-family: monospace; }
-    
-    /* Tombol Download Diubah Menjadi Hijau */
-    .dl-small-btn { background: var(--theme-color); color: #000; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
-    .dl-small-btn:hover { background: var(--theme-color-hover); }
+    .header-core {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        width: 100%;
+    }
 
-    .meta-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-    .meta-row:last-child { border: none; padding-bottom: 0; }
-    .meta-row span { color: var(--text-muted); }
-    .meta-row b { color: #fff; }
+    .header-core img {
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        object-fit: cover;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+    }
 
-    @media (max-width: 768px) { .layout { grid-template-columns: 1fr; } .version-row { flex-direction: column; gap: 15px; align-items: flex-start; } .dl-small-btn { width: 100%; justify-content: center; } }
+    .header-text h1 {
+        font-size: 28px;
+        font-weight: 800;
+        margin: 0 0 5px 0;
+        color: #fff;
+    }
+
+    .header-text p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 14px;
+    }
+
+    /* Tombol Aksi Utama Pas di Bawah Ikon */
+    .action-bar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    .main-download-btn {
+        background: var(--theme-color);
+        color: #000;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        box-shadow: 0 4px 12px rgba(0, 175, 156, 0.3);
+    }
+
+    .main-download-btn:hover {
+        transform: scale(1.05);
+        background: var(--theme-color-hover);
+    }
+
+    .icon-btn-secondary {
+        background: var(--bg-card);
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .icon-btn-secondary:hover {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    /* Angka Stat Palsu biar makin mirip screenshot */
+    .fake-stats {
+        display: flex;
+        gap: 20px;
+        color: var(--text-muted);
+        font-size: 14px;
+        margin-top: -5px;
+        font-weight: 600;
+    }
+    .fake-stats span i {
+        margin-right: 5px;
+    }
+
+    /* Navigasi Tab Mini */
+    .tab-bar {
+        display: flex;
+        gap: 15px;
+        border-bottom: 2px solid var(--border);
+        width: 100%;
+        margin-top: 20px;
+        padding-bottom: 10px;
+    }
+    .tab-item {
+        color: #fff;
+        font-weight: 700;
+        font-size: 15px;
+        border-bottom: 3px solid var(--theme-color);
+        padding-bottom: 11px;
+        margin-bottom: -13px;
+    }
+
+    /* Kotak Deskripsi */
+    .desc-box {
+        width: 100%;
+        background: var(--bg-card);
+        padding: 25px;
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        line-height: 1.6;
+        text-align: justify;
+        color: #cbd5e1;
+        margin-top: 20px;
+    }
+
+    /* STYLING POP-UP / MODAL BERKAS */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s ease;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        background: var(--bg-modal);
+        border: 1px solid var(--border);
+        width: 100%;
+        max-width: 500px;
+        border-radius: 16px;
+        padding: 25px;
+        transform: translateY(30px);
+        transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 15px;
+    }
+
+    .modal-header h3 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+        color: #fff;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .close-modal:hover { color: #fff; }
+
+    .version-scroll {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    /* Row Download di dalam Pop-up */
+    .pop-version-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border);
+        padding: 12px 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        transition: 0.2s;
+    }
+    .pop-version-row:hover {
+        border-color: var(--theme-color);
+        background: rgba(0, 175, 156, 0.05);
+    }
+
+    .version-title-text {
+        font-weight: 600;
+        font-size: 14px;
+        color: #fff;
+        font-family: monospace;
+        word-break: break-all;
+        padding-right: 10px;
+    }
+
+    .pop-dl-btn {
+        background: var(--theme-color);
+        color: #000;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+    }
 </style>
 
-<div class="mod-header">
-    <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/120/1c1e26/22c55e?text=Mod'">
-    <div>
-        <h1>{{ mod.title }}</h1>
-        <p style="color: var(--text-muted);">Karya <b style="color:#fff;">RexCraft</b> &bull; Kategori: <span style="text-transform: capitalize; color: var(--theme-color);">{{ mod.category }}</span></p>
+<div class="modrinth-container">
+    <div class="header-core">
+        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/100/1c1e26/00af9c?text=Mod'">
+        <div class="header-text">
+            <h1>{{ mod.title }}</h1>
+            <p>{{ mod.category }} &bull; Oleh RexCraft</p>
+        </div>
+    </div>
+
+    <div class="action-bar">
+        <button class="main-download-btn" onclick="openModal()" title="Unduh Berkas">
+            <i class="fas fa-download"></i>
+        </button>
+        <button class="icon-btn-secondary"><i class="far fa-heart"></i></button>
+        <button class="icon-btn-secondary"><i class="far fa-bookmark"></i></button>
+    </div>
+
+    <div class="fake-stats">
+        <span><i class="fas fa-download"></i> 1.2K</span>
+        <span><i class="fas fa-heart"></i> 340</span>
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab-item">Description</div>
+    </div>
+
+    <div class="desc-box">
+        <p style="white-space: pre-wrap; margin: 0;">{{ mod.desc }}</p>
     </div>
 </div>
 
-<div class="layout">
-    <div>
-        <div class="desc-box">
-            <h3 style="margin-bottom: 15px; color: #fff; border-bottom: 2px solid var(--border); padding-bottom: 10px;">Deskripsi Mod</h3>
-            <p style="white-space: pre-wrap;">{{ mod.desc }}</p>
+<div class="modal-overlay" id="versionModal" onclick="closeModalOutside(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Pilih Versi File</h3>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
-
-        <div class="version-list-title"><i class="fas fa-layer-group" style="color: var(--theme-color);"></i> Berkas Tersedia (Silakan Pilih)</div>
-        {% for filename in mod.files %}
-        <div class="version-row">
-            <div class="version-meta">
-                <i class="fas fa-file-archive" style="color: var(--theme-color); font-size: 18px;"></i>
-                <span class="v-name">{{ filename }}</span>
+        
+        <div class="version-scroll">
+            {% for filename in mod.files %}
+            <div class="pop-version-row">
+                <span class="version-title-text">{{ filename }}</span>
+                <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ filename }}" class="pop-dl-btn">
+                    <i class="fas fa-arrow-down"></i> Unduh
+                </a>
             </div>
-            <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ filename }}" class="dl-small-btn">
-                <i class="fas fa-arrow-down"></i> Unduh Berkas
-            </a>
-        </div>
-        {% else %}
-        <p style="color: var(--text-muted);">Belum ada berkas game (.jar/.mcpack) di dalam folder ini.</p>
-        {% endfor %}
-    </div>
-
-    <div class="sidebar-mod">
-        <div class="stat-box">
-            <h4 style="margin-bottom: 15px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 10px;">Informasi</h4>
-            <div class="meta-row"><span>Platform Target</span> <b style="text-transform: uppercase;">{{ mod.platform }}</b></div>
-            <div class="meta-row"><span>Total File Terdeteksi</span> <b>{{ mod.files|length }} Versi</b></div>
-            <div class="meta-row"><span>Sistem Sinkronisasi</span> <b style="color: var(--theme-color);">Pure GitHub Live</b></div>
+            {% else %}
+            <p style="color: var(--text-muted); text-align: center; padding: 10px;">Belum ada berkas versi di folder ini.</p>
+            {% endfor %}
         </div>
     </div>
 </div>
+
+<script>
+    function openModal() {
+        document.getElementById('versionModal').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('versionModal').classList.remove('active');
+    }
+
+    // Fungsi biar kalau klik area luar pop-up, otomatis ketutup
+    function closeModalOutside(event) {
+        if (event.target.id === 'versionModal') {
+            closeModal();
+        }
+    }
+</script>
 {% endblock %}
