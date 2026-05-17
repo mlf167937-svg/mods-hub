@@ -6,318 +6,333 @@
     <title>{{ mod.title }} - RexCraft Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --mr-bg-dark: #07080b;
-            --mr-bg-surface: #111217;
-            --mr-bg-card: #161920;
-            --mr-border: #242836;
-            --mr-text-main: #f1f5f9;
-            --mr-text-muted: #94a3b8;
-            --mr-green: #00af9c; 
+            --bg-dark: #090a0f;
+            --bg-surface: #12141c;
+            --bg-card: #181b26;
+            --border-color: #222735;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --mr-green: #00af9c;
             --mr-green-hover: #00d4bd;
-            --font-mr: 'Inter', sans-serif;
+            --mr-green-alpha: rgba(0, 175, 156, 0.15);
+            --java-blue: #38bdf8;
+            --font-main: 'Inter', sans-serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--mr-bg-dark); font-family: var(--font-mr); color: var(--mr-text-main); padding-bottom: 60px; }
+        body {
+            background-color: var(--bg-dark);
+            font-family: var(--font-main);
+            color: var(--text-main);
+            padding-bottom: 60px;
+        }
 
-        .mr-nav-top { background-color: var(--mr-bg-surface); border-bottom: 1px solid var(--mr-border); padding: 14px 20px; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .mr-back-link { color: var(--mr-text-muted); text-decoration: none; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .rex-navbar {
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 20px;
+        }
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-brand span { color: var(--mr-green); }
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .back-link:hover { color: #fff; }
 
-        .mr-container { max-width: 1200px; margin: 24px auto 0 auto; padding: 0 16px; }
-
-        .mr-main-header-block { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; }
-        .mr-identity-row { display: flex; gap: 16px; align-items: flex-start; }
-        .mr-big-icon-wrapper { width: 76px; height: 76px; background: var(--mr-bg-card); border: 1px solid var(--mr-border); border-radius: 14px; overflow: hidden; }
-        .mr-big-icon-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .mr-text-side h1 { font-size: 24px; font-weight: 700; color: var(--mr-text-main); margin-bottom: 4px; }
-        .mr-short-desc { font-size: 14px; color: var(--mr-text-muted); }
-
-        .mr-action-buttons-container { display: flex; align-items: center; gap: 12px; }
-        
-        /* SOLUSI KELUHAN 1: TOMBOL DOWNLOAD DAPAT MEMBUKA POPUP MODRINTH */
-        .btn-action-download { background-color: #00af9c; color: #ffffff; width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; border: none; cursor: pointer; }
-        .btn-action-download:hover { background-color: #00d4bd; }
-
-        .btn-action-secondary { background-color: var(--mr-bg-surface); color: var(--mr-text-main); border: 1px solid var(--mr-border); width: 42px; height: 42px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
-        .btn-action-secondary.liked i { color: #ef4444; }
-        .btn-action-secondary.fav-active i { color: #eab308; }
-
-        .mr-metrics-mini-text { display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--mr-text-muted); }
-
-        .mr-tabs { display: flex; border-bottom: 1px solid var(--mr-border); margin-bottom: 20px; }
-        .mr-tab-btn { background: none; border: none; color: var(--mr-text-muted); padding: 10px 14px; font-size: 13.5px; font-weight: 600; border-bottom: 3px solid transparent; }
-        .mr-tab-btn.active { color: var(--mr-text-main); border-bottom-color: var(--mr-green); }
-
-        .mr-grid { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
-        .mr-card-main { background-color: var(--mr-bg-surface); border: 1px solid var(--mr-border); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
-        .mr-card-main h2 { font-size: 16.5px; color: var(--mr-text-main); margin-bottom: 12px; }
-        .mr-card-main p { color: #cbd5e1; font-size: 14px; line-height: 1.5; }
-
-        /* TABLE SYSTEMS */
-        .mr-table-scroll-area { width: 100%; overflow-x: auto; border: 1px solid var(--mr-border); border-radius: 6px; background: var(--mr-bg-surface); }
-        .mr-version-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; min-width: 580px; }
-        .mr-version-table th { padding: 10px 14px; color: var(--mr-text-muted); font-weight: 700; font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--mr-border); }
-        .mr-version-table td { padding: 12px 14px; border-bottom: 1px solid var(--mr-border); vertical-align: middle; }
-        
-        .file-title-wrap { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-        .loader-badge { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
-        .loader-fabric { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .loader-forge { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-        .loader-neoforge { background: rgba(234, 179, 8, 0.15); color: #fde047; }
-        .loader-universal { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; }
-        .game-ver-tag { background-color: #161920; color: #cbd5e1; padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; border: 1px solid var(--mr-border); }
-
-        .mr-row-download-btn { background-color: rgba(0, 175, 156, 0.1); color: var(--mr-green); border: 1px solid rgba(0, 175, 156, 0.2); width: 32px; height: 32px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
-
-        /* SIDEBAR SYSTEMS */
-        .mr-sidebar-card { background-color: var(--mr-bg-surface); border: 1px solid var(--mr-border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
-        .mr-sidebar-card h3 { font-size: 11px; color: var(--mr-text-muted); text-transform: uppercase; margin-bottom: 12px; font-weight: 700; }
-        .sidebar-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--mr-border); font-size: 13px; }
-        .sidebar-row:last-child { border-bottom: none; }
-        .row-label { color: var(--mr-text-muted); }
-        .row-val { color: var(--mr-text-main); font-weight: 600; }
-        .social-link-btn { display: flex; align-items: center; justify-content: space-between; background-color: #161920; border: 1px solid var(--mr-border); color: var(--mr-text-main); padding: 10px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; margin-bottom: 6px; }
-
-        /* ── INTERACTIVE POP-UP MODAL MODRINTH STYLE ── */
-        .mr-modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.75);
+        .mod-header-container {
+            max-width: 1000px;
+            margin: 30px auto 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .mod-large-icon {
+            width: 96px;
+            height: 96px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            margin: 0 auto 16px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            padding: 16px;
-        }
-        .mr-modal-overlay.open { opacity: 1; pointer-events: auto; }
-        
-        .mr-modal-window {
-            background-color: #161920;
-            border: 1px solid var(--mr-border);
-            width: 100%;
-            max-width: 440px;
-            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
-            transform: translateY(10px);
-            transition: transform 0.2s ease;
         }
-        .mr-modal-overlay.open .mr-modal-window { transform: translateY(0); }
+        .mod-large-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .mod-large-icon i { font-size: 42px; color: var(--mr-green); }
 
-        .mr-modal-header {
-            padding: 16px;
-            border-bottom: 1px solid var(--mr-border);
+        .mod-header-container h1 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+        .mod-author { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+        .mod-author span { color: var(--mr-green); font-weight: 600; }
+
+        /* METRICS COUNTER GRID (LIKE & DOWNLOAD AUTOMATION) */
+        .metrics-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .metric-pill {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff;
+        }
+        .metric-pill.clickable {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .metric-pill.clickable:hover {
+            background: var(--bg-card);
+            border-color: #ef4444;
+        }
+        .metric-pill i.fa-download { color: var(--mr-green); }
+        .metric-pill i.fa-heart { color: #ef4444; }
+
+        /* TAB SEPARATOR */
+        .tab-nav-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .tab-buttons { display: flex; gap: 20px; }
+        .tab-btn {
+            background: none; border: none;
+            color: var(--text-muted);
+            padding: 12px 4px;
+            font-family: var(--font-main);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+        }
+        .tab-btn.active { color: var(--text-main); }
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 2px;
+            background: var(--mr-green);
+        }
+
+        /* CONTENT CONTENT MANAGEMENT */
+        .content-body-area {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+        .panel-content { display: none; }
+        .panel-content.active { display: block; }
+
+        .desc-text-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            font-size: 14.5px;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* DOWNLOAD MATRIX TABLE - MODRINTH STYLE */
+        .download-list-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .download-row-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: var(--mr-bg-surface);
+            transition: background 0.2s;
         }
-        .mr-modal-header h3 { font-size: 16px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px; }
-        .btn-close-modal { background: none; border: none; color: var(--mr-text-muted); font-size: 18px; cursor: pointer; }
-        .btn-close-modal:hover { color: #fff; }
+        .download-row-card:hover { background: var(--bg-card); }
+        
+        .file-meta-info { display: flex; flex-direction: column; gap: 4px; }
+        .file-title-text { font-size: 14px; font-weight: 700; color: #fff; }
+        
+        .file-badges { display: flex; gap: 6px; align-items: center; }
+        .mini-badge { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        .mini-badge.loader-tag { background: var(--mr-green-alpha); color: var(--mr-green); }
+        .mini-badge.version-tag { background: var(--bg-dark); color: var(--text-muted); border: 1px solid var(--border-color); }
+        .file-size-txt { font-size: 12px; color: var(--text-muted); }
 
-        .mr-modal-body { padding: 16px; max-height: 380px; overflow-y: auto; }
-        .popup-section-title { font-size: 11px; text-transform: uppercase; color: var(--mr-text-muted); margin-bottom: 10px; font-weight: 700; display: block; }
-
-        /* Item Baris Daftar Versi di Dalam Popup */
-        .popup-version-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: var(--mr-bg-surface);
-            border: 1px solid var(--mr-border);
-            padding: 12px 14px;
+        .download-action-btn {
+            background: var(--mr-green-alpha);
+            color: var(--mr-green);
+            border: 1px solid rgba(0, 175, 156, 0.3);
+            width: 36px; height: 36px;
             border-radius: 8px;
-            margin-bottom: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
             text-decoration: none;
-            color: var(--mr-text-main);
-            transition: border-color 0.15s;
+            transition: all 0.2s;
         }
-        .popup-version-row:hover { border-color: var(--mr-green); background-color: rgba(255,255,255,0.01); }
-        .popup-ver-left { display: flex; flex-direction: column; gap: 2px; }
-        .popup-file-name { font-size: 13.5px; font-weight: 600; }
-        .popup-meta-sub { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--mr-text-muted); }
-
-        @media (max-width: 850px) {
-            .mr-grid { grid-template-columns: 1fr; }
-            .mr-identity-row { align-items: center; }
-            .mr-big-icon-wrapper { width: 68px; height: 68px; }
-            .mr-text-side h1 { font-size: 21px; }
+        .download-action-btn:hover {
+            background: var(--mr-green);
+            color: #000;
         }
     </style>
 </head>
 <body>
 
-    <div class="mr-nav-top">
+    <nav class="rex-navbar">
         <div class="nav-container">
-            <a href="/" class="mr-back-link"><i class="fas fa-arrow-left"></i> Kembali</a>
-            <a href="/tutorial" class="mr-back-link" style="color: var(--mr-green);"><i class="fas fa-book"></i> Panduan Tutorial</a>
+            <a href="/" class="nav-brand" style="text-decoration:none"><i class="fas fa-cubes" style="color:var(--mr-green)"></i> RexCraft<span>Hub</span></a>
+            <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Kembali</a>
+        </div>
+    </nav>
+
+    <header class="mod-header-container">
+        <div class="mod-large-icon">
+            {% if mod.icon_url %}
+                <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
+            {% else %}
+                <i class="fas fa-cube"></i>
+            {% endif %}
+        </div>
+        <h1>{{ mod.title }}</h1>
+        <p class="mod-author">Dibuat oleh <span>{{ mod.author if mod.author else 'RexCraft' }}</span></p>
+
+        <div class="metrics-row">
+            <div class="metric-pill">
+                <i class="fas fa-download"></i> 
+                <span id="downloadGlobalCounter">{{ mod.downloads if mod.downloads else 1200 }} Unduhan</span>
+            </div>
+            <div class="metric-pill clickable" onclick="triggerClientLike()">
+                <i class="fas fa-heart"></i> 
+                <span id="likeGlobalCounter">{{ mod.likes if mod.likes else 48 }} Suka</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="tab-nav-wrapper">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchSubPanel('deskripsi', this)">Deskripsi</button>
+            <button class="tab-btn" onclick="switchSubPanel('versions', this)">Daftar Versi ({{ files|length if files else 0 }})</button>
         </div>
     </div>
 
-    <div class="mr-container">
-        
-        <div class="mr-main-header-block">
-            <div class="mr-identity-row">
-                <div class="mr-big-icon-wrapper">
-                    {% if mod.icon_url %}
-                        <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
-                    {% else %}
-                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#161822;"><i class="fas fa-cube" style="color:var(--mr-green); font-size:26px;"></i></div>
-                    {% endif %}
-                </div>
-                <div class="mr-text-side">
-                    <h1>{{ mod.title }}</h1>
-                    <div class="mr-short-desc">Arsip optimasi rendering dan alokasi data game client.</div>
-                </div>
-            </div>
-
-            <div class="mr-action-buttons-container">
-                <button class="btn-action-download" onclick="openDownloadModal()" title="Pilih Versi Unduhan">
-                    <i class="fas fa-download"></i>
-                </button>
-
-                <button class="btn-action-secondary" id="likeBtn" onclick="toggleLike()">
-                    <i class="far fa-heart"></i>
-                </button>
-
-                <button class="btn-action-secondary" id="favBtn" onclick="toggleFav()">
-                    <i class="far fa-bookmark"></i>
-                </button>
-            </div>
-
-            <div class="mr-metrics-mini-text">
-                <span><i class="fas fa-download" style="color: var(--mr-green);"></i> 1.2M Unduhan</span>
-                <span><i class="fas fa-heart" style="color: #ef4444;"></i> 36.3K Suka</span>
-                <span><i class="fas fa-user"></i> Oleh RexCraft</span>
-            </div>
+    <main class="content-body-area">
+        <div id="panel-deskripsi" class="panel-content active">
+            <article class="desc-text-box">
+                {{ mod.long_desc if mod.long_desc else mod.desc }}
+            </article>
         </div>
 
-        <div class="mr-tabs">
-            <button class="mr-tab-btn active">Daftar Berkas & Versi</button>
-        </div>
-
-        <div class="mr-grid">
-            <div class="main-content-area">
-                <div class="mr-card-main">
-                    <h2>Deskripsi Singkat</h2>
-                    <p>{{ mod.desc }} Seluruh arsip di web RexCraft dirancang untuk memastikan kestabilan performa sirkuit kompilasi game Anda.</p>
-                </div>
-
-                <div class="mr-card-main" style="padding: 20px 0;">
-                    <h2 style="padding: 0 20px 10px 20px; margin-bottom: 0;">Arsip Unduhan Valid</h2>
-                    <div class="mr-table-scroll-area">
-                        <table class="mr-version-table">
-                            <thead>
-                                <tr>
-                                    <th style="padding-left: 20px; width: 42%;">Nama Berkas Rilis</th>
-                                    <th style="width: 15%;">Loader</th>
-                                    <th style="width: 15%;">Versi Game</th>
-                                    <th style="width: 13%;">Ukuran</th>
-                                    <th style="text-align: center; padding-right: 20px; width: 15%;">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if mod.versions %}
-                                    {% for version in mod.versions %}
-                                    <tr>
-                                        <td style="padding-left: 20px;">
-                                            <div class="file-title-wrap">
-                                                <i class="far fa-file-archive" style="color: var(--mr-text-muted);"></i>
-                                                {{ version.version_name }}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span class="loader-badge 
-                                                {% if version.loader == 'Fabric' %}loader-fabric
-                                                {% elif version.loader == 'Forge' %}loader-forge
-                                                {% elif version.loader == 'NeoForge' %}loader-neoforge
-                                                {% else %}loader-universal{% endif %}">
-                                                {{ version.loader }}
-                                            </span>
-                                        </td>
-                                        <td><span class="game-ver-tag">v{{ version.game_version }}</span></td>
-                                        <td style="color: var(--mr-text-muted);">{{ version.file_size }}</td>
-                                        <td style="text-align: center; padding-right: 20px;">
-                                            <a href="{{ version.download_url }}" class="mr-row-download-btn" download><i class="fas fa-download"></i></a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr><td colspan="5" style="text-align: center; padding: 30px;">Tidak ada berkas rilis.</td></tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mr-sidebar-area">
-                <div class="mr-sidebar-card">
-                    <h3>Media Sosial Resmi</h3>
-                    <a href="https://www.youtube.com/@RexCraft6506" target="_blank" class="social-link-btn">
-                        <span><i class="fab fa-youtube" style="color: #ff0000; margin-right: 6px;"></i> YouTube Hub</span>
-                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--mr-text-muted);"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mr-modal-overlay" id="downloadModal" onclick="closeDownloadModalOutside(event)">
-        <div class="mr-modal-window">
-            <div class="mr-modal-header">
-                <h3><i class="fas fa-cloud-download-alt" style="color: var(--mr-green);"></i> Pilih Versi Game</h3>
-                <button class="btn-close-modal" onclick="closeDownloadModal()">&times;</button>
-            </div>
-            <div class="mr-modal-body">
-                <span class="popup-section-title">Berkas Tersedia ({{ mod.versions|length }})</span>
-                {% if mod.versions %}
-                    {% for version in mod.versions %}
-                    <a href="{{ version.download_url }}" class="popup-version-row" download onclick="closeDownloadModal()">
-                        <div class="popup-ver-left">
-                            <div class="popup-file-name">{{ version.version_name }}</div>
-                            <div class="popup-meta-sub">
-                                <span style="color: var(--mr-green); font-weight:700;">{{ version.loader }}</span>
-                                <span>&bull;</span>
-                                <span>v{{ version.game_version }}</span>
-                                <span>&bull;</span>
-                                <span>{{ version.file_size }}</span>
+        <div id="panel-versions" class="panel-content">
+            <div class="download-list-wrapper">
+                {% if files %}
+                    {% for file in files %}
+                    <div class="download-row-card">
+                        <div class="file-meta-info">
+                            <div class="file-title-text">{{ file.filename }}</div>
+                            <div class="file-badges">
+                                <span class="mini-badge loader-tag">{{ file.loader if file.loader else mod.loaders[0] if mod.loaders else 'FABRIC' }}</span>
+                                <span class="mini-badge version-tag">v{{ file.game_version if file.game_version else mod.version_range }}</span>
+                                <span class="file-size-txt">&bull; {{ file.size if file.size else '7.0 MB' }}</span>
                             </div>
                         </div>
-                        <i class="fas fa-arrow-alt-circle-down" style="color: var(--mr-green); font-size: 18px;"></i>
-                    </a>
+                        <a href="{{ file.download_url if file.download_url else '#' }}" class="download-action-btn" onclick="registerDownloadTrigger()" download>
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
                     {% endfor %}
                 {% else %}
-                    <p style="text-align:center; font-size:13px; color:var(--mr-text-muted);">Belum ada berkas terunggah.</p>
+                    <div class="download-row-card">
+                        <div class="file-meta-info">
+                            <div class="file-title-text">{{ mod.title }} Build Stable Pack</div>
+                            <div class="file-badges">
+                                <span class="mini-badge loader-tag">FABRIC</span>
+                                <span class="mini-badge version-tag">v{{ mod.version_range }}</span>
+                                <span class="file-size-txt">&bull; 4.2 MB</span>
+                            </div>
+                        </div>
+                        <a href="#" class="download-action-btn" onclick="registerDownloadTrigger()">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        function openDownloadModal() { document.getElementById('downloadModal').classList.add('open'); }
-        function closeDownloadModal() { document.getElementById('downloadModal').classList.remove('open'); }
-        function closeDownloadModalOutside(e) { if(e.target.id === 'downloadModal') closeDownloadModal(); }
+        // Fungsi Tab Switcher
+        function switchSubPanel(targetId, element) {
+            let panels = document.getElementsByClassName('panel-content');
+            for(let panel of panels) { panel.classList.remove('active'); }
+            
+            let buttons = document.getElementsByClassName('tab-btn');
+            for(let btn of buttons) { btn.classList.remove('active'); }
 
-        function toggleLike() {
-            const btn = document.getElementById('likeBtn');
-            btn.classList.toggle('liked');
-            btn.querySelector('i').className = btn.classList.contains('liked') ? 'fas fa-heart' : 'far fa-heart';
+            document.getElementById('panel-' + targetId).classList.add('active');
+            if(element) element.classList.add('active');
         }
-        function toggleFav() {
-            const btn = document.getElementById('favBtn');
-            btn.classList.toggle('fav-active');
-            btn.querySelector('i').className = btn.classList.contains('fav-active') ? 'fas fa-bookmark' : 'far fa-bookmark';
+
+        // Otomatisasi Penambahan Unduhan ketika User Mengklik Tombol Download
+        function registerDownloadTrigger() {
+            let counterElement = document.getElementById('downloadGlobalCounter');
+            if (counterElement) {
+                let text = counterElement.innerText;
+                let currentCount = parseInt(text.replace(/[^0-8]/g, '')) || 0;
+                
+                // Tambah 1 angka secara instan di sisi client
+                currentCount++;
+                counterElement.innerText = currentCount + " Unduhan";
+            }
+        }
+
+        // Otomatisasi Sistem Like Instan
+        let userHasLiked = false;
+        function triggerClientLike() {
+            let counterElement = document.getElementById('likeGlobalCounter');
+            if (counterElement) {
+                let text = counterElement.innerText;
+                let currentCount = parseInt(text.replace(/[^0-8]/g, '')) || 0;
+
+                if (!userHasLiked) {
+                    currentCount++;
+                    counterElement.innerText = currentCount + " Suka";
+                    document.querySelector('.metric-pill.clickable').style.borderColor = '#ef4444';
+                    userHasLiked = true;
+                } else {
+                    currentCount--;
+                    counterElement.innerText = currentCount + " Suka";
+                    document.querySelector('.metric-pill.clickable').style.borderColor = 'var(--border-color)';
+                    userHasLiked = false;
+                }
+            }
         }
     </script>
 </body>
