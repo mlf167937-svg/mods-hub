@@ -1,63 +1,81 @@
-from flask import Flask, render_template, request, redirect, url_for
+# =========================================================================
+# REXCRAFT MODS HUB - CORE BACKEND ENGINE (FLASK MASTER)
+# =========================================================================
+# Dioptimalkan untuk deployment lancar di platform Render Cloud.
+# Pastikan file ini berada di root folder repositori GitHub Bos.
+# =========================================================================
+
+from flask import Flask, render_template, abort
 
 app = Flask(__name__)
 
-# ==========================================================================
-# DATABASE RECONSTRUCTION (Hanya Masukkan Data Sesuai File yang Anda Punya)
-# ==========================================================================
+# =========================================================================
+# DATABASE REPOSITORI MODS LOCAL (MENGGUNAKAN FILE ASLI RACIKAN BOS)
+# =========================================================================
+# Jika Bos punya mod racikan baru lagi nanti, tinggal tambahkan blok baru 
+# di dalam tanda kurung siku [ ... ] ini menggunakan tanda koma (,).
+# =========================================================================
 MODS_DATABASE = [
     {
         "id": 1,
-        "name": "Complementary Unbound Shaders",
-        "title": "Complementary Unbound v5.1.1",
         "category": "java",
-        "version_range": "1.20 - 1.21",
-        "desc": "Shader premium dengan optimasi luar biasa, bayangan realistis, efek air dinamis, dan support untuk mega project cyberpunk.",
-        "icon_url": "https://media.forgecdn.net/avatars/573/190/637926127394143492.png",
-        "download_url": "https://edge.forgecdn.net/files/5321/412/ComplementaryUnbound_r5.1.1.zip"
-    },
-    {
-        "id": 3,
-        "name": "Fabulously Optimized Pack",
-        "title": "Fabulously Optimized Engine Pack",
-        "category": "java",
-        "version_range": "1.19 - 1.21",
-        "desc": "Kumpulan mod performa (Sodium, Lithium, dll) racikan khusus untuk mendongkrak FPS saat merender chunk dalam jumlah besar.",
-        # FIX: Icon file mods racikan sekarang menggunakan URL cdn valid agar muncul
-        "icon_url": "https://media.forgecdn.net/avatars/398/12/637604312458428135.png",
-        "download_url": "#"
-    },
-    {
-        "id": 4,
-        "name": "Bedrock Cyber-UI Addon",
-        "title": "Cyber-UI & HUD Pack Addon",
-        "category": "mcpe",
-        "version_range": "1.20 - 1.21",
-        "desc": "Mengubah total tampilan antarmuka Minecraft Bedrock/PE menjadi bertema scifi futuristik dengan dominasi warna hijau neon.",
-        "icon_url": "https://media.forgecdn.net/avatars/412/820/637651034928129032.png",
-        "download_url": "#"
+        "name": "mod-racikan-bos",
+        "title": "Mod Racikan Premium v1.0",
+        "desc": "Berkas modifikasi hasil racikan kustom RexCraft Engine, dijamin super stabil, optimal, dan anti-lag.",
+        "version_range": "1.20 - 1.21+",
+        # Jalur asset gambar & file zip asli milik Bos di GitHub:
+        "icon_url": "/static/upload/java/mod_racikan/icon.png",
+        "download_url": "/static/upload/java/mod_racikan/mod.zip"
     }
-    # File "Physics Mod" dan "Cyberpunk Map" yang tidak Anda upload sudah saya hapus permanen dari sini!
 ]
 
+# =========================================================================
+# ROUTING CONTROLLER A: HALAMAN UTAMA / DASHBOARD (index.html)
+# =========================================================================
 @app.route('/')
-def index():
+def home_dashboard():
+    # Mengirimkan list MODS_DATABASE ke dalam file templates/index.html 
+    # untuk di-render secara otomatis oleh mesin Jinja2.
     return render_template('index.html', mods=MODS_DATABASE)
 
+# =========================================================================
+# ROUTING CONTROLLER B: HALAMAN DETAIL BERKAS MOD (mod.html)
+# =========================================================================
 @app.route('/mod/<int:mod_id>')
-def mod_detail(mod_id):
-    selected_mod = next((m for m in MODS_DATABASE if m['id'] == mod_id), None)
-    if selected_mod:
-        return render_template('mod.html', mod=selected_mod)
-    return redirect(url_for('index'))
+def mod_detail_page(mod_id):
+    # Algoritma pencarian ID berkas di dalam database local
+    selected_mod = None
+    for item in MODS_DATABASE:
+        if item["id"] == mod_id:
+            selected_mod = item
+            break
+            
+    # Jika ID berkas tidak ditemukan di database, lemparkan eror 404
+    if selected_mod is None:
+        abort(404)
+        
+    # Mengirimkan data berkas spesifik ke file templates/mod.html
+    return render_template('mod.html', mod=selected_mod)
 
-# FIX: Mengarahkan rute tutorial ke file template tutorial.html asli (Biar Tidak Eror 404)
+# =========================================================================
+# ROUTING CONTROLLER C: HALAMAN PANDUAN / TUTORIAL PEMASANGAN
+# =========================================================================
 @app.route('/tutorial')
-def tutorial():
-    try:
-        return render_template('tutorial.html')
-    except:
-        return "<h3>Panduan Instalasi: Pasang berkas .zip/.jar ke folder mods Minecraft Anda.</h3>"
+def tutorial_page():
+    # Menampilkan halaman edukasi jalur pemasangan berkas resmi RexCraft
+    return render_template('tutorial.html')
 
+# =========================================================================
+# PLATFORM ERROR HANDLER SYSTEM (FALLBACK CORE)
+# =========================================================================
+@app.errorhandler(404)
+def page_not_found(error):
+    # Mengembalikan status 404 jika user mencoba mengakses link gaib
+    return "<h1>404 - Berkas Modifikasi Tidak Ditemukan!</h1><p>Kembali ke <a href='/'>Dashboard RexCraft</a></p>", 404
+
+# =========================================================================
+# LOCAL COMPILING APPLICATION RUNNER (ANTI-BUG TRIGGER)
+# =========================================================================
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Mode debug diaktifkan untuk deteksi eror real-time saat testing lokal
+    app.run(debug=True, host='0.0.0.0', port=5000)
