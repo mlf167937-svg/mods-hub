@@ -9,13 +9,14 @@
     <style>
         :root { --bg-dark: #07080b; --bg-surface: #111217; --border-color: #242836; --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; }
         body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding: 20px; }
-        .container { max-width: 600px; margin: 40px auto; }
+        .container { max-width: 650px; margin: 40px auto; padding: 0 20px; }
         .back-nav { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-muted); font-size: 14px; margin-bottom: 24px; font-weight: 600; }
-        h1 { font-size: 24px; font-weight: 800; margin-bottom: 16px; }
-        .step-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 18px; border-radius: 12px; margin-bottom: 12px; }
-        .step-num { font-weight: 800; color: var(--theme-color); font-size: 11px; margin-bottom: 4px; text-transform: uppercase; }
-        .step-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-        .step-box p { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+        .back-nav:hover { color: #fff; }
+        h1 { font-size: 24px; font-weight: 800; margin-bottom: 20px; }
+        .step-box { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; margin-bottom: 14px; }
+        .step-num { font-weight: 800; color: var(--theme-color); font-size: 11px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .step-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+        .step-box p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -26,19 +27,19 @@
         <div class="step-box">
             <div class="step-num">Langkah 01</div>
             <div class="step-title">Unduh Berkas Valid</div>
-            <p>Pilih paket modifikasi resmi kustom dari beranda RexCraft Hub, masuk ke Tab Daftar Versi, lalu klik tombol download untuk mendapatkan berkas berekstensi .zip, .jar, atau .mcpack.</p>
+            <p>Pilih paket kustom resmi dari beranda RexCraft Hub, masuk ke Tab Daftar Versi, lalu tekan tombol unduh untuk mendapatkan berkas berekstensi .zip, .jar, atau .mcpack.</p>
         </div>
 
         <div class="step-box">
             <div class="step-num">Langkah 02</div>
-            <div class="step-title">Pindahkan Berkas (Minecraft Java)</div>
-            <p>Buka direktori penyimpanan run game Anda di %appdata%/.minecraft/mods lalu paste file .jar yang sudah diunduh ke dalam folder tersebut.</p>
+            <div class="step-title">Pindahkan Folder (Minecraft Java)</div>
+            <p>Buka folder run game Anda di direktori %appdata%/.minecraft/mods lalu simpan file .jar yang sudah diekstrak ke dalam folder tersebut.</p>
         </div>
 
         <div class="step-box">
             <div class="step-num">Langkah 03</div>
-            <div class="step-title">Eksekusi Impor (Minecraft MCPE / Bedrock)</div>
-            <p>Untuk pengguna Android/iOS/Windows 10, cukup klik berkas berkode .mcpack atau .mcaddon yang selesai diunduh agar game Minecraft otomatis melakukan import secara langsung.</p>
+            <div class="step-title">Eksekusi Impor otomatis (Minecraft MCPE / Bedrock)</div>
+            <p>Untuk pengguna mobile/Android/iOS, cukup klik berkas berkode .mcpack atau .mcaddon yang selesai diunduh agar sistem game Minecraft melakukan impor aset secara langsung.</p>
         </div>
     </div>
 </body>
