@@ -27,15 +27,16 @@
         .nav-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .nav-btn:hover { background: var(--bg-card); border-color: var(--theme-color); }
 
-        /* DROPDOWN MENU KANAN ATAS */
+        /* DROPDOWN MENU */
         .setting-wrapper { position: relative; }
-        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 230px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: left; }
+        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 250px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: left; }
         .setting-dropdown-box.active { display: flex; }
         .theme-options { display: flex; gap: 8px; margin-top: 4px; }
         .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
         .color-dot.active { border-color: #fff; }
 
-        .dropdown-link { font-size: 12.5px; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; padding: 4px 0; }
+        .dropdown-item-info { font-size: 12.5px; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
+        .dropdown-link { font-size: 12.5px; color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 4px 0; }
         .dropdown-link:hover { color: var(--theme-color); }
 
         .rex-banner-hero { position: relative; background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 50px 20px; text-align: center; user-select: none; z-index: 1; }
@@ -60,12 +61,13 @@
         .proyek-section { max-width: 650px; margin: 0 auto; padding: 0 20px 60px 20px; }
         .grid-layout { display: flex; flex-direction: column; gap: 14px; }
         
+        /* FIX ICON CONTAINER UTAMA */
         .mod-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; gap: 16px; text-decoration: none; color: inherit; transition: 0.2s; align-items: center; }
         .mod-card:hover { transform: translateY(-2px); border-color: var(--theme-color); background: var(--bg-card); }
         
         .mod-icon { width: 60px; height: 60px; background: #1c1e24; border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
-        .mod-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
-        .mod-icon i { font-size: 24px; color: var(--theme-color); z-index: 1; }
+        .mod-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; }
+        .mod-icon i { font-size: 24px; color: var(--theme-color); position: relative; z-index: 1; }
         
         .mod-info { flex-grow: 1; min-width: 0; }
         .title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
@@ -95,17 +97,17 @@
                     </div>
                     
                     <div style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 4px;">
-                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px;">INFO HUB / KREATOR</div>
-                        <div style="font-size: 12px; color: #fff; margin-bottom: 6px;"><i class="fas fa-gamepad" style="color:var(--theme-color); width:16px;"></i> GT: RexCraft</div>
-                        <a href="https://wa.me/6283873024650?text=Halo%20RexCraft,%20saya%20ingin%20bertanya" target="_blank" class="dropdown-link">
-                            <i class="fab fa-whatsapp" style="color:#25d366; width:16px;"></i> +62 838-7302-4650
-                        </a>
-                        <a href="https://saweria.co/" target="_blank" class="dropdown-link">
-                            <i class="fas fa-donate" style="color:#f59e0b; width:16px;"></i> Tautan Donasi
-                        </a>
-                        <a href="https://tiktok.com/" target="_blank" class="dropdown-link">
-                            <i class="fab fa-tiktok" style="color:#ff0050; width:16px;"></i> Media Sosial
-                        </a>
+                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px;">GAMERTAG MINECRAFT</div>
+                        <div class="dropdown-item-info"><span><i class="fab fa-java" style="color:#ff2424; width:16px;"></i> Java</span> <strong style="color:var(--theme-color)">RexCraft</strong></div>
+                        <div class="dropdown-item-info" style="margin-bottom: 10px;"><span><i class="fas fa-cube" style="color:#22c55e; width:16px;"></i> MCPE</span> <strong style="color:var(--theme-color)">RexCraft6506</strong></div>
+                        
+                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px; border-top: 1px solid var(--border-color); padding-top: 8px;">SOSIAL MEDIA</div>
+                        <a href="https://youtube.com/" target="_blank" class="dropdown-link"><span><i class="fab fa-youtube" style="color:#ff0000; width:16px;"></i> YouTube</span> <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--text-muted)"></i></a>
+                        <a href="https://tiktok.com/" target="_blank" class="dropdown-link" style="margin-bottom: 10px;"><span><i class="fab fa-tiktok" style="color:#fff; width:16px;"></i> TikTok</span> <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--text-muted)"></i></a>
+
+                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px; border-top: 1px solid var(--border-color); padding-top: 8px;">HUBUNGI / DONASI</div>
+                        <a href="https://wa.me/6283873024650?text=Halo%20RexCraft" target="_blank" class="dropdown-link"><span><i class="fab fa-whatsapp" style="color:#25d366; width:16px;"></i> WhatsApp</span> <i class="fas fa-chevron-right" style="font-size:10px; color:var(--text-muted)"></i></a>
+                        <div class="dropdown-item-info" style="color:var(--text-muted); font-style:italic; font-size:11.5px; margin-top:4px;"><i class="fas fa-donate" style="width:16px;"></i> Donasi (Nanti)</div>
                     </div>
                 </div>
 
