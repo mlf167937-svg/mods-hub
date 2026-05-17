@@ -7,7 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836; --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; }
+        :root { 
+            --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836; 
+            --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; 
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding-bottom: 60px; }
         
@@ -16,14 +19,12 @@
         
         .container { max-width: 650px; margin: 40px auto; padding: 0 20px; text-align: center; }
         
-        /* FIX ICON CONTAINER CONTAINER */
         .mod-big-icon { width: 84px; height: 84px; background: #1c1e24; border: 1px solid var(--border-color); border-radius: 16px; margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
         .mod-big-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
         .mod-big-icon i { font-size: 32px; color: var(--theme-color); z-index: 1; }
         
         h1 { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 6px; }
         
-        /* FIX STATS LAYOUT HORIZONTAL (MODRINTH STYLE) */
         .stats-row { display: flex; gap: 10px; justify-content: center; margin: 16px 0 30px 0; }
         .badge-info { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
         .badge-like { cursor: pointer; transition: 0.2s; }
@@ -39,10 +40,18 @@
         .card-box { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; line-height: 1.6; font-size: 14px; color: var(--text-main); }
         
         .version-node { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .dl-btn { background: var(--theme-color); color: #000; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 12.5px; font-weight: 800; border: none; cursor: pointer; transition: 0.2s; }
-        .dl-btn:hover { opacity: 0.9; }
         
-        .wa-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25d366; color: #fff; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; text-align: center; margin-top: 16px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2); }
+        /* FIX TOMBOL UNDUHAN LANGSUNG TANPA MACET */
+        .dl-btn { background: var(--theme-color); color: #000; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 12.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; transition: 0.2s; }
+        .dl-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        
+        /* CSS KHUSUS MENU SOSIAL DAN DONASI */
+        .info-list { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+        .info-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px 16px; border-radius: 8px; text-decoration: none; color: inherit; }
+        .info-item:hover { border-color: var(--theme-color); }
+        .info-left { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 13.5px; }
+        .info-right { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+        .wa-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: #25d366; color: #fff; padding: 14px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 14px; text-align: center; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2); }
         .wa-btn:hover { background: #20ba5a; }
     </style>
 </head>
@@ -70,7 +79,7 @@
         <div class="tabs-header">
             <div class="tab-item active" onclick="switchTab('desc', this)">Deskripsi</div>
             <div class="tab-item" onclick="switchTab('vers', this)">Daftar Versi</div>
-            <div class="tab-item" onclick="switchTab('err', this)">Lapor Bug</div>
+            <div class="tab-item" onclick="switchTab('err', this)">Hubungi & Sosial</div>
         </div>
 
         <div class="tab-panel active" id="p-desc">
@@ -85,7 +94,7 @@
                         <div style="font-weight:700; color:#fff; font-size:14px;">{{ v.filename }}</div>
                         <div style="font-size:11.5px; color: var(--text-muted); margin-top:4px;">Ukuran: {{ v.size }}</div>
                     </div>
-                    <button onclick="triggerDl('{{ v.download_url }}')" class="dl-btn"><i class="fas fa-download"></i> Unduh</button>
+                    <a href="{{ v.download_url }}" class="dl-btn"><i class="fas fa-download"></i> Unduh</a>
                 </div>
                 {% endfor %}
             {% else %}
@@ -94,9 +103,26 @@
         </div>
 
         <div class="tab-panel" id="p-err">
+            <a href="https://wa.me/6283873024650?text=Halo%20RexCraft,%20saya%20menemukan%20bug%20atau%20ingin%20bertanya" target="_blank" class="wa-btn">
+                <i class="fab fa-whatsapp"></i> Chat WhatsApp Resmi
+            </a>
+            
             <div class="card-box">
-                <p style="margin-bottom: 10px;">Menemukan kendala, crash sikit, atau error sirkuit saat pemasangan berkas modifikasi? Klik tombol resmi di bawah untuk melapor langsung ke WhatsApp Komunitas RexCraft.</p>
-                <a href="https://wa.me/6283873024650?text=Halo%20RexCraft,%20saya%20menemukan%20bug/kendala%20di%20web" target="_blank" class="wa-btn"><i class="fab fa-whatsapp"></i> Chat WhatsApp Masukan Proyek</a>
+                <div style="font-weight: 700; color: #fff; margin-bottom: 10px; font-size: 14px;">INFORMASI KREATOR & DONASI</div>
+                <div class="info-list">
+                    <div class="info-item">
+                        <div class="info-left"><i class="fas fa-gamepad" style="color:#10b981"></i> Gamertag MC</div>
+                        <div class="info-right">RexCraft</div>
+                    </div>
+                    <a href="https://saweria.co/" target="_blank" class="info-item">
+                        <div class="info-left"><i class="fas fa-donate" style="color:#f59e0b"></i> Dukung / Donasi</div>
+                        <div class="info-right">Klik untuk Dukung <i class="fas fa-external-link-alt" style="font-size:10px"></i></div>
+                    </a>
+                    <a href="https://tiktok.com/" target="_blank" class="info-item">
+                        <div class="info-left"><i class="fab fa-tiktok" style="color:#ff0050"></i> Media Sosial</div>
+                        <div class="info-right">Ikuti Kreator <i class="fas fa-external-link-alt" style="font-size:10px"></i></div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -109,11 +135,6 @@
             for(let p of panels) p.classList.remove('active');
             el.classList.add('active');
             document.getElementById('p-' + t).classList.add('active');
-        }
-        function triggerDl(url) {
-            fetch(url).then(res => res.json()).then(data => {
-                if(data.status === 'redirect') { window.location.href = data.url; setTimeout(() => { window.location.reload(); }, 1200); }
-            });
         }
         function addLike(id) {
             fetch('/like_action/' + id, { method: 'POST' }).then(res => res.json()).then(data => {
