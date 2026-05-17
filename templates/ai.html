@@ -1,53 +1,34 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Minecraft Assistant - RexCraft Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --bg-dark: #07080b; --bg-surface: #111217; --bg-card: #161920; --border-color: #242836; --text-main: #f1f5f9; --text-muted: #94a3b8; --theme-color: #00af9c; }
-        body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; padding: 20px; }
-        .container { max-width: 650px; margin: 40px auto; display: flex; flex-direction: column; height: 82vh; padding: 0 20px; }
-        .back-nav { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-muted); font-size: 14px; margin-bottom: 16px; font-weight: 600; }
-        .chat-box { flex-grow: 1; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; margin-bottom: 14px; }
-        .chat-bubble { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; line-height: 1.5; }
-        .chat-bubble.ai { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; align-self: flex-start; }
-        .chat-bubble.user { background: var(--theme-color); color: #000; font-weight: 600; align-self: flex-end; }
-        .input-row { display: flex; gap: 8px; }
-        .chat-input { flex-grow: 1; background: var(--bg-surface); border: 1px solid var(--border-color); padding: 14px; border-radius: 10px; color: #fff; outline: none; font-size: 13.5px; }
-        .chat-input:focus { border-color: var(--theme-color); }
-        .send-btn { background: var(--theme-color); color: #000; border: none; padding: 0 22px; border-radius: 10px; font-weight: 700; font-size: 13.5px; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <a href="/" class="back-nav"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
-        <div class="chat-box" id="chatBox">
-            <div class="chat-bubble ai">Halo! Saya RexCraft AI Assistant. Tanyakan apa saja tentang optimasi sirkuit engine visual game Minecraft atau kendala render aset!</div>
-        </div>
-        <div class="input-row">
-            <input type="text" class="chat-input" id="chatInp" placeholder="Ketik pesan optimasi Anda...">
-            <button class="send-btn" onclick="sendMsg()">Kirim</button>
-        </div>
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .qa-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 25px; margin-bottom: 20px; transition: 0.2s; }
+    .qa-box:hover { border-color: var(--theme-color); }
+    .q { font-weight: 800; font-size: 18px; color: #fff; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px; }
+    .q i { color: var(--text-muted); margin-top: 3px; }
+    .a { color: #cbd5e1; line-height: 1.6; text-align: justify; padding-left: 35px; border-left: 3px solid var(--theme-color); margin-left: 8px; }
+</style>
+<h2 style="margin-bottom: 30px; display: flex; align-items: center; gap: 10px;">
+    <i class="fas fa-robot" style="color: var(--theme-color);"></i> Pertanyaan Sering Diajukan (RexAI)
+</h2>
+
+<div class="qa-box">
+    <div class="q"><i class="fas fa-user-circle"></i> Bagaimana cara memasang mod Java?</div>
+    <div class="a">
+        <b style="color: var(--theme-color);">RexAI:</b> Untuk Java Edition, pastikan Anda sudah menginstal <b>Fabric</b> atau <b>Forge</b> sesuai dengan loader yang tertera di halaman mod. Buka direktori Minecraft dengan menekan <code>WIN + R</code> lalu ketik <code>%appdata%\.minecraft\mods</code>. Pindahkan file berformat <code>.jar</code> yang sudah didownload ke folder tersebut.
     </div>
+</div>
 
-    <script>
-        function sendMsg() {
-            let inp = document.getElementById('chatInp');
-            let val = inp.value.trim(); if(!val) return;
-            let box = document.getElementById('chatBox');
-            
-            let uB = document.createElement('div'); uB.className = 'chat-bubble user'; uB.innerText = val;
-            box.appendChild(uB); inp.value = ''; box.scrollTop = box.scrollHeight;
+<div class="qa-box">
+    <div class="q"><i class="fas fa-user-circle"></i> Bagaimana cara pasang modifikasi di MCPE / Bedrock?</div>
+    <div class="a">
+        <b style="color: var(--theme-color);">RexAI:</b> Untuk Bedrock/MCPE, unduh file berformat <code>.mcpack</code> atau <code>.zip</code>. Jika filenya <code>.mcpack</code>, Anda hanya perlu mengkliknya dan Minecraft akan terbuka otomatis untuk melakukan proses impor. Jika berformat <code>.zip</code>, Anda perlu mengekstraknya ke direktori <code>games/com.mojang/behavior_packs</code> atau <code>resource_packs</code>.
+    </div>
+</div>
 
-            setTimeout(() => {
-                let aB = document.createElement('div'); aB.className = 'chat-bubble ai';
-                aB.innerText = "Untuk kestabilan maksimal sirkuit engine visual dunia Minecraft, disarankan memadukan loader Fabric dengan mod Sodium & Lithium yang tersedia di halaman utama repositori RexCraft Hub.";
-                box.appendChild(aB); box.scrollTop = box.scrollHeight;
-            }, 600);
-        }
-    </script>
-</body>
-</html>
+<div class="qa-box">
+    <div class="q"><i class="fas fa-user-circle"></i> Kenapa Minecraft saya crash setelah memasang mod?</div>
+    <div class="a">
+        <b style="color: var(--theme-color);">RexAI:</b> Hal ini biasanya terjadi karena dua alasan: Versi game Anda tidak cocok dengan versi mod, atau Anda menggunakan loader yang salah (misal: mod Fabric dijalankan di Forge). Pastikan membaca metadata "Versi Game" dan "Mesin Loader" pada halaman download.
+    </div>
+</div>
+{% endblock %}
