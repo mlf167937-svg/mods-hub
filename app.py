@@ -1,14 +1,20 @@
 # =========================================================================
-# REXCRAFT MODS HUB - CORE ENGINE REVISION ULTIMATE
+# REXCRAFT MODS HUB - CORE ENGINE REVISION ULTIMATE (ANTI-CRASH DEPLOY)
 # =========================================================================
 import os
+import re
 from flask import Flask, render_template, abort
-# Menggunakan modul pengecekan versi standar bawaan untuk sortir versi MC
-from distutils.version import LooseVersion
 
 app = Flask(__name__)
 
 BASE_UPLOAD_DIR = os.path.join('static', 'uploads')
+
+# FUNGSI PINTAR UNTUK MENYORTIR VERSI MINECRAFT SECARA ALFABET DAN ANGKA (Menggantikan LooseVersion)
+def version_key(version_str):
+    if version_str == "Unknown" or not version_str:
+        return [0]
+    # Memecah string '1.21.11' menjadi list angka [1, 21, 11] supaya sorting matematika-nya akurat
+    return [int(c) if c.isdigit() else c for c in re.split(r'(\d+)', version_str)]
 
 def parse_file_info(file_name):
     name_lower = file_name.lower()
@@ -24,11 +30,10 @@ def parse_file_info(file_name):
     elif "quilt" in name_lower:
         loader = "Quilt"
 
-    parts = name_lower.replace('-', '_').split('_')
-    for part in parts:
-        if part and part[0].isdigit() and '.' in part:
-            version = part.split('.zip')[0].split('.jar')[0].split('.mcpack')[0]
-            break
+    # Mencari pola versi seperti 1.21.9 atau 1.20.4
+    match = re.search(r'\d+\.\d+(?:\.\d+)?', name_lower)
+    if match:
+        version = match.group(0)
             
     return loader, version
 
@@ -39,6 +44,7 @@ def get_dynamic_mods():
     if not os.path.exists(BASE_UPLOAD_DIR):
         return mods_list
 
+    # Mendukung folder dengan underscore (_) maupun dash (-)
     for category in ['java', 'mcpe']:
         category_path = os.path.join(BASE_UPLOAD_DIR, category)
         if not os.path.exists(category_path):
@@ -48,6 +54,7 @@ def get_dynamic_mods():
             mod_path = os.path.join(category_path, mod_folder)
             
             if os.path.isdir(mod_path):
+                # Mengubah mods_racikan atau mods-racikan menjadi "Mods Racikan"
                 display_title = mod_folder.replace('-', ' ').replace('_', ' ').title()
                 
                 icon_url = f"/static/uploads/{category}/{mod_folder}/icon.png"
@@ -85,13 +92,12 @@ def get_dynamic_mods():
                             "download_url": f"/static/uploads/{category}/{mod_folder}/{file_name}"
                         })
 
-                # URUTKAN VERSI BERKAS INTERNAL PAKAI LOOSEVERSION (Anti Selip Angka)
-                versions.sort(key=lambda x: LooseVersion(x['game_version']), reverse=True)
+                # URUTKAN VERSI BERKAS INTERNAL (Menggunakan fungsi buatan sendiri yang aman)
+                versions.sort(key=lambda x: version_key(x['game_version']), reverse=True)
                 
                 # JALUR PENGURUTAN RANGE VERSI DI HALAMAN DEPAN
                 if game_versions_found:
-                    # Ambil list versi unik, bersihkan, lalu sortir dengan LooseVersion
-                    unique_versions = sorted(list(set(game_versions_found)), key=LooseVersion)
+                    unique_versions = sorted(list(set(game_versions_found)), key=version_key)
                     if len(unique_versions) > 1:
                         version_range = f"{unique_versions[0]} - {unique_versions[-1]}"
                     else:
@@ -129,7 +135,6 @@ def mod_detail_page(mod_id):
         abort(404)
     return render_template('mod.html', mod=selected_mod)
 
-# SOLUSI KELUHAN 2: MENGHILANGKAN LAYAR PUTIH 404 PANDUAN TUTORIAL
 @app.route('/tutorial')
 def tutorial_page():
     return """
@@ -139,7 +144,7 @@ def tutorial_page():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Panduan Tutorial - RexCraft</title>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;800&display=swap" rel="stylesheet">
         <style>
             body { background-color: #07080b; color: #f1f5f9; font-family: 'Inter', sans-serif; padding: 40px 20px; text-align: center; }
             .box { max-width: 600px; margin: 60px auto; background: #111217; padding: 30px; border-radius: 12px; border: 1px solid #242836; }
