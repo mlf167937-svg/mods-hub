@@ -11,26 +11,34 @@
     
     <style>
         :root {
-            --mr-bg-dark: #090a0f;
-            --mr-bg-surface: #111218;
-            --mr-bg-card: #161822;
-            --mr-border: #242736;
+            --mr-bg-dark: #07080b;
+            --mr-bg-surface: #111217;
+            --mr-bg-card: #161920;
+            --mr-border: #242836;
+            --mr-border-focus: #00af9c;
             --mr-text-main: #f1f5f9;
-            --mr-text-muted: #a1a1aa;
+            --mr-text-muted: #94a3b8;
             --mr-green: #00af9c; 
-            --mr-green-hover: #00c4ae;
+            --mr-green-hover: #00d4bd;
+            --mr-green-alpha: rgba(0, 175, 156, 0.1);
             --mr-badge-bg: #1e293b;
             --font-mr: 'Inter', sans-serif;
+            --glow-effect: 0 0 15px rgba(0, 175, 156, 0.2);
         }
 
+        /* ── CUSTOM SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--mr-bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--mr-border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--mr-green); }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
         body {
             background-color: var(--mr-bg-dark);
             font-family: var(--font-mr);
             color: var(--mr-text-main);
-            line-height: 1.5;
-            padding-bottom: 60px;
+            line-height: 1.6;
+            padding-bottom: 80px;
         }
 
         /* ── NAVBAR TOP ── */
@@ -38,10 +46,13 @@
             background-color: var(--mr-bg-surface);
             border-bottom: 1px solid var(--mr-border);
             padding: 14px 24px;
-            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
         }
         .nav-container {
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -55,48 +66,55 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: color 0.2s;
+            transition: color 0.2s ease;
         }
         .mr-back-link:hover { color: var(--mr-text-main); }
+        .mr-brand-mini {
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--mr-green);
+            letter-spacing: -0.5px;
+        }
 
         .mr-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            max-width: 1240px;
+            margin: 40px auto 0 auto;
+            padding: 0 24px;
         }
 
-        /* ── PROJECT HEADER ── */
+        /* ── PROJECT HEADER COMPONENT ── */
         .mr-header {
             display: flex;
-            gap: 24px;
-            align-items: flex-start;
-            margin-bottom: 24px;
+            gap: 28px;
+            align-items: center;
+            margin-bottom: 30px;
         }
         .mr-icon-box {
-            width: 96px;
-            height: 96px;
+            width: 110px;
+            height: 110px;
             background: var(--mr-bg-card);
             border: 1px solid var(--mr-border);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: var(--glow-effect);
         }
         .mr-icon-img { width: 100%; height: 100%; object-fit: cover; }
         
         .mr-title-block h1 {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 800;
             color: var(--mr-text-main);
-            letter-spacing: -0.5px;
-            margin-bottom: 6px;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
         }
         .mr-meta-author {
             font-size: 14px;
             color: var(--mr-text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         .mr-meta-author span { color: var(--mr-green); font-weight: 600; }
 
@@ -104,7 +122,7 @@
         .mr-tag {
             font-size: 11px;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 6px;
             text-transform: uppercase;
             background: var(--mr-badge-bg);
@@ -112,182 +130,218 @@
             color: var(--mr-text-main);
         }
 
-        /* ── TABS ── */
+        /* ── MODRINTH INTERACTIVE TABS ── */
         .mr-tabs {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             border-bottom: 1px solid var(--mr-border);
-            margin-bottom: 24px;
+            margin-bottom: 30px;
         }
         .mr-tab-btn {
             background: none;
             border: none;
             color: var(--mr-text-muted);
-            padding: 10px 16px;
+            padding: 12px 20px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             border-bottom: 3px solid transparent;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .mr-tab-btn.active {
             color: var(--mr-text-main);
             border-bottom-color: var(--mr-green);
+            background: rgba(255, 255, 255, 0.02);
         }
+        .mr-tab-btn:hover:not(.active) { color: var(--mr-text-main); background: rgba(255, 255, 255, 0.01); }
 
-        /* ── RESPONSIVE GRID LAYOUT ── */
+        /* ── LAYOUT GRID ── */
         .mr-grid {
             display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 24px;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+        }
+
+        /* CONTENT TAB CONTROLLERS */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .mr-card-main {
             background-color: var(--mr-bg-surface);
             border: 1px solid var(--mr-border);
-            border-radius: 8px;
-            padding: 24px;
+            border-radius: 12px;
+            padding: 30px;
             margin-bottom: 24px;
         }
-        .mr-card-main h2 {
-            font-size: 18px;
-            color: var(--mr-text-main);
-            margin-bottom: 16px;
-            font-weight: 700;
+        
+        /* ── FEATURE: SCREENSHOT GALLERY CAROUSEL ── */
+        .mr-gallery {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 24px;
+            snap-type: x mandatory;
         }
-        .mr-card-main p {
-            color: #d1d5db;
-            font-size: 15px;
-            line-height: 1.6;
+        .gallery-item {
+            flex: 0 0 48%;
+            height: 180px;
+            background: var(--mr-bg-card);
+            border: 1px solid var(--mr-border);
+            border-radius: 8px;
+            overflow: hidden;
+            snap-align: start;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .gallery-item:hover img { transform: scale(1.04); }
+
+        /* RICH TEXT DESKRIPSI */
+        .mr-card-main h2 { font-size: 20px; color: var(--mr-text-main); margin-bottom: 18px; font-weight: 700; }
+        .mr-card-main p { color: #cbd5e1; font-size: 15px; line-height: 1.7; margin-bottom: 16px; }
+        
+        /* ALERT BOX STYLE */
+        .mr-alert-box {
+            background: rgba(0, 175, 156, 0.05);
+            border-left: 4px solid var(--mr-green);
+            padding: 16px;
+            border-radius: 4px 8px 8px 4px;
+            margin-bottom: 20px;
+            font-size: 14.5px;
+            color: #e2e8f0;
         }
 
-        /* ── FIXED MODRINTH TABLE (ANTI MIRING DI HP) ── */
-        .mr-table-wrapper { 
-            width: 100%; 
-            overflow-x: auto; 
-            -webkit-overflow-scrolling: touch;
+        .feature-list { list-style: none; margin-bottom: 20px; }
+        .feature-list li { position: relative; padding-left: 24px; margin-bottom: 8px; color: #cbd5e1; font-size: 14.5px; }
+        .feature-list li::before {
+            content: "\f00c"; font-family: "Font Awesome 5 Free"; font-weight: 900;
+            position: absolute; left: 0; color: var(--mr-green); font-size: 13px;
         }
-        .mr-version-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 14px;
-            min-width: 600px; /* Menjaga tabel tidak ringsek di layar kecil */
-        }
+
+        /* ── VERSIONS TABLE ULTIMATE (ANTI MIRING 100%) ── */
+        .table-header-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 4px; }
+        .mr-table-wrapper { width: 100%; overflow-x: auto; border: 1px solid var(--mr-border); border-radius: 8px; background: var(--mr-bg-surface); }
+        .mr-version-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 650px; }
         .mr-version-table th {
-            padding: 12px 16px;
+            padding: 14px 20px;
             color: var(--mr-text-muted);
             font-weight: 700;
             font-size: 11px;
             text-transform: uppercase;
             border-bottom: 1px solid var(--mr-border);
             background-color: rgba(255, 255, 255, 0.01);
+            letter-spacing: 0.5px;
         }
-        .mr-version-table td {
-            padding: 16px;
-            border-bottom: 1px solid var(--mr-border);
-            vertical-align: middle;
-        }
-        .mr-version-table tr:hover {
-            background-color: rgba(255, 255, 255, 0.01);
-        }
+        .mr-version-table td { padding: 18px 20px; border-bottom: 1px solid var(--mr-border); vertical-align: middle; }
+        .mr-version-table tr:last-child td { border-bottom: none; }
+        .mr-version-table tr:hover { background-color: rgba(255, 255, 255, 0.01); }
         
-        .file-title { font-weight: 600; color: var(--mr-text-main); }
+        .file-title-block { display: flex; align-items: center; gap: 12px; }
+        .file-icon-wrap { color: var(--mr-text-muted); font-size: 16px; }
+        .file-name-text { font-weight: 600; color: var(--mr-text-main); font-size: 14.5px; }
         
-        .loader-badge {
-            font-size: 11px;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-        }
-        .loader-fabric { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-        .loader-forge { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-        .loader-neoforge { background: rgba(234, 179, 8, 0.15); color: #fde047; }
-        .loader-universal { background: rgba(148, 163, 184, 0.15); color: #cbd5e1; }
+        /* Badges Engine */
+        .loader-badge { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .loader-fabric { background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .loader-forge { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .loader-neoforge { background: rgba(234, 179, 8, 0.12); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.2); }
+        .loader-universal { background: rgba(148, 163, 184, 0.12); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.2); }
 
         .game-ver-tag {
-            background-color: #1a1c28;
-            color: #cbd5e1;
-            padding: 3px 8px;
+            background-color: #161920;
+            color: #e2e8f0;
+            padding: 4px 10px;
             border-radius: 4px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
             border: 1px solid var(--mr-border);
+            font-weight: 600;
         }
 
-        /* ── BUTTON DOWNLOAD MODRINTH 100% LOOKS ── */
+        /* ── PERFECT MODRINTH DOWNLOAD BUTTON ── */
         .mr-download-btn-box {
-            background-color: rgba(0, 175, 156, 0.1);
+            background-color: var(--mr-green-alpha);
             color: var(--mr-green);
             border: 1px solid rgba(0, 175, 156, 0.2);
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             font-size: 15px;
-            transition: all 0.15s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .mr-download-btn-box:hover {
             background-color: var(--mr-green);
             color: #ffffff;
             border-color: var(--mr-green);
+            box-shadow: 0 0 12px rgba(0, 175, 156, 0.4);
+            transform: scale(1.05);
         }
 
-        /* ── SIDEBAR PANEL ── */
+        /* ── SIDEBAR METADATA PANEL ── */
         .mr-sidebar-card {
             background-color: var(--mr-bg-surface);
             border: 1px solid var(--mr-border);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            height: fit-content;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
         }
         .mr-sidebar-card h3 {
             font-size: 12px;
             color: var(--mr-text-muted);
             text-transform: uppercase;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
+            margin-bottom: 18px;
+            letter-spacing: 0.8px;
             font-weight: 700;
         }
         .sidebar-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--mr-border);
-            font-size: 13.5px;
+            font-size: 14px;
         }
         .sidebar-row:last-child { border-bottom: none; }
-        .row-label { color: var(--mr-text-muted); }
+        .row-label { color: var(--mr-text-muted); display: flex; align-items: center; gap: 8px; }
         .row-val { color: var(--mr-text-main); font-weight: 600; }
 
-        /* BUTTON LINK MEDSOS */
+        /* SIDEBAR MEDSOS BUTTONS */
         .social-link-btn {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background-color: var(--mr-bg-card);
+            justify-content: space-between;
+            background-color: #171922;
             border: 1px solid var(--mr-border);
             color: var(--mr-text-main);
-            padding: 10px 14px;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
-            margin-bottom: 8px;
-            transition: background 0.2s;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
         }
         .social-link-btn:hover {
             background-color: var(--mr-border);
+            border-color: var(--mr-text-muted);
+            transform: translateX(2px);
         }
 
-        @media (max-width: 850px) {
+        @media (max-width: 950px) {
             .mr-grid { grid-template-columns: 1fr; }
-            .mr-header { flex-direction: column; align-items: center; text-align: center; }
+            .mr-header { flex-direction: column; align-items: center; text-align: center; gap: 16px; }
             .mr-badge-row { justify-content: center; }
+            .gallery-item { flex: 0 0 85%; }
         }
     </style>
 </head>
@@ -295,8 +349,9 @@
 
     <div class="mr-nav-top">
         <div class="nav-container">
-            <a href="/" class="mr-back-link"><i class="fas fa-search"></i> Kembali ke Dashboard</a>
-            <a href="/tutorial" class="mr-back-link" style="color: var(--mr-green);"><i class="fas fa-book"></i> Panduan Tutorial</a>
+            <a href="/" class="mr-back-link"><i class="fas fa-chevron-left"></i> Kembali ke Penjelajah</a>
+            <div class="mr-brand-mini">RexCraft Network</div>
+            <a href="/tutorial" class="mr-back-link" style="color: var(--mr-green);"><i class="fas fa-book-open"></i> Dokumen Tutorial</a>
         </div>
     </div>
 
@@ -307,82 +362,110 @@
                 {% if mod.icon_url %}
                     <img src="{{ mod.icon_url }}" class="mr-icon-img" alt="{{ mod.title }}">
                 {% else %}
-                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#161822;"><i class="fas fa-cube" style="color:var(--mr-green); font-size:32px;"></i></div>
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;"><i class="fas fa-box-open" style="color:var(--mr-green); font-size:36px;"></i></div>
                 {% endif %}
             </div>
             <div class="mr-title-block">
                 <h1>{{ mod.title }}</h1>
-                <div class="mr-meta-author">Oleh <span>{% if mod.category == 'java' %}RexCraft{% else %}RexCraft6506{% endif %}</span></div>
+                <div class="mr-meta-author">Dibuat oleh <span>{% if mod.category == 'java' %}RexCraft{% else %}RexCraft6506{% endif %}</span></div>
                 <div class="mr-badge-row">
-                    <span class="mr-tag" style="color: var(--mr-green); border-color: rgba(0, 175, 156, 0.3);">Verified Clean</span>
-                    <span class="mr-tag">{{ mod.project_type }}</span>
-                    <span class="mr-tag">Client & Server</span>
+                    <span class="mr-tag" style="color: var(--mr-green); border-color: rgba(0, 175, 156, 0.4); background: rgba(0,175,156,0.04);"><i class="fas fa-shield-alt"></i> Verified Clean</span>
+                    <span class="mr-tag"><i class="fas fa-layer-group"></i> {{ mod.project_type }}</span>
+                    <span class="mr-tag"><i class="fas fa-server"></i> Client & Server</span>
                 </div>
             </div>
         </div>
 
         <div class="mr-tabs">
-            <button class="mr-tab-btn active"><i class="fas fa-file-alt" style="margin-right: 6px;"></i> Deskripsi</button>
-            <button class="mr-tab-btn"><i class="fas fa-history" style="margin-right: 6px;"></i> Daftar Versi</button>
+            <button class="mr-tab-btn active" onclick="switchTab(event, 'description-section')"><i class="fas fa-file-alt"></i> Deskripsi</button>
+            <button class="mr-tab-btn" onclick="switchTab(event, 'versions-section')"><i class="fas fa-history"></i> Daftar Versi ({% if mod.versions %}{{ mod.versions|length }}{% else %}0{% endif %})</button>
         </div>
 
         <div class="mr-grid">
             
             <div class="main-content-area">
                 
-                <div class="mr-card-main">
-                    <h2>Tentang Berkas Ini</h2>
-                    <p>{{ mod.desc }} Semua file pengoptimalan di repositori jaringan RexCraft dikompilasi secara khusus demi menjamin stabilitas performa, kelancaran frametime, serta bebas dari bug.</p>
+                <div id="description-section" class="tab-content active">
+                    
+                    <div class="mr-gallery">
+                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=600&auto=format&fit=crop" alt="Preview 1"></div>
+                        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&auto=format&fit=crop" alt="Preview 2"></div>
+                    </div>
+
+                    <div class="mr-card-main">
+                        <h2>Tentang Proyek</h2>
+                        <div class="mr-alert-box">
+                            <i class="fas fa-info-circle" style="margin-right: 6px; color: var(--mr-green);"></i> 
+                            <strong>Catatan Rilis resmi:</strong> Seluruh modifikasi berkas ini dikompilasi langsung oleh RexCraft untuk memberikan jaminan alokasi memori RAM yang stabil dan peningkatan frame rate secara maksimal.
+                        </div>
+                        <p>{{ mod.desc }} Paket optimasi ini dirancang khusus untuk mengurangi stuttering, mempercepat loading chunk dunia Minecraft, serta memberikan kenyamanan visual terbaik saat bermain game.</p>
+                        
+                        <h2 style="margin-top: 24px;">Keunggulan & Fitur Utama</h2>
+                        <ul class="feature-list">
+                            <li>Alokasi pembersihan sampah memori otomatis (Garbage Collector Tweaks).</li>
+                            <li>Optimalisasi rendering tekstur tanpa menurunkan kualitas visual game asli.</li>
+                            <li>Kompatibilitas penuh antar platform server multiplayer.</li>
+                            <li>Pembaruan berkala mengikuti update patch runtime Minecraft terbaru.</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="mr-card-main" style="padding: 16px 0;">
-                    <h2 style="padding: 0 24px 8px 24px; margin-bottom: 8px;">Semua Versi Rilis</h2>
-                    <div class="mr-table-wrapper">
-                        <table class="mr-version-table">
-                            <thead>
-                                <tr>
-                                    <th style="padding-left: 24px; width: 40%;">Nama Versi</th>
-                                    <th style="width: 15%;">Loader</th>
-                                    <th style="width: 15%;">Versi Game</th>
-                                    <th style="width: 15%;">Ukuran</th>
-                                    <th style="text-align: center; padding-right: 24px; width: 15%;">Unduh</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if mod.versions %}
-                                    {% for version in mod.versions %}
+                <div id="versions-section" class="tab-content">
+                    <div class="mr-card-main" style="padding: 24px 0;">
+                        <div class="table-header-container">
+                            <h2 style="margin-bottom: 0; padding-left: 24px;">Arsip Unduhan Valid</h2>
+                        </div>
+                        
+                        <div class="mr-table-wrapper">
+                            <table class="mr-version-table">
+                                <thead>
                                     <tr>
-                                        <td class="file-title" style="padding-left: 24px;">
-                                            <i class="far fa-file-archive" style="color: var(--mr-text-muted); margin-right: 8px;"></i>
-                                            {{ version.version_name }}
-                                        </td>
-                                        <td>
-                                            <span class="loader-badge 
-                                                {% if version.loader == 'Fabric' %}loader-fabric
-                                                {% elif version.loader == 'Forge' %}loader-forge
-                                                {% elif version.loader == 'NeoForge' %}loader-neoforge
-                                                {% else %}loader-universal{% endif %}">
-                                                {{ version.loader }}
-                                            </span>
-                                        </td>
-                                        <td><span class="game-ver-tag">{{ version.game_version }}</span></td>
-                                        <td style="color: var(--mr-text-muted); font-size: 13.5px; font-weight: 500;">{{ version.file_size }}</td>
-                                        <td style="text-align: center; padding-right: 24px;">
-                                            <a href="{{ version.download_url }}" class="mr-download-btn-box" download title="Download File">
-                                                <i class="fas fa-download"></i>
-                                            </a>
-                                        </td>
+                                        <th style="padding-left: 24px; width: 42%;">Nama Berkas Rilis</th>
+                                        <th style="width: 15%;">Mod Loader</th>
+                                        <th style="width: 15%;">Versi Game</th>
+                                        <th style="width: 13%;">Kapasitas</th>
+                                        <th style="text-align: center; padding-right: 24px; width: 15%;">Aksi</th>
                                     </tr>
-                                    {% endfor %}
-                                {% else %}
-                                    <tr>
-                                        <td colspan="5" style="text-align: center; color: var(--mr-text-muted); padding: 30px;">
-                                            Belum ada berkas unduhan yang terdeteksi di dalam folder proyek ini.
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {% if mod.versions %}
+                                        {% for version in mod.versions %}
+                                        <tr>
+                                            <td style="padding-left: 24px;">
+                                                <div class="file-title-block">
+                                                    <div class="file-icon-wrap"><i class="fas fa-file-archive"></i></div>
+                                                    <div class="file-name-text">{{ version.version_name }}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="loader-badge 
+                                                    {% if version.loader == 'Fabric' %}loader-fabric
+                                                    {% elif version.loader == 'Forge' %}loader-forge
+                                                    {% elif version.loader == 'NeoForge' %}loader-neoforge
+                                                    {% else %}loader-universal{% endif %}">
+                                                    {{ version.loader }}
+                                                </span>
+                                            </td>
+                                            <td><span class="game-ver-tag">v{{ version.game_version }}</span></td>
+                                            <td style="color: var(--mr-text-muted); font-size: 13px; font-weight: 600;">{{ version.file_size }}</td>
+                                            <td style="text-align: center; padding-right: 24px;">
+                                                <a href="{{ version.download_url }}" class="mr-download-btn-box" download title="Unduh Berkas Sekarang">
+                                                    <i class="fas fa-download"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5" style="text-align: center; color: var(--mr-text-muted); padding: 40px;">
+                                                <i class="fas fa-folder-open" style="font-size: 28px; display:block; margin-bottom:10px;"></i>
+                                                Belum ada arsip rilis file di folder penyimpanan lokal proyek ini.
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -391,28 +474,34 @@
             <div class="mr-sidebar-area">
                 
                 <div class="mr-sidebar-card">
-                    <h3>Media Sosial Resmi</h3>
+                    <h3>Kanal Media Sosial</h3>
                     <a href="https://www.youtube.com/@RexCraft6506" target="_blank" class="social-link-btn">
-                        <i class="fab fa-youtube" style="color: #ff0000; font-size: 16px;"></i> YouTube Channel
+                        <span><i class="fab fa-youtube" style="color: #ef4444; margin-right: 8px;"></i> YouTube Hub</span>
+                        <i class="fas fa-external-link-alt" style="font-size:11px; color:var(--mr-text-muted)"></i>
                     </a>
                     <a href="https://www.tiktok.com/@rexcraft6506" target="_blank" class="social-link-btn">
-                        <i class="fab fa-tiktok" style="color: #ff0050; font-size: 16px;"></i> TikTok Official
+                        <span><i class="fab fa-tiktok" style="color: #ff0050; margin-right: 8px;"></i> TikTok Official</span>
+                        <i class="fas fa-external-link-alt" style="font-size:11px; color:var(--mr-text-muted)"></i>
                     </a>
                 </div>
 
                 <div class="mr-sidebar-card">
-                    <h3>Informasi Teknis</h3>
+                    <h3>Metadata Proyek</h3>
                     <div class="sidebar-row">
-                        <span class="row-label">Platform</span>
-                        <span class="row-val" style="text-transform: uppercase;">{{ mod.category }} Edition</span>
+                        <span class="row-label"><i class="fas fa-laptop-code"></i> Kompatibilitas</span>
+                        <span class="row-val" style="text-transform: uppercase;">{{ mod.category }}</span>
                     </div>
                     <div class="sidebar-row">
-                        <span class="row-label">Lisensi</span>
-                        <span class="row-val" style="color: var(--mr-green);">Custom Open</span>
+                        <span class="row-label"><i class="fas fa-certificate"></i> Lisensi Asset</span>
+                        <span class="row-val" style="color: var(--mr-green);">Custom Free Open</span>
                     </div>
                     <div class="sidebar-row">
-                        <span class="row-label">Status</span>
-                        <span class="row-val" style="color: #4ade80;">Production</span>
+                        <span class="row-label"><i class="fas fa-toggle-on"></i> Status Build</span>
+                        <span class="row-val" style="color: #4ade80;">Active (Stable)</span>
+                    </div>
+                    <div class="sidebar-row">
+                        <span class="row-label"><i class="fas fa-hdd"></i> Hosting</span>
+                        <span class="row-val">Render Cloud</span>
                     </div>
                 </div>
 
@@ -420,6 +509,26 @@
 
         </div>
     </div>
+
+    <script>
+        function switchTab(evt, tabId) {
+            // Sembunyikan semua konten tab
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            // Matikan status active semua tombol tab
+            const tabButtons = document.getElementsByClassName("mr-tab-btn");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            // Tampilkan tab yang dipilih dan beri status active pada tombol
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 
 </body>
 </html>
