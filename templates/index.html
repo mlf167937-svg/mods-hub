@@ -27,7 +27,6 @@
         .nav-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .nav-btn:hover { background: var(--bg-card); border-color: var(--theme-color); }
 
-        /* DROPDOWN MENU */
         .setting-wrapper { position: relative; }
         .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 250px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: left; }
         .setting-dropdown-box.active { display: flex; }
@@ -61,7 +60,6 @@
         .proyek-section { max-width: 650px; margin: 0 auto; padding: 0 20px 60px 20px; }
         .grid-layout { display: flex; flex-direction: column; gap: 14px; }
         
-        /* FIX ICON CONTAINER UTAMA */
         .mod-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; gap: 16px; text-decoration: none; color: inherit; transition: 0.2s; align-items: center; }
         .mod-card:hover { transform: translateY(-2px); border-color: var(--theme-color); background: var(--bg-card); }
         
@@ -142,6 +140,8 @@
                     <i class="fas fa-cube"></i>
                     {% if mod.icon_url %}
                         <img src="{{ mod.icon_url }}" onerror="this.style.display='none'">
+                    {% elif mod.image %}
+                        <img src="{{ mod.image }}" onerror="this.style.display='none'">
                     {% endif %}
                 </div>
                 <div class="mod-info">
