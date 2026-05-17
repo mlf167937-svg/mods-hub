@@ -11,16 +11,16 @@
 </style>
 <div class="upload-container">
     <h2 style="margin-bottom: 25px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 15px;">
-        <i class="fas fa-cloud-upload-alt" style="color: var(--theme-color); margin-right: 10px;"></i> Panel Distribusi Mod
+        <i class="fas fa-cloud-upload-alt" style="color: var(--theme-color); margin-right: 10px;"></i> Distribusi Berkas Versi
     </h2>
     <form method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label>Judul Modifikasi</label>
-            <input type="text" name="title" placeholder="Contoh: Sodium Optimization" required>
+            <input type="text" name="title" placeholder="Gunakan judul yang SAMA untuk menambah versi baru" required>
         </div>
         <div class="form-group">
-            <label>Deskripsi Lengkap Mod</label>
-            <textarea name="desc" rows="5" placeholder="Tuliskan fitur, kegunaan, dan peringatan mod ini..." required></textarea>
+            <label>Deskripsi Mod</label>
+            <textarea name="desc" rows="4" placeholder="Tuliskan detail fitur mod..." required></textarea>
         </div>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
@@ -34,9 +34,9 @@
             <div class="form-group">
                 <label>Kategori Utama</label>
                 <select name="category">
-                    <option value="optimization">Optimization (Kinerja)</option>
-                    <option value="utility">Utility (Alat)</option>
-                    <option value="content">Content (Item Baru)</option>
+                    <option value="optimization">Optimization</option>
+                    <option value="utility">Utility</option>
+                    <option value="content">Content Pack</option>
                     <option value="shader">Shader / Visual</option>
                 </select>
             </div>
@@ -45,26 +45,26 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group">
                 <label>Mesin Loader</label>
-                <input type="text" name="loader" placeholder="Contoh: Fabric, Forge, NeoForge, Addon" required>
+                <input type="text" name="loader" placeholder="Contoh: Fabric, Forge, Addon" required>
             </div>
             <div class="form-group">
-                <label>Versi Game Didukung</label>
-                <input type="text" name="version" placeholder="Contoh: 1.20.4, 1.21" required>
+                <label>Versi Spesifik Game</label>
+                <input type="text" name="game_version" placeholder="Contoh: 1.21.4 atau 1.21.5" required>
             </div>
         </div>
 
         <div style="background: rgba(255,255,255,0.02); border: 1px dashed var(--border); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
             <div class="form-group">
-                <label><i class="fas fa-image" style="color: var(--theme-color);"></i> Ikon Mod (1:1 Square, .jpg/.png)</label>
+                <label><i class="fas fa-image" style="color: var(--theme-color);"></i> Ikon Gambar (icon.jpg)</label>
                 <input type="file" name="icon" accept="image/*" required style="padding: 10px; background: none; border: none;">
             </div>
             <div class="form-group" style="margin-bottom: 0;">
-                <label><i class="fas fa-file-archive" style="color: var(--theme-color);"></i> File Berkas (.zip/.jar/.mcpack)</label>
+                <label><i class="fas fa-file-archive" style="color: var(--theme-color);"></i> Berkas File Game (Sertakan versi di nama file, ex: mod_v1.21.4.jar)</label>
                 <input type="file" name="file" required style="padding: 10px; background: none; border: none;">
             </div>
         </div>
         
-        <button type="submit" class="btn-submit"><i class="fas fa-upload"></i> Publikasikan Ke Repositori</button>
+        <button type="submit" class="btn-submit"><i class="fas fa-plus"></i> Masukkan ke Folder Repositori</button>
     </form>
 </div>
 {% endblock %}
