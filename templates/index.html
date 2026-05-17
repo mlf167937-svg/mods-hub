@@ -6,112 +6,779 @@
     <title>RexCraft Hub - Pusat Berkas Modifikasi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ==========================================================================
+           1. ROOT VARIABLES & THEME ACCENTS 
+           ========================================================================== */
         :root {
-            --bg-dark: #07080b; 
-            --bg-surface: #111217; 
-            --bg-card: #161920; 
+            --bg-dark: #07080b;
+            --bg-surface: #111217;
+            --bg-card: #161920;
+            --bg-card-hover: #1e222d;
             --border-color: #242836;
-            --text-main: #f1f5f9; 
-            --text-muted: #94a3b8; 
-            --theme-color: #00af9c; 
-            --theme-alpha: rgba(0, 175, 156, 0.15);
+            --border-color-hover: #32384c;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dark: #64748b;
+            --theme-color: #00af9c;
+            --theme-alpha: rgba(0, 175, 156, 0.12);
+            --theme-alpha-hover: rgba(0, 175, 156, 0.25);
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --font-primary: 'Inter', sans-serif;
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --glow-color: rgba(0, 175, 156, 0.3);
         }
-        .theme-green { --theme-color: #00af9c; --theme-alpha: rgba(0, 175, 156, 0.15); }
-        .theme-blue { --theme-color: #3b82f6; --theme-alpha: rgba(59, 130, 246, 0.15); }
-        .theme-purple { --theme-color: #a855f7; --theme-alpha: rgba(168, 85, 247, 0.15); }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        
-        .navbar { background: var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .nav-logo { font-size: 18px; font-weight: 800; text-decoration: none; color: #fff; }
-        .nav-logo span { color: var(--theme-color); }
-        .nav-links { display: flex; gap: 8px; align-items: center; }
-        .nav-btn { background: transparent; color: var(--text-main); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; }
-        .nav-btn:hover { background: var(--bg-card); border-color: var(--theme-color); }
+        .theme-green {
+            --theme-color: #00af9c;
+            --theme-alpha: rgba(0, 175, 156, 0.12);
+            --theme-alpha-hover: rgba(0, 175, 156, 0.25);
+            --glow-color: rgba(0, 175, 156, 0.3);
+        }
+        .theme-blue {
+            --theme-color: #3b82f6;
+            --theme-alpha: rgba(59, 130, 246, 0.12);
+            --theme-alpha-hover: rgba(59, 130, 246, 0.25);
+            --glow-color: rgba(59, 130, 246, 0.3);
+        }
+        .theme-purple {
+            --theme-color: #a855f7;
+            --theme-alpha: rgba(168, 85, 247, 0.12);
+            --theme-alpha-hover: rgba(168, 85, 247, 0.25);
+            --glow-color: rgba(168, 85, 247, 0.3);
+        }
 
-        .setting-wrapper { position: relative; }
-        .setting-dropdown-box { position: absolute; top: 45px; right: 0; width: 250px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; display: none; flex-direction: column; gap: 10px; z-index: 9999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: left; }
-        .setting-dropdown-box.active { display: flex; }
-        .theme-options { display: flex; gap: 8px; margin-top: 4px; }
-        .color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .color-dot.active { border-color: #fff; }
+        /* ==========================================================================
+           2. GLOBAL RESET & BASE STYLES
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrolling: smooth;
+        }
 
-        .dropdown-item-info { font-size: 12.5px; color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 4px 0; }
-        .dropdown-link { font-size: 12.5px; color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 4px 0; }
-        .dropdown-link:hover { color: var(--theme-color); }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+        }
 
-        .rex-banner-hero { position: relative; background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 70%), var(--bg-surface); border-bottom: 1px solid var(--border-color); padding: 50px 20px; text-align: center; user-select: none; z-index: 1; }
-        .badge-update { display: inline-block; background: var(--theme-alpha); color: var(--theme-color); padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 14px; }
-        h1 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 10px; }
-        .rex-banner-hero p { font-size: 13.5px; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.5; }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: var(--radius-sm);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-dark);
+        }
 
-        .search-filter-container { max-width: 650px; margin: -25px auto 30px auto; padding: 0 20px; position: relative; z-index: 10; }
-        .search-box-wrapper { position: relative; margin-bottom: 14px; }
-        .search-box-wrapper i { position: absolute; left: 16px; top: 15px; color: var(--text-muted); }
-        .search-input { width: 100%; background: var(--bg-card); border: 1px solid var(--border-color); padding: 14px 16px 14px 44px; border-radius: 10px; color: #fff; font-size: 14px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .search-input:focus { border-color: var(--theme-color); }
-        
-        .autocomplete-suggestions { position: absolute; top: 52px; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; display: none; z-index: 50; }
-        .suggestion-item { padding: 12px 16px; font-size: 13.5px; cursor: pointer; color: var(--text-main); }
-        .suggestion-item:hover { background: var(--bg-surface); color: var(--theme-color); }
+        /* ==========================================================================
+           3. NAVIGATION BAR ARCHITECTURE
+           ========================================================================== */
+        .navbar {
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
 
-        .filter-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-        .filter-btn { background: var(--bg-surface); color: var(--text-muted); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .filter-btn.active { background: var(--theme-color); color: #000; border-color: var(--theme-color); }
+        .nav-container-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
 
-        .proyek-section { max-width: 650px; margin: 0 auto; padding: 0 20px 60px 20px; }
-        .grid-layout { display: flex; flex-direction: column; gap: 14px; }
-        
-        .mod-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; gap: 16px; text-decoration: none; color: inherit; transition: 0.2s; align-items: center; }
-        .mod-card:hover { transform: translateY(-2px); border-color: var(--theme-color); background: var(--bg-card); }
-        
-        .mod-icon { width: 60px; height: 60px; background: #1c1e24; border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
-        .mod-icon img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; }
-        .mod-icon i { font-size: 24px; color: var(--theme-color); position: relative; z-index: 1; }
-        
-        .mod-info { flex-grow: 1; min-width: 0; }
-        .title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .mod-card-title { font-size: 16px; font-weight: 700; color: #fff; }
-        .mod-card-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.4; margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
-        .tag-node { padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; background: #1e293b; color: #94a3b8; }
-        .tag-loader { background: var(--theme-alpha); color: var(--theme-color); }
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 900;
+            text-decoration: none;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-logo i {
+            color: var(--theme-color);
+        }
+
+        .nav-logo span {
+            color: var(--theme-color);
+        }
+
+        .nav-logo:hover {
+            opacity: 0.9;
+        }
+
+        .nav-menu-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-links-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: var(--radius-md);
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-btn:hover {
+            background-color: var(--bg-card);
+            border-color: var(--theme-color);
+            color: #ffffff;
+            box-shadow: 0 0 12px var(--theme-alpha);
+        }
+
+        .nav-btn i {
+            font-size: 14px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-btn:hover i {
+            color: var(--theme-color);
+        }
+
+        .nav-btn-primary {
+            background-color: var(--theme-color);
+            color: #07080b;
+            border: 1px solid var(--theme-color);
+        }
+
+        .nav-btn-primary:hover {
+            background-color: transparent;
+            color: var(--theme-color);
+        }
+
+        .nav-btn-primary i {
+            color: #07080b;
+        }
+
+        .nav-btn-primary:hover i {
+            color: var(--theme-color);
+        }
+
+        /* ==========================================================================
+           4. MENU SETTING DROPDOWN SYSTEM
+           ========================================================================== */
+        .setting-wrapper {
+            position: relative;
+        }
+
+        .setting-dropdown-box {
+            position: absolute;
+            top: 52px;
+            right: 0;
+            width: 290px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            z-index: 1100;
+            box-shadow: var(--shadow-lg);
+            animation: dropdownFade 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes dropdownFade {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .setting-dropdown-box.active {
+            display: flex;
+        }
+
+        .dropdown-section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 2px;
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .color-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .color-dot.active::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 11px;
+            color: #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 4px 0;
+        }
+
+        .dropdown-item-info {
+            font-size: 13px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+        }
+
+        .dropdown-item-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+        }
+
+        .dropdown-item-info strong {
+            color: var(--theme-color);
+            font-family: monospace;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.03);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .dropdown-link {
+            font-size: 13px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 10px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-smooth);
+        }
+
+        .dropdown-link:hover {
+            background-color: var(--bg-card);
+            color: var(--theme-color);
+        }
+
+        .dropdown-link span {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ==========================================================================
+           5. HERO BANNER ARCHITECTURE
+           ========================================================================== */
+        .rex-banner-hero {
+            position: relative;
+            background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 65%), var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 65px 24px;
+            text-align: center;
+            user-select: none;
+            z-index: 1;
+        }
+
+        .badge-update {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: var(--theme-alpha);
+            color: var(--theme-color);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            border: 1px solid rgba(0, 175, 156, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .badge-update::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--theme-color);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        .rex-banner-hero h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 12px;
+            letter-spacing: -0.8px;
+        }
+
+        .rex-banner-hero p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           6. SEARCH ENGINE & FILTRATION WRAPPER
+           ========================================================================== */
+        .search-filter-container {
+            max-width: 720px;
+            margin: -28px auto 35px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .search-box-wrapper i.search-icon {
+            position: absolute;
+            left: 18px;
+            top: 17px;
+            color: var(--text-dark);
+            font-size: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 16px 16px 16px 50px;
+            border-radius: var(--radius-lg);
+            color: #ffffff;
+            font-size: 14.5px;
+            font-family: var(--font-primary);
+            font-weight: 500;
+            outline: none;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+        }
+
+        .search-input:focus {
+            border-color: var(--theme-color);
+            background-color: var(--bg-surface);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 12px var(--theme-alpha);
+        }
+
+        .search-input:focus + i.search-icon {
+            color: var(--theme-color);
+        }
+
+        /* AUTOCOMPLETE SUGGESTIONS BOX */
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 58px;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: none;
+            z-index: 150;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .suggestion-item {
+            padding: 14px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: var(--transition-smooth);
+        }
+
+        .suggestion-item:last-child {
+            border: none;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--bg-surface);
+            color: var(--theme-color);
+            padding-left: 22px;
+        }
+
+        /* FILTRATION INTERFACE BUTTONS */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-dark);
+            color: #ffffff;
+        }
+
+        .filter-btn.active {
+            background-color: var(--theme-color);
+            color: #07080b;
+            border-color: var(--theme-color);
+            box-shadow: 0 4px 14px var(--theme-alpha-hover);
+        }
+
+        /* ==========================================================================
+           7. MOD CARDS REPOSITORY AREA
+           ========================================================================== */
+        .proyek-section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 20px 80px 20px;
+        }
+
+        .grid-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .mod-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-smooth);
+            align-items: center;
+            position: relative;
+        }
+
+        .mod-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--theme-color);
+            background-color: var(--bg-card);
+            box-shadow: var(--shadow-md), 0 0 15px rgba(0, 175, 156, 0.05);
+        }
+
+        /* BULLETPROOF IMAGE CONTAINER SYSTEM */
+        .mod-icon {
+            width: 68px;
+            height: 68px;
+            background-color: #1a1c23;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .mod-card:hover .mod-icon {
+            border-color: var(--theme-color);
+            background-color: #12131a;
+        }
+
+        .mod-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            border-radius: var(--radius-md);
+        }
+
+        .mod-icon .fallback-cube {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex; /* Default flex, diganti jika img sukses dimuat */
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            background-color: #1a1c23;
+        }
+
+        .mod-icon .fallback-cube i {
+            font-size: 26px;
+            color: var(--theme-color);
+        }
+
+        /* CONTENT ROW METADATA */
+        .mod-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            gap: 12px;
+        }
+
+        .mod-card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .mod-card:hover .mod-card-title {
+            color: var(--theme-color);
+        }
+
+        .download-badge-info {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .mod-card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag-node {
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background-color: #1e293b;
+            color: #94a3b8;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .tag-loader {
+            background-color: var(--theme-alpha);
+            color: var(--theme-color);
+            border: 1px solid rgba(0, 175, 156, 0.15);
+        }
+
+        .tag-version {
+            background-color: rgba(255, 255, 255, 0.04);
+            color: #e2e8f0;
+        }
+
+        /* EMPTY FALLBACK CONTAINER */
+        .empty-repository-box {
+            background-color: var(--bg-surface);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .empty-repository-box i {
+            font-size: 36px;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        /* ==========================================================================
+           8. RESPONSIVE MEDIA QUERIES (MOBILE BACKWARD)
+           ========================================================================== */
+        @media (max-width: 640px) {
+            .navbar { padding: 0 16px; }
+            .nav-menu-links { display: none; }
+            .rex-banner-hero { padding: 50px 16px; }
+            .rex-banner-hero h1 { font-size: 26px; }
+            .rex-banner-hero p { font-size: 13px; }
+            .search-filter-container { margin-top: -20px; }
+            .filter-btn { padding: 8px 14px; font-size: 12px; }
+            .mod-card { padding: 16px; gap: 14px; }
+            .mod-icon { width: 56px; height: 56px; }
+            .mod-card-title { font-size: 15px; }
+            .download-badge-info { font-size: 11px; padding: 2px 6px; }
+        }
     </style>
 </head>
 <body class="theme-green">
 
     <nav class="navbar">
-        <a href="/" class="nav-logo">RexCraft<span>Hub</span></a>
-        <div class="nav-links">
-            <a href="/tutorial" class="nav-btn"><i class="fas fa-book"></i> Panduan</a>
-            <a href="/ai" class="nav-btn"><i class="fas fa-robot"></i> AI</a>
+        <div class="nav-container-left">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-cubes"></i> RexCraft<span>Hub</span>
+            </a>
+            <div class="nav-menu-links">
+                <a href="/tutorial" class="nav-btn"><i class="fas fa-book-open"></i> Buku Panduan</a>
+                <a href="/ai" class="nav-btn"><i class="fas fa-robot"></i> Asisten AI</a>
+            </div>
+        </div>
+        
+        <div class="nav-links-right">
             <div class="setting-wrapper">
-                <button class="nav-btn" onclick="toggleSetting()"><i class="fas fa-cog"></i> Menu</button>
+                <button class="nav-btn nav-btn-primary" onclick="toggleSettingBox(event)">
+                    <i class="fas fa-sliders-h"></i> Menu Navigasi
+                </button>
                 
                 <div class="setting-dropdown-box" id="settingDropdown">
-                    <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 4px;">AKSEN WARNA</div>
-                    <div class="theme-options" style="margin-bottom: 12px;">
-                        <div class="color-dot active" style="background:#00af9c;" onclick="setTheme('green', this)"></div>
-                        <div class="color-dot" style="background:#3b82f6;" onclick="setTheme('blue', this)"></div>
-                        <div class="color-dot" style="background:#a855f7;" onclick="setTheme('purple', this)"></div>
+                    <div class="dropdown-section-title">Palet Aksen Warna</div>
+                    <div class="theme-options">
+                        <div class="color-dot active" style="background-color: #00af9c;" onclick="changeThemeAccent('green', this)"></div>
+                        <div class="color-dot" style="background-color: #3b82f6;" onclick="changeThemeAccent('blue', this)"></div>
+                        <div class="color-dot" style="background-color: #a855f7;" onclick="changeThemeAccent('purple', this)"></div>
                     </div>
                     
-                    <div style="border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 4px;">
-                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px;">GAMERTAG MINECRAFT</div>
-                        <div class="dropdown-item-info"><span><i class="fab fa-java" style="color:#ff2424; width:16px;"></i> Java</span> <strong style="color:var(--theme-color)">RexCraft</strong></div>
-                        <div class="dropdown-item-info" style="margin-bottom: 10px;"><span><i class="fas fa-cube" style="color:#22c55e; width:16px;"></i> MCPE</span> <strong style="color:var(--theme-color)">RexCraft6506</strong></div>
-                        
-                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px; border-top: 1px solid var(--border-color); padding-top: 8px;">SOSIAL MEDIA</div>
-                        <a href="https://youtube.com/" target="_blank" class="dropdown-link"><span><i class="fab fa-youtube" style="color:#ff0000; width:16px;"></i> YouTube</span> <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--text-muted)"></i></a>
-                        <a href="https://tiktok.com/" target="_blank" class="dropdown-link" style="margin-bottom: 10px;"><span><i class="fab fa-tiktok" style="color:#fff; width:16px;"></i> TikTok</span> <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--text-muted)"></i></a>
-
-                        <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom: 6px; border-top: 1px solid var(--border-color); padding-top: 8px;">HUBUNGI / DONASI</div>
-                        <a href="https://wa.me/6283873024650?text=Halo%20RexCraft" target="_blank" class="dropdown-link"><span><i class="fab fa-whatsapp" style="color:#25d366; width:16px;"></i> WhatsApp</span> <i class="fas fa-chevron-right" style="font-size:10px; color:var(--text-muted)"></i></a>
-                        <div class="dropdown-item-info" style="color:var(--text-muted); font-style:italic; font-size:11.5px; margin-top:4px;"><i class="fas fa-donate" style="width:16px;"></i> Donasi (Nanti)</div>
+                    <div class="dropdown-divider"></div>
+                    
+                    <div class="dropdown-section-title">Akun / Gamertag Resmi</div>
+                    <div class="dropdown-item-info">
+                        <span><i class="fab fa-java" style="color: #ff2e2e; width: 16px;"></i> Minecraft Java</span>
+                        <strong>RexCraft</strong>
+                    </div>
+                    <div class="dropdown-item-info">
+                        <span><i class="fas fa-cube" style="color: #22c55e; width: 16px;"></i> Bedrock MCPE</span>
+                        <strong>RexCraft6506</strong>
+                    </div>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <div class="dropdown-section-title">Jejaring Sosial</div>
+                    <a href="https://youtube.com/" target="_blank" class="dropdown-link">
+                        <span><i class="fab fa-youtube" style="color: #ff0000; width: 16px;"></i> YouTube Official</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark);"></i>
+                    </a>
+                    <a href="https://tiktok.com/" target="_blank" class="dropdown-link">
+                        <span><i class="fab fa-tiktok" style="color: #ffffff; width: 16px;"></i> TikTok Kreator</span>
+                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark);"></i>
+                    </a>
+                    
+                    <div class="dropdown-divider"></div>
+                    
+                    <div class="dropdown-section-title">Bantuan & Dukungan</div>
+                    <a href="https://wa.me/6283873024650?text=Halo%20RexCraft%20Hub" target="_blank" class="dropdown-link">
+                        <span><i class="fab fa-whatsapp" style="color: #25d366; width: 16px;"></i> Jalur WhatsApp</span>
+                        <i class="fas fa-chevron-right" style="font-size: 10px; color: var(--text-dark);"></i>
+                    </a>
+                    <div class="dropdown-item-info" style="color: var(--text-dark); font-style: italic; padding-left: 10px;">
+                        <span><i class="fas fa-wallet" style="width: 16px;"></i> Gerbang Donasi</span> Beroperasi Nanti
                     </div>
                 </div>
             </div>
@@ -119,93 +786,142 @@
     </nav>
 
     <header class="rex-banner-hero">
-        <div class="badge-update">● V2.0 LIVE DEVELOPMENT</div>
-        <h1>Pusat Modifikasi RexCraft</h1>
-        <p>Situs repositori kustom terverifikasi mirip Modrinth. Mengoptimalkan performa rendering engine dunia Minecraft Anda.</p>
+        <div class="badge-update">CORE PIPELINE V2.0 LIVE DEVELOPMENT</div>
+        <h1>Repositori Modifikasi RexCraft</h1>
+        <p>Platform distribusi terintegrasi penyedia berkas modifikasi, paket tekstur, dan optimasi engine visual dunia Minecraft terverifikasi.</p>
     </header>
 
     <div class="search-filter-container">
         <div class="search-box-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" class="search-input" id="searchInp" placeholder="Cari arsip berkas..." onkeyup="searchEngine()">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInp" placeholder="Masukkan kata kunci arsip berkas..." onkeyup="executeSearchEngine()">
             <div class="autocomplete-suggestions" id="autoBox"></div>
         </div>
+        
         <div class="filter-tabs">
-            <button class="filter-btn active" onclick="filterPlatform('semua', this)">Semua Berkas</button>
-            <button class="filter-btn" onclick="filterPlatform('java', this)">Java Edition</button>
-            <button class="filter-btn" onclick="filterPlatform('mcpe', this)">Bedrock / MCPE</button>
+            <button class="filter-btn active" onclick="executePlatformFiltrasi('semua', this)"><i class="fas fa-layer-group"></i> Semua Berkas</button>
+            <button class="filter-btn" onclick="executePlatformFiltrasi('java', this)"><i class="fab fa-java"></i> Java Edition</button>
+            <button class="filter-btn" onclick="executePlatformFiltrasi('mcpe', this)"><i class="fas fa-mobile-alt"></i> Bedrock / MCPE</button>
         </div>
     </div>
 
     <main class="proyek-section">
-        <div class="grid-layout">
+        <div class="grid-layout" id="repositoryGrid">
             {% for mod in mods %}
             <a href="/mod/{{ mod.id }}" class="mod-card" data-platform="{{ mod.category }}">
                 <div class="mod-icon">
-                    <i class="fas fa-cube"></i>
+                    <div class="fallback-cube"><i class="fas fa-cube"></i></div>
                     {% if mod.icon_url %}
-                        <img src="{{ mod.icon_url }}" onerror="this.remove();">
+                        <img src="{{ mod.icon_url }}" onload="this.parentNode.querySelector('.fallback-cube').style.display='none';" onerror="this.parentNode.querySelector('.fallback-cube').style.display='flex'; this.remove();">
                     {% elif mod.image %}
-                        <img src="{{ mod.image }}" onerror="this.remove();">
+                        <img src="{{ mod.image }}" onload="this.parentNode.querySelector('.fallback-cube').style.display='none';" onerror="this.parentNode.querySelector('.fallback-cube').style.display='flex'; this.remove();">
                     {% endif %}
                 </div>
                 <div class="mod-info">
                     <div class="title-row">
                         <div class="mod-card-title">{{ mod.title }}</div>
-                        <div style="font-size:11px; color:var(--text-muted); font-weight: 600;"><i class="fas fa-download"></i> {{ mod.downloads }}</div>
+                        <div class="download-badge-info"><i class="fas fa-download"></i> {{ mod.downloads }}</div>
                     </div>
                     <div class="mod-card-desc">{{ mod.desc }}</div>
                     <div class="tag-row">
                         <div class="tag-node">{{ mod.category|upper }}</div>
                         <div class="tag-node tag-loader">{{ mod.loader }}</div>
-                        <div class="tag-node" style="background:rgba(255,255,255,0.04); color:#fff;">{{ mod.version_game }}</div>
+                        <div class="tag-node tag-version">{{ mod.version_game }}</div>
                     </div>
                 </div>
             </a>
             {% endfor %}
+            
+            <div class="empty-repository-box" id="emptyFallback">
+                <i class="fas fa-folder-open"></i>
+                <p>Arsip berkas tidak ditemukan untuk pencarian ini.</p>
+            </div>
         </div>
     </main>
 
     <script>
-        function toggleSetting() { document.getElementById('settingDropdown').classList.toggle('active'); }
-        function setTheme(col, el) {
+        function toggleSettingBox(event) {
+            event.stopPropagation();
+            document.getElementById('settingDropdown').classList.toggle('active');
+        }
+
+        document.addEventListener('click', function() {
+            document.getElementById('settingDropdown').classList.remove('active');
+        });
+
+        function changeThemeAccent(col, el) {
             document.body.className = 'theme-' + col;
             let dots = document.getElementsByClassName('color-dot');
-            for(let d of dots) d.classList.remove('active');
-            el.classList.add('active');
-        }
-        function filterPlatform(p, el) {
-            let btns = document.getElementsByClassName('filter-btn');
-            for(let b of btns) b.classList.remove('active');
-            el.classList.add('active');
-            let cards = document.getElementsByClassName('mod-card');
-            for(let c of cards) {
-                c.style.display = (p === 'semua' || c.getAttribute('data-platform') === p) ? 'flex' : 'none';
+            for(let d of dots) {
+                d.classList.remove('active');
             }
+            el.classList.add('active');
         }
-        function searchEngine() {
-            let val = document.getElementById('searchInp').value.toLowerCase();
+
+        function executePlatformFiltrasi(platform, element) {
+            let buttons = document.getElementsByClassName('filter-btn');
+            for(let btn of buttons) {
+                btn.classList.remove('active');
+            }
+            element.classList.add('active');
+
+            let cards = document.getElementsByClassName('mod-card');
+            let counterVisible = 0;
+            
+            for(let card of cards) {
+                let targetPlatform = card.getAttribute('data-platform');
+                if(platform === 'semua' || targetPlatform === platform) {
+                    card.style.display = 'flex';
+                    counterVisible++;
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+            
+            document.getElementById('emptyFallback').style.display = (counterVisible === 0) ? 'block' : 'none';
+        }
+
+        function executeSearchEngine() {
+            let inputVal = document.getElementById('searchInp').value.toLowerCase();
             let cards = document.getElementsByClassName('mod-card');
             let box = document.getElementById('autoBox');
             box.innerHTML = '';
-            if(!val) { box.style.display = 'none'; for(let c of cards) c.style.display = 'flex'; return; }
-            let m = 0;
-            for(let c of cards) {
-                let t = c.querySelector('.mod-card-title').innerText.toLowerCase();
-                if(t.includes(val)) {
-                    c.style.display = 'flex'; m++;
-                    let item = document.createElement('div');
-                    item.className = 'suggestion-item';
-                    item.innerText = c.querySelector('.mod-card-title').innerText;
-                    item.onclick = function() {
-                        document.getElementById('searchInp').value = this.innerText;
-                        box.style.display = 'none';
-                        for(let card of cards) card.style.display = (card.querySelector('.mod-card-title').innerText === this.innerText) ? 'flex' : 'none';
-                    };
-                    box.appendChild(item);
-                } else { c.style.display = 'none'; }
+            
+            if(!inputVal) {
+                box.style.display = 'none';
+                for(let card of cards) {
+                    card.style.display = 'flex';
+                }
+                document.getElementById('emptyFallback').style.display = 'none';
+                return;
             }
-            box.style.display = m > 0 ? 'block' : 'none';
+
+            let matchCounter = 0;
+            for(let card of cards) {
+                let titleText = card.querySelector('.mod-card-title').innerText.toLowerCase();
+                if(titleText.includes(inputVal)) {
+                    card.style.display = 'flex';
+                    matchCounter++;
+                    
+                    let suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'suggestion-item';
+                    suggestionItem.innerHTML = `<span><i class="fas fa-cube" style="color:var(--theme-color);margin-right:8px;"></i>${card.querySelector('.mod-card-title').innerText}</span><i class="fas fa-chevron-right" style="font-size:10px;color:var(--text-dark)"></i>`;
+                    
+                    suggestionItem.onclick = function() {
+                        document.getElementById('searchInp').value = card.querySelector('.mod-card-title').innerText;
+                        box.style.display = 'none';
+                        for(let c of cards) {
+                            c.style.display = (c.querySelector('.mod-card-title').innerText === card.querySelector('.mod-card-title').innerText) ? 'flex' : 'none';
+                        }
+                    };
+                    box.appendChild(suggestionItem);
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+            
+            box.style.display = matchCounter > 0 ? 'block' : 'none';
+            document.getElementById('emptyFallback').style.display = (matchCounter === 0) ? 'block' : 'none';
         }
     </script>
 </body>
