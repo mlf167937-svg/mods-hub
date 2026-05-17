@@ -3,708 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RexCraft Hub - Beranda Mod & Optimasi Premium</title>
+    <title>RexCraft Hub - Repositori Mod & Optimasi Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* =========================================================================
-           CORE BRANDING COLOR VARIABLES & DESIGN SYSTEM
-           ========================================================================= */
         :root {
-            --bg-dark: #07080b;
-            --bg-surface: #111217;
-            --bg-card: #161920;
-            --bg-card-hover: #1c202b;
-            --border-color: #242836;
-            --border-glow: #2e3448;
-            --text-main: #f1f5f9;
+            --bg-dark: #090a0f;
+            --bg-surface: #12141c;
+            --bg-card: #181b26;
+            --border-color: #222735;
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --text-dark: #64748b;
-            
-            /* Modrinth Accent Palette */
             --mr-green: #00af9c;
             --mr-green-hover: #00d4bd;
-            --mr-green-alpha: rgba(0, 175, 156, 0.12);
-            --mr-green-glow: rgba(0, 175, 156, 0.3);
-            
-            /* Category Accent Palette */
+            --mr-green-alpha: rgba(0, 175, 156, 0.15);
             --java-blue: #38bdf8;
             --java-blue-alpha: rgba(56, 189, 248, 0.12);
             --mcpe-orange: #f97316;
             --mcpe-orange-alpha: rgba(249, 115, 22, 0.12);
-            --ver-purple: #c084fc;
-            --ver-purple-alpha: rgba(168, 85, 247, 0.12);
-            
             --font-main: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
-            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* =========================================================================
-           GLOBAL RESET & SCROLLBAR EXPERIENCES
-           ========================================================================= */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg-dark);
             font-family: var(--font-main);
             color: var(--text-main);
-            padding-bottom: 0;
             line-height: 1.5;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            padding-bottom: 40px;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-dark);
-        }
-
-        /* =========================================================================
-           PREMIUM ANIMATIONS DEFINITIONS
-           ========================================================================= */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(0, 175, 156, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 175, 156, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 175, 156, 0); }
-        }
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        /* =========================================================================
-           DYNAMIC NAVBAR LAYOUT SYSTEM
-           ========================================================================= */
+        /* NAVBAR RESET */
         .rex-navbar {
-            background-color: rgba(17, 18, 23, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background-color: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
-            padding: 16px 24px;
+            padding: 16px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: var(--transition-smooth);
         }
         .nav-container {
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         .nav-brand {
-            font-size: 20px;
-            font-weight: 900;
+            font-size: 18px;
+            font-weight: 800;
             color: #fff;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            letter-spacing: -0.5px;
-        }
-        .nav-brand i {
-            color: var(--mr-green);
-            font-size: 22px;
-        }
-        .nav-brand span { 
-            color: var(--mr-green); 
-            font-weight: 400;
-        }
-        
-        .nav-menu-right { 
-            display: flex; 
-            align-items: center;
-            gap: 20px; 
-        }
-        .nav-link-btn {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: var(--transition-smooth);
-            padding: 6px 12px;
-            border-radius: 6px;
         }
-        .nav-link-btn:hover { 
-            color: #fff; 
-            background-color: rgba(255,255,255,0.03);
-        }
-        .nav-link-btn.highlight { 
-            color: #fff;
-            background-color: var(--mr-green);
-            box-shadow: 0 4px 12px rgba(0, 175, 156, 0.2);
-        }
-        .nav-link-btn.highlight:hover { 
-            background-color: var(--mr-green-hover);
-            box-shadow: 0 4px 16px rgba(0, 175, 156, 0.4);
-        }
-
-        /* =========================================================================
-           ADVANCED JUMBOTRON HERO SECTION WITH LIVE COUNTERS
-           ========================================================================= */
-        .rex-hero-wrapper {
-            position: relative;
-            background: radial-gradient(circle at 50% -20%, rgba(0, 175, 156, 0.15) 0%, rgba(7, 8, 11, 0) 60%);
-            border-bottom: 1px solid rgba(36, 40, 54, 0.5);
-            overflow: hidden;
-        }
-        .rex-hero-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: linear-gradient(rgba(255,255,255,0.003) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.003) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center top;
-            pointer-events: none;
-        }
-        .rex-hero {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 80px 24px 60px 24px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            animation: fadeInUp 0.6s ease-out;
-        }
-        .hero-badge-version {
-            background-color: var(--mr-green-alpha);
-            color: var(--mr-green);
-            border: 1px solid rgba(0, 175, 156, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-        .hero-badge-version i { animation: pulseGlow 2s infinite; border-radius: 50%; }
-        
-        .rex-hero h1 { 
-            font-size: 46px; 
-            font-weight: 900; 
-            letter-spacing: -1.5px; 
-            margin-bottom: 16px; 
-            line-height: 1.1;
-            color: #fff;
-        }
-        .rex-hero h1 span { 
-            background: linear-gradient(135deg, #fff 30%, var(--mr-green-hover) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .rex-hero p { 
-            color: var(--text-muted); 
-            font-size: 16.5px; 
-            max-width: 680px; 
-            margin: 0 auto 32px auto; 
-            line-height: 1.6;
-        }
-
-        .hero-stats-panel {
-            display: inline-flex;
-            gap: 32px;
-            background: var(--bg-surface);
-            padding: 14px 32px;
-            border-radius: 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-        }
-        .stat-node {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-align: left;
-        }
-        .stat-node i {
-            font-size: 20px;
-            color: var(--mr-green);
-        }
-        .stat-meta {
-            display: flex;
-            flex-direction: column;
-        }
-        .stat-meta .stat-val {
-            font-size: 15px;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.2;
-        }
-        .stat-meta .stat-lbl {
-            font-size: 11px;
+        .nav-brand span { color: var(--mr-green); }
+        .nav-links { display: flex; gap: 16px; }
+        .nav-btn {
             color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        /* =========================================================================
-           FEATURED UPDATES / ANNOUNCEMENTS GRID
-           ========================================================================= */
-        .announcement-section {
-            max-width: 1300px;
-            margin: 40px auto 0 auto;
-            padding: 0 24px;
-        }
-        .announcement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 16px;
-        }
-        .announcement-card {
-            background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(22,25,32,0.7) 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            position: relative;
-            overflow: hidden;
-        }
-        .announcement-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--mr-green);
-        }
-        .announcement-card.alert::before { background: var(--mcpe-orange); }
-        .announcement-icon {
-            width: 44px; height: 44px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; color: var(--mr-green); flex-shrink: 0;
-            border: 1px solid var(--border-color);
-        }
-        .announcement-card.alert .announcement-icon { color: var(--mcpe-orange); }
-        .announcement-body h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-        .announcement-body p { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
-
-        /* =========================================================================
-           CORE TWO-COLUMN EXPLORER INTEGRATION INTERFACE
-           ========================================================================= */
-        .rex-main-container {
-            max-width: 1300px;
-            margin: 40px auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 32px;
-        }
-
-        /* SIDEBAR INTERACTIVE MODULES */
-        .rex-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .sidebar-widget {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-        }
-        .widget-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            font-weight: 800;
-            margin-bottom: 14px;
-            letter-spacing: 0.8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .widget-title span {
-            width: 6px; height: 6px; background-color: var(--mr-green); border-radius: 50%;
-        }
-        
-        /* Interactive Filter Button Stacks */
-        .filter-btn-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .filter-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            background: none;
-            border: 1px solid transparent;
-            padding: 11px 14px;
-            color: var(--text-muted);
+            text-decoration: none;
             font-size: 13.5px;
             font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            text-align: left;
+            transition: color 0.2s;
         }
-        .filter-btn div { display: flex; align-items: center; gap: 10px; }
-        .filter-btn div i { width: 16px; text-align: center; font-size: 14px; }
-        .filter-btn .count-badge {
-            font-size: 11px;
-            background: rgba(255,255,255,0.04);
-            padding: 1px 6px;
-            border-radius: 4px;
-            color: var(--text-dark);
-            font-family: var(--font-mono);
+        .nav-btn:hover { color: #fff; }
+        .nav-btn.active { color: var(--mr-green); }
+
+        /* JUMBOTRON HERO CLEAN STYLE */
+        .rex-hero-bg {
+            background: radial-gradient(circle at top, rgba(0, 175, 156, 0.1) 0%, transparent 70%);
+            border-bottom: 1px solid var(--border-color);
         }
-        
-        .filter-btn:hover {
-            background: rgba(255,255,255,0.02);
-            color: #fff;
+        .rex-hero {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            text-align: center;
         }
-        .filter-btn.active {
-            background: var(--bg-card);
-            color: #fff;
-            border-color: var(--border-color);
-            border-left: 3px solid var(--mr-green);
-        }
-        .filter-btn.active .count-badge {
+        .hero-badge {
             background: var(--mr-green-alpha);
             color: var(--mr-green);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
         }
+        .rex-hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 12px; color: #fff; letter-spacing: -0.5px; }
+        .rex-hero h1 span { color: var(--mr-green); }
+        .rex-hero p { color: var(--text-muted); font-size: 14.5px; line-height: 1.6; }
 
-        /* SERVER STATUS GRAPHIC RADAR */
-        .server-radar-box {
+        /* COUNTER CHIPS */
+        .hero-stats {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 4px;
-        }
-        .radar-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12.5px;
-            padding: 4px 0;
-        }
-        .radar-label { color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
-        .radar-value { color: #fff; font-weight: 700; font-family: var(--font-mono); }
-        .radar-chart-placeholder {
-            width: 100%; height: 60px;
-            border-radius: 6px; background: #07080b;
-            border: 1px solid var(--border-color);
-            position: relative; overflow: hidden;
-            display: flex; align-items: flex-end;
-        }
-        .svg-chart { width: 100%; height: 100%; }
-
-        /* AREA RIGHT CONTROLLER (SEARCH & CARDS INTERFACE) */
-        .rex-content-area {
-            display: flex;
-            flex-direction: column;
+            justify-content: center;
             gap: 20px;
+            margin-top: 24px;
+            flex-wrap: wrap;
         }
-
-        /* PREMIUM DYNAMIC CONTROL BAR */
-        .content-top-bar {
-            display: flex;
-            gap: 14px;
-            width: 100%;
-            align-items: center;
-        }
-        .search-wrapper {
-            position: relative;
-            flex: 1;
-        }
-        .search-wrapper i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 15px;
-        }
-        .search-input {
-            width: 100%;
+        .stat-chip {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            padding: 14px 16px 14px 46px;
-            border-radius: 10px;
-            color: #fff;
-            font-family: var(--font-main);
-            font-size: 14.5px;
-            outline: none;
-            transition: var(--transition-smooth);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
-        .search-input:focus { 
-            border-color: var(--mr-green); 
-            box-shadow: 0 0 0 3px rgba(0, 175, 156, 0.15), inset 0 2px 4px rgba(0,0,0,0.2);
-            background-color: var(--bg-card);
-        }
-
-        .view-sort-selector {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 13.5px 16px;
-            border-radius: 10px;
-            font-family: var(--font-main);
-            font-size: 14px;
-            font-weight: 600;
-            outline: none;
-            cursor: pointer;
-        }
-
-        /* MAIN SEARCH RESULT STATS META */
-        .search-meta-summary {
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 13px;
-            color: var(--text-muted);
             display: flex;
-            justify-content: space-between;
-            padding: 0 4px;
+            align-items: center;
+            gap: 8px;
+        }
+        .stat-chip i { color: var(--mr-green); }
+
+        /* MAIN EXPLORER AREA */
+        .rex-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
 
-        /* GRID ARSIP MODUL KARTU */
-        .rex-card-grid {
+        /* CONTROLLER & BUTTONS FILTER */
+        .filter-row {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
         }
-
-        /* EXCLUSIVE MODRINTH TYPE MOD CARD DESIGN */
-        .rex-mod-card {
-            background-color: var(--bg-surface);
+        .filter-card-btn {
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 18px;
-            display: flex;
-            gap: 16px;
-            text-decoration: none;
-            color: var(--text-main);
-            transition: var(--transition-smooth);
-            align-items: flex-start;
-            position: relative;
-        }
-        .rex-mod-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--border-glow);
-            box-shadow: 0 12px 30px -8px rgba(0,0,0,0.6);
-            background-color: var(--bg-card-hover);
-        }
-        .rex-mod-card::after {
-            content: '';
-            position: absolute;
-            inset: 0; border-radius: 12px;
-            pointer-events: none;
-            border: 1px solid transparent;
-            transition: var(--transition-smooth);
-        }
-        .rex-mod-card:hover::after {
-            border-color: rgba(0, 175, 156, 0.2);
-        }
-
-        /* CARD SQUARE GRAPHIC */
-        .card-icon-box {
-            width: 68px;
-            height: 68px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            flex-shrink: 0;
+            color: var(--text-muted);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition-smooth);
+            gap: 8px;
+            transition: all 0.2s;
         }
-        .rex-mod-card:hover .card-icon-box {
-            border-color: var(--text-dark);
-            transform: scale(1.02);
+        .filter-card-btn:hover { background: var(--bg-card); color: #fff; }
+        .filter-card-btn.active {
+            border-color: var(--mr-green);
+            color: #fff;
+            background: var(--mr-green-alpha);
         }
-        .card-icon-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-icon-box i { font-size: 26px; color: var(--mr-green); }
 
-        /* TEKS INTEGRASI KARTU */
-        .card-content-info {
+        /* SEARCH BAR COMPONENT */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .search-container i {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dark);
+        }
+        .search-bar-input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 12px 14px 12px 40px;
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-main);
+            font-size: 14px;
+            outline: none;
+        }
+        .search-bar-input:focus { border-color: var(--mr-green); }
+
+        /* CARDS GRID SYSTEM */
+        .rex-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* MODRINTH STYLE CLEAN MOD CARD */
+        .mod-card-anchor {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .mod-card-anchor:hover {
+            transform: translateY(-2px);
+            border-color: #2e3448;
+            background: var(--bg-card);
+        }
+
+        .mod-img-wrapper {
+            width: 64px; height: 64px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .mod-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .mod-img-wrapper i { font-size: 24px; color: var(--mr-green); }
+
+        .mod-details {
             display: flex;
             flex-direction: column;
             width: 100%;
             overflow: hidden;
         }
-        .card-content-info h2 {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            letter-spacing: -0.3px;
-        }
-        .card-desc-text {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.45;
-            margin-bottom: 14px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 38px;
-        }
+        .mod-details h2 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .mod-details p { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
 
-        /* BADGES ROW SYSTEM STRUCTURAL (FIX KELUHAN 3) */
-        .card-badges-row {
+        /* BADGES LABELS FOR MOD LOADER & PLATFORMS */
+        .badge-container-row {
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
-            margin-top: auto;
         }
-        .tag-badge {
+        .system-badge {
             font-size: 10px;
-            font-weight: 800;
-            padding: 3px 8px;
+            font-weight: 700;
+            padding: 2px 6px;
             border-radius: 4px;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
-            display: inline-flex;
-            align-items: center;
+            font-family: var(--font-mono);
         }
-        
-        .tag-platform.java { background-color: var(--java-blue-alpha); color: var(--java-blue); }
-        .tag-platform.mcpe { background-color: var(--mcpe-orange-alpha); color: var(--mcpe-orange); }
-        .tag-loader { background-color: var(--mr-green-alpha); color: var(--mr-green); }
-        .tag-version { background-color: #07080b; color: #cbd5e1; border: 1px solid var(--border-color); font-family: var(--font-mono); font-size: 10px; }
+        .badge-plat.java { background: var(--java-blue-alpha); color: var(--java-blue); }
+        .badge-plat.mcpe { background: var(--mcpe-orange-alpha); color: var(--mcpe-orange); }
+        .badge-loader { background: var(--mr-green-alpha); color: var(--mr-green); }
+        .badge-version { background: var(--bg-dark); color: #cbd5e1; border: 1px solid var(--border-color); }
 
-        /* INTERNAL EMPTY CONTROLLER */
-        .rex-empty-state {
-            grid-column: 1 / -1;
+        /* FALLBACK EMPTY */
+        .empty-info-box {
             text-align: center;
-            background-color: var(--bg-surface);
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            padding: 60px 24px;
+            padding: 40px 20px;
             border-radius: 12px;
+            color: var(--text-muted);
         }
-        .rex-empty-state i { font-size: 48px; color: var(--text-dark); margin-bottom: 16px; }
-        .rex-empty-state p { color: var(--text-muted); font-size: 14px; margin-bottom: 8px; }
-        .rex-empty-state span { font-size: 12px; color: var(--text-dark); font-family: var(--font-mono); }
+        .empty-info-box i { font-size: 36px; color: #475569; margin-bottom: 12px; }
 
-        /* =========================================================================
-           KOLOM DOKUMENTASI FAQ & CHANGELOGS (EXTRA ADDONS BARIS DATA)
-           ========================================================================= */
-        .rex-extra-section {
-            max-width: 1300px;
-            margin: 40px auto 0 auto;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-        .extra-box {
-            background-color: var(--bg-surface);
+        /* DOCUMENTATION ARCHITECTURE */
+        .doc-section {
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 24px;
+            padding: 20px;
+            margin-top: 24px;
         }
-        .extra-box h3 { font-size: 16px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; color: #fff; }
-        .extra-box h3 i { color: var(--mr-green); }
+        .doc-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .doc-section h3 i { color: var(--mr-green); }
 
-        /* Changelog Timeline Item Modules */
-        .changelog-timeline { display: flex; flex-direction: column; gap: 14px; }
-        .timeline-item { position: relative; padding-left: 20px; border-left: 2px solid var(--border-color); }
-        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; background: var(--mr-green); border-radius: 50%; }
-        .timeline-date { font-size: 11px; font-family: var(--font-mono); color: var(--text-dark); font-weight: 700; }
-        .timeline-title { font-size: 13.5px; font-weight: 700; color: #e2e8f0; margin: 2px 0; }
-        .timeline-desc { font-size: 12.5px; color: var(--text-muted); }
+        .faq-box { display: flex; flex-direction: column; gap: 10px; }
+        .faq-node { border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-dark); }
+        .faq-head { width: 100%; background: none; border: none; padding: 12px; text-align: left; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; }
+        .faq-body { padding: 0 12px 12px 12px; color: var(--text-muted); font-size: 12.5px; line-height: 1.5; }
 
-        /* FAQ Accordion Elements */
-        .faq-accordion { display: flex; flex-direction: column; gap: 8px; }
-        .faq-item { border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--bg-card); overflow: hidden; }
-        .faq-trigger { width: 100%; background: none; border: none; padding: 12px 16px; text-align: left; color: #fff; font-size: 13.5px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .faq-trigger i { color: var(--text-muted); transition: var(--transition-smooth); }
-        .faq-content { padding: 0 16px; max-height: 0; overflow: hidden; transition: all 0.2s ease-out; color: var(--text-muted); font-size: 12.5px; line-height: 1.5; }
-        .faq-item.active .faq-content { padding: 0 16px 14px 16px; max-height: 100px; }
-        .faq-item.active .faq-trigger i { transform: rotate(180deg); color: var(--mr-green); }
-
-        /* =========================================================================
-           GIANT MEGA FOOTER COMPONENT OVERVIEW
-           ========================================================================= */
-        .rex-giant-footer {
-            background-color: var(--bg-surface);
+        /* MINI FOOTER */
+        .rex-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
             border-top: 1px solid var(--border-color);
-            margin-top: 80px;
-            padding: 60px 24px 30px 24px;
+            font-size: 12px;
+            color: #475569;
         }
-        .footer-grid-wrapper {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr repeat(3, 1fr);
-            gap: 40px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 40px;
-        }
-        .footer-brand-column h2 { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 12px; }
-        .footer-brand-column h2 span { color: var(--mr-green); }
-        .footer-brand-column p { color: var(--text-muted); font-size: 13.5px; max-width: 320px; line-height: 1.6; margin-bottom: 20px; }
-        .footer-socials { display: flex; gap: 12px; }
-        .social-circle-btn { width: 36px; height: 36px; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; transition: var(--transition-smooth); font-size: 14px; }
-        .social-circle-btn:hover { background-color: var(--mr-green); color: #fff; border-color: var(--mr-green); transform: translateY(-2px); }
 
-        .footer-links-column h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 16px; font-weight: 800; }
-        .footer-links-column ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .footer-links-column ul li a { color: #cbd5e1; text-decoration: none; font-size: 13.5px; transition: var(--transition-smooth); }
-        .footer-links-column ul li a:hover { color: var(--mr-green); padding-left: 4px; }
-
-        .footer-bottom-bar {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12.5px;
-            color: var(--text-dark);
-        }
-        .footer-bottom-left { display: flex; align-items: center; gap: 6px; }
-        .footer-bottom-right { display: flex; gap: 20px; }
-        .footer-bottom-right a { color: var(--text-dark); text-decoration: none; }
-        .footer-bottom-right a:hover { color: var(--text-muted); }
-
-        /* MOBILE AREA ADAPTIVE CONTROLLER */
-        @media (max-width: 900px) {
-            .rex-main-container { grid-template-columns: 1fr; gap: 20px; }
-            .rex-sidebar { display: none; }
-            .footer-grid-wrapper { grid-template-columns: 1fr; gap: 30px; }
-            .rex-extra-section { grid-template-columns: 1fr; }
-            .rex-hero h1 { font-size: 32px; }
-            .hero-stats-panel { display: flex; flex-direction: column; gap: 14px; border-radius: 16px; align-items: flex-start; }
-            .footer-bottom-bar { flex-direction: column; gap: 14px; text-align: center; }
+        @media(min-width: 768px) {
+            .filter-row { grid-template-columns: repeat(3, 1fr); }
+            .rex-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -712,343 +294,125 @@
 
     <nav class="rex-navbar">
         <div class="nav-container">
-            <a href="/" class="nav-brand"><i class="fas fa-cubes"></i>RexCraft<span>Hub</span></a>
-            <div class="nav-menu-right">
-                <a href="/tutorial" class="nav-link-btn highlight"><i class="fas fa-book-open"></i> Panduan Pasang</a>
-                <a href="https://www.youtube.com/@RexCraft6506" target="_blank" class="nav-link-btn"><i class="fab fa-youtube"></i> YouTube Hub</a>
+            <a href="/" class="nav-brand"><i class="fas fa-cubes" style="color:var(--mr-green)"></i> RexCraft<span>Hub</span></a>
+            <div class="nav-links">
+                <a href="/" class="nav-btn active">Penjelajah</a>
             </div>
         </div>
     </nav>
 
-    <div class="rex-hero-wrapper">
+    <div class="rex-hero-bg">
         <header class="rex-hero">
-            <div class="hero-badge-version">
-                <i class="fas fa-circle" style="font-size: 8px;"></i> Big Update v2.0 Live Deployment
-            </div>
+            <div class="hero-badge">BIG UPDATE V2.0 LIVE</div>
             <h1>Repositori Pusat <span>Optimasi & Modifikasi</span></h1>
-            <p>Situs distribusi berkas digital RexCraft terverifikasi. Seluruh paket zip, jar, dan mcpack dikompilasi secara presisi guna meningkatkan FPS sirkuit game client Anda.</p>
-            
-            <div class="hero-stats-panel">
-                <div class="stat-node">
-                    <i class="fas fa-folder-open"></i>
-                    <div class="stat-meta">
-                        <span class="stat-val" id="totalProjectLabel">{{ mods|length }} Proyek</span>
-                        <span class="stat-lbl">Arsip Aktif</span>
-                    </div>
-                </div>
-                <div class="stat-node">
-                    <i class="fas fa-bolt" style="color: #eab308;"></i>
-                    <div class="stat-meta">
-                        <span class="stat-val">0.02 ms</span>
-                        <span class="stat-lbl">Kueri Respon</span>
-                    </div>
-                </div>
-                <div class="stat-node">
-                    <i class="fas fa-shield-alt" style="color: #22c55e;"></i>
-                    <div class="stat-meta">
-                        <span class="stat-val">Terproteksi</span>
-                        <span class="stat-lbl">Integritas File</span>
-                    </div>
-                </div>
+            <p>Situs distribusi berkas digital terverifikasi untuk meningkatkan performa frame sirkuit game client Anda secara instan.</p>
+            <div class="hero-stats">
+                <div class="stat-chip"><i class="fas fa-folder"></i> <span>{{ mods|length }} Proyek Aktif</span></div>
+                <div class="stat-chip"><i class="fas fa-shield-alt"></i> <span>Terproteksi Clean</span></div>
             </div>
         </header>
     </div>
 
-    <div class="announcement-section">
-        <div class="announcement-grid">
-            <div class="announcement-card">
-                <div class="announcement-icon"><i class="fas fa-info-circle"></i></div>
-                <div class="announcement-body">
-                    <h3>Integrasi Layout Pop-Up Berhasil</h3>
-                    <p>Tombol unduh utama pada halaman detail mod kini memunculkan panel dialog pop-up pilihan rilis seperti Modrinth asli.</p>
-                </div>
-            </div>
-            <div class="announcement-card alert">
-                <div class="announcement-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                <div class="announcement-body">
-                    <h3>Penamaan Folder Repositori</h3>
-                    <p>Pastikan folder aset di dalam direktori internal menggunakan huruf kecil murni atau tanda hubung biasa untuk mencegah kegagalan tautan.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="rex-main-container">
+    <main class="rex-container">
         
-        <aside class="rex-sidebar">
-            <div class="sidebar-widget">
-                <div class="widget-title">Filter Edisi Game <span></span></div>
-                <div class="filter-btn-stack">
-                    <button class="filter-btn active" id="filter-all-btn" onclick="filterPlatform('all', this)">
-                        <div><i class="fas fa-border-all"></i> Semua Berkas</div>
-                        <span class="count-badge">{{ mods|length }}</span>
-                    </button>
-                    <button class="filter-btn" id="filter-java-btn" onclick="filterPlatform('java', this)">
-                        <div><i class="fab fa-java"></i> Java Edition</div>
-                        <span class="count-badge" id="javaCountBox">0</span>
-                    </button>
-                    <button class="filter-btn" id="filter-mcpe-btn" onclick="filterPlatform('mcpe', this)">
-                        <div><i class="fas fa-mobile-alt"></i> Bedrock / MCPE</div>
-                        <span class="count-badge" id="mcpeCountBox">0</span>
-                    </button>
-                </div>
-            </div>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" class="search-bar-input" id="searchFilterInput" placeholder="Cari nama modifikasi..." onkeyup="runEngineSearch()">
+        </div>
 
-            <div class="sidebar-widget">
-                <div class="widget-title">Status Node Server <span></span></div>
-                <div class="server-radar-box">
-                    <div class="radar-row">
-                        <span class="radar-label"><i class="fas fa-network-wired" style="color:var(--mr-green)"></i> API Gateway</span>
-                        <span class="radar-value" style="color:#22c55e">ONLINE</span>
+        <div class="filter-row">
+            <button class="filter-card-btn active" id="btn-all" onclick="setPlatformFilter('all', this)"><i class="fas fa-globe"></i> Semua Berkas</button>
+            <button class="filter-card-btn" id="btn-java" onclick="setPlatformFilter('java', this)"><i class="fab fa-java"></i> Java Edition</button>
+            <button class="filter-card-btn" id="btn-mcpe" onclick="setPlatformFilter('mcpe', this)"><i class="fas fa-mobile-alt"></i> Bedrock / MCPE</button>
+        </div>
+
+        <div class="rex-grid" id="modsContainerGrid">
+            {% if mods %}
+                {% for mod in mods %}
+                <a href="/mod/{{ mod.id }}" class="mod-card-anchor" data-name="{{ mod.title|lower }}" data-platform="{{ mod.category }}">
+                    <div class="mod-img-wrapper">
+                        {% if mod.icon_url %}
+                            <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
+                        {% else %}
+                            <i class="fas fa-cube"></i>
+                        {% endif %}
                     </div>
-                    <div class="radar-row">
-                        <span class="radar-label"><i class="fas fa-hdd" style="color:var(--text-dark)"></i> Penyimpanan</span>
-                        <span class="radar-value">92.4 GB</span>
-                    </div>
-                    <div class="radar-chart-placeholder">
-                        <svg class="svg-chart" viewBox="0 0 240 60">
-                            <path d="M0,50 Q30,20 60,40 T120,15 T180,35 T240,10 L240,60 L0,60 Z" fill="rgba(0, 175, 156, 0.08)" stroke="var(--mr-green)" stroke-width="2"></path>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar-widget">
-                <div class="widget-title">Informasi Lisensi <span></span></div>
-                <p style="font-size: 12.5px; color: var(--text-muted); line-height: 1.6;">Berkas kompilasi yang tersedia di web RexCraft Hub bersifat didistribusikan gratis demi kenyamanan performa komunitas pemain.</p>
-            </div>
-        </aside>
-
-        <section class="rex-content-area">
-            
-            <div class="content-top-bar">
-                <div class="search-wrapper">
-                    <i class="fas fa-search"></i>
-                    <input type="text" class="search-input" id="masterSearchInput" placeholder="Cari arsip mod, optimization, atau shader pack..." onkeyup="executeMatrixSearch()">
-                </div>
-                <select class="view-sort-selector" id="sortingEngineSelect" onchange="executeMatrixSearch()">
-                    <option value="az">Nama (A-Z)</option>
-                    <option value="za">Nama (Z-A)</option>
-                </select>
-            </div>
-
-            <div class="search-meta-summary">
-                <span>Menampilkan <strong id="currentVisibleCount" style="color:#fff;">0</strong> modul terkompilasi</span>
-                <span id="activeFilterBadge" style="font-family:var(--font-mono); text-transform:uppercase; color:var(--mr-green)">Filter: Semua</span>
-            </div>
-
-            <div class="rex-card-grid" id="masterGridMatrix">
-                {% if mods %}
-                    {% for mod in mods %}
-                    <a href="/mod/{{ mod.id }}" class="rex-mod-card" data-title="{{ mod.title|lower }}" data-category="{{ mod.category }}">
-                        <div class="card-icon-box">
-                            {% if mod.icon_url %}
-                                <img src="{{ mod.icon_url }}" alt="{{ mod.title }}">
-                            {% else %}
-                                <i class="fas fa-cube"></i>
-                            {% endif %}
-                        </div>
-                        <div class="card-content-info">
-                            <h2>{{ mod.title }}</h2>
-                            <div class="card-desc-text">{{ mod.desc }}</div>
+                    <div class="mod-details">
+                        <h2>{{ mod.title }}</h2>
+                        <p>{{ mod.desc }}</p>
+                        
+                        <div class="badge-container-row">
+                            <span class="system-badge badge-plat {{ mod.category }}">{{ mod.category }}</span>
                             
-                            <div class="card-badges-row">
-                                <span class="tag-badge tag-platform {% if mod.category == 'java' %}java{% else %}mcpe{% endif %}">
-                                    {{ mod.category }}
-                                </span>
-                                
-                                {% if mod.loaders %}
-                                    {% for loader in mod.loaders %}
-                                    <span class="tag-badge tag-loader">{{ loader }}</span>
-                                    {% endfor %}
-                                {% endif %}
-                                
-                                <span class="tag-badge tag-version">v{{ mod.version_range }}</span>
-                            </div>
+                            {% if mod.loaders %}
+                                {% for loader in mod.loaders %}
+                                <span class="system-badge badge-loader">{{ loader }}</span>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <span class="system-badge badge-version">v{{ mod.version_range }}</span>
                         </div>
-                    </a>
-                    {% endfor %}
-                {% else %}
-                    <div class="rex-empty-state" id="emptyFallbackCard">
-                        <i class="fas fa-folder-open"></i>
-                        <p>Arsip repositori internal tidak mendeteksi adanya folder rilis.</p>
-                        <span>Path check target: static/uploads/(java|mcpe)/*</span>
                     </div>
-                {% endif %}
-            </div>
-
-        </section>
-    </div>
-
-    <div class="rex-extra-section">
-        <div class="extra-box">
-            <h3><i class="fas fa-history"></i> Catatan Pembaruan Situs (Changelog)</h3>
-            <div class="changelog-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">MEI 17, 2026</div>
-                    <div class="timeline-title">Big Update Deployment v2.0</div>
-                    <div class="timeline-desc">Penerapan pop-up pilihan berkas rilis, pembenahan logika pengurutan versi otomatis, dan penyematan tag loader dinamis di beranda.</div>
+                </a>
+                {% endfor %}
+            {% else %}
+                <div class="empty-info-box" id="fallbackEmptyBox">
+                    <i class="fas fa-folder-open"></i>
+                    <p>Berkas kosong. Belum ada mod terdaftar di dalam repositori local.</p>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">DESEMBER 24, 2025</div>
-                    <div class="timeline-title">Initial Core Release v1.0</div>
-                    <div class="timeline-desc">Konfigurasi awal struktur database folder otomatis berbasis python flask engine core.</div>
-                </div>
-            </div>
+            {% endif %}
         </div>
 
-        <div class="extra-box">
+        <section class="doc-section">
             <h3><i class="fas fa-question-circle"></i> Pertanyaan Umum (FAQ)</h3>
-            <div class="faq-accordion">
-                <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaqAccordion(this)">
-                        Apakah berkas di RexCraft aman dari virus? <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        Tentu saja aman, Bos. Seluruh berkas modifikasi dan tekstur yang diunggah ke server RexCraft telah melalui proses enkripsi dan pemindaian integritas kode internal.
-                    </div>
+            <div class="faq-box">
+                <div class="faq-node">
+                    <button class="faq-head">Apakah berkas di RexCraft aman dari virus? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-body">Tentu saja aman. Seluruh berkas modifikasi dan tekstur yang diunggah ke server RexCraft telah melalui proses verifikasi keamanan dan enkripsi internal.</div>
                 </div>
-                <div class="faq-item">
-                    <button class="faq-trigger" onclick="toggleFaqAccordion(this)">
-                        Bagaimana cara memperbarui mod yang usang? <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        Anda hanya perlu masuk ke halaman detail mod tersebut, klik unduh, lalu pilih rilis dengan tag versi terbaru game Minecraft Anda.
-                    </div>
+                <div class="faq-node">
+                    <button class="faq-head">Bagaimana cara memperbarui mod yang usang? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-body">Masuk ke halaman detail item, lalu pilih menu rilis yang sesuai dengan versi pembaruan eksekusi Minecraft Anda.</div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <footer class="rex-giant-footer">
-        <div class="footer-grid-wrapper">
-            <div class="footer-brand-column">
-                <h2>RexCraft<span>Hub</span></h2>
-                <p>Platform arsip digital independen penyedia berkas optimasi, shader, dan mod kustom Minecraft berkinerja tinggi.</p>
-                <div class="footer-socials">
-                    <a href="https://www.youtube.com/@RexCraft6506" target="_blank" class="social-circle-btn"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.tiktok.com/@rexcraft6506" target="_blank" class="social-circle-btn"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-links-column">
-                <h4>Navigasi Portal</h4>
-                <ul>
-                    <li><a href="/">Beranda Utama</a></li>
-                    <li><a href="/tutorial">Instruksi Pasang</a></li>
-                    <li><a href="https://www.youtube.com/@RexCraft6506" target="_blank">Hub Komunitas</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links-column">
-                <h4>Kategori Distribusi</h4>
-                <ul>
-                    <li><a href="#" onclick="triggerDirectFilter('java')">Minecraft Java Edition</a></li>
-                    <li><a href="#" onclick="triggerDirectFilter('mcpe')">Minecraft Bedrock / MCPE</a></li>
-                    <li><a href="#">Paket Optimasi FPS</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links-column">
-                <h4>Arsitektur Jaringan</h4>
-                <ul>
-                    <li><a href="#">Flask Engine V2</a></li>
-                    <li><a href="#">Render Cloud Cluster</a></li>
-                    <li><a href="#">GitHub Core Storage</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom-bar">
-            <div class="footer-bottom-left">
-                &copy; 2026 <strong>RexCraft Hub</strong>. All Rights Reserved. Dikembangkan untuk Komunitas Minecraft Indonesia.
-            </div>
-            <div class="footer-bottom-right">
-                <a href="#">Ketentuan Layanan</a>
-                <a href="#">Kebijakan Privasi</a>
-            </div>
-        </div>
-    </footer>
+        <footer class="rex-footer">
+            &copy; 2026 RexCraft Hub. Dikembangkan Bersama Komunitas Minecraft Indonesia.
+        </footer>
+    </main>
 
     <script>
-        let currentActivePlatform = 'all';
+        let currentTargetPlatform = 'all';
 
-        // Menghitung jumlah kategori secara otomatis saat halaman dimuat pertama kali
-        document.addEventListener("DOMContentLoaded", function() {
-            calculateCategoryMetrics();
-            executeMatrixSearch();
-        });
+        function runEngineSearch() {
+            let searchKeyword = document.getElementById('searchFilterInput').value.toLowerCase();
+            let cards = Array.from(document.getElementsByClassName('mod-card-anchor'));
+            let activeCardsCount = 0;
 
-        function calculateCategoryMetrics() {
-            let cards = document.getElementsByClassName('rex-mod-card');
-            let javaCount = 0;
-            let mcpeCount = 0;
-
-            for (let i = 0; i < cards.length; i++) {
-                let cat = cards[i].getAttribute('data-category');
-                if (cat === 'java') javaCount++;
-                if (cat === 'mcpe') mcpeCount++;
-            }
-
-            if(document.getElementById('javaCountBox')) document.getElementById('javaCountBox').innerText = javaCount;
-            if(document.getElementById('mcpeCountBox')) document.getElementById('mcpeCountBox').innerText = mcpeCount;
-        }
-
-        function executeMatrixSearch() {
-            let searchKeyword = document.getElementById('masterSearchInput').value.toLowerCase();
-            let cards = Array.from(document.getElementsByClassName('rex-mod-card'));
-            let gridContainer = document.getElementById('masterGridMatrix');
-            let visibleCount = 0;
-
-            // Proses Filter & Pencarian Teks
             cards.forEach(card => {
-                let title = card.getAttribute('data-title');
-                let category = card.getAttribute('data-category');
-                
-                let isMatchSearch = title.includes(searchKeyword);
-                let isMatchFilter = (currentActivePlatform === 'all' || category === currentActivePlatform);
+                let name = card.getAttribute('data-name');
+                let platform = card.getAttribute('data-platform');
 
-                if (isMatchSearch && isMatchFilter) {
+                let matchSearch = name.includes(searchKeyword);
+                let matchFilter = (currentTargetPlatform === 'all' || platform === currentTargetPlatform);
+
+                if (matchSearch && matchFilter) {
                     card.style.display = "flex";
-                    visibleCount++;
+                    activeCardsCount++;
                 } else {
                     card.style.display = "none";
                 }
             });
 
-            // Jalankan Logika Pengurutan Sorting Dom Element
-            let sortingStrategy = document.getElementById('sortingEngineSelect').value;
-            cards.sort((alpha, beta) => {
-                let titleAlpha = alpha.getAttribute('data-title');
-                let titleBeta = beta.getAttribute('data-title');
-                if (sortingStrategy === 'az') {
-                    return titleAlpha.localeCompare(titleBeta);
-                } else {
-                    return titleBeta.localeCompare(titleAlpha);
-                }
-            });
-
-            // Terapkan urutan elemen baru ke container grid
-            cards.forEach(card => {
-                if(card.style.display === "flex") {
-                    gridContainer.appendChild(card);
-                }
-            });
-
-            // Update Meta Jumlah Data Terlihat
-            if(document.getElementById('currentVisibleCount')) {
-                document.getElementById('currentVisibleCount').innerText = visibleCount;
-            }
-
-            // Atur Fallback Kosong jika data tidak ditemukan saat dicari
-            let fallbackElement = document.getElementById('emptyFallbackCard');
-            if (visibleCount === 0) {
-                if(!fallbackElement && gridContainer) {
-                    gridContainer.innerHTML += `
-                        <div class="rex-empty-state" id="emptyFallbackCard">
+            let fallbackElement = document.getElementById('fallbackEmptyBox');
+            let container = document.getElementById('modsContainerGrid');
+            if (activeCardsCount === 0) {
+                if(!fallbackElement && container) {
+                    container.innerHTML += `
+                        <div class="empty-info-box" id="fallbackEmptyBox">
                             <i class="fas fa-search-minus"></i>
-                            <p>Modul yang Anda cari tidak ditemukan.</p>
-                            <span>Coba gunakan kata kunci lain.</span>
+                            <p>Modifikasi yang Anda cari tidak ditemukan.</p>
                         </div>
                     `;
                 }
@@ -1057,34 +421,14 @@
             }
         }
 
-        function filterPlatform(targetCategory, buttonElement) {
-            currentActivePlatform = targetCategory;
+        function setPlatformFilter(category, element) {
+            currentTargetPlatform = category;
             
-            // Atur ulang tombol kelas aktif di sidebar
-            let buttons = document.getElementsByClassName('filter-btn');
-            for(let b of buttons) { b.classList.remove('active'); }
-            if(buttonElement) buttonElement.classList.add('active');
-            
-            // Update teks status filter aktif
-            let badgeText = "Semua";
-            if(targetCategory === 'java') badgeText = "Java Edition";
-            if(targetCategory === 'mcpe') badgeText = "Bedrock / MCPE";
-            if(document.getElementById('activeFilterBadge')) {
-                document.getElementById('activeFilterBadge').innerText = "Filter: " + badgeText;
-            }
+            let buttons = document.getElementsByClassName('filter-card-btn');
+            for(let btn of buttons) { btn.classList.remove('active'); }
+            if(element) element.classList.add('active');
 
-            executeMatrixSearch();
-        }
-
-        function triggerDirectFilter(category) {
-            window.scrollTo({ top: document.getElementById('masterSearchInput').offsetTop - 100, behavior: 'smooth' });
-            if(category === 'java') filterPlatform('java', document.getElementById('filter-java-btn'));
-            if(category === 'mcpe') filterPlatform('mcpe', document.getElementById('filter-mcpe-btn'));
-        }
-
-        function toggleFaqAccordion(element) {
-            let parentNode = element.parentElement;
-            parentNode.classList.toggle('active');
+            runEngineSearch();
         }
     </script>
 </body>
