@@ -36,6 +36,24 @@ def parse_info_file(folder_path):
             pass
     return info
 
+def find_mod_components(files):
+    """Memisahkan ikon, file info, dan berkas mod sejati dengan pintar"""
+    icon_file = None
+    mod_files = []
+    
+    # List kata kunci nama file gambar yang kemungkinan dipakai untuk ikon
+    icon_keywords = ['icon.jpg', 'icon.png', 'icon.jpeg', 'icon.webp', 'logo.png', 'logo.jpg']
+    
+    for f in files:
+        if f.lower() == 'info.txt':
+            continue
+        elif f.lower() in icon_keywords:
+            icon_file = f  # Kunci nama ikon aslinya (.png / .jpg dll)
+        else:
+            mod_files.append(f) # Ini beneran file mod (.jar / .mcpack)
+            
+    return icon_file, sorted(mod_files, reverse=True)
+
 def scan_mods():
     """Membaca semua folder secara langsung dari direktori static/uploads"""
     all_mods = []
@@ -50,15 +68,11 @@ def scan_mods():
         for folder_name in os.listdir(platform_path):
             folder_path = os.path.join(platform_path, folder_name)
             if os.path.isdir(folder_path):
-                # Ekstrak info dari info.txt
                 meta = parse_info_file(folder_path)
-                
-                # Scan semua file di dalam folder untuk memisahkan file mod dan icon
                 files = os.listdir(folder_path)
-                icon_file = 'icon.jpg' if 'icon.jpg' in files else None
                 
-                # Ambil file berkas selain icon dan info text
-                mod_files = [f for f in files if f not in ['icon.jpg', 'info.txt']]
+                # Saring komponen pakai fungsi pintar baru
+                icon_file, mod_files = find_mod_components(files)
                 
                 all_mods.append({
                     'id': mod_id_counter,
@@ -68,7 +82,7 @@ def scan_mods():
                     'category': meta['category'],
                     'desc': meta['desc'],
                     'icon': icon_file,
-                    'files': sorted(mod_files, reverse=True) # Versi terbaru di atas
+                    'files': mod_files
                 })
                 mod_id_counter += 1
     return all_mods
@@ -86,8 +100,9 @@ def mod_detail(platform, folder_name):
         
     meta = parse_info_file(folder_path)
     files = os.listdir(folder_path)
-    icon_file = 'icon.jpg' if 'icon.jpg' in files else None
-    mod_files = [f for f in files if f not in ['icon.jpg', 'info.txt']]
+    
+    # Saring komponen pakai fungsi pintar baru
+    icon_file, mod_files = find_mod_components(files)
     
     mod_data = {
         'folder_name': folder_name,
@@ -96,7 +111,7 @@ def mod_detail(platform, folder_name):
         'category': meta['category'],
         'desc': meta['desc'],
         'icon': icon_file,
-        'files': sorted(mod_files, reverse=True)
+        'files': mod_files
     }
     return render_template('mod.html', mod=mod_data)
 
