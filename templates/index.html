@@ -6,648 +6,575 @@
     <title>RexCraft Hub - Pusat Berkas Modifikasi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ==========================================================================
-           1. ROOT VARIABLES & THEME ACCENTS 
+           CORE ARCHITECTURE STYLE SHEET - EXPLICIT EXPANDED LINES VERSION
            ========================================================================== */
+        
         :root {
-            --bg-dark: #07080b;
-            --bg-surface: #111217;
-            --bg-card: #161920;
-            --bg-card-hover: #1e222d;
-            --border-color: #242836;
-            --border-color-hover: #32384c;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --text-dark: #64748b;
-            --theme-color: #00af9c;
-            --theme-alpha: rgba(0, 175, 156, 0.12);
-            --theme-alpha-hover: rgba(0, 175, 156, 0.25);
-            --success-color: #22c55e;
-            --danger-color: #ef4444;
-            --warning-color: #f59e0b;
-            --font-primary: 'Inter', sans-serif;
-            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 14px;
-            --glow-color: rgba(0, 175, 156, 0.3);
+            --bg-dark-hex-core: #07080b;
+            --bg-surface-hex-core: #111217;
+            --bg-card-hex-core: #161920;
+            --bg-card-hover-hex-core: #1e222d;
+            --border-color-hex-core: #242836;
+            --border-color-hover-hex-core: #32384c;
+            --text-main-hex-core: #f1f5f9;
+            --text-muted-hex-core: #94a3b8;
+            --text-dark-hex-core: #64748b;
+            --theme-color-hex-core: #00af9c;
+            --theme-alpha-hex-core: rgba(0, 175, 156, 0.12);
+            --theme-alpha-hover-hex-core: rgba(0, 175, 156, 0.25);
+            --success-color-hex-core: #22c55e;
+            --danger-color-hex-core: #ef4444;
+            --warning-color-hex-core: #f59e0b;
+            --font-primary-stack: 'Inter', sans-serif;
+            --shadow-sm-layer: 0 2px 8px rgba(0, 0, 0, 0.2);
+            --shadow-md-layer: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg-layer: 0 16px 40px rgba(0, 0, 0, 0.6);
+            --radius-sm-node: 6px;
+            --radius-md-node: 10px;
+            --radius-lg-node: 14px;
         }
 
-        .theme-green {
-            --theme-color: #00af9c;
-            --theme-alpha: rgba(0, 175, 156, 0.12);
-            --theme-alpha-hover: rgba(0, 175, 156, 0.25);
-            --glow-color: rgba(0, 175, 156, 0.3);
+        /* VERSI THEME CLASSIFICATION */
+        body.theme-green {
+            --theme-color-hex-core: #00af9c;
+            --theme-alpha-hex-core: rgba(0, 175, 156, 0.12);
+            --theme-alpha-hover-hex-core: rgba(0, 175, 156, 0.25);
         }
-        .theme-blue {
-            --theme-color: #3b82f6;
-            --theme-alpha: rgba(59, 130, 246, 0.12);
-            --theme-alpha-hover: rgba(59, 130, 246, 0.25);
-            --glow-color: rgba(59, 130, 246, 0.3);
+        body.theme-blue {
+            --theme-color-hex-core: #3b82f6;
+            --theme-alpha-hex-core: rgba(59, 130, 246, 0.12);
+            --theme-alpha-hover-hex-core: rgba(59, 130, 246, 0.25);
         }
-        .theme-purple {
-            --theme-color: #a855f7;
-            --theme-alpha: rgba(168, 85, 247, 0.12);
-            --theme-alpha-hover: rgba(168, 85, 247, 0.25);
-            --glow-color: rgba(168, 85, 247, 0.3);
+        body.theme-purple {
+            --theme-color-hex-core: #a855f7;
+            --theme-alpha-hex-core: rgba(168, 85, 247, 0.12);
+            --theme-alpha-hover-hex-core: rgba(168, 85, 247, 0.25);
         }
 
-        /* ==========================================================================
-           2. GLOBAL RESET & BASE STYLES
-           ========================================================================== */
-        * {
-            box-sizing: border-box;
+        /* RESET LAYOUT SYSTEM STATEMENT */
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
             margin: 0;
             padding: 0;
-            scrolling: smooth;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font-primary);
+            background-color: var(--bg-dark-hex-core);
+            color: var(--text-main-hex-core);
+            font-family: var(--font-primary-stack);
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             line-height: 1.5;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        /* SCROLLBAR CONFIGURATION STYLE */
+        body::-webkit-scrollbar {
+            width: 10px;
         }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
+        body::-webkit-scrollbar-track {
+            background: var(--bg-dark-hex-core);
         }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: var(--radius-sm);
+        body::-webkit-scrollbar-thumb {
+            background: var(--border-color-hex-core);
+            border-radius: var(--radius-sm-node);
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-dark);
+        body::-webkit-scrollbar-thumb:hover {
+            background: var(--text-dark-hex-core);
         }
 
-        /* ==========================================================================
-           3. NAVIGATION BAR ARCHITECTURE
-           ========================================================================== */
-        .navbar {
-            background-color: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            padding: 0 24px;
-            height: 70px;
+        /* NAVIGATION EXPLICIT STRUCTURE */
+        header.navbar-container {
+            width: 100%;
+            height: 75px;
+            background-color: var(--bg-surface-hex-core);
+            border-bottom: 1px solid var(--border-color-hex-core);
+            display: block;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .navbar-alignment-wrapper {
+            max-width: 1400px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-sm);
         }
 
-        .nav-container-left {
+        .navbar-left-segment {
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 40px;
         }
 
-        .nav-logo {
-            font-size: 20px;
+        .navbar-brand-logo {
+            font-size: 22px;
             font-weight: 900;
-            text-decoration: none;
             color: #ffffff;
+            text-decoration: none;
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: var(--transition-smooth);
+            gap: 10px;
         }
 
-        .nav-logo i {
-            color: var(--theme-color);
+        .navbar-brand-logo span.brand-accent {
+            color: var(--theme-color-hex-core);
         }
 
-        .nav-logo span {
-            color: var(--theme-color);
-        }
-
-        .nav-logo:hover {
-            opacity: 0.9;
-        }
-
-        .nav-menu-links {
+        .navbar-links-navigation-list {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            list-style: none;
         }
 
-        .nav-links-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-btn {
-            background-color: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 10px 16px;
-            border-radius: var(--radius-md);
-            font-size: 13.5px;
-            font-weight: 600;
-            cursor: pointer;
+        .navigation-link-item a {
+            color: var(--text-muted-hex-core);
             text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: var(--radius-md-node);
+            border: 1px solid transparent;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: var(--transition-smooth);
+            transition: all 0.2s ease;
         }
 
-        .nav-btn:hover {
-            background-color: var(--bg-card);
-            border-color: var(--theme-color);
+        .navigation-link-item a:hover {
             color: #ffffff;
-            box-shadow: 0 0 12px var(--theme-alpha);
+            background-color: var(--bg-card-hex-core);
+            border-color: var(--border-color-hex-core);
         }
 
-        .nav-btn i {
-            font-size: 14px;
-            color: var(--text-muted);
-            transition: var(--transition-smooth);
+        .navigation-link-item a.active-route {
+            color: var(--theme-color-hex-core);
+            background-color: var(--theme-alpha-hex-core);
+            border-color: rgba(0, 175, 156, 0.2);
         }
 
-        .nav-btn:hover i {
-            color: var(--theme-color);
+        .navbar-right-segment {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .nav-btn-primary {
-            background-color: var(--theme-color);
-            color: #07080b;
-            border: 1px solid var(--theme-color);
-        }
-
-        .nav-btn-primary:hover {
+        /* CORE BUTTON STYLES DETAILED */
+        .ui-interactive-btn {
             background-color: transparent;
-            color: var(--theme-color);
+            color: var(--text-main-hex-core);
+            border: 1px solid var(--border-color-hex-core);
+            padding: 11px 20px;
+            border-radius: var(--radius-md-node);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav-btn-primary i {
+        .ui-interactive-btn:hover {
+            background-color: var(--bg-card-hex-core);
+            border-color: var(--theme-color-hex-core);
+            box-shadow: 0 0 15px var(--theme-alpha-hex-core);
+        }
+
+        .ui-interactive-btn-primary {
+            background-color: var(--theme-color-hex-core);
             color: #07080b;
+            border: 1px solid var(--theme-color-hex-core);
         }
 
-        .nav-btn-primary:hover i {
-            color: var(--theme-color);
+        .ui-interactive-btn-primary:hover {
+            background-color: transparent;
+            color: var(--theme-color-hex-core);
         }
 
-        /* ==========================================================================
-           4. MENU SETTING DROPDOWN SYSTEM
-           ========================================================================== */
-        .setting-wrapper {
+        /* DROPDOWN DETAILED MANAGEMENT */
+        .dropdown-menu-portal {
             position: relative;
+            display: inline-block;
         }
 
-        .setting-dropdown-box {
+        .dropdown-absolute-container {
             position: absolute;
-            top: 52px;
+            top: 55px;
             right: 0;
-            width: 290px;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 18px;
+            width: 310px;
+            background-color: var(--bg-surface-hex-core);
+            border: 1px solid var(--border-color-hex-core);
+            border-radius: var(--radius-lg-node);
+            padding: 20px;
             display: none;
             flex-direction: column;
-            gap: 14px;
-            z-index: 1100;
-            box-shadow: var(--shadow-lg);
-            animation: dropdownFade 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 16px;
+            box-shadow: var(--shadow-lg-layer);
+            z-index: 99999;
         }
 
-        @keyframes dropdownFade {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .setting-dropdown-box.active {
+        .dropdown-absolute-container.active-state {
             display: flex;
         }
 
-        .dropdown-section-title {
+        .dropdown-group-header {
             font-size: 11px;
             font-weight: 800;
-            color: var(--text-dark);
+            color: var(--text-dark-hex-core);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 2px;
+            letter-spacing: 1px;
         }
 
-        .theme-options {
+        .palette-selector-flex {
             display: flex;
-            gap: 10px;
-            margin-top: 4px;
+            gap: 12px;
         }
 
-        .color-dot {
-            width: 28px;
-            height: 28px;
+        .palette-dot {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
-            transition: var(--transition-smooth);
-            position: relative;
+            transition: transform 0.2s ease;
         }
 
-        .color-dot:hover {
-            transform: scale(1.1);
+        .palette-dot:hover {
+            transform: scale(1.15);
         }
 
-        .color-dot.active::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            font-size: 11px;
-            color: #ffffff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .palette-dot.selected-dot {
+            border-color: #ffffff;
         }
 
-        .dropdown-divider {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 4px 0;
-        }
-
-        .dropdown-item-info {
-            font-size: 13px;
-            color: var(--text-main);
+        .dropdown-row-value-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 0;
+            font-size: 13.5px;
         }
 
-        .dropdown-item-info span {
+        .dropdown-row-value-info span.lbl {
+            color: var(--text-muted-hex-core);
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-muted);
         }
 
-        .dropdown-item-info strong {
-            color: var(--theme-color);
+        .dropdown-row-value-info strong.val {
+            color: var(--theme-color-hex-core);
             font-family: monospace;
-            font-size: 14px;
-            background-color: rgba(255, 255, 255, 0.03);
-            padding: 2px 6px;
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 3px 8px;
             border-radius: 4px;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-color-hex-core);
         }
 
-        .dropdown-link {
-            font-size: 13px;
-            color: var(--text-main);
-            text-decoration: none;
+        .dropdown-navigation-anchor {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 8px 10px;
-            border-radius: var(--radius-sm);
-            transition: var(--transition-smooth);
-        }
-
-        .dropdown-link:hover {
-            background-color: var(--bg-card);
-            color: var(--theme-color);
-        }
-
-        .dropdown-link span {
-            display: flex;
             align-items: center;
-            gap: 10px;
+            color: var(--text-main-hex-core);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm-node);
+            font-size: 13.5px;
+            transition: background-color 0.2s ease;
         }
 
-        /* ==========================================================================
-           5. HERO BANNER ARCHITECTURE
-           ========================================================================== */
-        .rex-banner-hero {
-            position: relative;
-            background: radial-gradient(circle at 50% 0%, var(--theme-alpha) 0%, rgba(7, 8, 11, 0) 65%), var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            padding: 65px 24px;
+        .dropdown-navigation-anchor:hover {
+            background-color: var(--bg-card-hex-core);
+            color: var(--theme-color-hex-core);
+        }
+
+        /* HERO PIPELINE SECTION DISPLAY */
+        .hero-jumbotron-wrapper {
+            width: 100%;
+            background: radial-gradient(circle at 50% 0%, var(--theme-alpha-hex-core) 0%, rgba(7, 8, 11, 0) 65%), var(--bg-surface-hex-core);
+            border-bottom: 1px solid var(--border-color-hex-core);
+            padding: 80px 20px;
             text-align: center;
-            user-select: none;
-            z-index: 1;
+            position: relative;
         }
 
-        .badge-update {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background-color: var(--theme-alpha);
-            color: var(--theme-color);
-            padding: 6px 16px;
-            border-radius: 30px;
+        .hero-jumbotron-wrapper .live-tag {
+            display: inline-block;
+            background-color: var(--theme-alpha-hex-core);
+            color: var(--theme-color-hex-core);
+            padding: 6px 18px;
+            border-radius: 40px;
             font-size: 11px;
-            font-weight: 800;
-            margin-bottom: 18px;
-            border: 1px solid rgba(0, 175, 156, 0.2);
+            font-weight: 900;
+            border: 1px solid rgba(0, 175, 156, 0.25);
+            margin-bottom: 24px;
             letter-spacing: 0.5px;
         }
 
-        .badge-update::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background-color: var(--theme-color);
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulseGlow 1.5s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(0.9); opacity: 0.6; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.6; }
-        }
-
-        .rex-banner-hero h1 {
-            font-size: 32px;
+        .hero-jumbotron-wrapper h2.hero-main-title {
+            font-size: 38px;
             font-weight: 900;
             color: #ffffff;
-            margin-bottom: 12px;
-            letter-spacing: -0.8px;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
         }
 
-        .rex-banner-hero p {
-            font-size: 14.5px;
-            color: var(--text-muted);
-            max-width: 580px;
+        .hero-jumbotron-wrapper p.hero-subtitle {
+            font-size: 15.5px;
+            color: var(--text-muted-hex-core);
+            max-width: 650px;
             margin: 0 auto;
             line-height: 1.6;
         }
 
-        /* ==========================================================================
-           6. SEARCH ENGINE & FILTRATION WRAPPER
-           ========================================================================== */
-        .search-filter-container {
-            max-width: 720px;
-            margin: -28px auto 35px auto;
-            padding: 0 20px;
+        /* INTERACTIVE ENGINE WRAPPER SEARCH FILTER */
+        .search-and-filter-hub {
+            max-width: 760px;
+            margin: -32px auto 40px auto;
+            padding: 0 24px;
             position: relative;
-            z-index: 10;
+            z-index: 100;
         }
 
-        .search-box-wrapper {
+        .search-bar-relative-box {
             position: relative;
-            margin-bottom: 18px;
-        }
-
-        .search-box-wrapper i.search-icon {
-            position: absolute;
-            left: 18px;
-            top: 17px;
-            color: var(--text-dark);
-            font-size: 16px;
-            transition: var(--transition-smooth);
-        }
-
-        .search-input {
             width: 100%;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 16px 16px 16px 50px;
-            border-radius: var(--radius-lg);
+            margin-bottom: 20px;
+        }
+
+        .search-bar-relative-box i.lens-icon {
+            position: absolute;
+            left: 20px;
+            top: 19px;
+            color: var(--text-dark-hex-core);
+            font-size: 18px;
+        }
+
+        .search-bar-relative-box .search-core-input-field {
+            width: 100%;
+            background-color: var(--bg-card-hex-core);
+            border: 1px solid var(--border-color-hex-core);
+            padding: 18px 20px 18px 56px;
+            border-radius: var(--radius-lg-node);
             color: #ffffff;
-            font-size: 14.5px;
-            font-family: var(--font-primary);
+            font-size: 15px;
             font-weight: 500;
             outline: none;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-md-layer);
+            transition: all 0.25s ease;
         }
 
-        .search-input:focus {
-            border-color: var(--theme-color);
-            background-color: var(--bg-surface);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), 0 0 12px var(--theme-alpha);
+        .search-bar-relative-box .search-core-input-field:focus {
+            border-color: var(--theme-color-hex-core);
+            background-color: var(--bg-surface-hex-core);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.6), 0 0 15px var(--theme-alpha-hex-core);
         }
 
-        .search-input:focus + i.search-icon {
-            color: var(--theme-color);
-        }
-
-        /* AUTOCOMPLETE SUGGESTIONS BOX */
-        .autocomplete-suggestions {
+        /* AUTOCOMPLETE SYSTEM */
+        .autocomplete-response-box {
             position: absolute;
-            top: 58px;
+            top: 65px;
             left: 0;
             right: 0;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            overflow: hidden;
+            background-color: var(--bg-card-hex-core);
+            border: 1px solid var(--border-color-hex-core);
+            border-radius: var(--radius-md-node);
+            box-shadow: var(--shadow-lg-layer);
             display: none;
-            z-index: 150;
-            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 9999;
         }
 
-        .suggestion-item {
-            padding: 14px 18px;
-            font-size: 14px;
+        .autocomplete-node-row {
+            padding: 16px 20px;
+            font-size: 14.5px;
+            color: var(--text-main-hex-core);
             cursor: pointer;
-            color: var(--text-main);
             border-bottom: 1px solid rgba(255, 255, 255, 0.02);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: var(--transition-smooth);
         }
 
-        .suggestion-item:last-child {
-            border: none;
+        .autocomplete-node-row:hover {
+            background-color: var(--bg-surface-hex-core);
+            color: var(--theme-color-hex-core);
         }
 
-        .suggestion-item:hover {
-            background-color: var(--bg-surface);
-            color: var(--theme-color);
-            padding-left: 22px;
-        }
-
-        /* FILTRATION INTERFACE BUTTONS */
-        .filter-tabs {
+        /* FILTER HORIZONTAL TABS SYSTEM */
+        .filter-tabs-flex-row {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
-        .filter-btn {
-            background-color: var(--bg-surface);
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 13px;
+        .filter-tab-pill-button {
+            background-color: var(--bg-surface-hex-core);
+            color: var(--text-muted-hex-core);
+            border: 1px solid var(--border-color-hex-core);
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 13.5px;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition-smooth);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            transition: all 0.2s ease;
         }
 
-        .filter-btn:hover {
-            border-color: var(--text-dark);
+        .filter-tab-pill-button:hover {
+            border-color: var(--text-dark-hex-core);
             color: #ffffff;
         }
 
-        .filter-btn.active {
-            background-color: var(--theme-color);
+        .filter-tab-pill-button.active-pill-state {
+            background-color: var(--theme-color-hex-core);
             color: #07080b;
-            border-color: var(--theme-color);
-            box-shadow: 0 4px 14px var(--theme-alpha-hover);
+            border-color: var(--theme-color-hex-core);
+            box-shadow: 0 4px 15px var(--theme-alpha-hover-hex-core);
         }
 
-        /* ==========================================================================
-           7. MOD CARDS REPOSITORY AREA
-           ========================================================================== */
-        .proyek-section {
-            max-width: 720px;
+        /* MAIN STREAM FEED REPOSITORY ARCHIVE */
+        .repository-stream-container {
+            max-width: 760px;
             margin: 0 auto;
-            padding: 0 20px 80px 20px;
+            padding: 0 24px 100px 24px;
         }
 
-        .grid-layout {
+        .repository-vertical-stack {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
-        .mod-card {
-            background-color: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 20px;
+        /* MOD CARD BLOCKS EXPLICIT DESIGN */
+        .archive-card-anchor {
+            background-color: var(--bg-surface-hex-core);
+            border: 1px solid var(--border-color-hex-core);
+            border-radius: var(--radius-lg-node);
+            padding: 22px;
             display: flex;
-            gap: 20px;
+            gap: 22px;
             text-decoration: none;
             color: inherit;
-            transition: var(--transition-smooth);
             align-items: center;
             position: relative;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .mod-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--theme-color);
-            background-color: var(--bg-card);
-            box-shadow: var(--shadow-md), 0 0 15px rgba(0, 175, 156, 0.05);
+        .archive-card-anchor:hover {
+            transform: translateY(-3px);
+            border-color: var(--theme-color-hex-core);
+            background-color: var(--bg-card-hex-core);
+            box-shadow: var(--shadow-md-layer), 0 0 20px rgba(0, 175, 156, 0.04);
         }
 
-        /* BULLETPROOF IMAGE CONTAINER SYSTEM */
-        .mod-icon {
-            width: 68px;
-            height: 68px;
+        /* 3-LAYER ICON FALLBACK STRATEGY */
+        .archive-card-image-wrapper {
+            width: 74px;
+            height: 74px;
             background-color: #1a1c23;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color-hex-core);
+            border-radius: var(--radius-md-node);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
             position: relative;
-            transition: var(--transition-smooth);
+            flex-shrink: 0;
+            overflow: hidden;
         }
 
-        .mod-card:hover .mod-icon {
-            border-color: var(--theme-color);
-            background-color: #12131a;
+        .archive-card-anchor:hover .archive-card-image-wrapper {
+            border-color: var(--theme-color-hex-core);
         }
 
-        .mod-icon img {
+        .archive-card-image-wrapper img.main-icon-graphic {
             width: 100%;
             height: 100%;
             object-fit: cover;
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 5;
-            border-radius: var(--radius-md);
+            z-index: 10;
+            border-radius: var(--radius-md-node);
         }
 
-        .mod-icon .fallback-cube {
+        .archive-card-image-wrapper .fallback-vector-box {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex; /* Default flex, diganti jika img sukses dimuat */
+            background-color: #1a1c23;
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 2;
-            background-color: #1a1c23;
+            z-index: 5;
         }
 
-        .mod-icon .fallback-cube i {
-            font-size: 26px;
-            color: var(--theme-color);
+        .archive-card-image-wrapper .fallback-vector-box i {
+            font-size: 28px;
+            color: var(--theme-color-hex-core);
         }
 
-        /* CONTENT ROW METADATA */
-        .mod-info {
+        /* TEXTUAL SPECIFICS IN CARDS */
+        .archive-card-details-block {
             flex-grow: 1;
             min-width: 0;
         }
 
-        .title-row {
+        .archive-card-header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 6px;
-            gap: 12px;
+            gap: 15px;
         }
 
-        .mod-card-title {
-            font-size: 17px;
+        .archive-card-title-text {
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
-            transition: var(--transition-smooth);
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;
+            transition: color 0.2s ease;
         }
 
-        .mod-card:hover .mod-card-title {
-            color: var(--theme-color);
+        .archive-card-anchor:hover .archive-card-title-text {
+            color: var(--theme-color-hex-core);
         }
 
-        .download-badge-info {
+        .downloads-counter-badge {
             font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--text-muted-hex-core);
             background-color: rgba(255, 255, 255, 0.02);
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: var(--radius-sm-node);
+            border: 1px solid var(--border-color-hex-core);
             display: flex;
             align-items: center;
             gap: 6px;
-            flex-shrink: 0;
         }
 
-        .mod-card-desc {
-            font-size: 13px;
-            color: var(--text-muted);
+        .archive-card-description-text {
+            font-size: 13.5px;
+            color: var(--text-muted-hex-core);
             line-height: 1.5;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -655,273 +582,261 @@
             -webkit-box-orient: vertical;
         }
 
-        .tag-row {
+        .archive-card-tags-flex-row {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
 
-        .tag-node {
-            padding: 3px 10px;
-            border-radius: 6px;
-            font-size: 10.5px;
-            font-weight: 700;
+        .metadata-pill-node {
+            padding: 4px 12px;
+            border-radius: var(--radius-sm-node);
+            font-size: 11px;
+            font-weight: 800;
             text-transform: uppercase;
             background-color: #1e293b;
             color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.02);
             letter-spacing: 0.3px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .tag-loader {
-            background-color: var(--theme-alpha);
-            color: var(--theme-color);
+        .metadata-pill-node.accent-loader-type {
+            background-color: var(--theme-alpha-hex-core);
+            color: var(--theme-color-hex-core);
             border: 1px solid rgba(0, 175, 156, 0.15);
         }
 
-        .tag-version {
-            background-color: rgba(255, 255, 255, 0.04);
-            color: #e2e8f0;
+        .metadata-pill-node.accent-game-version {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #f1f5f9;
         }
 
-        /* EMPTY FALLBACK CONTAINER */
-        .empty-repository-box {
-            background-color: var(--bg-surface);
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 40px;
+        /* EMPTY FALLBACK ELEMENT */
+        .empty-repository-notice-card {
+            background-color: var(--bg-surface-hex-core);
+            border: 2px dashed var(--border-color-hex-core);
+            border-radius: var(--radius-lg-node);
+            padding: 50px;
             text-align: center;
-            color: var(--text-muted);
+            color: var(--text-muted-hex-core);
             display: none;
         }
 
-        .empty-repository-box i {
-            font-size: 36px;
-            color: var(--text-dark);
-            margin-bottom: 12px;
+        .empty-repository-notice-card i {
+            font-size: 40px;
+            color: var(--text-dark-hex-core);
+            margin-bottom: 14px;
         }
 
-        /* ==========================================================================
-           8. RESPONSIVE MEDIA QUERIES (MOBILE BACKWARD)
-           ========================================================================== */
-        @media (max-width: 640px) {
-            .navbar { padding: 0 16px; }
-            .nav-menu-links { display: none; }
-            .rex-banner-hero { padding: 50px 16px; }
-            .rex-banner-hero h1 { font-size: 26px; }
-            .rex-banner-hero p { font-size: 13px; }
-            .search-filter-container { margin-top: -20px; }
-            .filter-btn { padding: 8px 14px; font-size: 12px; }
-            .mod-card { padding: 16px; gap: 14px; }
-            .mod-icon { width: 56px; height: 56px; }
-            .mod-card-title { font-size: 15px; }
-            .download-badge-info { font-size: 11px; padding: 2px 6px; }
+        /* RESPONSIVE LAYOUT PIPELINE */
+        @media (max-width: 768px) {
+            header.navbar-container { height: auto; padding: 15px 0; }
+            .navbar-alignment-wrapper { flex-direction: column; gap: 15px; padding: 0 20px; }
+            .navbar-left-segment { flex-direction: column; gap: 10px; }
+            .navbar-links-navigation-list { display: none; }
+            .hero-jumbotron-wrapper { padding: 60px 20px; }
+            .hero-jumbotron-wrapper h2.hero-main-title { font-size: 28px; }
+            .search-and-filter-hub { margin-top: -25px; }
+            .archive-card-anchor { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .archive-card-image-wrapper { width: 64px; height: 64px; }
+            .archive-card-header-flex { width: 100%; }
         }
     </style>
 </head>
 <body class="theme-green">
 
-    <nav class="navbar">
-        <div class="nav-container-left">
-            <a href="/" class="nav-logo">
-                <i class="fas fa-cubes"></i> RexCraft<span>Hub</span>
-            </a>
-            <div class="nav-menu-links">
-                <a href="/tutorial" class="nav-btn"><i class="fas fa-book-open"></i> Buku Panduan</a>
-                <a href="/ai" class="nav-btn"><i class="fas fa-robot"></i> Asisten AI</a>
+    <header class="navbar-container">
+        <div class="navbar-alignment-wrapper">
+            <div class="navbar-left-segment">
+                <a href="/" class="navbar-brand-logo">
+                    <i class="fas fa-cubes"></i> RexCraft<span class="brand-accent">Hub</span>
+                </a>
+                <ul class="navbar-links-navigation-list">
+                    <li class="navigation-link-item"><a href="/" class="active-route"><i class="fas fa-compass"></i> Penjelajah</a></li>
+                    <li class="navigation-link-item"><a href="/tutorial"><i class="fas fa-book-open"></i> Dokumentasi</a></li>
+                    <li class="navigation-link-item"><a href="/ai"><i class="fas fa-robot"></i> RexAI Bot</a></li>
+                </ul>
             </div>
-        </div>
-        
-        <div class="nav-links-right">
-            <div class="setting-wrapper">
-                <button class="nav-btn nav-btn-primary" onclick="toggleSettingBox(event)">
-                    <i class="fas fa-sliders-h"></i> Menu Navigasi
-                </button>
-                
-                <div class="setting-dropdown-box" id="settingDropdown">
-                    <div class="dropdown-section-title">Palet Aksen Warna</div>
-                    <div class="theme-options">
-                        <div class="color-dot active" style="background-color: #00af9c;" onclick="changeThemeAccent('green', this)"></div>
-                        <div class="color-dot" style="background-color: #3b82f6;" onclick="changeThemeAccent('blue', this)"></div>
-                        <div class="color-dot" style="background-color: #a855f7;" onclick="changeThemeAccent('purple', this)"></div>
-                    </div>
+            
+            <div class="navbar-right-segment">
+                <div class="dropdown-menu-portal">
+                    <button class="ui-interactive-btn ui-interactive-btn-primary" onclick="triggerDropdownVisibility(event)">
+                        <i class="fas fa-bars-staggered"></i> Menu Dasbor
+                    </button>
                     
-                    <div class="dropdown-divider"></div>
-                    
-                    <div class="dropdown-section-title">Akun / Gamertag Resmi</div>
-                    <div class="dropdown-item-info">
-                        <span><i class="fab fa-java" style="color: #ff2e2e; width: 16px;"></i> Minecraft Java</span>
-                        <strong>RexCraft</strong>
-                    </div>
-                    <div class="dropdown-item-info">
-                        <span><i class="fas fa-cube" style="color: #22c55e; width: 16px;"></i> Bedrock MCPE</span>
-                        <strong>RexCraft6506</strong>
-                    </div>
-                    
-                    <div class="dropdown-divider"></div>
-                    
-                    <div class="dropdown-section-title">Jejaring Sosial</div>
-                    <a href="https://youtube.com/" target="_blank" class="dropdown-link">
-                        <span><i class="fab fa-youtube" style="color: #ff0000; width: 16px;"></i> YouTube Official</span>
-                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark);"></i>
-                    </a>
-                    <a href="https://tiktok.com/" target="_blank" class="dropdown-link">
-                        <span><i class="fab fa-tiktok" style="color: #ffffff; width: 16px;"></i> TikTok Kreator</span>
-                        <i class="fas fa-external-link-alt" style="font-size: 10px; color: var(--text-dark);"></i>
-                    </a>
-                    
-                    <div class="dropdown-divider"></div>
-                    
-                    <div class="dropdown-section-title">Bantuan & Dukungan</div>
-                    <a href="https://wa.me/6283873024650?text=Halo%20RexCraft%20Hub" target="_blank" class="dropdown-link">
-                        <span><i class="fab fa-whatsapp" style="color: #25d366; width: 16px;"></i> Jalur WhatsApp</span>
-                        <i class="fas fa-chevron-right" style="font-size: 10px; color: var(--text-dark);"></i>
-                    </a>
-                    <div class="dropdown-item-info" style="color: var(--text-dark); font-style: italic; padding-left: 10px;">
-                        <span><i class="fas fa-wallet" style="width: 16px;"></i> Gerbang Donasi</span> Beroperasi Nanti
+                    <div class="dropdown-absolute-container" id="portalDropdown">
+                        <div class="dropdown-group-header">Pilih Tema Antarmuka</div>
+                        <div class="palette-selector-flex">
+                            <div class="palette-dot selected-dot" style="background-color: #00af9c;" onclick="applyColorAccent('green', this)"></div>
+                            <div class="palette-dot" style="background-color: #3b82f6;" onclick="applyColorAccent('blue', this)"></div>
+                            <div class="palette-dot" style="background-color: #a855f7;" onclick="applyColorAccent('purple', this)"></div>
+                        </div>
+                        
+                        <div class="dropdown-divider" style="height: 1px; background-color: var(--border-color-hex-core);"></div>
+                        
+                        <div class="dropdown-group-header">Minecraft Identitas</div>
+                        <div class="dropdown-row-value-info">
+                            <span class="lbl"><i class="fab fa-java" style="color:#ff3333;"></i> Edition Java</span>
+                            <strong class="val">RexCraft</strong>
+                        </div>
+                        <div class="dropdown-row-value-info">
+                            <span class="lbl"><i class="fas fa-cube" style="color:#2ed573;"></i> Edition MCPE</span>
+                            <strong class="val">RexCraft6506</strong>
+                        </div>
+                        
+                        <div class="dropdown-divider" style="height: 1px; background-color: var(--border-color-hex-core);"></div>
+                        
+                        <div class="dropdown-group-header">Saluran Sosial</div>
+                        <a href="https://youtube.com/" target="_blank" class="dropdown-navigation-anchor">
+                            <span><i class="fab fa-youtube" style="color:#ff0000; margin-right:6px;"></i> YouTube Resmi</span>
+                            <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--text-dark-hex-core)"></i>
+                        </a>
+                        <a href="https://tiktok.com/" target="_blank" class="dropdown-navigation-anchor">
+                            <span><i class="fab fa-tiktok" style="color:#fff; margin-right:6px;"></i> TikTok Kreator</span>
+                            <i class="fas fa-external-link-alt" style="font-size:10px; color:var(--text-dark-hex-core)"></i>
+                        </a>
+                        <a href="https://wa.me/6283873024650" target="_blank" class="dropdown-navigation-anchor">
+                            <span><i class="fab fa-whatsapp" style="color:#2ed573; margin-right:6px;"></i> Hubungi Admin</span>
+                            <i class="fas fa-chevron-right" style="font-size:10px; color:var(--text-dark-hex-core)"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </nav>
-
-    <header class="rex-banner-hero">
-        <div class="badge-update">CORE PIPELINE V2.0 LIVE DEVELOPMENT</div>
-        <h1>Repositori Modifikasi RexCraft</h1>
-        <p>Platform distribusi terintegrasi penyedia berkas modifikasi, paket tekstur, dan optimasi engine visual dunia Minecraft terverifikasi.</p>
     </header>
 
-    <div class="search-filter-container">
-        <div class="search-box-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" class="search-input" id="searchInp" placeholder="Masukkan kata kunci arsip berkas..." onkeyup="executeSearchEngine()">
-            <div class="autocomplete-suggestions" id="autoBox"></div>
+    <section class="hero-jumbotron-wrapper">
+        <div class="live-tag">CORE BRANCH V2.0 STABLE PRODUCTION</div>
+        <h2 class="hero-main-title">Pusat Repositori Modifikasi RexCraft</h2>
+        <p class="hero-subtitle">Unduh berkas modifikasi, resource packs, shaders, dan utility optimasi server dunia Minecraft kustom terverifikasi bebas dari malware.</p>
+    </section>
+
+    <section class="search-and-filter-hub">
+        <div class="search-bar-relative-box">
+            <i class="fas fa-magnifying-glass lens-icon"></i>
+            <input type="text" class="search-core-input-field" id="searchInp" placeholder="Masukkan judul berkas atau komponen mod..." onkeyup="processRepositorySearch()">
+            <div class="autocomplete-response-box" id="autoBox"></div>
         </div>
         
-        <div class="filter-tabs">
-            <button class="filter-btn active" onclick="executePlatformFiltrasi('semua', this)"><i class="fas fa-layer-group"></i> Semua Berkas</button>
-            <button class="filter-btn" onclick="executePlatformFiltrasi('java', this)"><i class="fab fa-java"></i> Java Edition</button>
-            <button class="filter-btn" onclick="executePlatformFiltrasi('mcpe', this)"><i class="fas fa-mobile-alt"></i> Bedrock / MCPE</button>
+        <div class="filter-tabs-flex-row">
+            <button class="filter-tab-pill-button active-pill-state" onclick="triggerPlatformFiltrasi('semua', this)"><i class="fas fa-boxes-stacked"></i> Semua Berkas</button>
+            <button class="filter-tab-pill-button" onclick="triggerPlatformFiltrasi('java', this)"><i class="fab fa-java"></i> Java Edition</button>
+            <button class="filter-btn filter-tab-pill-button" onclick="triggerPlatformFiltrasi('mcpe', this)"><i class="fas fa-mobile-screen-button"></i> Bedrock / MCPE</button>
         </div>
-    </div>
+    </section>
 
-    <main class="proyek-section">
-        <div class="grid-layout" id="repositoryGrid">
+    <main class="repository-stream-container">
+        <div class="repository-vertical-stack" id="repositoryGrid">
             {% for mod in mods %}
-            <a href="/mod/{{ mod.id }}" class="mod-card" data-platform="{{ mod.category }}">
-                <div class="mod-icon">
-                    <div class="fallback-cube"><i class="fas fa-cube"></i></div>
+            <a href="/mod/{{ mod.id }}" class="archive-card-anchor" data-platform="{{ mod.category }}">
+                <div class="archive-card-image-wrapper">
+                    <div class="fallback-vector-box"><i class="fas fa-cube"></i></div>
+                    
                     {% if mod.icon_url %}
-                        <img src="{{ mod.icon_url }}" onload="this.parentNode.querySelector('.fallback-cube').style.display='none';" onerror="this.parentNode.querySelector('.fallback-cube').style.display='flex'; this.remove();">
+                        <img src="/static/uploads/Java/mods_racikan/{{ mod.icon_url }}" class="main-icon-graphic" onload="this.parentNode.querySelector('.fallback-vector-box').style.display='none';" onerror="this.src='/static/uploads/Java/mods_racikan/icon.png'; this.onerror=function(){ this.parentNode.querySelector('.fallback-vector-box').style.display='flex'; this.remove(); };">
                     {% elif mod.image %}
-                        <img src="{{ mod.image }}" onload="this.parentNode.querySelector('.fallback-cube').style.display='none';" onerror="this.parentNode.querySelector('.fallback-cube').style.display='flex'; this.remove();">
+                        <img src="/static/uploads/Java/mods_racikan/{{ mod.image }}" class="main-icon-graphic" onload="this.parentNode.querySelector('.fallback-vector-box').style.display='none';" onerror="this.src='/static/uploads/Java/mods_racikan/icon.png'; this.onerror=function(){ this.parentNode.querySelector('.fallback-vector-box').style.display='flex'; this.remove(); };">
+                    {% else %}
+                        <img src="/static/uploads/Java/mods_racikan/icon.png" class="main-icon-graphic" onload="this.parentNode.querySelector('.fallback-vector-box').style.display='none';" onerror="this.parentNode.querySelector('.fallback-vector-box').style.display='flex'; this.remove(); WarmLog();">
                     {% endif %}
                 </div>
-                <div class="mod-info">
-                    <div class="title-row">
-                        <div class="mod-card-title">{{ mod.title }}</div>
-                        <div class="download-badge-info"><i class="fas fa-download"></i> {{ mod.downloads }}</div>
+                <div class="archive-card-details-block">
+                    <div class="archive-card-header-flex">
+                        <div class="archive-card-title-text">{{ mod.title }}</div>
+                        <div class="downloads-counter-badge"><i class="fas fa-cloud-arrow-down"></i> {{ mod.downloads }}</div>
                     </div>
-                    <div class="mod-card-desc">{{ mod.desc }}</div>
-                    <div class="tag-row">
-                        <div class="tag-node">{{ mod.category|upper }}</div>
-                        <div class="tag-node tag-loader">{{ mod.loader }}</div>
-                        <div class="tag-node tag-version">{{ mod.version_game }}</div>
+                    <div class="archive-card-description-text">{{ mod.desc }}</div>
+                    <div class="archive-card-tags-flex-row">
+                        <div class="metadata-pill-node">{{ mod.category|upper }}</div>
+                        <div class="metadata-pill-node accent-loader-type">{{ mod.loader }}</div>
+                        <div class="metadata-pill-node accent-game-version">{{ mod.version_game }}</div>
                     </div>
                 </div>
             </a>
             {% endfor %}
             
-            <div class="empty-repository-box" id="emptyFallback">
+            <div class="empty-repository-notice-card" id="emptyNotice">
                 <i class="fas fa-folder-open"></i>
-                <p>Arsip berkas tidak ditemukan untuk pencarian ini.</p>
+                <p>Tidak ada berkas modifikasi yang cocok dengan parameter filter pencarian Anda.</p>
             </div>
         </div>
     </main>
 
     <script>
-        function toggleSettingBox(event) {
-            event.stopPropagation();
-            document.getElementById('settingDropdown').classList.toggle('active');
+        function triggerDropdownVisibility(e) {
+            e.stopPropagation();
+            document.getElementById('portalDropdown').classList.toggle('active-state');
         }
 
         document.addEventListener('click', function() {
-            document.getElementById('settingDropdown').classList.remove('active');
+            document.getElementById('portalDropdown').classList.remove('active-state');
         });
 
-        function changeThemeAccent(col, el) {
-            document.body.className = 'theme-' + col;
-            let dots = document.getElementsByClassName('color-dot');
-            for(let d of dots) {
-                d.classList.remove('active');
-            }
-            el.classList.add('active');
+        function applyColorAccent(themeColor, targetNode) {
+            document.body.className = 'theme-' + themeColor;
+            let dots = document.getElementsByClassName('palette-dot');
+            for(let dot of dots) { dot.classList.remove('selected-dot'); }
+            targetNode.classList.add('selected-dot');
         }
 
-        function executePlatformFiltrasi(platform, element) {
-            let buttons = document.getElementsByClassName('filter-btn');
-            for(let btn of buttons) {
-                btn.classList.remove('active');
-            }
-            element.classList.add('active');
+        function triggerPlatformFiltrasi(platform, elementNode) {
+            let pills = document.getElementsByClassName('filter-tab-pill-button');
+            for(let pill of pills) { pill.classList.remove('active-pill-state'); }
+            elementNode.classList.add('active-pill-state');
 
-            let cards = document.getElementsByClassName('mod-card');
-            let counterVisible = 0;
+            let cards = document.getElementsByClassName('archive-card-anchor');
+            let matchedCount = 0;
             
             for(let card of cards) {
-                let targetPlatform = card.getAttribute('data-platform');
-                if(platform === 'semua' || targetPlatform === platform) {
+                let cardPlatform = card.getAttribute('data-platform');
+                if(platform === 'semua' || cardPlatform === platform) {
                     card.style.display = 'flex';
-                    counterVisible++;
+                    matchedCount++;
                 } else {
                     card.style.display = 'none';
                 }
             }
-            
-            document.getElementById('emptyFallback').style.display = (counterVisible === 0) ? 'block' : 'none';
+            document.getElementById('emptyNotice').style.display = (matchedCount === 0) ? 'block' : 'none';
         }
 
-        function executeSearchEngine() {
-            let inputVal = document.getElementById('searchInp').value.toLowerCase();
-            let cards = document.getElementsByClassName('mod-card');
-            let box = document.getElementById('autoBox');
-            box.innerHTML = '';
+        function processRepositorySearch() {
+            let query = document.getElementById('searchInp').value.toLowerCase();
+            let cards = document.getElementsByClassName('archive-card-anchor');
+            let suggestionBox = document.getElementById('autoBox');
+            suggestionBox.innerHTML = '';
             
-            if(!inputVal) {
-                box.style.display = 'none';
-                for(let card of cards) {
-                    card.style.display = 'flex';
-                }
-                document.getElementById('emptyFallback').style.display = 'none';
+            if(!query) {
+                suggestionBox.style.display = 'none';
+                for(let card of cards) { card.style.display = 'flex'; }
+                document.getElementById('emptyNotice').style.display = 'none';
                 return;
             }
 
-            let matchCounter = 0;
+            let found = 0;
             for(let card of cards) {
-                let titleText = card.querySelector('.mod-card-title').innerText.toLowerCase();
-                if(titleText.includes(inputVal)) {
+                let title = card.querySelector('.archive-card-title-text').innerText.toLowerCase();
+                if(title.includes(query)) {
                     card.style.display = 'flex';
-                    matchCounter++;
+                    found++;
                     
-                    let suggestionItem = document.createElement('div');
-                    suggestionItem.className = 'suggestion-item';
-                    suggestionItem.innerHTML = `<span><i class="fas fa-cube" style="color:var(--theme-color);margin-right:8px;"></i>${card.querySelector('.mod-card-title').innerText}</span><i class="fas fa-chevron-right" style="font-size:10px;color:var(--text-dark)"></i>`;
+                    let row = document.createElement('div');
+                    row.className = 'autocomplete-node-row';
+                    row.innerHTML = `<span><i class="fas fa-cube" style="color:var(--theme-color-hex-core); margin-right:8px;"></i>${card.querySelector('.archive-card-title-text').innerText}</span><i class="fas fa-chevron-right" style="font-size:10px; color:var(--text-dark-hex-core)"></i>`;
                     
-                    suggestionItem.onclick = function() {
-                        document.getElementById('searchInp').value = card.querySelector('.mod-card-title').innerText;
-                        box.style.display = 'none';
+                    row.onclick = function() {
+                        document.getElementById('searchInp').value = card.querySelector('.archive-card-title-text').innerText;
+                        suggestionBox.style.display = 'none';
                         for(let c of cards) {
-                            c.style.display = (c.querySelector('.mod-card-title').innerText === card.querySelector('.mod-card-title').innerText) ? 'flex' : 'none';
+                            c.style.display = (c.querySelector('.archive-card-title-text').innerText === card.querySelector('.archive-card-title-text').innerText) ? 'flex' : 'none';
                         }
                     };
-                    box.appendChild(suggestionItem);
+                    suggestionBox.appendChild(row);
                 } else {
                     card.style.display = 'none';
                 }
             }
-            
-            box.style.display = matchCounter > 0 ? 'block' : 'none';
-            document.getElementById('emptyFallback').style.display = (matchCounter === 0) ? 'block' : 'none';
+            suggestionBox.style.display = found > 0 ? 'block' : 'none';
+            document.getElementById('emptyNotice').style.display = (found === 0) ? 'block' : 'none';
         }
     </script>
 </body>
