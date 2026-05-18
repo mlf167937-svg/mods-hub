@@ -27,33 +27,54 @@ def get_all_mods():
                 
             try:
                 with open(info_file, 'r', encoding='utf-8') as f:
-                    lines = [line.strip() for line in f.readlines()]
+                    content = f.read().splitlines()
                 
-                if len(lines) < 4:
+                # Filter hanya baris yang ada isinya (Abaikan baris kosong tak sengaja)
+                non_empty_lines = [line.strip() for line in content if line.strip()]
+                
+                if len(non_empty_lines) < 3:
                     continue
                     
-                title = lines[0]
-                category = lines[1]
-                icon = lines[2]
-                desc = lines[3]
+                # FITUR PINTAR: Bersihkan auto prefix jika user nulis "Judul: / Kategori: / Icon:"
+                title = non_empty_lines[0]
+                if title.lower().startswith('judul:'): title = title[6:].strip()
+                elif title.lower().startswith('title:'): title = title[6:].strip()
                 
-                # BACA FILE VERSI DOWNLOAD (DIPERBAIKI: Support file tanpa tanda minus agar tidak 0 berkas)
+                category = non_empty_lines[1]
+                if category.lower().startswith('kategori:'): category = category[9:].strip()
+                elif category.lower().startswith('category:'): category = category[9:].strip()
+                
+                icon = non_empty_lines[2]
+                if icon.lower().startswith('icon:'): icon = icon[5:].strip()
+                
+                # Proteksi Case-Sensitivity Linux untuk Gambar Icon
+                for real_file in os.listdir(folder_path):
+                    if real_file.lower() == icon.lower():
+                        icon = real_file
+                        break
+                
+                # Deskripsi mengambil seluruh sisa baris di info.txt secara utuh
+                desc = "\n".join(non_empty_lines[3:])
+                if desc.lower().startswith('deskripsi:'): desc = desc[10:].strip()
+                elif desc.lower().startswith('description:'): desc = desc[12:].strip()
+                
+                # BACA FILE VERSI DOWNLOAD (Fix: Case-Insensitive untuk ekstensi .ZIP / .MCPACK di Render)
                 files_info = []
                 for file in os.listdir(folder_path):
-                    if file.endswith(('.zip', '.mcpack', '.mcaddon', '.jar')):
-                        if '-' in file:
-                            parts = file.rsplit('.', 1)[0].split('-', 1)
-                            if len(parts) == 2:
-                                version = parts[1]
-                                files_info.append({'version': version, 'filename': file})
+                    if file.lower().endswith(('.zip', '.mcpack', '.mcaddon', '.jar')):
+                        base_name = file.rsplit('.', 1)[0]
+                        if '-' in base_name:
+                            version = base_name.rsplit('-', 1)[1]
+                        elif '_' in base_name:
+                            version = base_name.rsplit('_', 1)[1]
                         else:
-                            # Jika user lupa naruh versi, otomatis diubah jadi 'Latest' agar mod MCPE tetap terdeteksi
-                            files_info.append({'version': 'Latest', 'filename': file})
+                            version = 'Latest'
+                        files_info.append({'version': version, 'filename': file})
                 
-                # Baca file galeri & teks penjelasannya
+                # Baca file galeri
                 gallery_info = []
                 for file in os.listdir(folder_path):
-                    if file.startswith('galery') and (file.endswith('.png') or file.endswith('.jpg') or file.endswith('.jpeg')):
+                    if file.lower().startswith('galery') and file.lower().endswith(('.png', '.jpg', '.jpeg')):
                         base_name = file.rsplit('.', 1)[0]
                         txt_file = os.path.join(folder_path, f"{base_name}.txt")
                         
@@ -85,7 +106,6 @@ def get_all_mods():
 def get_community_posts():
     posts = []
     community_path = os.path.join('static', 'community')
-    
     if not os.path.exists(community_path):
         os.makedirs(community_path, exist_ok=True)
         return posts
