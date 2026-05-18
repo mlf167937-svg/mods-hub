@@ -2,66 +2,53 @@
 {% block content %}
 <style>
     .banner-hero {
-        /* FIX: Sekarang background mengambil langsung dari static/img/banner.png milikmu */
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('/static/img/banner.png') center/cover;
-        border-radius: 16px; padding: 30px 20px; text-align: center;
+        /* FIX: Mengambil nilai variabel banner_url dinamis dari flask agar .jpg / .png terdeteksi sempurna */
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('{{ banner_url }}') center/cover;
+        border-radius: 16px; padding: 40px 20px; text-align: center;
         border: 1px solid var(--border); margin-bottom: 25px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
 
-    .banner-hero h1 { font-size: 24px; font-weight: 800; margin: 0 0 15px 0; color: #fff; }
+    .banner-hero h1 { font-size: 26px; font-weight: 900; margin: 0 0 18px 0; color: #fff; letter-spacing: -0.5px; }
 
-    .search-box-container {
-        position: relative;
-        max-width: 420px;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .search-box-container i {
-        position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-        color: var(--text-muted); font-size: 14px;
-    }
+    .search-box-container { position: relative; max-width: 400px; width: 100%; margin: 0 auto; }
+    .search-box-container i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; }
 
     .input-search {
-        width: 100%; background: #0d0f12; border: 1px solid var(--border);
-        padding: 12px 16px 12px 42px; border-radius: 10px; color: #fff;
+        width: 100%; background: #090a0f; border: 1px solid var(--border);
+        padding: 13px 16px 13px 44px; border-radius: 12px; color: #fff;
         font-size: 14px; box-sizing: border-box; transition: 0.2s;
     }
+    .input-search:focus { border-color: var(--current-accent); outline: none; box-shadow: 0 0 10px rgba(34,197,94,0.1); }
 
-    .input-search:focus { border-color: var(--current-accent); outline: none; }
-
-    .tabs-filter { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-    
+    .tabs-filter { display: flex; gap: 8px; margin-bottom: 22px; overflow-x: auto; padding-bottom: 4px; }
     .btn-tab {
         background: var(--bg-card); border: 1px solid var(--border); color: #cbd5e1;
-        padding: 9px 16px; border-radius: 20px; font-size: 13px; font-weight: 700;
+        padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 700;
         cursor: pointer; white-space: nowrap; transition: 0.2s;
     }
-
-    .btn-tab.active { background: var(--current-accent); color: #000; border-color: var(--current-accent); }
+    .btn-tab.active { background: var(--current-accent); color: #000; border-color: var(--current-accent); font-weight: 800; }
 
     .grid-container { display: flex; flex-direction: column; gap: 14px; }
 
     .card-mod {
-        background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+        background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
         padding: 16px; display: flex; gap: 16px; align-items: center;
-        text-decoration: none; color: inherit; transition: 0.2s ease;
+        text-decoration: none; color: inherit; transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    .card-mod:hover { transform: translateY(-2px); border-color: var(--current-accent); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
 
-    .card-mod:hover { transform: translateY(-2px); border-color: var(--current-accent); }
+    /* FIX: Penanganan ukuran gambar icon mod agar presisi, anti distorsi, dan tidak menghitam */
+    .card-mod img { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; background: #171a25; flex-shrink: 0; }
 
-    .card-mod img { width: 75px; height: 75px; border-radius: 12px; object-fit: cover; background: #14161d; }
-
-    .card-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-    
-    .card-title { font-size: 17px; font-weight: 800; color: #fff; margin: 0; }
+    .card-info { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+    .card-title { font-size: 17px; font-weight: 800; color: #fff; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .card-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-    
-    .badge-tag { font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+    .badge-tag { font-size: 10px; font-weight: 800; padding: 4px 9px; border-radius: 6px; text-transform: uppercase; }
     .badge-tag.java { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
     .badge-tag.bedrock { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
-    .badge-cat { background: rgba(255,255,255,0.04); color: var(--text-muted); }
+    .badge-cat { background: rgba(255,255,255,0.04); color: var(--text-muted); border: 1px solid rgba(255,255,255,0.02); }
     .badge-ver { background: rgba(34, 197, 94, 0.1); color: #22c55e; font-family: monospace; }
 </style>
 
@@ -69,7 +56,7 @@
     <h1>Mods modified RexCraft</h1>
     <div class="search-box-container">
         <i class="fas fa-search"></i>
-        <input type="text" class="input-search" id="searchInput" placeholder="Cari mods..." onkeyup="filterModsData()">
+        <input type="text" class="input-search" id="searchInput" placeholder="Cari mods favoritmu..." onkeyup="filterModsData()">
     </div>
 </div>
 
@@ -82,7 +69,7 @@
 <div class="grid-container" id="modsWrapper">
     {% for mod in mods %}
     <a href="/mod/{{ mod.platform }}/{{ mod.folder_name }}" class="card-mod" data-platform="{{ mod.platform }}" data-title="{{ mod.title.lower() }}">
-        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/75/1c1e26/22c55e?text=Mod'">
+        <img src="/static/uploads/{{ mod.actual_platform_dir }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/70/131722/22c55e?text=Mod'">
         <div class="card-info">
             <div class="card-title">{{ mod.title }}</div>
             <div class="card-meta">
@@ -93,7 +80,7 @@
         </div>
     </a>
     {% else %}
-    <p style="text-align:center; color:var(--text-muted); padding:30px 0;">Belum ada mod terkoneksi di folder uploads Anda.</p>
+    <p style="text-align:center; color:var(--text-muted); padding:40px 0; font-size:14px;">Belum ada berkas mod terdeteksi di dalam folder uploads.</p>
     {% endfor %}
 </div>
 
