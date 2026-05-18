@@ -2,8 +2,8 @@
 {% block content %}
 <style>
     :root {
-        --theme-color: #22c55e;
-        --theme-color-hover: #16a34a;
+        /* Mengambil otomatis dari tema dasar yang sedang aktif */
+        --theme-color: var(--current-accent, #22c55e);
         --bg-modal: #16181d;
         --btn-gray: #2d313a;
         --btn-gray-hover: #3d424e;
@@ -63,7 +63,10 @@
     }
 
     .btn-dl { background: var(--theme-color); color: #000; }
-    .btn-dl:hover { background: var(--theme-color-hover); transform: scale(1.05); }
+    
+    /* Menggunakan teknik filter otomatis agar tombol menggelap saat hover apa pun temanya */
+    .btn-dl:hover { filter: brightness(0.85); transform: scale(1.05); }
+    
     .btn-action { background: var(--btn-gray); color: #a0aec0; }
     .btn-action:hover { background: var(--btn-gray-hover); color: #fff; }
     .btn-action.liked { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; }
@@ -105,7 +108,7 @@
         margin-top: 10px;
     }
 
-    /* KUSTOMISASI KONTEN GALERI BARU */
+    /* KONTEN GALERI */
     .gallery-container {
         display: flex;
         flex-direction: column;
@@ -209,6 +212,7 @@
         background: var(--theme-color); color: #000; padding: 8px 16px; border-radius: 8px;
         text-decoration: none; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 6px;
     }
+    .pop-dl-btn:hover { filter: brightness(0.85); }
 </style>
 
 <div class="modrinth-container">
@@ -249,7 +253,7 @@
             </div>
             {% else %}
             <div class="gallery-empty">
-                <i class="fas fa-images style='font-size: 30px; margin-bottom: 10px; display:block;'"></i>
+                <i class="fas fa-images" style="font-size: 30px; margin-bottom: 10px; display:block;"></i>
                 Belum ada berkas gambar galeri untuk mod ini.
             </div>
             {% endfor %}
