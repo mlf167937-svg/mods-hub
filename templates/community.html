@@ -1,1 +1,176 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .com-header {
+        margin-bottom: 25px;
+    }
+    .com-header h1 {
+        font-size: 26px;
+        font-weight: 800;
+        margin: 0 0 5px 0;
+        color: #fff;
+    }
+    .com-header p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 14px;
+    }
 
+    .posts-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .post-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .post-creator-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .avatar-rex {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--current-accent);
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 16px;
+    }
+
+    .creator-names {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .creator-name {
+        color: #fff;
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+    .post-date {
+        color: var(--text-muted);
+        font-size: 11px;
+        margin-top: 2px;
+    }
+
+    .post-text {
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        margin: 0;
+    }
+
+    .post-media-box {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #000;
+    }
+
+    .post-media-box img {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-height: 400px;
+        object-fit: cover;
+    }
+
+    /* TOMBOL LINK AKSI UTAMA DI BAWAH JADI PANJANG DAN ELASTRIS */
+    .post-action-bar {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+    }
+
+    .btn-watch-yt {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #ef4444; /* Warna khas merah YouTube */
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        transition: 0.2s ease;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-watch-yt:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-watch-yt i {
+        font-size: 16px;
+    }
+
+    .empty-posts {
+        text-align: center;
+        padding: 50px 20px;
+        color: var(--text-muted);
+        background: var(--bg-card);
+        border-radius: 14px;
+        border: 1px solid var(--border);
+    }
+</style>
+
+<div class="com-container">
+    <div class="com-header">
+        <h1>Community Feed</h1>
+        <p>Info terbaru, bocoran proyek Minecraft, dan rilis video eksklusif dari RexCraft.</p>
+    </div>
+
+    <div class="posts-stack">
+        {% for post in posts %}
+        <div class="post-card">
+            <div class="post-creator-info">
+                <div class="avatar-rex">R</div>
+                <div class="creator-names">
+                    <span class="creator-name">RexCraft Admin</span>
+                    <span class="post-date">Diterbitkan otomatis (@{{ post.id }})</span>
+                </div>
+            </div>
+
+            <p class="post-text">{{ post.text }}</p>
+
+            <div class="post-media-box">
+                <img src="/static/community/{{ post.id }}/{{ post.thumbnail }}" onerror="this.src='https://via.placeholder.com/600x337/1c1e26/848d9a?text=RexCraft+Community+Image'">
+            </div>
+
+            <div class="post-action-bar">
+                <a href="{{ post.link }}" target="_blank" class="btn-watch-yt">
+                    <i class="fab fa-youtube"></i> KLIK DI SINI UNTUK TONTON DI YOUTUBE
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-posts">
+            <i class="fas fa-bullhorn" style="font-size: 40px; margin-bottom: 12px; color: var(--text-muted); display: block;"></i>
+            Belum ada postingan komunitas saat ini. Silakan buat folder dan file di GitHub!
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
