@@ -2,19 +2,19 @@
 {% block content %}
 <style>
     .banner-hero {
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1607988795691-3d0147b43231?q=80&w=600') center/cover;
+        /* FIX: Sekarang background mengambil langsung dari static/img/banner.png milikmu */
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('/static/img/banner.png') center/cover;
         border-radius: 16px; padding: 30px 20px; text-align: center;
         border: 1px solid var(--border); margin-bottom: 25px;
     }
 
     .banner-hero h1 { font-size: 24px; font-weight: 800; margin: 0 0 15px 0; color: #fff; }
 
-    /* FIX: Kunci Lebar Search Bar Agar Tidak Kepanjangan */
     .search-box-container {
         position: relative;
-        max-width: 420px; /* Batasi lebar maksimal di HP / PC */
+        max-width: 420px;
         width: 100%;
-        margin: 0 auto; /* Supaya otomatis presisi di tengah banner */
+        margin: 0 auto;
     }
 
     .search-box-container i {
@@ -54,7 +54,6 @@
 
     .card-info { flex: 1; display: flex; flex-direction: column; gap: 6px; }
     
-    /* FIX: Teks Bersih Tanpa Imbuhan Kata Judul */
     .card-title { font-size: 17px; font-weight: 800; color: #fff; margin: 0; }
 
     .card-meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
