@@ -2,63 +2,58 @@
 {% block content %}
 <style>
     :root {
-        --theme-color: #00af9c; /* Hijau khas Modrinth */
-        --theme-color-hover: #008f80;
+        --theme-color: #22c55e;
+        --theme-color-hover: #16a34a;
         --bg-modal: #16181d;
+        --btn-gray: #2d313a;
+        --btn-gray-hover: #3d424e;
     }
 
-    /* Layout Utama ala Modrinth Mobile */
     .modrinth-container {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
         gap: 20px;
-        padding: 10px;
         margin-bottom: 30px;
     }
 
-    .header-core {
+    .mod-top-section {
         display: flex;
         gap: 20px;
         align-items: center;
-        width: 100%;
     }
 
-    .header-core img {
-        width: 100px;
-        height: 100px;
+    .mod-top-section img {
+        width: 110px;
+        height: 110px;
         border-radius: 20px;
         object-fit: cover;
         background: var(--bg-card);
-        border: 1px solid var(--border);
     }
 
-    .header-text h1 {
+    .mod-title-box h1 {
         font-size: 28px;
         font-weight: 800;
-        margin: 0 0 5px 0;
+        margin: 0 0 8px 0;
         color: #fff;
     }
 
-    .header-text p {
+    .mod-title-box p {
         margin: 0;
         color: var(--text-muted);
-        font-size: 14px;
+        font-size: 15px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
-    /* Tombol Aksi Utama Pas di Bawah Ikon */
-    .action-bar {
+    .action-buttons {
         display: flex;
         gap: 12px;
-        align-items: center;
-        width: 100%;
         margin-top: 5px;
     }
 
-    .main-download-btn {
-        background: var(--theme-color);
-        color: #000;
-        border: none;
+    .btn-circle {
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -67,86 +62,76 @@
         justify-content: center;
         font-size: 20px;
         cursor: pointer;
+        border: none;
         transition: 0.2s ease;
-        box-shadow: 0 4px 12px rgba(0, 175, 156, 0.3);
     }
 
-    .main-download-btn:hover {
-        transform: scale(1.05);
+    .btn-dl {
+        background: var(--theme-color);
+        color: #000;
+    }
+
+    .btn-dl:hover {
         background: var(--theme-color-hover);
+        transform: scale(1.05);
     }
 
-    .icon-btn-secondary {
-        background: var(--bg-card);
-        color: var(--text-muted);
-        border: 1px solid var(--border);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        cursor: pointer;
-        transition: 0.2s;
+    .btn-action {
+        background: var(--btn-gray);
+        color: #a0aec0;
     }
 
-    .icon-btn-secondary:hover {
+    .btn-action:hover {
+        background: var(--btn-gray-hover);
         color: #fff;
-        border-color: #fff;
     }
 
-    /* Angka Stat Palsu biar makin mirip screenshot */
-    .fake-stats {
+    .btn-action.liked {
+        color: #ef4444;
+    }
+
+    .stats-row {
         display: flex;
         gap: 20px;
         color: var(--text-muted);
-        font-size: 14px;
-        margin-top: -5px;
-        font-weight: 600;
-    }
-    .fake-stats span i {
-        margin-right: 5px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-top: 5px;
     }
 
-    /* Navigasi Tab Mini */
+    .stats-row span i {
+        margin-right: 6px;
+    }
+
     .tab-bar {
         display: flex;
-        gap: 15px;
-        border-bottom: 2px solid var(--border);
-        width: 100%;
-        margin-top: 20px;
-        padding-bottom: 10px;
-    }
-    .tab-item {
-        color: #fff;
-        font-weight: 700;
-        font-size: 15px;
-        border-bottom: 3px solid var(--theme-color);
-        padding-bottom: 11px;
-        margin-bottom: -13px;
+        gap: 20px;
+        border-bottom: 1px solid var(--border);
+        margin-top: 15px;
     }
 
-    /* Kotak Deskripsi */
+    .tab-item {
+        color: var(--theme-color);
+        font-weight: 800;
+        font-size: 16px;
+        padding-bottom: 12px;
+        border-bottom: 3px solid var(--theme-color);
+        margin-bottom: -2px;
+    }
+
     .desc-box {
-        width: 100%;
         background: var(--bg-card);
         padding: 25px;
-        border-radius: 14px;
-        border: 1px solid var(--border);
+        border-radius: 12px;
         line-height: 1.6;
-        text-align: justify;
         color: #cbd5e1;
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
-    /* STYLING POP-UP / MODAL BERKAS */
+    /* POP-UP (MODAL) STYLE */
     .modal-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 0; left: 0; width: 100%; height: 100%;
         background: rgba(0, 0, 0, 0.75);
         backdrop-filter: blur(4px);
         display: flex;
@@ -155,7 +140,7 @@
         z-index: 9999;
         opacity: 0;
         pointer-events: none;
-        transition: 0.3s ease;
+        transition: 0.3s;
         padding: 20px;
     }
 
@@ -168,12 +153,11 @@
         background: var(--bg-modal);
         border: 1px solid var(--border);
         width: 100%;
-        max-width: 500px;
+        max-width: 400px;
         border-radius: 16px;
         padding: 25px;
         transform: translateY(30px);
-        transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transition: 0.3s;
     }
 
     .modal-overlay.active .modal-content {
@@ -185,56 +169,31 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 15px;
     }
 
     .modal-header h3 {
         margin: 0;
-        font-size: 20px;
-        font-weight: 800;
+        font-size: 18px;
         color: #fff;
     }
 
     .close-modal {
-        background: none;
-        border: none;
-        color: var(--text-muted);
-        font-size: 22px;
-        cursor: pointer;
-    }
-    .close-modal:hover { color: #fff; }
-
-    .version-scroll {
-        max-height: 300px;
-        overflow-y: auto;
-        padding-right: 5px;
+        background: none; border: none; color: #a0aec0; font-size: 24px; cursor: pointer;
     }
 
-    /* Row Download di dalam Pop-up */
     .pop-version-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--border);
+        background: var(--bg-card);
         padding: 12px 15px;
         border-radius: 10px;
         margin-bottom: 10px;
-        transition: 0.2s;
-    }
-    .pop-version-row:hover {
-        border-color: var(--theme-color);
-        background: rgba(0, 175, 156, 0.05);
+        border: 1px solid transparent;
     }
 
-    .version-title-text {
-        font-weight: 600;
-        font-size: 14px;
-        color: #fff;
-        font-family: monospace;
-        word-break: break-all;
-        padding-right: 10px;
+    .pop-version-row:hover {
+        border-color: var(--theme-color);
     }
 
     .pop-dl-btn {
@@ -244,34 +203,37 @@
         border-radius: 6px;
         text-decoration: none;
         font-weight: 800;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        white-space: nowrap;
+        font-size: 13px;
     }
 </style>
 
 <div class="modrinth-container">
-    <div class="header-core">
-        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/100/1c1e26/00af9c?text=Mod'">
-        <div class="header-text">
+    <div class="mod-top-section">
+        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/110/1c1e26/22c55e?text=Mod'">
+        <div class="mod-title-box">
             <h1>{{ mod.title }}</h1>
-            <p>{{ mod.category }} &bull; Oleh RexCraft</p>
+            <p>{{ mod.category }} &bull; Dipersembahkan oleh RexCraft. Mod pilihan terbaik untuk Anda.</p>
         </div>
     </div>
 
-    <div class="action-bar">
-        <button class="main-download-btn" onclick="openModal()" title="Unduh Berkas">
+    <div class="action-buttons">
+        <button class="btn-circle btn-dl" onclick="openModal()">
             <i class="fas fa-download"></i>
         </button>
-        <button class="icon-btn-secondary"><i class="far fa-heart"></i></button>
-        <button class="icon-btn-secondary"><i class="far fa-bookmark"></i></button>
+        <button class="btn-circle btn-action" id="likeBtn" onclick="likeMod('{{ mod.folder_name }}')">
+            <i class="fas fa-heart"></i>
+        </button>
+        <button class="btn-circle btn-action">
+            <i class="fas fa-bookmark"></i>
+        </button>
+        <button class="btn-circle btn-action">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
     </div>
 
-    <div class="fake-stats">
-        <span><i class="fas fa-download"></i> 1.2K</span>
-        <span><i class="fas fa-heart"></i> 340</span>
+    <div class="stats-row">
+        <span><i class="fas fa-download"></i> <span id="dlCount">{{ mod.downloads_fmt }}</span></span>
+        <span><i class="fas fa-heart"></i> <span id="likeCount">{{ mod.likes_fmt }}</span></span>
     </div>
 
     <div class="tab-bar">
@@ -289,36 +251,49 @@
             <h3>Pilih Versi File</h3>
             <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
-        
-        <div class="version-scroll">
+        <div>
             {% for filename in mod.files %}
             <div class="pop-version-row">
-                <span class="version-title-text">{{ filename }}</span>
-                <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ filename }}" class="pop-dl-btn">
-                    <i class="fas fa-arrow-down"></i> Unduh
+                <span style="color: #fff; font-family: monospace; font-size: 14px;">{{ filename }}</span>
+                <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ filename }}" class="pop-dl-btn" onclick="addDownloadCount()">
+                    <i class="fas fa-download"></i> Unduh
                 </a>
             </div>
             {% else %}
-            <p style="color: var(--text-muted); text-align: center; padding: 10px;">Belum ada berkas versi di folder ini.</p>
+            <p style="color: var(--text-muted); text-align: center;">Belum ada berkas versi di folder ini.</p>
             {% endfor %}
         </div>
     </div>
 </div>
 
 <script>
-    function openModal() {
-        document.getElementById('versionModal').classList.add('active');
+    function openModal() { document.getElementById('versionModal').classList.add('active'); }
+    function closeModal() { document.getElementById('versionModal').classList.remove('active'); }
+    function closeModalOutside(e) { if (e.target.id === 'versionModal') closeModal(); }
+
+    function likeMod(folderName) {
+        fetch(`/like/${folderName}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                document.getElementById('likeCount').innerText = data.likes_fmt;
+                document.getElementById('likeBtn').classList.add('liked');
+            }
+        });
     }
 
-    function closeModal() {
-        document.getElementById('versionModal').classList.remove('active');
-    }
-
-    // Fungsi biar kalau klik area luar pop-up, otomatis ketutup
-    function closeModalOutside(event) {
-        if (event.target.id === 'versionModal') {
-            closeModal();
+    // Fungsi visual agar angka download nambah saat tombol di klik
+    function addDownloadCount() {
+        let dlSpan = document.getElementById('dlCount');
+        let currentText = dlSpan.innerText;
+        // Hanya menambah angka jika belum berformat K atau M biar tidak rusak visualnya saat diklik langsung
+        if(!currentText.includes('K') && !currentText.includes('M')) {
+            let currentNum = parseInt(currentText.replace(/,/g, ''));
+            if(!isNaN(currentNum)) {
+                dlSpan.innerText = currentNum + 1;
+            }
         }
+        setTimeout(closeModal, 1000); // Tutup pop up setelah 1 detik didownload
     }
 </script>
 {% endblock %}
