@@ -47,6 +47,7 @@
         overflow: hidden;
     }
 
+    /* Bar Tombol Ikonik Tetap Dipertahankan Sesuai Gambar */
     .action-buttons {
         display: flex;
         gap: 12px;
@@ -86,21 +87,11 @@
         color: #fff;
     }
 
+    /* Efek Interaktif Keren Ketika Tombol Like Diklik */
     .btn-action.liked {
         color: #ef4444;
-    }
-
-    .stats-row {
-        display: flex;
-        gap: 20px;
-        color: var(--text-muted);
-        font-size: 15px;
-        font-weight: 700;
-        margin-top: 5px;
-    }
-
-    .stats-row span i {
-        margin-right: 6px;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid #ef4444;
     }
 
     .tab-bar {
@@ -128,7 +119,7 @@
         margin-top: 10px;
     }
 
-    /* POP-UP (MODAL) STYLE */
+    /* PERBAIKAN STYLING POP-UP (MODAL) */
     .modal-overlay {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -140,7 +131,7 @@
         z-index: 9999;
         opacity: 0;
         pointer-events: none;
-        transition: 0.3s;
+        transition: 0.25s ease;
         padding: 20px;
     }
 
@@ -153,11 +144,12 @@
         background: var(--bg-modal);
         border: 1px solid var(--border);
         width: 100%;
-        max-width: 400px;
+        max-width: 420px;
         border-radius: 16px;
         padding: 25px;
-        transform: translateY(30px);
-        transition: 0.3s;
+        transform: translateY(20px);
+        transition: 0.25s ease;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     .modal-overlay.active .modal-content {
@@ -169,41 +161,64 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 12px;
     }
 
     .modal-header h3 {
         margin: 0;
         font-size: 18px;
         color: #fff;
+        font-weight: 800;
     }
 
     .close-modal {
-        background: none; border: none; color: #a0aec0; font-size: 24px; cursor: pointer;
+        background: none; border: none; color: #a0aec0; font-size: 24px; cursor: pointer; line-height: 1;
     }
+    .close-modal:hover { color: #fff; }
 
+    /* Desain Baris Versi Minimalis Anti-Overflow */
     .pop-version-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: var(--bg-card);
-        padding: 12px 15px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.02);
+        padding: 14px 18px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        border: 1px solid var(--border);
     }
 
     .pop-version-row:hover {
         border-color: var(--theme-color);
+        background: rgba(34, 197, 94, 0.02);
+    }
+
+    .version-tag {
+        color: #fff;
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 4px 10px;
+        border-radius: 6px;
     }
 
     .pop-dl-btn {
         background: var(--theme-color);
         color: #000;
-        padding: 6px 12px;
-        border-radius: 6px;
+        padding: 8px 16px;
+        border-radius: 8px;
         text-decoration: none;
         font-weight: 800;
         font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: 0.2s;
+    }
+    .pop-dl-btn:hover {
+        background: var(--theme-color-hover);
     }
 </style>
 
@@ -217,23 +232,18 @@
     </div>
 
     <div class="action-buttons">
-        <button class="btn-circle btn-dl" onclick="openModal()">
+        <button class="btn-circle btn-dl" onclick="openModal()" title="Unduh Berkas">
             <i class="fas fa-download"></i>
         </button>
-        <button class="btn-circle btn-action" id="likeBtn" onclick="likeMod('{{ mod.folder_name }}')">
+        <button class="btn-circle btn-action" id="likeBtn" onclick="toggleLike()" title="Sukai">
             <i class="fas fa-heart"></i>
         </button>
-        <button class="btn-circle btn-action">
+        <button class="btn-circle btn-action" id="bookmarkBtn" onclick="toggleBookmark()" title="Simpan">
             <i class="fas fa-bookmark"></i>
         </button>
         <button class="btn-circle btn-action">
             <i class="fas fa-ellipsis-v"></i>
         </button>
-    </div>
-
-    <div class="stats-row">
-        <span><i class="fas fa-download"></i> <span id="dlCount">{{ mod.downloads_fmt }}</span></span>
-        <span><i class="fas fa-heart"></i> <span id="likeCount">{{ mod.likes_fmt }}</span></span>
     </div>
 
     <div class="tab-bar">
@@ -251,16 +261,16 @@
             <h3>Pilih Versi File</h3>
             <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
-        <div>
-            {% for filename in mod.files %}
+        <div style="max-height: 320px; overflow-y: auto; padding-right: 2px;">
+            {% for file_info in mod.files %}
             <div class="pop-version-row">
-                <span style="color: #fff; font-family: monospace; font-size: 14px;">{{ filename }}</span>
-                <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ filename }}" class="pop-dl-btn" onclick="addDownloadCount()">
+                <span class="version-tag">{{ file_info.version }}</span>
+                <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ file_info.filename }}" class="pop-dl-btn" onclick="closeModalAfterClick()">
                     <i class="fas fa-download"></i> Unduh
                 </a>
             </div>
             {% else %}
-            <p style="color: var(--text-muted); text-align: center;">Belum ada berkas versi di folder ini.</p>
+            <p style="color: var(--text-muted); text-align: center; padding: 10px;">Belum ada berkas versi di folder ini.</p>
             {% endfor %}
         </div>
     </div>
@@ -270,30 +280,21 @@
     function openModal() { document.getElementById('versionModal').classList.add('active'); }
     function closeModal() { document.getElementById('versionModal').classList.remove('active'); }
     function closeModalOutside(e) { if (e.target.id === 'versionModal') closeModal(); }
+    function closeModalAfterClick() { setTimeout(closeModal, 800); }
 
-    function likeMod(folderName) {
-        fetch(`/like/${folderName}`, { method: 'POST' })
-        .then(response => response.json())
-        .then(data => {
-            if(data.success) {
-                document.getElementById('likeCount').innerText = data.likes_fmt;
-                document.getElementById('likeBtn').classList.add('liked');
-            }
-        });
+    // Logika animasi klik lokal agar tombol Like & Bookmark terasa responsif saat ditekan pengunjung
+    function toggleLike() {
+        document.getElementById('likeBtn').classList.toggle('liked');
     }
-
-    // Fungsi visual agar angka download nambah saat tombol di klik
-    function addDownloadCount() {
-        let dlSpan = document.getElementById('dlCount');
-        let currentText = dlSpan.innerText;
-        // Hanya menambah angka jika belum berformat K atau M biar tidak rusak visualnya saat diklik langsung
-        if(!currentText.includes('K') && !currentText.includes('M')) {
-            let currentNum = parseInt(currentText.replace(/,/g, ''));
-            if(!isNaN(currentNum)) {
-                dlSpan.innerText = currentNum + 1;
-            }
+    function toggleBookmark() {
+        const btn = document.getElementById('bookmarkBtn');
+        if(btn.style.color === 'rgb(0, 175, 156)' || btn.style.color === '#00af9c') {
+            btn.style.color = '#a0aec0';
+            btn.style.background = '#2d313a';
+        } else {
+            btn.style.color = '#00af9c';
+            btn.style.background = 'rgba(0, 175, 156, 0.1)';
         }
-        setTimeout(closeModal, 1000); // Tutup pop up setelah 1 detik didownload
     }
 </script>
 {% endblock %}
