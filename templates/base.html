@@ -1,234 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RexCraftHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-source-sans-pro/3.0.0/system.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #0d0f12;
-            --bg-card: #1c1e26;
-            --border: #2d313a;
-            --text-main: #ffffff;
-            --text-muted: #848d9a;
-            --accent-teal: #22c55e;
-            --accent-blue: #3b82f6;
-            --accent-purple: #a855f7;
-            --current-accent: #22c55e;
+            --bg-main: #0b0d12;
+            --bg-card: #131722;
+            --border: #222834;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --current-accent: #22c55e; /* Default Ijo Minecraft */
         }
+        
+        body.theme-blue { --current-accent: #3b82f6; }
+        body.theme-purple { --current-accent: #a855f7; }
+        body.theme-green { --current-accent: #22c55e; }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0; padding: 0;
-            display: flex; flex-direction: column;
-            min-height: 100vh;
+            background-color: var(--bg-main); color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0; padding-top: 65px;
         }
 
-        .navbar {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky; top: 0; z-index: 100;
+        /* HEADER */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
+            background: rgba(19, 23, 34, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border); display: flex;
+            align-items: center; justify-content: space-between; padding: 0 16px;
+            box-sizing: border-box; z-index: 999;
         }
 
-        .nav-left {
-            display: flex; align-items: center; gap: 15px;
+        .left-header { display: flex; align-items: center; gap: 14px; }
+        .menu-toggle { font-size: 20px; color: #fff; cursor: pointer; background: none; border: none; }
+        .logo-text { font-size: 19px; font-weight: 900; color: #fff; text-decoration: none; }
+        .logo-text span { color: var(--current-accent); transition: 0.3s; }
+
+        /* SIDEBAR / DRAWER */
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            opacity: 0; pointer-events: none; transition: 0.3s; z-index: 1000;
         }
+        .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
 
-        /* TOMBOL COMMUNITY POST POJOK KANAN ATAS */
-        .nav-right {
-            display: flex; align-items: center;
+        .sidebar-drawer {
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+            background: #0f121a; border-right: 1px solid var(--border);
+            box-sizing: border-box; padding: 24px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1001; display: flex; flex-direction: column; gap: 24px;
+            overflow-y: auto;
         }
+        .sidebar-drawer.open { left: 0; }
 
-        .nav-comm-btn {
-            color: #fff;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid var(--border);
-            font-size: 16px;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none;
-            transition: 0.2s ease;
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: -10px; }
+        .drawer-header h2 { font-size: 20px; font-weight: 800; margin: 0; }
+        .close-btn { background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
+
+        .section-menu { display: flex; flex-direction: column; gap: 10px; }
+        .section-title { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+
+        /* FIX: Menambahkan margin bawah yang cukup agar opsi palet warna tidak menabrak judul teks */
+        .color-palette { display: flex; gap: 12px; margin-bottom: 15px; margin-top: 5px; }
+        .color-dot { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .color-dot.green { background: #22c55e; }
+        .color-dot.blue { background: #3b82f6; }
+        .color-dot.purple { background: #a855f7; }
+        .color-dot.active { border-color: #fff; transform: scale(1.1); }
+
+        .menu-link {
+            display: flex; align-items: center; gap: 12px; color: #cbd5e1;
+            text-decoration: none; font-size: 14px; font-weight: 700;
+            padding: 10px 14px; border-radius: 10px; transition: 0.2s;
+            border: 1px solid transparent;
         }
+        .menu-link:hover { background: rgba(255,255,255,0.03); color: #fff; border-color: var(--border); }
+        .menu-link i { font-size: 15px; color: var(--current-accent); width: 20px; text-align: center; }
 
-        .nav-comm-btn:hover {
-            background: var(--current-accent);
-            color: #000;
-            transform: scale(1.05);
+        .gametag-box {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            border-radius: 10px; padding: 12px; font-size: 13px; display: flex;
+            flex-direction: column; gap: 8px;
         }
+        .tag-row { display: flex; justify-content: space-between; font-weight: 600; }
+        .tag-row span:first-child { color: var(--text-muted); }
+        .tag-row span:last-child { color: #fff; font-family: monospace; }
 
-        .menu-toggle {
-            background: none; border: none;
-            color: var(--text-main); font-size: 22px; cursor: pointer;
-        }
-
-        .brand-logo {
-            font-size: 20px; font-weight: 800; text-decoration: none; color: #fff;
-        }
-
-        .brand-logo span { color: var(--current-accent); }
-
-        .main-content {
-            flex: 1; padding: 20px; max-width: 800px; width: 100%;
-            box-sizing: border-box; margin: 0 auto;
-        }
-
-        .sidebar {
-            position: fixed; top: 0; left: -320px;
-            width: 280px; height: 100%; background: #14161d;
-            border-right: 1px solid var(--border); z-index: 1000;
-            transition: 0.3s ease; padding: 25px;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.6); overflow-y: auto;
-        }
-
-        .sidebar.open { left: 0; }
-
-        .sidebar-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
-        }
-
-        .sidebar-header h2 { margin: 0; font-size: 22px; font-weight: 800; }
-        .close-sidebar { background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
-
-        /* PERBAIKAN SPACING SIDEBAR */
-        .section-label {
-            font-size: 11px; font-weight: 800; color: var(--text-muted);
-            letter-spacing: 1.5px; margin: 25px 0 12px 0; text-transform: uppercase;
-            display: block; clear: both;
-        }
-
-        .theme-circles {
-            display: flex; gap: 12px; margin-bottom: 10px; padding-bottom: 5px;
-        }
-
-        .circle {
-            width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
-            border: 2px solid transparent; transition: 0.2s ease;
-        }
-
-        .circle:hover { transform: scale(1.15); }
-        .circle.teal { background: #22c55e; }
-        .circle.blue { background: #3b82f6; }
-        .circle.purple { background: #a855f7; }
-
-        .launcher-link {
-            display: flex; align-items: center; gap: 12px;
-            background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2);
-            padding: 12px; border-radius: 10px; color: #fff; text-decoration: none;
-            font-weight: 700; font-size: 14px; margin-bottom: 10px; transition: 0.2s;
-        }
-
-        .launcher-link:hover { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; }
-        .launcher-link i { color: #3b82f6; font-size: 16px; }
-
-        .menu-list { display: flex; flex-direction: column; gap: 4px; }
-
-        .menu-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            color: #cbd5e1; text-decoration: none; border-radius: 8px;
-            font-size: 14px; font-weight: 600; background: none; border: none;
-            width: 100%; text-align: left; cursor: pointer;
-        }
-
-        .menu-item:hover { background: rgba(255,255,255,0.04); color: #fff; }
-        .menu-item i { width: 20px; font-size: 16px; color: var(--current-accent); }
-
-        .tag-box {
-            background: var(--bg-card); border: 1px solid var(--border);
-            padding: 10px 14px; border-radius: 8px; margin-bottom: 8px;
-            display: flex; justify-content: space-between; align-items: center; font-size: 13px;
-        }
-
-        .tag-name { font-weight: 700; color: #fff; font-family: monospace; }
-        .tag-val { color: var(--text-muted); font-size: 12px; }
-
-        .social-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #cbd5e1; text-decoration: none; font-size: 14px; }
-        .social-link i.fa-youtube { color: #ef4444; }
-        .social-link i.fa-tiktok { color: #fff; }
-
-        .status-fix { display: flex; align-items: center; gap: 10px; color: #eab308; font-size: 13px; font-weight: 600; padding: 5px 12px; }
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
-        .sidebar-overlay.show { display: block; }
+        .main-wrapper { max-width: 600px; margin: 0 auto; padding: 16px; box-sizing: border-box; }
     </style>
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('rexHubTheme');
-            if (savedTheme) { document.documentElement.style.setProperty('--current-accent', savedTheme); }
-        })();
-    </script>
 </head>
-<body>
+<body class="theme-green">
 
-    <div class="navbar">
-        <div class="nav-left">
+    <header>
+        <div class="left-header">
             <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-            <a href="/" class="brand-logo">RexCraft<span>Hub</span></a>
+            <a href="/" class="logo-text">RexCraft<span>Hub</span></a>
         </div>
-        <div class="nav-right">
-            <a href="/community" class="nav-comm-btn"><i class="fas fa-users"></i></a>
-        </div>
-    </div>
+        <a href="/community" style="color:#fff; font-size:18px;"><i class="fas fa-users-cog"></i></a>
+    </header>
 
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-    <div class="sidebar" id="sidebarMenu">
-        <div class="sidebar-header">
+    <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+    
+    <div class="sidebar-drawer" id="drawer">
+        <div class="drawer-header">
             <h2>Pengaturan</h2>
-            <button class="close-sidebar" onclick="toggleSidebar()">&times;</button>
+            <button class="close-btn" onclick="toggleSidebar()">&times;</button>
         </div>
 
-        <div class="section-label">Tema Warna</div>
-        <div class="theme-circles">
-            <div class="circle teal" onclick="changeTheme('#22c55e')"></div>
-            <div class="circle blue" onclick="changeTheme('#3b82f6')"></div>
-            <div class="circle purple" onclick="changeTheme('#a855f7')"></div>
+        <div class="section-menu">
+            <div class="section-title">Tema Warna</div>
+            <div class="color-palette">
+                <div class="color-dot green active" onclick="setTheme('green')"></div>
+                <div class="color-dot blue" onclick="setTheme('blue')"></div>
+                <div class="color-dot purple" onclick="setTheme('purple')"></div>
+            </div>
         </div>
 
-        <div class="section-label">Download Launcher</div>
-        <a href="https://www.mediafire.com" target="_blank" class="launcher-link"><i class="fab fa-medium-m"></i> Download MC MCPE</a>
-        <a href="https://www.mediafire.com" target="_blank" class="launcher-link"><i class="fas fa-rocket"></i> Download Zalith Launcher</a>
-
-        <div class="section-label">Menu Utama</div>
-        <div class="menu-list">
-            <a href="/" class="menu-item"><i class="fas fa-cubes"></i> Daftar Mod</a>
-            <a href="/community" class="menu-item"><i class="fas fa-users"></i> Community Post</a>
-            <a href="/ai" class="menu-item"><i class="fas fa-robot"></i> RexAI Q&A</a>
-            <a href="/tutorial" class="menu-item"><i class="fas fa-book"></i> Tutorial Pemasangan</a>
-            <button class="menu-item" onclick="triggerAdminAlert()"><i class="fas fa-cloud-upload-alt"></i> Upload Mod (Admin)</button>
+        <div class="section-menu">
+            <div class="section-title">Menu Utama</div>
+            <a href="/ai" class="menu-link"><i class="fas fa-robot"></i> RexAI Q&A</a>
+            <a href="/tutorial" class="menu-link"><i class="fas fa-book"></i> Tutorial Pemasangan</a>
+            <a href="/community" class="menu-link"><i class="fas fa-comments"></i> Komunitas Post</a>
         </div>
 
-        <div class="section-label">Gamertag Minecraft</div>
-        <div class="tag-box"><span class="tag-name">Java</span><span class="tag-val">RexCraft</span></div>
-        <div class="tag-box"><span class="tag-name">Bedrock</span><span class="tag-val">RexCraft6506</span></div>
+        <div class="section-menu">
+            <div class="section-title">Gamertag Minecraft</div>
+            <div class="gametag-box">
+                <div class="tag-row"><span>Java</span><span>RexCraft</span></div>
+                <div class="tag-row"><span>Bedrock</span><span>RexCraft6506</span></div>
+            </div>
+        </div>
 
-        <div class="section-label">Media Sosial</div>
-        <a href="https://youtube.com" target="_blank" class="social-link"><i class="fab fa-youtube"></i> YouTube</a>
-        <a href="https://tiktok.com" target="_blank" class="social-link"><i class="fab fa-tiktok"></i> TikTok</a>
-
-        <div class="section-label">Donasi</div>
-        <div class="status-fix"><i class="fas fa-tools"></i> Sedang dalam perbaikan</div>
+        <div class="section-menu">
+            <div class="section-title">Media Sosial</div>
+            <a href="https://youtube.com" target="_blank" class="menu-link"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="https://tiktok.com" target="_blank" class="menu-link"><i class="fab fa-tiktok"></i> TikTok</a>
+        </div>
     </div>
 
-    <div class="main-content">
+    <div class="main-wrapper">
         {% block content %}{% endblock %}
     </div>
 
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebarMenu').classList.toggle('open');
-            document.getElementById('sidebarOverlay').classList.toggle('show');
+            document.getElementById('overlay').classList.toggle('open');
+            document.getElementById('drawer').classList.toggle('open');
         }
-        function triggerAdminAlert() { alert("Anda bukan admin!"); }
-        function changeTheme(colorCode) {
-            document.documentElement.style.setProperty('--current-accent', colorCode);
-            localStorage.setItem('rexHubTheme', colorCode);
+        function setTheme(color) {
+            document.body.className = '';
+            document.body.classList.add('theme-' + color);
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            document.querySelector('.color-dot.' + color).classList.add('active');
+            localStorage.setItem('rex-theme', color);
         }
+        // Load preference theme saved
+        const savedTheme = localStorage.getItem('rex-theme');
+        if(savedTheme) { setTheme(savedTheme); }
     </script>
 </body>
 </html>
