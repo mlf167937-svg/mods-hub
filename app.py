@@ -37,14 +37,18 @@ def get_all_mods():
                 icon = lines[2]
                 desc = lines[3]
                 
-                # Baca file versi download
+                # BACA FILE VERSI DOWNLOAD (DIPERBAIKI: Support file tanpa tanda minus agar tidak 0 berkas)
                 files_info = []
                 for file in os.listdir(folder_path):
-                    if (file.endswith('.zip') or file.endswith('.mcpack') or file.endswith('.mcaddon')) and '-' in file:
-                        parts = file.rsplit('.', 1)[0].split('-', 1)
-                        if len(parts) == 2:
-                            version = parts[1]
-                            files_info.append({'version': version, 'filename': file})
+                    if file.endswith(('.zip', '.mcpack', '.mcaddon', '.jar')):
+                        if '-' in file:
+                            parts = file.rsplit('.', 1)[0].split('-', 1)
+                            if len(parts) == 2:
+                                version = parts[1]
+                                files_info.append({'version': version, 'filename': file})
+                        else:
+                            # Jika user lupa naruh versi, otomatis diubah jadi 'Latest' agar mod MCPE tetap terdeteksi
+                            files_info.append({'version': 'Latest', 'filename': file})
                 
                 # Baca file galeri & teks penjelasannya
                 gallery_info = []
@@ -105,14 +109,12 @@ def get_community_posts():
             lines = text_content.split('\n')
             yt_link = lines[-1].strip()
             
-            # Validasi apakah baris terakhir beneran link YouTube
             if yt_link.startswith('http://') or yt_link.startswith('https://'):
                 text_body = '\n'.join(lines[:-1]).strip()
             else:
                 text_body = text_content
-                yt_link = "https://youtube.com" # Fallback jika lupa isi link
+                yt_link = "https://youtube.com"
                 
-            # Deteksi gambar thumbnail bebas format (.png/.jpg/.jpeg)
             thumbnail_file = "thumbnail.png"
             for file in os.listdir(folder_path):
                 if file.lower().startswith('thumbnail') and file.lower().endswith(('.png', '.jpg', '.jpeg')):
