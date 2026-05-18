@@ -41,13 +41,8 @@
         margin: 0;
         color: var(--text-muted);
         font-size: 15px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
     }
 
-    /* Bar Tombol Ikonik Tetap Dipertahankan Sesuai Gambar */
     .action-buttons {
         display: flex;
         gap: 12px;
@@ -67,48 +62,39 @@
         transition: 0.2s ease;
     }
 
-    .btn-dl {
-        background: var(--theme-color);
-        color: #000;
-    }
+    .btn-dl { background: var(--theme-color); color: #000; }
+    .btn-dl:hover { background: var(--theme-color-hover); transform: scale(1.05); }
+    .btn-action { background: var(--btn-gray); color: #a0aec0; }
+    .btn-action:hover { background: var(--btn-gray-hover); color: #fff; }
+    .btn-action.liked { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; }
 
-    .btn-dl:hover {
-        background: var(--theme-color-hover);
-        transform: scale(1.05);
-    }
-
-    .btn-action {
-        background: var(--btn-gray);
-        color: #a0aec0;
-    }
-
-    .btn-action:hover {
-        background: var(--btn-gray-hover);
-        color: #fff;
-    }
-
-    /* Efek Interaktif Keren Ketika Tombol Like Diklik */
-    .btn-action.liked {
-        color: #ef4444;
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid #ef4444;
-    }
-
+    /* BAR DESAIN TAB MODRINTH */
     .tab-bar {
         display: flex;
-        gap: 20px;
-        border-bottom: 1px solid var(--border);
+        gap: 25px;
+        border-bottom: 2px solid var(--border);
         margin-top: 15px;
     }
 
     .tab-item {
-        color: var(--theme-color);
+        color: var(--text-muted);
         font-weight: 800;
         font-size: 16px;
         padding-bottom: 12px;
-        border-bottom: 3px solid var(--theme-color);
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
         margin-bottom: -2px;
+        transition: 0.15s;
     }
+
+    .tab-item.active {
+        color: var(--theme-color);
+        border-bottom-color: var(--theme-color);
+    }
+
+    /* KONTEN BOX SWITCHER */
+    .content-panel { display: none; }
+    .content-panel.active { display: block; }
 
     .desc-box {
         background: var(--bg-card);
@@ -119,7 +105,48 @@
         margin-top: 10px;
     }
 
-    /* PERBAIKAN STYLING POP-UP (MODAL) */
+    /* KUSTOMISASI KONTEN GALERI BARU */
+    .gallery-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .gallery-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .gallery-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        max-height: 380px;
+        object-fit: cover;
+        background: #000;
+    }
+
+    .gallery-info {
+        padding: 15px 20px;
+        color: #e2e8f0;
+        font-size: 14px;
+        line-height: 1.5;
+        border-top: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.15);
+        white-space: pre-wrap;
+    }
+
+    .gallery-empty {
+        text-align: center;
+        color: var(--text-muted);
+        padding: 40px 20px;
+        font-size: 15px;
+    }
+
+    /* POP-UP WINDOW STYLE */
     .modal-overlay {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -135,10 +162,7 @@
         padding: 20px;
     }
 
-    .modal-overlay.active {
-        opacity: 1;
-        pointer-events: auto;
-    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
     .modal-content {
         background: var(--bg-modal);
@@ -149,12 +173,9 @@
         padding: 25px;
         transform: translateY(20px);
         transition: 0.25s ease;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .modal-overlay.active .modal-content {
-        transform: translateY(0);
-    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
 
     .modal-header {
         display: flex;
@@ -165,19 +186,9 @@
         padding-bottom: 12px;
     }
 
-    .modal-header h3 {
-        margin: 0;
-        font-size: 18px;
-        color: #fff;
-        font-weight: 800;
-    }
+    .modal-header h3 { margin: 0; font-size: 18px; color: #fff; font-weight: 800; }
+    .close-modal { background: none; border: none; color: #a0aec0; font-size: 24px; cursor: pointer; line-height: 1; }
 
-    .close-modal {
-        background: none; border: none; color: #a0aec0; font-size: 24px; cursor: pointer; line-height: 1;
-    }
-    .close-modal:hover { color: #fff; }
-
-    /* Desain Baris Versi Minimalis Anti-Overflow */
     .pop-version-row {
         display: flex;
         justify-content: space-between;
@@ -189,36 +200,14 @@
         border: 1px solid var(--border);
     }
 
-    .pop-version-row:hover {
-        border-color: var(--theme-color);
-        background: rgba(34, 197, 94, 0.02);
-    }
-
     .version-tag {
-        color: #fff;
-        font-family: monospace;
-        font-size: 16px;
-        font-weight: 700;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 4px 10px;
-        border-radius: 6px;
+        color: #fff; font-family: monospace; font-size: 16px; font-weight: 700;
+        background: rgba(255, 255, 255, 0.05); padding: 4px 10px; border-radius: 6px;
     }
 
     .pop-dl-btn {
-        background: var(--theme-color);
-        color: #000;
-        padding: 8px 16px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 800;
-        font-size: 13px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: 0.2s;
-    }
-    .pop-dl-btn:hover {
-        background: var(--theme-color-hover);
+        background: var(--theme-color); color: #000; padding: 8px 16px; border-radius: 8px;
+        text-decoration: none; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 6px;
     }
 </style>
 
@@ -227,31 +216,44 @@
         <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/110/1c1e26/22c55e?text=Mod'">
         <div class="mod-title-box">
             <h1>{{ mod.title }}</h1>
-            <p>{{ mod.category }} &bull; Dipersembahkan oleh RexCraft. Mod pilihan terbaik untuk Anda.</p>
+            <p>{{ mod.category }} &bull; Dipersembahkan oleh RexCraft.</p>
         </div>
     </div>
 
     <div class="action-buttons">
-        <button class="btn-circle btn-dl" onclick="openModal()" title="Unduh Berkas">
-            <i class="fas fa-download"></i>
-        </button>
-        <button class="btn-circle btn-action" id="likeBtn" onclick="toggleLike()" title="Sukai">
-            <i class="fas fa-heart"></i>
-        </button>
-        <button class="btn-circle btn-action" id="bookmarkBtn" onclick="toggleBookmark()" title="Simpan">
-            <i class="fas fa-bookmark"></i>
-        </button>
-        <button class="btn-circle btn-action">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
+        <button class="btn-circle btn-dl" onclick="openModal()"><i class="fas fa-download"></i></button>
+        <button class="btn-circle btn-action" id="likeBtn" onclick="toggleLike()"><i class="fas fa-heart"></i></button>
+        <button class="btn-circle btn-action"><i class="fas fa-bookmark"></i></button>
+        <button class="btn-circle btn-action"><i class="fas fa-ellipsis-v"></i></button>
     </div>
 
     <div class="tab-bar">
-        <div class="tab-item">Description</div>
+        <div class="tab-item active" id="tabDesc" onclick="switchTab('desc')">Description</div>
+        <div class="tab-item" id="tabGallery" onclick="switchTab('gallery')">Gallery</div>
     </div>
 
-    <div class="desc-box">
-        <p style="white-space: pre-wrap; margin: 0;">{{ mod.desc }}</p>
+    <div class="content-panel active" id="panelDesc">
+        <div class="desc-box">
+            <p style="white-space: pre-wrap; margin: 0;">{{ mod.desc }}</p>
+        </div>
+    </div>
+
+    <div class="content-panel" id="panelGallery">
+        <div class="gallery-container">
+            {% for item in mod.gallery %}
+            <div class="gallery-card">
+                <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ item.image }}" alt="Gallery Image">
+                {% if item.text %}
+                <div class="gallery-info">{{ item.text }}</div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="gallery-empty">
+                <i class="fas fa-images style='font-size: 30px; margin-bottom: 10px; display:block;'"></i>
+                Belum ada berkas gambar galeri untuk mod ini.
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
@@ -261,7 +263,7 @@
             <h3>Pilih Versi File</h3>
             <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
-        <div style="max-height: 320px; overflow-y: auto; padding-right: 2px;">
+        <div style="max-height: 320px; overflow-y: auto;">
             {% for file_info in mod.files %}
             <div class="pop-version-row">
                 <span class="version-tag">{{ file_info.version }}</span>
@@ -269,8 +271,6 @@
                     <i class="fas fa-download"></i> Unduh
                 </a>
             </div>
-            {% else %}
-            <p style="color: var(--text-muted); text-align: center; padding: 10px;">Belum ada berkas versi di folder ini.</p>
             {% endfor %}
         </div>
     </div>
@@ -281,19 +281,21 @@
     function closeModal() { document.getElementById('versionModal').classList.remove('active'); }
     function closeModalOutside(e) { if (e.target.id === 'versionModal') closeModal(); }
     function closeModalAfterClick() { setTimeout(closeModal, 800); }
+    function toggleLike() { document.getElementById('likeBtn').classList.toggle('liked'); }
 
-    // Logika animasi klik lokal agar tombol Like & Bookmark terasa responsif saat ditekan pengunjung
-    function toggleLike() {
-        document.getElementById('likeBtn').classList.toggle('liked');
-    }
-    function toggleBookmark() {
-        const btn = document.getElementById('bookmarkBtn');
-        if(btn.style.color === 'rgb(0, 175, 156)' || btn.style.color === '#00af9c') {
-            btn.style.color = '#a0aec0';
-            btn.style.background = '#2d313a';
+    // SISTEM NAVIGASI TAB SWITCHER
+    function switchTab(type) {
+        document.getElementById('tabDesc').classList.remove('active');
+        document.getElementById('tabGallery').classList.remove('active');
+        document.getElementById('panelDesc').classList.remove('active');
+        document.getElementById('panelGallery').classList.remove('active');
+
+        if(type === 'desc') {
+            document.getElementById('tabDesc').classList.add('active');
+            document.getElementById('panelDesc').classList.add('active');
         } else {
-            btn.style.color = '#00af9c';
-            btn.style.background = 'rgba(0, 175, 156, 0.1)';
+            document.getElementById('tabGallery').classList.add('active');
+            document.getElementById('panelGallery').classList.add('active');
         }
     }
 </script>
