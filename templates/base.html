@@ -1,98 +1,320 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RexCraft Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>RexCraftHub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #111217;
+            --bg-main: #0d0f12;
             --bg-card: #1c1e26;
-            --border: #2d313f;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --theme-color: #00af9c; /* Green Default */
+            --border: #2d313a;
+            --text-main: #ffffff;
+            --text-muted: #848d9a;
+            --accent-teal: #00af9c;
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --current-accent: #22c55e;
         }
-        body.theme-blue { --theme-color: #3b82f6; }
-        body.theme-purple { --theme-color: #a855f7; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        /* Navbar & Sidebar Setting (Pojok Kiri) */
-        nav { padding: 15px 30px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; position: sticky; top: 0; z-index: 100; }
-        .setting-btn { font-size: 24px; color: var(--theme-color); cursor: pointer; margin-right: 20px; background: none; border: none; }
-        .brand { font-weight: 800; font-size: 20px; color: #fff; text-decoration: none; }
-        .brand span { color: var(--theme-color); }
+        .navbar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-        .sidebar { position: fixed; top: 0; left: -350px; width: 350px; height: 100vh; background: var(--bg-card); border-right: 1px solid var(--border); transition: 0.3s; z-index: 1000; padding: 30px; overflow-y: auto; }
-        .sidebar.active { left: 0; }
-        .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-        
-        .sb-title { font-size: 14px; color: var(--text-muted); font-weight: 800; margin: 20px 0 10px 0; text-transform: uppercase; }
-        .theme-selector { display: flex; gap: 10px; }
-        .t-btn { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; }
-        .t-btn.green { background: #00af9c; } .t-btn.blue { background: #3b82f6; } .t-btn.purple { background: #a855f7; }
-        
-        .sb-link { display: block; color: var(--text-main); text-decoration: none; padding: 10px 0; font-weight: 600; border-bottom: 1px solid var(--border); }
-        .sb-link i { width: 25px; color: var(--theme-color); }
-        .sb-link:hover { color: var(--theme-color); }
-        
-        .gt-box { display: flex; justify-content: space-between; background: var(--bg-main); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; }
-        .gt-box span { color: var(--text-muted); }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .brand-logo {
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .brand-logo span {
+            color: #22c55e;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        /* SIDEBAR / LAUNCHER SETTINGS STYLING */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100%;
+            background: #14161d;
+            border-right: 1px solid var(--border);
+            z-index: 1000;
+            transition: 0.3s ease;
+            padding: 25px;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.6);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        .theme-circles {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .circle.teal { background: var(--accent-teal); }
+        .circle.blue { background: var(--accent-blue); }
+        .circle.purple { background: var(--accent-purple); }
+
+        /* LINK DOWNLOAD MEDIAFIRE DESIGN */
+        .launcher-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: 0.2s;
+        }
+
+        .launcher-link:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .launcher-link i {
+            color: #3b82f6;
+            font-size: 16px;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: rgba(255,255,255,0.04);
+            color: #fff;
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: 16px;
+            color: #22c55e;
+        }
+
+        .tag-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .tag-name { font-weight: 700; color: #fff; font-family: monospace; }
+        .tag-val { color: var(--text-muted); font-size: 12px; }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .social-link i.fa-youtube { color: #ef4444; }
+        .social-link i.fa-tiktok { color: #fff; }
+
+        .status-fix {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #eab308;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 5px 12px;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .sidebar-overlay.show { display: block; }
     </style>
 </head>
-<body class="theme-green">
+<body>
 
-    <nav>
-        <button class="setting-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-        <a href="/" class="brand">RexCraft<span>Hub</span></a>
-    </nav>
-
-    <div class="sidebar" id="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
-        <h2>Pengaturan</h2>
-        
-        <div class="sb-title">Tema Warna</div>
-        <div class="theme-selector">
-            <div class="t-btn green" onclick="setTheme('theme-green')"></div>
-            <div class="t-btn blue" onclick="setTheme('theme-blue')"></div>
-            <div class="t-btn purple" onclick="setTheme('theme-purple')"></div>
+    <div class="navbar">
+        <div class="nav-left">
+            <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            <a href="/" class="brand-logo">RexCraft<span>Hub</span></a>
         </div>
-
-        <div class="sb-title">Menu Utama</div>
-        <a href="/ai" class="sb-link"><i class="fas fa-robot"></i> RexAI Q&A</a>
-        <a href="/tutorial" class="sb-link"><i class="fas fa-book"></i> Tutorial Pemasangan</a>
-        <a href="/upload" class="sb-link"><i class="fas fa-upload"></i> Upload Mod (Admin)</a>
-
-        <div class="sb-title">Gamertag Minecraft</div>
-        <div class="gt-box"><span>Java</span> <b>RexCraft</b></div>
-        <div class="gt-box"><span>Bedrock</span> <b>RexCraft6506</b></div>
-
-        <div class="sb-title">Media Sosial</div>
-        <a href="https://youtube.com/" target="_blank" class="sb-link"><i class="fab fa-youtube" style="color: #ff0000;"></i> YouTube</a>
-        <a href="https://tiktok.com/" target="_blank" class="sb-link"><i class="fab fa-tiktok" style="color: #fff;"></i> TikTok</a>
-
-        <div class="sb-title">Donasi</div>
-        <a href="#" class="sb-link" style="color: #f59e0b;"><i class="fas fa-tools"></i> Sedang dalam perbaikan</a>
     </div>
 
-    <div class="container">
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebarMenu">
+        <div class="sidebar-header">
+            <h2>Pengaturan</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">&times;</button>
+        </div>
+
+        <div class="section-label">Tema Warna</div>
+        <div class="theme-circles">
+            <div class="circle teal"></div>
+            <div class="circle blue"></div>
+            <div class="circle purple"></div>
+        </div>
+
+        <div class="section-label">Download Launcher</div>
+        <a href="https://www.mediafire.com" target="_blank" class="launcher-link">
+            <i class="fab fa-medium-m"></i> Download MC MCPE
+        </a>
+        <a href="https://www.mediafire.com" target="_blank" class="launcher-link">
+            <i class="fas fa-rocket"></i> Download Zalith Launcher
+        </a>
+
+        <div class="section-label">Menu Utama</div>
+        <div class="menu-list">
+            <a href="/ai" class="menu-item"><i class="fas fa-robot"></i> RexAI Q&A</a>
+            <a href="/tutorial" class="menu-item"><i class="fas fa-book"></i> Tutorial Pemasangan</a>
+            <button class="menu-item" onclick="triggerAdminAlert()"><i class="fas fa-cloud-upload-alt"></i> Upload Mod (Admin)</button>
+        </div>
+
+        <div class="section-label">Gamertag Minecraft</div>
+        <div class="tag-box"><span class="tag-name">Java</span><span class="tag-val">RexCraft</span></div>
+        <div class="tag-box"><span class="tag-name">Bedrock</span><span class="tag-val">RexCraft6506</span></div>
+
+        <div class="section-label">Media Sosial</div>
+        <a href="https://youtube.com" target="_blank" class="social-link"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://tiktok.com" target="_blank" class="social-link"><i class="fab fa-tiktok"></i> TikTok</a>
+
+        <div class="section-label">Donasi</div>
+        <div class="status-fix"><i class="fas fa-tools"></i> Sedang dalam perbaikan</div>
+    </div>
+
+    <div class="main-content">
         {% block content %}{% endblock %}
     </div>
 
     <script>
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
-        function setTheme(theme) {
-            document.body.className = theme;
-            localStorage.setItem('rexTheme', theme);
+        function toggleSidebar() {
+            document.getElementById('sidebarMenu').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
         }
-        const savedTheme = localStorage.getItem('rexTheme');
-        if(savedTheme) document.body.className = savedTheme;
+        function triggerAdminAlert() {
+            alert("Anda bukan admin!");
+        }
     </script>
 </body>
 </html>
