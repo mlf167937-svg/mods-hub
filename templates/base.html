@@ -12,10 +12,10 @@
             --border: #2d313a;
             --text-main: #ffffff;
             --text-muted: #848d9a;
-            --accent-teal: #22c55e; /* Warna Hijau Utama RexCraft */
+            --accent-teal: #22c55e;
             --accent-blue: #3b82f6;
             --accent-purple: #a855f7;
-            --current-accent: #22c55e; /* Default awal */
+            --current-accent: #22c55e;
         }
 
         body {
@@ -75,7 +75,6 @@
             margin: 0 auto;
         }
 
-        /* SIDEBAR SETTINGS STYLING */
         .sidebar {
             position: fixed;
             top: 0;
@@ -148,7 +147,6 @@
         .circle.blue { background: #3b82f6; }
         .circle.purple { background: #a855f7; }
 
-        /* LINK DOWNLOAD MEDIAFIRE DESIGN */
         .launcher-link {
             display: flex;
             align-items: center;
@@ -258,7 +256,6 @@
         .sidebar-overlay.show { display: block; }
     </style>
     <script>
-        // SCRIPT DETEKSI MEMORI TEMA (Harus paling atas agar web tidak berkedip hijau saat dimuat)
         (function() {
             const savedTheme = localStorage.getItem('rexHubTheme');
             if (savedTheme) {
@@ -300,6 +297,8 @@
 
         <div class="section-label">Menu Utama</div>
         <div class="menu-list">
+            <a href="/" class="menu-item"><i class="fas fa-cubes"></i> Daftar Mod</a>
+            <a href="/community" class="menu-item"><i class="fas fa-users"></i> Community Post</a>
             <a href="/ai" class="menu-item"><i class="fas fa-robot"></i> RexAI Q&A</a>
             <a href="/tutorial" class="menu-item"><i class="fas fa-book"></i> Tutorial Pemasangan</a>
             <button class="menu-item" onclick="triggerAdminAlert()"><i class="fas fa-cloud-upload-alt"></i> Upload Mod (Admin)</button>
@@ -329,8 +328,6 @@
         function triggerAdminAlert() {
             alert("Anda bukan admin!");
         }
-        
-        // FUNGSI GANTI TEMA UTAMA
         function changeTheme(colorCode) {
             document.documentElement.style.setProperty('--current-accent', colorCode);
             localStorage.setItem('rexHubTheme', colorCode);
