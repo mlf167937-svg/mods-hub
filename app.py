@@ -6,15 +6,11 @@ app = Flask(__name__)
 BASE_UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
 
 def extract_version(filename):
-    # Mencari pola angka versi seperti 1.21.9 atau 1_21_9 di dalam nama file
     match = re.search(r'(\d+[\._]\d+(?:[\._]\d+)?)', filename)
     if match:
-        # Mengubah karakter underscore (_) menjadi titik (.) agar rapi
         clean_ver = match.group(1).replace('_', '.')
         return f"v{clean_ver}"
-    # Jika tidak ditemukan pola angka, potong ekstensi filenya saja sebagai cadangan
-    name_without_ext = os.path.splitext(filename)[0]
-    return name_without_ext
+    return os.path.splitext(filename)[0]
 
 def parse_info_file(folder_path):
     info = {
@@ -45,24 +41,48 @@ def parse_info_file(folder_path):
             pass
     return info
 
-def find_mod_components(files):
+def find_mod_components(files, folder_path):
     icon_file = None
     mod_files = []
+    gallery_map = {}
+    gallery_items = []
     icon_keywords = ['icon.jpg', 'icon.png', 'icon.jpeg', 'icon.webp', 'logo.png', 'logo.jpg']
+    
     for f in files:
-        if f.lower() == 'info.txt':
+        lower_f = f.lower()
+        if lower_f == 'info.txt':
             continue
-        elif f.lower() in icon_keywords:
+        elif lower_f in icon_keywords:
             icon_file = f
+        elif lower_f.startswith('galery') or lower_f.startswith('gallery'):
+            match = re.match(r'galer[yi](\d+)\.(png|jpg|jpeg|webp|txt)', lower_f)
+            if match:
+                num = int(match.group(1))
+                ext = match.group(2)
+                if num not in gallery_map:
+                    gallery_map[num] = {'image': None, 'text': ''}
+                if ext == 'txt':
+                    txt_path = os.path.join(folder_path, f)
+                    try:
+                        with open(txt_path, 'r', encoding='utf-8') as txt_f:
+                            gallery_map[num]['text'] = txt_f.read().strip()
+                    except:
+                        pass
+                else:
+                    gallery_map[num]['image'] = f
         else:
             version_display = extract_version(f)
             mod_files.append({
                 'filename': f,
                 'version': version_display
             })
-    # Mengurutkan file berdasarkan versi terbaru di atas
+            
+    for num in sorted(gallery_map.keys()):
+        if gallery_map[num]['image']:
+            gallery_items.append(gallery_map[num])
+            
     mod_files.sort(key=lambda x: x['version'], reverse=True)
-    return icon_file, mod_files
+    return icon_file, mod_files, gallery_items
 
 def scan_mods():
     all_mods = []
@@ -77,7 +97,7 @@ def scan_mods():
             if os.path.isdir(folder_path):
                 meta = parse_info_file(folder_path)
                 files = os.listdir(folder_path)
-                icon_file, mod_files = find_mod_components(files)
+                icon_file, mod_files, gallery_items = find_mod_components(files, folder_path)
                 all_mods.append({
                     'id': mod_id_counter,
                     'folder_name': folder_name,
@@ -86,7 +106,8 @@ def scan_mods():
                     'category': meta['category'],
                     'desc': meta['desc'],
                     'icon': icon_file,
-                    'files': mod_files
+                    'files': mod_files,
+                    'gallery': gallery_items
                 })
                 mod_id_counter += 1
     return all_mods
@@ -103,7 +124,7 @@ def mod_detail(platform, folder_name):
         abort(404, "Folder mod tidak ditemukan di repositori")
     meta = parse_info_file(folder_path)
     files = os.listdir(folder_path)
-    icon_file, mod_files = find_mod_components(files)
+    icon_file, mod_files, gallery_items = find_mod_components(files, folder_path)
     mod_data = {
         'folder_name': folder_name,
         'platform': platform,
@@ -111,7 +132,8 @@ def mod_detail(platform, folder_name):
         'category': meta['category'],
         'desc': meta['desc'],
         'icon': icon_file,
-        'files': mod_files
+        'files': mod_files,
+        'gallery': gallery_items
     }
     return render_template('mod.html', mod=mod_data)
 
