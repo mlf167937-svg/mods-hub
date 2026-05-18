@@ -3,55 +3,63 @@
 <style>
     :root {
         --theme-color: var(--current-accent, #22c55e);
-        --bg-modal: #16181d;
-        --btn-gray: #2d313a;
+        --bg-modal: #11131a;
+        --btn-gray: #1e222e;
     }
 
-    .mod-top-section { display: flex; gap: 20px; align-items: center; margin-bottom: 15px; }
-    .mod-top-section img { width: 110px; height: 110px; border-radius: 20px; object-fit: cover; background: var(--bg-card); }
-    .mod-title-box h1 { font-size: 26px; font-weight: 800; margin: 0 0 6px 0; color: #fff; }
-    .mod-title-box p { margin: 0; color: var(--text-muted); font-size: 14px; }
+    .mod-top-section { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; margin-top: 10px; }
+    .mod-top-section img { width: 95px; height: 95px; border-radius: 18px; object-fit: cover; background: var(--bg-card); flex-shrink: 0; border: 1px solid var(--border); }
+    .mod-title-box h1 { font-size: 24px; font-weight: 800; margin: 0 0 6px 0; color: #fff; line-height: 1.2; }
+    .mod-title-box p { margin: 0; color: var(--text-muted); font-size: 13px; font-weight: 600; }
 
-    .action-buttons { display: flex; gap: 12px; margin-bottom: 20px; }
-    .btn-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; border: none; transition: 0.2s ease; }
-    .btn-dl { background: var(--theme-color); color: #000; }
-    .btn-dl:hover { transform: scale(1.05); }
-    .btn-action { background: var(--btn-gray); color: #a0aec0; }
-    .btn-action:hover { color: #fff; }
-    .btn-action.liked { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; }
+    .action-buttons { display: flex; gap: 12px; margin-bottom: 25px; }
+    .btn-circle { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: none; transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .btn-dl { background: var(--theme-color); color: #000; font-weight: bold; }
+    .btn-dl:hover { transform: scale(1.08); box-shadow: 0 4px 12px rgba(34,197,94,0.2); }
+    .btn-action { background: var(--btn-gray); color: #a0aec0; border: 1px solid var(--border); }
+    .btn-action:hover { color: #fff; background: rgba(255,255,255,0.02); }
+    .btn-action.liked { color: #ef4444; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); }
 
-    .tab-bar { display: flex; gap: 25px; border-bottom: 2px solid var(--border); margin-top: 25px; margin-bottom: 15px; }
-    .tab-item { color: var(--text-muted); font-weight: 800; font-size: 15px; padding: 10px 4px; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s; user-select: none; }
+    .tab-bar { display: flex; gap: 24px; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+    .tab-item { color: var(--text-muted); font-weight: 800; font-size: 14px; padding: 10px 2px; cursor: pointer; border-bottom: 3px solid transparent; transition: 0.2s; user-select: none; }
     .tab-item:hover { color: #fff; }
     .tab-item.active { color: var(--theme-color); border-bottom-color: var(--theme-color); }
 
-    .content-panel { display: none; }
+    .content-panel { display: none; animation: fadeIn 0.3s ease; }
     .content-panel.active { display: block; }
 
-    .desc-box { background: var(--bg-card); padding: 20px; border-radius: 12px; line-height: 1.6; color: #cbd5e1; border: 1px solid var(--border); }
-    .gallery-container { display: flex; flex-direction: column; gap: 20px; }
-    .gallery-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-    .gallery-card img { width: 100%; height: auto; display: block; max-height: 380px; object-fit: cover; }
-    .gallery-info { padding: 15px 20px; color: #e2e8f0; font-size: 14px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.2); }
-    .gallery-empty { text-align: center; color: var(--text-muted); padding: 40px 20px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: 0.2s; padding: 20px; }
+    .desc-box { background: var(--bg-card); padding: 20px; border-radius: 16px; line-height: 1.7; color: #cbd5e1; border: 1px solid var(--border); font-size: 14.5px; }
+    
+    .gallery-container { display: flex; flex-direction: column; gap: 18px; }
+    .gallery-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .gallery-card img { width: 100%; height: auto; display: block; max-height: 350px; object-fit: cover; }
+    .gallery-info { padding: 14px 18px; color: #e2e8f0; font-size: 13.5px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.15); line-height: 1.5; }
+    .gallery-empty { text-align: center; color: var(--text-muted); padding: 50px 20px; font-size: 14px; }
+
+    /* MODAL DOWNLOAD WINDOW */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 9999; opacity: 0; pointer-events: none; transition: 0.2s; padding: 16px; box-sizing: border-box; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    .modal-content { background: var(--bg-modal); border: 1px solid var(--border); width: 100%; max-width: 400px; border-radius: 16px; padding: 25px; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-    .modal-header h3 { margin: 0; font-size: 18px; color: #fff; }
-    .close-modal { background: none; border: none; color: #a0aec0; font-size: 24px; cursor: pointer; }
-    .pop-version-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 12px 16px; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
-    .version-tag { color: #fff; font-family: monospace; font-size: 15px; font-weight: 700; }
-    .pop-dl-btn { background: var(--theme-color); color: #000; padding: 8px 14px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+    .modal-content { background: var(--bg-modal); border: 1px solid var(--border); width: 100%; max-width: 380px; border-radius: 20px; padding: 22px; box-sizing: border-box; transform: scale(0.95); transition: 0.2s; }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .modal-header h3 { margin: 0; font-size: 17px; color: #fff; font-weight: 800; }
+    .close-modal { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+    
+    .pop-version-row { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 12px 14px; border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
+    .version-tag { color: #fff; font-family: monospace; font-size: 14px; font-weight: 700; }
+    .pop-dl-btn { background: var(--theme-color); color: #000; padding: 8px 14px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 12px; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+    .pop-dl-btn:hover { opacity: 0.9; }
 </style>
 
-<div class="modrinth-container">
+<div class="mod-detail-container">
     <div class="mod-top-section">
-        <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/110/1c1e26/22c55e?text=Mod'">
+        <img src="/static/uploads/{{ mod.actual_platform_dir }}/{{ mod.folder_name }}/{{ mod.icon }}" onerror="this.src='https://via.placeholder.com/95/131722/22c55e?text=Mod'">
         <div class="mod-title-box">
             <h1>{{ mod.title }}</h1>
-            <p>{{ mod.category }} &bull; Oleh RexCraft</p>
+            <p>{{ mod.category }} &bull; Creator RexCraft</p>
         </div>
     </div>
 
@@ -76,15 +84,15 @@
         <div class="gallery-container">
             {% for item in mod.gallery %}
             <div class="gallery-card">
-                <img src="/static/uploads/{{ mod.platform }}/{{ mod.folder_name }}/{{ item.image }}">
+                <img src="/static/uploads/{{ mod.actual_platform_dir }}/{{ mod.folder_name }}/{{ item.image }}">
                 {% if item.text %}
                 <div class="gallery-info">{{ item.text }}</div>
                 {% endif %}
             </div>
             {% else %}
             <div class="gallery-empty">
-                <i class="fas fa-images" style="font-size: 30px; margin-bottom: 10px; display:block;"></i>
-                Belum ada gambar galeri untuk berkas ini.
+                <i class="fas fa-images" style="font-size: 32px; margin-bottom: 12px; display:block; color:var(--text-muted);"></i>
+                Belum ada berkas screenshot galeri untuk modifikasi ini.
             </div>
             {% endfor %}
         </div>
@@ -94,19 +102,19 @@
 <div class="modal-overlay" id="versionModal" onclick="closeModalOutside(event)">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Pilih Versi Berkas</h3>
+            <h3>Pilih Versi Unduhan</h3>
             <button class="close-modal" onclick="closeModal()">&times;</button>
         </div>
-        <div style="max-height: 300px; overflow-y: auto;">
+        <div style="max-height: 280px; overflow-y: auto; padding-right: 2px;">
             {% for file_info in mod.files %}
             <div class="pop-version-row">
                 <span class="version-tag">{{ file_info.version }}</span>
-                <a href="/download/{{ mod.platform }}/{{ mod.folder_name }}/{{ file_info.filename }}" class="pop-dl-btn" onclick="setTimeout(closeModal, 600)">
-                    <i class="fas fa-download"></i> Unduh
+                <a href="/download/{{ mod.actual_platform_dir }}/{{ mod.folder_name }}/{{ file_info.filename }}" class="pop-dl-btn" onclick="setTimeout(closeModal, 500)">
+                    <i class="fas fa-cloud-download-alt"></i> Unduh
                 </a>
             </div>
             {% else %}
-            <p style="color:var(--text-muted); text-align:center; font-size:14px; padding:10px;">Berkas download tidak ditemukan.</p>
+            <p style="color:var(--text-muted); text-align:center; font-size:13px; padding:15px 0;">Berkas download zip/mcpack tidak ditemukan.</p>
             {% endfor %}
         </div>
     </div>
