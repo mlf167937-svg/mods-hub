@@ -22,245 +22,145 @@
             background-color: var(--bg-main);
             color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
             min-height: 100vh;
         }
 
         .navbar {
             background: var(--bg-card);
             border-bottom: 1px solid var(--border);
-            padding: 15px 20px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: sticky; top: 0; z-index: 100;
         }
 
         .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            display: flex; align-items: center; gap: 15px;
         }
 
-        .menu-toggle {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-size: 22px;
-            cursor: pointer;
+        /* TOMBOL COMMUNITY POST POJOK KANAN ATAS */
+        .nav-right {
+            display: flex; align-items: center;
         }
 
-        .brand-logo {
-            font-size: 20px;
-            font-weight: 800;
-            text-decoration: none;
+        .nav-comm-btn {
             color: #fff;
-        }
-
-        .brand-logo span {
-            color: var(--current-accent);
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            max-width: 800px;
-            width: 100%;
-            box-sizing: border-box;
-            margin: 0 auto;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -320px;
-            width: 280px;
-            height: 100%;
-            background: #14161d;
-            border-right: 1px solid var(--border);
-            z-index: 1000;
-            transition: 0.3s ease;
-            padding: 25px;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.6);
-            overflow-y: auto;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .sidebar-header h2 {
-            margin: 0;
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .section-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--text-muted);
-            letter-spacing: 1.5px;
-            margin: 20px 0 10px 0;
-            text-transform: uppercase;
-        }
-
-        .theme-circles {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .circle {
-            width: 32px;
-            height: 32px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            font-size: 16px;
+            width: 40px; height: 40px;
             border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
             transition: 0.2s ease;
         }
 
-        .circle:hover {
-            transform: scale(1.15);
+        .nav-comm-btn:hover {
+            background: var(--current-accent);
+            color: #000;
+            transform: scale(1.05);
         }
 
+        .menu-toggle {
+            background: none; border: none;
+            color: var(--text-main); font-size: 22px; cursor: pointer;
+        }
+
+        .brand-logo {
+            font-size: 20px; font-weight: 800; text-decoration: none; color: #fff;
+        }
+
+        .brand-logo span { color: var(--current-accent); }
+
+        .main-content {
+            flex: 1; padding: 20px; max-width: 800px; width: 100%;
+            box-sizing: border-box; margin: 0 auto;
+        }
+
+        .sidebar {
+            position: fixed; top: 0; left: -320px;
+            width: 280px; height: 100%; background: #14161d;
+            border-right: 1px solid var(--border); z-index: 1000;
+            transition: 0.3s ease; padding: 25px;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.6); overflow-y: auto;
+        }
+
+        .sidebar.open { left: 0; }
+
+        .sidebar-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+        }
+
+        .sidebar-header h2 { margin: 0; font-size: 22px; font-weight: 800; }
+        .close-sidebar { background: none; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
+
+        /* PERBAIKAN SPACING SIDEBAR */
+        .section-label {
+            font-size: 11px; font-weight: 800; color: var(--text-muted);
+            letter-spacing: 1.5px; margin: 25px 0 12px 0; text-transform: uppercase;
+            display: block; clear: both;
+        }
+
+        .theme-circles {
+            display: flex; gap: 12px; margin-bottom: 10px; padding-bottom: 5px;
+        }
+
+        .circle {
+            width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+            border: 2px solid transparent; transition: 0.2s ease;
+        }
+
+        .circle:hover { transform: scale(1.15); }
         .circle.teal { background: #22c55e; }
         .circle.blue { background: #3b82f6; }
         .circle.purple { background: #a855f7; }
 
         .launcher-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(59, 130, 246, 0.08);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            padding: 12px;
-            border-radius: 10px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 10px;
-            transition: 0.2s;
+            display: flex; align-items: center; gap: 12px;
+            background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 12px; border-radius: 10px; color: #fff; text-decoration: none;
+            font-weight: 700; font-size: 14px; margin-bottom: 10px; transition: 0.2s;
         }
 
-        .launcher-link:hover {
-            background: rgba(59, 130, 246, 0.15);
-            border-color: #3b82f6;
-        }
+        .launcher-link:hover { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; }
+        .launcher-link i { color: #3b82f6; font-size: 16px; }
 
-        .launcher-link i {
-            color: #3b82f6;
-            font-size: 16px;
-        }
-
-        .menu-list {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .menu-list { display: flex; flex-direction: column; gap: 4px; }
 
         .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            color: #cbd5e1; text-decoration: none; border-radius: 8px;
+            font-size: 14px; font-weight: 600; background: none; border: none;
+            width: 100%; text-align: left; cursor: pointer;
         }
 
-        .menu-item:hover {
-            background: rgba(255,255,255,0.04);
-            color: #fff;
-        }
-
-        .menu-item i {
-            width: 20px;
-            font-size: 16px;
-            color: var(--current-accent);
-        }
+        .menu-item:hover { background: rgba(255,255,255,0.04); color: #fff; }
+        .menu-item i { width: 20px; font-size: 16px; color: var(--current-accent); }
 
         .tag-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 10px 14px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            padding: 10px 14px; border-radius: 8px; margin-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center; font-size: 13px;
         }
 
         .tag-name { font-weight: 700; color: #fff; font-family: monospace; }
         .tag-val { color: var(--text-muted); font-size: 12px; }
 
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
+        .social-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; color: #cbd5e1; text-decoration: none; font-size: 14px; }
         .social-link i.fa-youtube { color: #ef4444; }
         .social-link i.fa-tiktok { color: #fff; }
 
-        .status-fix {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #eab308;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 5px 12px;
-        }
-
-        .sidebar-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            display: none;
-        }
-
+        .status-fix { display: flex; align-items: center; gap: 10px; color: #eab308; font-size: 13px; font-weight: 600; padding: 5px 12px; }
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; display: none; }
         .sidebar-overlay.show { display: block; }
     </style>
     <script>
         (function() {
             const savedTheme = localStorage.getItem('rexHubTheme');
-            if (savedTheme) {
-                document.documentElement.style.setProperty('--current-accent', savedTheme);
-            }
+            if (savedTheme) { document.documentElement.style.setProperty('--current-accent', savedTheme); }
         })();
     </script>
 </head>
@@ -270,6 +170,9 @@
         <div class="nav-left">
             <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
             <a href="/" class="brand-logo">RexCraft<span>Hub</span></a>
+        </div>
+        <div class="nav-right">
+            <a href="/community" class="nav-comm-btn"><i class="fas fa-users"></i></a>
         </div>
     </div>
 
@@ -288,12 +191,8 @@
         </div>
 
         <div class="section-label">Download Launcher</div>
-        <a href="https://www.mediafire.com" target="_blank" class="launcher-link">
-            <i class="fab fa-medium-m"></i> Download MC MCPE
-        </a>
-        <a href="https://www.mediafire.com" target="_blank" class="launcher-link">
-            <i class="fas fa-rocket"></i> Download Zalith Launcher
-        </a>
+        <a href="https://www.mediafire.com" target="_blank" class="launcher-link"><i class="fab fa-medium-m"></i> Download MC MCPE</a>
+        <a href="https://www.mediafire.com" target="_blank" class="launcher-link"><i class="fas fa-rocket"></i> Download Zalith Launcher</a>
 
         <div class="section-label">Menu Utama</div>
         <div class="menu-list">
@@ -325,9 +224,7 @@
             document.getElementById('sidebarMenu').classList.toggle('open');
             document.getElementById('sidebarOverlay').classList.toggle('show');
         }
-        function triggerAdminAlert() {
-            alert("Anda bukan admin!");
-        }
+        function triggerAdminAlert() { alert("Anda bukan admin!"); }
         function changeTheme(colorCode) {
             document.documentElement.style.setProperty('--current-accent', colorCode);
             localStorage.setItem('rexHubTheme', colorCode);
