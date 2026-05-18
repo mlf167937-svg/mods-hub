@@ -3,17 +3,26 @@ from flask import Flask, render_template, abort, send_from_directory
 
 app = Flask(__name__)
 
-# Konfigurasi Lokasi Upload Mod
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def get_all_mods():
     mods = []
-    platforms = ['java', 'bedrock']
-    
-    for platform in platforms:
-        platform_path = os.path.join(UPLOAD_FOLDER, platform)
-        if not os.path.exists(platform_path):
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        return mods
+
+    # Pindai folder secara dinamis agar aman dari perbedaan huruf besar/kecil (Java/JAVA/bedrock/Bedrock)
+    for platform_dir in os.listdir(UPLOAD_FOLDER):
+        platform_lower = platform_dir.lower()
+        if platform_lower not in ['java', 'bedrock', 'mcpe']:
+            continue
+            
+        # Standarisasi nama platform untuk keperluan routing template
+        platform_key = 'bedrock' if platform_lower in ['bedrock', 'mcpe'] else 'java'
+        platform_path = os.path.join(UPLOAD_FOLDER, platform_dir)
+        
+        if not os.path.isdir(platform_path):
             continue
             
         for folder_name in os.listdir(platform_path):
@@ -26,42 +35,56 @@ def get_all_mods():
                 continue
                 
             try:
-                with open(info_file, 'r', encoding='utf-8') as f:
+                # FIX: Menggunakan utf-8-sig untuk otomatis membuang karakter bom tersembunyi dari Notepad Windows
+                with open(info_file, 'r', encoding='utf-8-sig') as f:
                     content = f.read().splitlines()
                 
-                # Filter hanya baris yang ada isinya (Abaikan baris kosong tak sengaja)
                 non_empty_lines = [line.strip() for line in content if line.strip()]
                 
                 if len(non_empty_lines) < 3:
                     continue
-                    
-                # FITUR PINTAR: Bersihkan auto prefix jika user nulis "Judul: / Kategori: / Icon:"
+                
+                # Pembersihan cerdas teks awalan (Prefix) jika terlanjur ditulis manual
                 title = non_empty_lines[0]
-                if title.lower().startswith('judul:'): title = title[6:].strip()
-                elif title.lower().startswith('title:'): title = title[6:].strip()
+                for prefix in ['judul:', 'title:', 'name:', 'nama:']:
+                    if title.lower().startswith(prefix):
+                        title = title[len(prefix):].strip()
                 
                 category = non_empty_lines[1]
-                if category.lower().startswith('kategori:'): category = category[9:].strip()
-                elif category.lower().startswith('category:'): category = category[9:].strip()
+                for prefix in ['kategori:', 'category:', 'type:', 'jenis:']:
+                    if category.lower().startswith(prefix):
+                        category = category[len(prefix):].strip()
                 
-                icon = non_empty_lines[2]
-                if icon.lower().startswith('icon:'): icon = icon[5:].strip()
+                icon_config = non_empty_lines[2]
+                if icon_config.lower().startswith('icon:'):
+                    icon_config = icon_config[5:].strip()
                 
-                # Proteksi Case-Sensitivity Linux untuk Gambar Icon
+                # FIX PINTAR: Cari nama file icon asli di dalam folder secara Case-Insensitive
+                icon = None
                 for real_file in os.listdir(folder_path):
-                    if real_file.lower() == icon.lower():
+                    if real_file.lower() == icon_config.lower():
                         icon = real_file
                         break
                 
-                # Deskripsi mengambil seluruh sisa baris di info.txt secara utuh
-                desc = "\n".join(non_empty_lines[3:])
-                if desc.lower().startswith('deskripsi:'): desc = desc[10:].strip()
-                elif desc.lower().startswith('description:'): desc = desc[12:].strip()
+                # Jaga-jaga kalau user salah nulis nama icon di info.txt, cari file gambar default di folder tersebut
+                if not icon:
+                    for real_file in os.listdir(folder_path):
+                        if real_file.lower() in ['icon.png', 'icon.jpg', 'icon.jpeg', 'logo.png']:
+                            icon = real_file
+                            break
+                    if not icon:
+                        icon = "icon.png" # Fallback terakhir
                 
-                # BACA FILE VERSI DOWNLOAD (Fix: Case-Insensitive untuk ekstensi .ZIP / .MCPACK di Render)
+                # Gabungkan sisa baris menjadi deskripsi utuh
+                desc_raw = "\n".join(non_empty_lines[3:])
+                for prefix in ['deskripsi:', 'description:', 'desc:', 'info:']:
+                    if desc_raw.lower().startswith(prefix):
+                        desc_raw = desc_raw[len(prefix):].strip()
+                
+                # BACA BERKAS DOWNLOAD (Mendukung .zip, .mcpack, .mcaddon, .jar, .mcworld secara fleksibel)
                 files_info = []
                 for file in os.listdir(folder_path):
-                    if file.lower().endswith(('.zip', '.mcpack', '.mcaddon', '.jar')):
+                    if file.lower().endswith(('.zip', '.mcpack', '.mcaddon', '.jar', '.mcworld', '.mctemplate')):
                         base_name = file.rsplit('.', 1)[0]
                         if '-' in base_name:
                             version = base_name.rsplit('-', 1)[1]
@@ -71,16 +94,16 @@ def get_all_mods():
                             version = 'Latest'
                         files_info.append({'version': version, 'filename': file})
                 
-                # Baca file galeri
+                # Baca file galeri dokumentasi mod
                 gallery_info = []
                 for file in os.listdir(folder_path):
-                    if file.lower().startswith('galery') and file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                    if file.lower().startswith('galery') and file.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
                         base_name = file.rsplit('.', 1)[0]
                         txt_file = os.path.join(folder_path, f"{base_name}.txt")
                         
                         text_content = ""
                         if os.path.exists(txt_file):
-                            with open(txt_file, 'r', encoding='utf-8') as tf:
+                            with open(txt_file, 'r', encoding='utf-8-sig') as tf:
                                 text_content = tf.read().strip()
                         
                         gallery_info.append({
@@ -89,17 +112,18 @@ def get_all_mods():
                         })
                 
                 mods.append({
-                    'platform': platform,
+                    'platform': platform_key,
+                    'actual_platform_dir': platform_dir, # Folder fisik asli di server
                     'folder_name': folder_name,
                     'title': title,
                     'category': category,
                     'icon': icon,
-                    'desc': desc,
+                    'desc': desc_raw if desc_raw else "Tidak ada deskripsi tersedia.",
                     'files': files_info,
                     'gallery': gallery_info
                 })
             except Exception as e:
-                print(f"Error reading mod {folder_name}: {e}")
+                print(f"Gagal memproses mod di folder {folder_name}: {e}")
                 
     return mods
 
@@ -120,7 +144,7 @@ def get_community_posts():
             continue
             
         try:
-            with open(txt_file, 'r', encoding='utf-8') as f:
+            with open(txt_file, 'r', encoding='utf-8-sig') as f:
                 text_content = f.read().strip()
                 
             if not text_content:
@@ -135,11 +159,14 @@ def get_community_posts():
                 text_body = text_content
                 yt_link = "https://youtube.com"
                 
-            thumbnail_file = "thumbnail.png"
+            thumbnail_file = None
             for file in os.listdir(folder_path):
-                if file.lower().startswith('thumbnail') and file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                if file.lower().startswith('thumbnail') and file.lower().endswith(('.png', '.jpg', '.jpeg', '.webp')):
                     thumbnail_file = file
                     break
+            
+            if not thumbnail_file:
+                thumbnail_file = "thumbnail.png"
                     
             posts.append({
                 'id': folder_name,
@@ -148,7 +175,7 @@ def get_community_posts():
                 'thumbnail': thumbnail_file
             })
         except Exception as e:
-            print(f"Error membaca postingan {folder_name}: {e}")
+            print(f"Error membaca komunitas {folder_name}: {e}")
             
     posts.sort(key=lambda x: x['id'], reverse=True)
     return posts
@@ -156,7 +183,19 @@ def get_community_posts():
 @app.route('/')
 def index():
     all_mods = get_all_mods()
-    return render_template('index.html', mods=all_mods)
+    
+    # FIX BANNER: Cari otomatis file banner dengan format .png, .jpg, atau .jpeg secara cerdas
+    img_dir = os.path.join('static', 'img')
+    banner_file = 'banner.png' 
+    
+    if os.path.exists(img_dir):
+        for file in os.listdir(img_dir):
+            if file.lower() in ['banner.png', 'banner.jpg', 'banner.jpeg', 'banner.webp']:
+                banner_file = file
+                break
+                
+    banner_url = f"/static/img/{banner_file}"
+    return render_template('index.html', mods=all_mods, banner_url=banner_url)
 
 @app.route('/mod/<platform>/<folder_name>')
 def mod_detail(platform, folder_name):
@@ -180,18 +219,19 @@ def community_page():
     posts = get_community_posts()
     return render_template('community.html', posts=posts)
 
-@app.route('/download/<platform>/<folder_name>/<filename>')
-def download_file(platform, folder_name, filename):
-    safe_path = os.path.join(UPLOAD_FOLDER, platform, folder_name)
+@app.route('/download/<platform_dir>/<folder_name>/<filename>')
+def download_file(platform_dir, folder_name, filename):
+    # Menggunakan folder fisik asli agar tidak terpeleset masalah case-sensitive Linux
+    safe_path = os.path.join(UPLOAD_FOLDER, platform_dir, folder_name)
     return send_from_directory(safe_path, filename, as_attachment=True)
 
 @app.route('/ai')
 def ai_page():
-    return "<h1>RexAI Q&A Page</h1><p>Fitur AI Chatbot RexCraftHub siap dikembangkan di sini!</p>"
+    return "<body style='background:#0b0c10;color:#fff;font-family:sans-serif;padding:30px;'><h1>RexAI Q&A</h1><p>Fitur AI Chatbot RexCraftHub siap dikembangkan di sini!</p></body>"
 
 @app.route('/tutorial')
 def tutorial_page():
-    return "<h1>Tutorial Pemasangan</h1><p>Halaman panduan instalasi mod dan shader RexCraft.</p>"
+    return "<body style='background:#0b0c10;color:#fff;font-family:sans-serif;padding:30px;'><h1>Tutorial Pemasangan</h1><p>Halaman panduan instalasi mod dan shader RexCraft.</p></body>"
 
 if __name__ == '__main__':
     app.run(debug=True)
