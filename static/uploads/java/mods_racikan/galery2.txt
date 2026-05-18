@@ -1,1 +1,5 @@
+Perbandingan FPS: Vanilla VS Mod Booster Performance
 
+Bukti nyata peningkatan performa ekstrem hingga lebih dari 3.2x lipat! Grafik di sebelah kiri menunjukkan performa Minecraft bawaan yang patah-patah (unstable) dan tersendat di angka 74 FPS pada grafis internal. 
+
+Setelah dipasangkan Mod Sodium yang ada di racikan mods booster (sebelah kanan), angka FPS langsung melonjak drastis hingga tembus 239 FPS! Tidak hanya grafis menjadi jauh lebih lancar, tetapi frame rate juga menjadi jauh lebih stabil, konsisten, dan bebas dari spike lag yang mengganggu kenyamanan bermain Anda.
