@@ -12,10 +12,10 @@
             --border: #2d313a;
             --text-main: #ffffff;
             --text-muted: #848d9a;
-            --accent-teal: #00af9c;
+            --accent-teal: #22c55e; /* Warna Hijau Utama RexCraft */
             --accent-blue: #3b82f6;
             --accent-purple: #a855f7;
-            --current-accent: #22c55e;
+            --current-accent: #22c55e; /* Default awal */
         }
 
         body {
@@ -63,7 +63,7 @@
         }
 
         .brand-logo span {
-            color: #22c55e;
+            color: var(--current-accent);
         }
 
         .main-content {
@@ -75,7 +75,7 @@
             margin: 0 auto;
         }
 
-        /* SIDEBAR / LAUNCHER SETTINGS STYLING */
+        /* SIDEBAR SETTINGS STYLING */
         .sidebar {
             position: fixed;
             top: 0;
@@ -137,11 +137,16 @@
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
+            transition: 0.2s ease;
         }
 
-        .circle.teal { background: var(--accent-teal); }
-        .circle.blue { background: var(--accent-blue); }
-        .circle.purple { background: var(--accent-purple); }
+        .circle:hover {
+            transform: scale(1.15);
+        }
+
+        .circle.teal { background: #22c55e; }
+        .circle.blue { background: #3b82f6; }
+        .circle.purple { background: #a855f7; }
 
         /* LINK DOWNLOAD MEDIAFIRE DESIGN */
         .launcher-link {
@@ -201,7 +206,7 @@
         .menu-item i {
             width: 20px;
             font-size: 16px;
-            color: #22c55e;
+            color: var(--current-accent);
         }
 
         .tag-box {
@@ -252,6 +257,15 @@
 
         .sidebar-overlay.show { display: block; }
     </style>
+    <script>
+        // SCRIPT DETEKSI MEMORI TEMA (Harus paling atas agar web tidak berkedip hijau saat dimuat)
+        (function() {
+            const savedTheme = localStorage.getItem('rexHubTheme');
+            if (savedTheme) {
+                document.documentElement.style.setProperty('--current-accent', savedTheme);
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -271,9 +285,9 @@
 
         <div class="section-label">Tema Warna</div>
         <div class="theme-circles">
-            <div class="circle teal"></div>
-            <div class="circle blue"></div>
-            <div class="circle purple"></div>
+            <div class="circle teal" onclick="changeTheme('#22c55e')"></div>
+            <div class="circle blue" onclick="changeTheme('#3b82f6')"></div>
+            <div class="circle purple" onclick="changeTheme('#a855f7')"></div>
         </div>
 
         <div class="section-label">Download Launcher</div>
@@ -314,6 +328,12 @@
         }
         function triggerAdminAlert() {
             alert("Anda bukan admin!");
+        }
+        
+        // FUNGSI GANTI TEMA UTAMA
+        function changeTheme(colorCode) {
+            document.documentElement.style.setProperty('--current-accent', colorCode);
+            localStorage.setItem('rexHubTheme', colorCode);
         }
     </script>
 </body>
