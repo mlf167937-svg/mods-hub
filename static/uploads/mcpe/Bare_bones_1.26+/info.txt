@@ -1,1 +1,12 @@
+Judul: Bare Bones Texture Pack
+Kategori: Texture Pack
+Deskripsi: Mau merasakan sensasi bermain Minecraft dengan visual grafis persis seperti di Trailer resmi buatan Mojang? Bare Bones adalah jawabannya!
 
+Texture pack ini dirancang khusus untuk menyederhanakan seluruh tekstur default Minecraft menjadi lebih bersih, cerah, dan flat, tanpa menghilangkan esensi asli dari game. Dengan warna yang lebih kontras dan tajam, dunia Minecraft Anda akan terlihat sangat segar dan estetik.
+
+Kelebihan Bare Bones :
+1. Sangat Ringan: Menghapus detail pixel yang berat, otomatis menaikkan FPS HP Anda (Cocok untuk HP Ram 2GB/3GB).
+2. Estetika Trailer: Mengubah atmosfer game menjadi super vibrant ala animasi resmi Mojang.
+3. Kompatibilitas Tinggi: Berjalan mulus di berbagai versi MCPE / Bedrock Edition tanpa menyebabkan lag atau crash.
+
+Sangat direkomendasikan untuk dipadukan dengan kustomisasi kontrol atau shader peringan dari RexCraft agar pengalaman bermain Anda semakin maksimal!
