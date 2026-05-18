@@ -6,6 +6,18 @@ app = Flask(__name__)
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+# FUNGSI DETEKSI & URUTKAN VERSI (Terbaru di atas, lama di bawah)
+def parse_version(file_dict):
+    v_str = file_dict['version']
+    if v_str.lower() == 'latest':
+        return [999, 999, 999]  # Selalu taruh teks 'Latest' di paling atas
+    try:
+        # Memecah '1.21.11' menjadi [1, 21, 11] agar bisa diurutkan dengan benar secara angka
+        return [int(x) for x in v_str.split('.')]
+    except ValueError:
+        # Jaga-jaga kalau format versinya mengandung huruf atau teks lain
+        return [0, 0, 0]
+
 def get_all_mods():
     mods = []
     if not os.path.exists(UPLOAD_FOLDER):
@@ -93,6 +105,9 @@ def get_all_mods():
                         else:
                             version = 'Latest'
                         files_info.append({'version': version, 'filename': file})
+                
+                # FIX AUTO-SORT: Mengurutkan versi berkas secara menurun (Terbaru di atas)
+                files_info.sort(key=parse_version, reverse=True)
                 
                 # Baca file galeri dokumentasi mod
                 gallery_info = []
