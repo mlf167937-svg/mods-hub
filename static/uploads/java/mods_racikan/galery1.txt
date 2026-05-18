@@ -1,1 +1,5 @@
+Tampilan Menu Pengaturan Grafis Mutakhir
 
+Melalui menu ini, Anda bisa mengatur performa rendering secara presisi mulai dari Render Distance, Simulation Distance, hingga batas Max Framerate (FPS). Kombinasi racikan mod ini memastikan semua opsi animasi dan partikel berat dikonfigurasi pada titik paling optimal agar game berjalan super smooth tanpa mengorbankan kualitas visual esensial.
+
+Anda dapet mengatur pengaturan particle di pengaturan
